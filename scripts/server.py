@@ -10,9 +10,12 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
-# Paths
-ROOT_DIR = Path(__file__).parent.parent
-DASHBOARD_DIR = ROOT_DIR / "dashboard"
+# Server code runs from the repo root
+SERVER_ROOT = Path(__file__).parent.parent
+DASHBOARD_DIR = SERVER_ROOT / "dashboard"
+
+# Content resides in the user's Obsidian Vault
+ROOT_DIR = Path("D:/Obsidian/My Wiki")
 WIKI_DIR = ROOT_DIR / "wiki"
 RAW_DIR = ROOT_DIR / "raw"
 DRAFTS_DIR = ROOT_DIR / "drafts"
@@ -269,7 +272,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
         self.send_json({"nodes": nodes, "edges": edges})
 
     def api_get_lint(self):
-        script_path = ROOT_DIR / "scripts" / "linter.py"
+        script_path = SERVER_ROOT / "scripts" / "linter.py"
         try:
             res = subprocess.run(["python", str(script_path)], capture_output=True, text=True, encoding="utf-8")
             self.send_json({
@@ -285,7 +288,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json({"error": "Missing parameter 'q'"}, 400)
             return
 
-        script_path = ROOT_DIR / "scripts" / "search.py"
+        script_path = SERVER_ROOT / "scripts" / "search.py"
         try:
             res = subprocess.run(["python", str(script_path), "--query", q], capture_output=True, text=True, encoding="utf-8")
             self.send_json({
@@ -312,7 +315,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             dest_path.write_bytes(file_data)
             
             # Trigger auto-ingestion pipeline in background
-            auto_ingest_path = ROOT_DIR / "scripts" / "auto_ingest.py"
+            auto_ingest_path = SERVER_ROOT / "scripts" / "auto_ingest.py"
             subprocess.Popen(["python", str(auto_ingest_path), "--file", str(dest_path)])
             
             self.send_json({
@@ -323,7 +326,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json({"error": str(e)}, 500)
 
     def handle_run_indexer(self):
-        script_path = ROOT_DIR / "scripts" / "indexer.py"
+        script_path = SERVER_ROOT / "scripts" / "indexer.py"
         try:
             res = subprocess.run(["python", str(script_path)], capture_output=True, text=True, encoding="utf-8")
             self.send_json({
@@ -380,7 +383,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             file_path.unlink()
             
             # Run indexer
-            indexer_path = ROOT_DIR / "scripts" / "indexer.py"
+            indexer_path = SERVER_ROOT / "scripts" / "indexer.py"
             subprocess.run(["python", str(indexer_path)], capture_output=True)
             
             # Log the deletion to log.md
@@ -414,7 +417,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                 self.send_json({"error": "Missing parameter 'url'"}, 400)
                 return
                 
-            script_path = ROOT_DIR / "scripts" / "clip_webpage.py"
+            script_path = SERVER_ROOT / "scripts" / "clip_webpage.py"
             cmd = ["python", str(script_path), "--url", url]
             if name:
                 cmd += ["--name", name]
@@ -426,7 +429,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                 stdout_text = res.stdout
                 raw_files = re.findall(r'raw/([a-zA-Z0-9_\-\.]+)', stdout_text)
                 
-                auto_ingest_path = ROOT_DIR / "scripts" / "auto_ingest.py"
+                auto_ingest_path = SERVER_ROOT / "scripts" / "auto_ingest.py"
                 for rf in set(raw_files):
                     rf_path = RAW_DIR / rf
                     if rf_path.exists():
@@ -660,7 +663,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             draft_path.unlink()
             
             # Run indexer
-            indexer_path = ROOT_DIR / "scripts" / "indexer.py"
+            indexer_path = SERVER_ROOT / "scripts" / "indexer.py"
             subprocess.run(["python", str(indexer_path)], capture_output=True)
             
             # Add log entry
@@ -672,7 +675,7 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                     lf.write(log_entry)
                     
             # Run linter
-            linter_path = ROOT_DIR / "scripts" / "linter.py"
+            linter_path = SERVER_ROOT / "scripts" / "linter.py"
             subprocess.run(["python", str(linter_path)], capture_output=True)
             
             self.send_json({

@@ -28,7 +28,7 @@ def parse_frontmatter(content):
     return metadata
 
 def generate_index():
-    wiki_dir = Path(__file__).parent.parent / "wiki"
+    wiki_dir = Path("D:/Obsidian/My Wiki/wiki")
     if not wiki_dir.exists():
         print(f"Error: wiki directory does not exist at {wiki_dir}")
         return

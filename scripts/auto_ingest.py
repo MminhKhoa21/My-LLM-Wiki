@@ -9,11 +9,11 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path("D:/Obsidian/My Wiki")
 WIKI_DIR = ROOT_DIR / "wiki"
 RAW_DIR = ROOT_DIR / "raw"
 DRAFTS_DIR = ROOT_DIR / "drafts"
-ENV_PATH = ROOT_DIR / ".env"
+ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 
 DRAFTS_DIR.mkdir(parents=True, exist_ok=True)
 

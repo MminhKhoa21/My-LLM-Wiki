@@ -31,3 +31,31 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 ## [2026-07-05] system | Deletion of raw file
 - Deleted file: example_ui_test.txt
 - Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: isaac_newton.md
+- Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: derivative.md
+- Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: differentiation_rules.md
+- Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: gottfried_leibniz.md
+- Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: integral.md
+- Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: summary_calculus_derivatives.md
+- Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: summary_calculus_integrals.md
+- Automatically ran indexer script.
