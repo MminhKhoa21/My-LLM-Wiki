@@ -330,6 +330,7 @@ async function loadNoteDetail(noteName) {
         // Switch to note view tab
         switchTab("note-tab");
         
+        noteContentArea.classList.add("note-viewer-empty");
         noteContentArea.innerHTML = `<div class="note-viewer-empty"><i class="fa-solid fa-spinner fa-spin empty-icon"></i><p>Reading note contents...</p></div>`;
         noteViewerHeader.style.display = "none";
         
@@ -345,6 +346,7 @@ async function loadNoteDetail(noteName) {
         renderNoteMarkdown(data);
     } catch (err) {
         noteViewerHeader.style.display = "none";
+        noteContentArea.classList.add("note-viewer-empty");
         noteContentArea.innerHTML = `<div class="note-viewer-empty"><i class="fa-solid fa-triangle-exclamation empty-icon" style="color: #ef4444;"></i><p>${err.message}</p></div>`;
         showToast(err.message, true);
     }
@@ -388,6 +390,7 @@ ${contentLines}
 
     const htmlContent = marked.parse(parsedMarkdown);
     
+    noteContentArea.classList.remove("note-viewer-empty");
     noteContentArea.innerHTML = `
         <article class="markdown-body">
             <div style="margin-bottom: 20px; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 12px;">
