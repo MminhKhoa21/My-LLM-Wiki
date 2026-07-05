@@ -725,3 +725,29 @@ a:hover {
     border-color: var(--panel-border);
 }
 
+
+/* Clipper Area Styles */
+.clipper-area {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.clipper-area input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 12px;
+    transition: var(--transition-fast);
+}
+
+.clipper-area input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px var(--secondary-glow);
+}

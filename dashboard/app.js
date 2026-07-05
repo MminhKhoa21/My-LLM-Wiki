@@ -35,7 +35,12 @@ const translations = {
         "btn-delete": "Delete",
         "toast-deleted": "File deleted successfully!",
         "toast-delete-fail": "Failed to delete file: ",
-        "confirm-delete": "Are you sure you want to delete this file?"
+        "confirm-delete": "Are you sure you want to delete this file?",
+        "clip-placeholder": "Paste article URL...",
+        "action-clip": "Clip & Ingest",
+        "toast-clipping": "Clipping website...",
+        "toast-clip-success": "Successfully clipped: ",
+        "toast-clip-fail": "Failed to clip webpage: "
     },
     vi: {
         "logo-title": "LLM Wiki",
@@ -69,7 +74,12 @@ const translations = {
         "btn-delete": "Xóa",
         "toast-deleted": "Đã xóa file thành công!",
         "toast-delete-fail": "Lỗi khi xóa file: ",
-        "confirm-delete": "Bạn có chắc chắn muốn xóa tệp này không?"
+        "confirm-delete": "Bạn có chắc chắn muốn xóa tệp này không?",
+        "clip-placeholder": "Dán liên kết URL bài báo...",
+        "action-clip": "Tải bài viết",
+        "toast-clipping": "Đang tải bài viết...",
+        "toast-clip-success": "Tải bài viết thành công: ",
+        "toast-clip-fail": "Lỗi khi tải bài viết: "
     }
 };
 
@@ -93,6 +103,8 @@ const toastMessageEl = document.getElementById("toast-message");
 const btnLangToggle = document.getElementById("btn-lang-toggle");
 const manageWikiListEl = document.getElementById("manage-wiki-list");
 const manageRawListEl = document.getElementById("manage-raw-list");
+const clipperUrlInput = document.getElementById("clipper-url");
+const btnClip = document.getElementById("btn-clip");
 
 // State variables
 let notesData = [];
@@ -111,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnRelint.addEventListener("click", () => switchTab("lint-tab", runLinter));
     btnRefreshLint.addEventListener("click", runLinter);
     btnLangToggle.addEventListener("click", toggleLanguage);
+    btnClip.addEventListener("click", runWebClipper);
     
     // Search on enter key
     sidebarSearchInput.addEventListener("keydown", (e) => {
@@ -668,4 +681,41 @@ async function deleteFile(type, name) {
         showToast(langData["toast-delete-fail"] + err.message, true);
     }
 }
+
+async function runWebClipper() {
+    const url = clipperUrlInput.value.trim();
+    if (!url) return;
+    
+    const langData = translations[currentLang];
+    try {
+        btnClip.disabled = true;
+        btnClip.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ...`;
+        showToast(langData["toast-clipping"]);
+        
+        const res = await fetch(`${API_BASE}/clip`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to clip");
+        
+        showToast(langData["toast-clip-success"] + data.message);
+        clipperUrlInput.value = "";
+        
+        // Refresh raw list in management tab if loaded
+        if (document.getElementById("manage-tab").classList.contains("active")) {
+            loadManagementData();
+        }
+    } catch (err) {
+        showToast(langData["toast-clip-fail"] + err.message, true);
+    } finally {
+        btnClip.disabled = false;
+        btnClip.innerHTML = `<i class="fa-solid fa-scissors"></i> <span data-i18n="action-clip">${langData["action-clip"]}</span>`;
+    }
+}
+
 

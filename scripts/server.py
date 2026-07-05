@@ -107,6 +107,8 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_run_indexer()
         elif path == "/api/delete":
             self.handle_delete()
+        elif path == "/api/clip":
+            self.handle_clip()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -376,6 +378,35 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                 "status": "success",
                 "message": f"Successfully deleted {ftype} file: {file_path.name}"
             })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_clip(self):
+        content_length = int(self.headers.get('Content-Length', 0))
+        try:
+            body = self.rfile.read(content_length).decode('utf-8')
+            params = json.loads(body)
+            url = params.get("url")
+            name = params.get("name", "")
+            
+            if not url:
+                self.send_json({"error": "Missing parameter 'url'"}, 400)
+                return
+                
+            script_path = ROOT_DIR / "scripts" / "clip_webpage.py"
+            cmd = ["python", str(script_path), "--url", url]
+            if name:
+                cmd += ["--name", name]
+                
+            res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
+            
+            if res.returncode == 0:
+                self.send_json({
+                    "status": "success",
+                    "message": res.stdout.strip()
+                })
+            else:
+                self.send_json({"error": res.stderr.strip() or res.stdout.strip()}, 500)
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
 
