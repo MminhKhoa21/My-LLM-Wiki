@@ -132,11 +132,10 @@ def handle_github_url(url, raw_dir):
                 print(f"Error downloading repository ZIP: {e}")
                 return False
                 
-        # Parse ZIP in-memory
+        # Parse ZIP in-memory — combine ALL content into ONE single raw file
         try:
             print("Extracting markdown files from ZIP in-memory...")
             with zipfile.ZipFile(io.BytesIO(zip_data)) as z:
-                # Find all .md files in the repository
                 md_files = [f for f in z.namelist() if f.lower().endswith(".md")]
                 
                 if not md_files:
@@ -153,32 +152,29 @@ def handle_github_url(url, raw_dir):
                     return (2, f)
                     
                 md_files.sort(key=sort_key)
+                files_to_extract = md_files[:20]  # top 20 docs
+                print(f"Found {len(md_files)} markdown files. Combining top {len(files_to_extract)} into one source file...")
                 
-                # Keep top 15 files to prevent disk overflow
-                files_to_extract = md_files[:15]
-                print(f"Found {len(md_files)} markdown files. Extracting top {len(files_to_extract)} files...")
-                
-                extracted_count = 0
+                # Combine ALL content into ONE file
+                combined_parts = [
+                    f"# GitHub Repository: {owner}/{repo}",
+                    f"Source URL: https://github.com/{owner}/{repo}",
+                    f"Branch: {branch}",
+                    "---"
+                ]
                 for f in files_to_extract:
                     with z.open(f) as file_in_zip:
                         file_content = file_in_zip.read().decode("utf-8", errors="replace")
-                    
-                    # Compute relative path inside zip (ignoring the root repo-branch folder)
-                    rel_parts = f.split("/")[1:]
-                    rel_path = "/".join(rel_parts)
+                    rel_path = "/".join(f.split("/")[1:])
                     if not rel_path:
                         continue
-                        
-                    clean_name = sanitize_filename(rel_path.replace(".md", ""))
-                    filename = f"github_{repo}_{clean_name}"
-                    
-                    # Convert to text and save
-                    output_path = raw_dir / f"{filename}.txt"
-                    output_path.write_text(file_content, encoding="utf-8")
-                    print(f"  - Extracted: raw/{filename}.txt")
-                    extracted_count += 1
-                    
-                print(f"Successfully ingested {extracted_count} raw documents from GitHub repository!")
+                    combined_parts.append(f"\n\n## [{rel_path}]\n\n{file_content[:4000]}")
+                
+                combined_text = "\n".join(combined_parts)
+                output_filename = f"github_{sanitize_filename(repo)}.txt"
+                output_path = raw_dir / output_filename
+                output_path.write_text(combined_text, encoding="utf-8")
+                print(f"Successfully combined into: raw/{output_filename}")
                 return True
         except Exception as e:
             print(f"Error processing ZIP file: {e}")

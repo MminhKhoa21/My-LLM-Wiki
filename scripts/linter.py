@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import os
 import re
+import sys
 from pathlib import Path
+
+sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 # Regex definitions
 YAML_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
@@ -41,8 +44,8 @@ def run_lint():
     errors = []
     warnings = []
     
-    # 1. Collect all pages
-    for file_path in wiki_dir.glob("*.md"):
+    # 1. Collect all pages (recursive - includes subdirectories)
+    for file_path in wiki_dir.rglob("*.md"):
         stem = file_path.stem
         all_stems.add(stem)
         

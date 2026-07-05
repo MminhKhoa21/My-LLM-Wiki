@@ -26,10 +26,7 @@ Welcome to your AI-managed learning wiki. This wiki compiles and aggregates know
 ## Major Learning Areas
 
 ### Mathematics (Calculus)
-- [[summary_calculus_derivatives]] - Summary of Calculus Derivatives Study Guide.
-- [[summary_calculus_integrals]] - Summary of Calculus Integrals Study Guide.
-- [[derivative]] - Definition and core principles of the derivative.
-- [[integral]] - Definition and core principles of the integral.
-- [[differentiation_rules]] - Standard algebraic rules for differentiation.
+*(No learning areas ingested yet. Once you upload raw materials and approve their drafts, they will appear here!)*
+
 
 

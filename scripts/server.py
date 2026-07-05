@@ -70,14 +70,21 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             # Static file serving
             if path == "/" or path == "":
                 file_path = DASHBOARD_DIR / "index.html"
+            elif path.startswith("/api/report/"):
+                report_name = path.replace("/api/report/", "")
+                file_path = REPORTS_DIR / report_name
             else:
                 file_path = DASHBOARD_DIR / path.lstrip("/")
 
             # Security check
             try:
                 resolved_file = file_path.resolve()
-                resolved_dashboard = DASHBOARD_DIR.resolve()
-                if not resolved_file.is_relative_to(resolved_dashboard):
+                if path.startswith("/api/report/"):
+                    resolved_base = REPORTS_DIR.resolve()
+                else:
+                    resolved_base = DASHBOARD_DIR.resolve()
+                    
+                if not resolved_file.is_relative_to(resolved_base):
                     self.send_error(403, "Forbidden")
                     return
             except Exception:
@@ -128,6 +135,10 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_reject_all()
         elif path == "/api/repo-report":
             self.handle_repo_report()
+        elif path == "/api/delete-bulk":
+            self.handle_delete_bulk()
+        elif path == "/api/approve-bulk":
+            self.handle_approve_bulk()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -435,10 +446,10 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
             
             if res.returncode == 0:
-                # Run auto-ingest in background for each saved file
                 stdout_text = res.stdout
-                raw_files = re.findall(r'raw/([a-zA-Z0-9_\-\.]+)', stdout_text)
                 
+                # Run auto_ingest.py in background for ALL extracted raw files
+                raw_files = re.findall(r'raw/([a-zA-Z0-9_\-\.]+)', stdout_text)
                 auto_ingest_path = SERVER_ROOT / "scripts" / "auto_ingest.py"
                 for rf in set(raw_files):
                     rf_path = RAW_DIR / rf
@@ -447,7 +458,8 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                         
                 self.send_json({
                     "status": "success",
-                    "message": res.stdout.strip() + " (AI auto-ingestion triggered)"
+                    "message": stdout_text.strip() + " (AI auto-ingestion triggered)",
+                    "is_github": "github.com" in url.lower()
                 })
             else:
                 self.send_json({"error": res.stderr.strip() or res.stdout.strip()}, 500)
@@ -785,7 +797,104 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
 
+    def handle_delete_bulk(self):
+        """POST /api/delete-bulk — delete multiple wiki or raw files by name list."""
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8")
+            params = json.loads(body)
+            filenames = params.get("filenames", [])
+            ftype = params.get("type", "wiki")  # "wiki" | "raw" | "draft"
+
+            if not filenames:
+                self.send_json({"error": "No filenames provided"}, 400)
+                return
+
+            if ftype == "wiki":
+                base_dir = WIKI_DIR
+                protected = {"index.md", "log.md", "overview.md"}
+            elif ftype == "raw":
+                base_dir = RAW_DIR
+                protected = set()
+            elif ftype == "draft":
+                base_dir = DRAFTS_DIR
+                protected = set()
+            else:
+                self.send_json({"error": "Invalid type"}, 400)
+                return
+
+            deleted = []
+            skipped = []
+            for fname in filenames:
+                safe = Path(fname).name  # strip any path traversal
+                if safe in protected:
+                    skipped.append(safe)
+                    continue
+                target = base_dir / safe
+                if target.exists() and target.is_file():
+                    target.unlink()
+                    deleted.append(safe)
+
+            # Re-run indexer after wiki deletions
+            if ftype == "wiki" and deleted:
+                subprocess.run(["python", str(SERVER_ROOT / "scripts" / "indexer.py")],
+                               capture_output=True, text=True)
+
+            self.send_json({
+                "status": "success",
+                "deleted": deleted,
+                "skipped": skipped,
+                "message": f"Deleted {len(deleted)} file(s)."
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_approve_bulk(self):
+        """POST /api/approve-bulk — approve a specific list of draft files."""
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8")
+            params = json.loads(body)
+            filenames = params.get("filenames", [])
+
+            if not filenames:
+                self.send_json({"error": "No filenames provided"}, 400)
+                return
+
+            approved = []
+            for fname in filenames:
+                safe = Path(fname).name
+                draft_path = DRAFTS_DIR / safe
+                if not draft_path.exists():
+                    continue
+                content = draft_path.read_text(encoding="utf-8")
+                # Parse target filename from <!-- target: wiki/xxx.md -->
+                target_match = re.search(r'<!--\s*target:\s*([^\s>]+)\s*-->', content)
+                if target_match:
+                    target_rel = target_match.group(1)
+                    target_path = ROOT_DIR / target_rel
+                else:
+                    target_path = WIKI_DIR / safe
+                target_path.parent.mkdir(parents=True, exist_ok=True)
+                clean = re.sub(r'<!--.*?-->', '', content, flags=re.DOTALL).strip()
+                target_path.write_text(clean, encoding="utf-8")
+                draft_path.unlink()
+                approved.append(safe)
+
+            if approved:
+                subprocess.run(["python", str(SERVER_ROOT / "scripts" / "indexer.py")],
+                               capture_output=True, text=True)
+
+            self.send_json({
+                "status": "success",
+                "approved": approved,
+                "message": f"Approved {len(approved)} draft(s)."
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
     def handle_repo_report(self):
+
         """POST /api/repo-report — generate a Vietnamese HTML summary of a GitHub repo."""
         try:
             content_length = int(self.headers.get("Content-Length", 0))

@@ -119,9 +119,6 @@
                         <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="tab-drafts">Review Drafts</span>
                         <span id="drafts-count-badge" class="drafts-count" style="position: absolute; top: -5px; right: -5px; background: var(--secondary); color: #0d1224; font-size: 10px; font-weight: bold; border-radius: 10px; padding: 2px 6px; display: none;">0</span>
                     </button>
-                    <button class="tab-btn" data-tab="report-tab" id="tab-report-btn">
-                        <i class="fa-solid fa-file-contract"></i> <span data-i18n="tab-report">Quick Report</span>
-                    </button>
                 </nav>
             </header>
 
@@ -199,7 +196,7 @@
                 <!-- 5. Manage Notes Tab -->
                 <div class="tab-content" id="manage-tab">
                     <div class="card manage-card">
-                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                             <div>
                                 <h3 data-i18n="manage-title">Lesson & File Management</h3>
                                 <span class="card-subtitle" data-i18n="manage-subtitle">Delete and manage raw sources and generated wiki pages</span>
@@ -209,17 +206,35 @@
                             </button>
                         </div>
                         <div class="manage-split-container">
+                            <!-- Wiki Pages column -->
                             <div class="manage-column">
-                                <h4 class="column-title"><i class="fa-solid fa-file-invoice"></i> <span data-i18n="manage-wiki-header">Wiki Pages (.md)</span></h4>
-                                <div id="manage-wiki-list" class="manage-list-viewport">
-                                    <!-- Dynamic list of wiki files -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <h4 class="column-title" style="margin:0;"><i class="fa-solid fa-file-invoice"></i> <span data-i18n="manage-wiki-header">Wiki Pages</span></h4>
+                                    <div style="display:flex; gap:6px; align-items:center;">
+                                        <label style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:4px; cursor:pointer;">
+                                            <input type="checkbox" id="wiki-select-all" style="accent-color:var(--primary);"> <span data-i18n="select-all">Chọn tất cả</span>
+                                        </label>
+                                        <button class="btn btn-secondary" id="btn-wiki-delete-selected" style="font-size:10px; padding:4px 10px; border-radius:6px; background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); display:none;">
+                                            <i class="fa-solid fa-trash-can"></i> <span id="wiki-del-count">0</span> <span data-i18n="btn-delete-selected">mục</span>
+                                        </button>
+                                    </div>
                                 </div>
+                                <div id="manage-wiki-list" class="manage-list-viewport"></div>
                             </div>
+                            <!-- Raw Sources column -->
                             <div class="manage-column">
-                                <h4 class="column-title"><i class="fa-solid fa-file-code"></i> <span data-i18n="manage-raw-header">Raw Sources (immutability rule)</span></h4>
-                                <div id="manage-raw-list" class="manage-list-viewport">
-                                    <!-- Dynamic list of raw files -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <h4 class="column-title" style="margin:0;"><i class="fa-solid fa-file-code"></i> <span data-i18n="manage-raw-header">Raw Sources</span></h4>
+                                    <div style="display:flex; gap:6px; align-items:center;">
+                                        <label style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:4px; cursor:pointer;">
+                                            <input type="checkbox" id="raw-select-all" style="accent-color:var(--primary);"> <span data-i18n="select-all">Chọn tất cả</span>
+                                        </label>
+                                        <button class="btn btn-secondary" id="btn-raw-delete-selected" style="font-size:10px; padding:4px 10px; border-radius:6px; background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); display:none;">
+                                            <i class="fa-solid fa-trash-can"></i> <span id="raw-del-count">0</span> <span data-i18n="btn-delete-selected">mục</span>
+                                        </button>
+                                    </div>
                                 </div>
+                                <div id="manage-raw-list" class="manage-list-viewport"></div>
                             </div>
                         </div>
                     </div>
@@ -233,19 +248,30 @@
                             <span class="card-subtitle" data-i18n="drafts-subtitle">Review, edit, and approve AI-generated wiki articles</span>
                         </div>
                         <div class="drafts-split-container" style="display: flex; gap: 20px; height: 550px;">
-                            <div class="drafts-sidebar" style="width: 250px; border-right: 1px solid var(--panel-border); padding-right: 15px; display: flex; flex-direction: column; gap: 10px;">
-                                <h4 class="column-title" data-i18n="drafts-pending-hdr" style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin: 0 0 5px 0;">Pending Review</h4>
-                                <div class="batch-actions-row" style="display: flex; gap: 6px; margin-bottom: 8px;">
-                                    <button class="btn btn-secondary" id="btn-reject-all" style="flex: 1; border-radius: 6px; font-size: 10px; padding: 6px 8px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.2);">
+                            <div class="drafts-sidebar" style="width: 265px; border-right: 1px solid var(--panel-border); padding-right: 15px; display: flex; flex-direction: column; gap: 8px;">
+                                <h4 class="column-title" data-i18n="drafts-pending-hdr" style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin: 0;">Pending Review</h4>
+                                <!-- Bulk action row -->
+                                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                                    <label style="font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:4px; cursor:pointer;">
+                                        <input type="checkbox" id="drafts-select-all" style="accent-color:var(--primary);"> <span data-i18n="select-all">Chọn tất cả</span>
+                                    </label>
+                                    <button class="btn btn-secondary" id="btn-approve-selected" style="font-size:10px; padding:4px 8px; border-radius:6px; background:rgba(16,185,129,0.1); color:#10b981; border:1px solid rgba(16,185,129,0.2); display:none;">
+                                        <i class="fa-solid fa-check"></i> <span id="drafts-approve-count">0</span>
+                                    </button>
+                                    <button class="btn btn-secondary" id="btn-delete-selected-drafts" style="font-size:10px; padding:4px 8px; border-radius:6px; background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); display:none;">
+                                        <i class="fa-solid fa-trash-can"></i> <span id="drafts-del-count">0</span>
+                                    </button>
+                                </div>
+                                <!-- All / Reject All -->
+                                <div class="batch-actions-row" style="display: flex; gap: 6px;">
+                                    <button class="btn btn-secondary" id="btn-reject-all" style="flex: 1; border-radius: 6px; font-size: 10px; padding: 6px 8px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);">
                                         <i class="fa-solid fa-trash-can"></i> <span data-i18n="btn-reject-all">Reject All</span>
                                     </button>
                                     <button class="btn btn-primary" id="btn-approve-all" style="flex: 1; border-radius: 6px; font-size: 10px; padding: 6px 8px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25);">
                                         <i class="fa-solid fa-check-double"></i> <span data-i18n="btn-approve-all">Approve All</span>
                                     </button>
                                 </div>
-                                <div id="drafts-list" class="drafts-list-viewport" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-                                    <!-- Dynamic drafts list -->
-                                </div>
+                                <div id="drafts-list" class="drafts-list-viewport" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;"></div>
                             </div>
                             <div class="drafts-editor" style="flex-grow: 1; display: flex; flex-direction: column; gap: 12px;">
                                 <div id="draft-editor-empty" class="note-viewer-empty" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -266,50 +292,6 @@
                                     </div>
                                     <textarea id="draft-editor-textarea" style="width: 100%; flex-grow: 1; background: rgba(0, 0, 0, 0.25); border: 1px solid var(--panel-border); border-radius: 10px; color: var(--text-main); font-family: 'Courier New', Courier, monospace; font-size: 12px; padding: 15px; resize: none; outline: none; line-height: 1.5;"></textarea>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                <!-- 7. Quick Report Tab -->
-                <div class="tab-content" id="report-tab">
-                    <div class="card" style="padding: 28px;">
-                        <div class="card-header" style="margin-bottom: 20px;">
-                            <h3 data-i18n="report-title">GitHub Repo Quick Report</h3>
-                            <span class="card-subtitle" data-i18n="report-subtitle">Paste a GitHub link to generate a Vietnamese AI analysis report</span>
-                        </div>
-                        <!-- URL Input Row -->
-                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                            <input type="text" id="report-url-input" data-i18n-placeholder="report-placeholder" placeholder="https://github.com/owner/repo" style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--panel-border); border-radius: 10px; padding: 11px 16px; color: var(--text-main); font-family: inherit; font-size: 14px;">
-                            <button class="btn btn-primary" id="btn-generate-report" style="padding: 11px 20px; border-radius: 10px; white-space: nowrap;">
-                                <i class="fa-solid fa-wand-sparkles"></i> <span data-i18n="btn-generate-report">Generate Report</span>
-                            </button>
-                        </div>
-                        <!-- Status / Loading -->
-                        <div id="report-status" style="display: none; padding: 12px 16px; border-radius: 10px; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); font-size: 13px; color: #a5b4fc; margin-bottom: 16px;">
-                            <i class="fa-solid fa-spinner fa-spin"></i> <span id="report-status-text">Đang phân tích...</span>
-                        </div>
-                        <!-- Report Preview + Download -->
-                        <div id="report-result-area" style="display: none;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                <h4 id="report-result-title" style="font-size: 14px; color: var(--secondary); margin: 0;"></h4>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="btn btn-secondary" id="btn-download-report" style="font-size: 12px; padding: 7px 14px; border-radius: 8px;">
-                                        <i class="fa-solid fa-download"></i> <span data-i18n="btn-download-report">Download HTML</span>
-                                    </button>
-                                    <button class="btn btn-secondary" id="btn-print-report" style="font-size: 12px; padding: 7px 14px; border-radius: 8px;">
-                                        <i class="fa-solid fa-print"></i> <span data-i18n="btn-print-report">Print / PDF</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <iframe id="report-preview-frame" style="width: 100%; height: 540px; border: 1px solid var(--panel-border); border-radius: 12px; background: #0f1117;"></iframe>
-                        </div>
-                        <!-- Past Reports History -->
-                        <div id="report-history-section" style="margin-top: 24px; border-top: 1px solid var(--panel-border); padding-top: 16px;">
-                            <h4 style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin: 0 0 10px 0; letter-spacing: 0.05em;"><i class="fa-solid fa-clock-rotate-left"></i> <span data-i18n="report-history">Saved Reports</span></h4>
-                            <div id="report-history-list" style="display: flex; flex-direction: column; gap: 8px;">
-                                <!-- Dynamically loaded -->
                             </div>
                         </div>
                     </div>

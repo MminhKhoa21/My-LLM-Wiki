@@ -177,20 +177,6 @@ const btnApproveDraft = document.getElementById("btn-approve-draft");
 const btnRejectDraft = document.getElementById("btn-reject-draft");
 const btnApproveAll = document.getElementById("btn-approve-all");
 const btnRejectAll = document.getElementById("btn-reject-all");
-const reportUrlInput = document.getElementById("report-url-input");
-const btnGenerateReport = document.getElementById("btn-generate-report");
-const btnDownloadReport = document.getElementById("btn-download-report");
-const btnPrintReport = document.getElementById("btn-print-report");
-const reportStatus = document.getElementById("report-status");
-const reportStatusText = document.getElementById("report-status-text");
-const reportResultArea = document.getElementById("report-result-area");
-const reportResultTitle = document.getElementById("report-result-title");
-const reportPreviewFrame = document.getElementById("report-preview-frame");
-const reportHistoryList = document.getElementById("report-history-list");
-
-let currentReportHtml = null;
-let currentReportFilename = null;
-
 // State variables
 let notesData = [];
 let network = null;
@@ -224,10 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnRejectDraft.addEventListener("click", rejectCurrentDraft);
     btnApproveAll.addEventListener("click", approveAllDrafts);
     btnRejectAll.addEventListener("click", rejectAllDrafts);
-    btnGenerateReport.addEventListener("click", generateRepoReport);
-    btnDownloadReport.addEventListener("click", downloadReport);
-    btnPrintReport.addEventListener("click", printReport);
-    loadReportHistory();
     
     // Top Search listeners
     topSearchInput.addEventListener("input", handleTopSearchInput);
@@ -674,79 +656,70 @@ async function loadManagementData() {
 
 function renderManagementWiki(wikis) {
     const langData = translations[currentLang];
-    
-    // Prepend system core files to the view list for complete transparency, even though they aren't in notes list
     const allWikis = [
         { name: "overview", title: "Learning Wiki Overview", isSystem: true },
         { name: "index", title: "Wiki Index", isSystem: true },
         { name: "log", title: "Operation Log", isSystem: true },
         ...wikis.map(w => ({ ...w, isSystem: false }))
     ];
-    
+
     manageWikiListEl.innerHTML = allWikis.map(item => {
         const badgeClass = item.isSystem ? "policy-unsafe" : "policy-safe";
         const badgeLabel = item.isSystem ? langData["lbl-core"] : langData["lbl-wiki-page"];
-        const disabledAttr = item.isSystem ? "disabled" : "";
+        const disabled = item.isSystem ? "disabled" : "";
         const titleText = item.title || item.name;
-        
         return `
-            <div class="manage-item">
-                <div class="manage-item-info">
-                    <span class="manage-item-title" title="${titleText}">${titleText}</span>
-                    <span style="font-size: 10px; color: var(--text-muted);">${item.name}.md</span>
-                </div>
-                <div class="manage-item-meta">
-                    <span class="policy-badge ${badgeClass}">${badgeLabel}</span>
-                    <button class="btn-delete" ${disabledAttr} data-type="wiki" data-name="${item.name}">
-                        <i class="fa-regular fa-trash-can"></i> ${langData["btn-delete"]}
-                    </button>
-                </div>
-            </div>
-        `;
+        <div class="manage-item-row ${item.isSystem ? '' : ''}" data-name="${item.name}.md" data-type="wiki">
+            <input type="checkbox" ${disabled} data-cb-wiki onchange="updateWikiBulkBar()">
+            <span class="manage-item-label" title="${titleText}">${titleText}<br><small style="color:var(--text-muted);font-size:10px;">${item.name}.md</small></span>
+            <span class="policy-badge ${badgeClass}" style="font-size:9px;">${badgeLabel}</span>
+            <button class="manage-item-delete" ${disabled} data-type="wiki" data-name="${item.name}.md" title="Delete">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>`;
     }).join("");
 
-    // Add listeners to delete buttons
-    manageWikiListEl.querySelectorAll(".btn-delete").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const name = btn.getAttribute("data-name");
-            confirmAndDelete("wiki", name);
-        });
+    manageWikiListEl.querySelectorAll(".manage-item-delete").forEach(btn => {
+        btn.addEventListener("click", () => confirmAndDelete("wiki", btn.dataset.name));
     });
+
+    // Select-all checkbox
+    const saAll = document.getElementById("wiki-select-all");
+    if (saAll) saAll.onchange = () => {
+        manageWikiListEl.querySelectorAll("input[data-cb-wiki]:not(:disabled)").forEach(cb => cb.checked = saAll.checked);
+        updateWikiBulkBar();
+    };
+    updateWikiBulkBar();
 }
 
 function renderManagementRaw(raws) {
     const langData = translations[currentLang];
-    
     if (raws.length === 0) {
         manageRawListEl.innerHTML = `<div style="padding: 15px; color: var(--text-muted); font-style: italic;">No raw sources found.</div>`;
         return;
     }
-    
     manageRawListEl.innerHTML = raws.map(item => {
         const kbSize = (item.size / 1024).toFixed(1);
         return `
-            <div class="manage-item">
-                <div class="manage-item-info">
-                    <span class="manage-item-title" title="${item.name}">${item.name}</span>
-                    <span style="font-size: 10px; color: var(--text-muted);">${kbSize} KB</span>
-                </div>
-                <div class="manage-item-meta">
-                    <span class="policy-badge policy-safe">${langData["lbl-raw-src"]}</span>
-                    <button class="btn-delete" data-type="raw" data-name="${item.name}">
-                        <i class="fa-regular fa-trash-can"></i> ${langData["btn-delete"]}
-                    </button>
-                </div>
-            </div>
-        `;
+        <div class="manage-item-row" data-name="${item.name}" data-type="raw">
+            <input type="checkbox" data-cb-raw onchange="updateRawBulkBar()">
+            <span class="manage-item-label" title="${item.name}">${item.name}<br><small style="color:var(--text-muted);font-size:10px;">${kbSize} KB</small></span>
+            <button class="manage-item-delete" data-type="raw" data-name="${item.name}" title="Delete">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>`;
     }).join("");
 
-    // Add listeners to delete buttons
-    manageRawListEl.querySelectorAll(".btn-delete").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const name = btn.getAttribute("data-name");
-            confirmAndDelete("raw", name);
-        });
+    manageRawListEl.querySelectorAll(".manage-item-delete").forEach(btn => {
+        btn.addEventListener("click", () => confirmAndDelete("raw", btn.dataset.name));
     });
+
+    const saAll = document.getElementById("raw-select-all");
+    if (saAll) saAll.onchange = () => {
+        manageRawListEl.querySelectorAll("input[data-cb-raw]").forEach(cb => cb.checked = saAll.checked);
+        updateRawBulkBar();
+    };
+    updateRawBulkBar();
 }
 
 function confirmAndDelete(type, name) {
@@ -1031,27 +1004,29 @@ function renderDraftsList(drafts) {
         currentDraftName = null;
         return;
     }
-    
+
     draftsListEl.innerHTML = drafts.map(draft => {
         const isActive = draft.name === currentDraftName ? "active" : "";
         return `
-            <div class="draft-item ${isActive}" data-name="${draft.name}">
-                <div class="draft-title"><i class="fa-solid fa-file-pen"></i> ${draft.title}</div>
-                <div class="draft-meta">
-                    <span class="note-type-badge type-${draft.type}" style="font-size: 8px; padding: 1px 4px;">${draft.type}</span>
-                    <span>${draft.timestamp}</span>
-                </div>
-            </div>
-        `;
+        <div class="draft-item-row ${isActive}" data-name="${draft.name}">
+            <input type="checkbox" data-cb-draft onchange="updateDraftsBulkBar()" onclick="event.stopPropagation()">
+            <span class="draft-item-name"><i class="fa-solid fa-file-pen" style="color:var(--primary);font-size:10px;"></i> ${draft.title || draft.name}</span>
+        </div>`;
     }).join("");
-    
-    // Add click event listeners
-    draftsListEl.querySelectorAll(".draft-item").forEach(item => {
-        item.addEventListener("click", () => {
-            const name = item.getAttribute("data-name");
-            loadDraftDetail(name);
+
+    draftsListEl.querySelectorAll(".draft-item-row").forEach(item => {
+        item.addEventListener("click", (e) => {
+            if (e.target.type === "checkbox") return;
+            loadDraftDetail(item.dataset.name);
         });
     });
+
+    const saAll = document.getElementById("drafts-select-all");
+    if (saAll) saAll.onchange = () => {
+        draftsListEl.querySelectorAll("input[data-cb-draft]").forEach(cb => cb.checked = saAll.checked);
+        updateDraftsBulkBar();
+    };
+    updateDraftsBulkBar();
 }
 
 async function loadDraftDetail(name) {
@@ -1269,124 +1244,100 @@ async function rejectAllDrafts() {
 }
 
 // ═══════════════════════════════════════════
-// QUICK REPORT FUNCTIONS
+// BULK SELECT BAR HELPERS
 // ═══════════════════════════════════════════
 
-async function generateRepoReport() {
-    const langData = translations[currentLang];
-    const url = reportUrlInput.value.trim();
-    if (!url) {
-        showToast("Vui lòng nhập link GitHub hợp lệ.", true);
-        return;
-    }
-    if (!url.includes("github.com")) {
-        showToast("Chỉ hỗ trợ link GitHub (https://github.com/...)", true);
-        return;
-    }
+function updateWikiBulkBar() {
+    const checked = [...manageWikiListEl.querySelectorAll("input[data-cb-wiki]:checked")];
+    const btn = document.getElementById("btn-wiki-delete-selected");
+    const counter = document.getElementById("wiki-del-count");
+    if (btn) { btn.style.display = checked.length > 0 ? "inline-flex" : "none"; }
+    if (counter) counter.textContent = checked.length;
+}
 
-    // Show loading state
-    reportStatus.style.display = "block";
-    reportStatusText.textContent = langData["toast-report-generating"];
-    reportResultArea.style.display = "none";
-    btnGenerateReport.disabled = true;
-    btnGenerateReport.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...`;
-    showToast(langData["toast-report-generating"]);
+function updateRawBulkBar() {
+    const checked = [...manageRawListEl.querySelectorAll("input[data-cb-raw]:checked")];
+    const btn = document.getElementById("btn-raw-delete-selected");
+    const counter = document.getElementById("raw-del-count");
+    if (btn) { btn.style.display = checked.length > 0 ? "inline-flex" : "none"; }
+    if (counter) counter.textContent = checked.length;
+}
 
-    try {
-        const res = await fetch(`${API_BASE}/repo-report`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url })
+function updateDraftsBulkBar() {
+    const checked = [...draftsListEl.querySelectorAll("input[data-cb-draft]:checked")];
+    const btnApprove = document.getElementById("btn-approve-selected");
+    const btnDelete = document.getElementById("btn-delete-selected-drafts");
+    const cntA = document.getElementById("drafts-approve-count");
+    const cntD = document.getElementById("drafts-del-count");
+    const show = checked.length > 0 ? "inline-flex" : "none";
+    if (btnApprove) btnApprove.style.display = show;
+    if (btnDelete) btnDelete.style.display = show;
+    if (cntA) cntA.textContent = checked.length;
+    if (cntD) cntD.textContent = checked.length;
+}
+
+// Wire bulk delete buttons once DOM is ready (delayed bind after first render)
+document.addEventListener("DOMContentLoaded", () => {
+    const btnWikiDel = document.getElementById("btn-wiki-delete-selected");
+    if (btnWikiDel) btnWikiDel.addEventListener("click", async () => {
+        const names = [...manageWikiListEl.querySelectorAll("input[data-cb-wiki]:checked")]
+            .map(cb => cb.closest("[data-name]")?.dataset.name).filter(Boolean);
+        if (!names.length) return;
+        if (!confirm(`Xóa ${names.length} file wiki đã chọn?`)) return;
+        const res = await fetch(`${API_BASE}/delete-bulk`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filenames: names, type: "wiki" })
         });
-
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Report generation failed");
+        showToast(data.message || `Đã xóa ${names.length} file.`);
+        loadManagementData();
+    });
 
-        // Save for download/print
-        currentReportHtml = data.html;
-        currentReportFilename = data.filename;
-
-        // Show result
-        reportResultTitle.textContent = `📄 ${data.filename}`;
-        reportResultArea.style.display = "block";
-
-        // Load HTML into iframe
-        const blob = new Blob([data.html], { type: "text/html" });
-        reportPreviewFrame.src = URL.createObjectURL(blob);
-
-        reportStatus.style.display = "none";
-        showToast(langData["toast-report-done"]);
-        loadReportHistory();
-
-    } catch (err) {
-        reportStatus.style.display = "none";
-        showToast(langData["toast-report-fail"] + err.message, true);
-    } finally {
-        btnGenerateReport.disabled = false;
-        btnGenerateReport.innerHTML = `<i class="fa-solid fa-wand-sparkles"></i> <span>${langData["btn-generate-report"]}</span>`;
-    }
-}
-
-function downloadReport() {
-    if (!currentReportHtml || !currentReportFilename) return;
-    const blob = new Blob([currentReportHtml], { type: "text/html;charset=utf-8" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = currentReportFilename;
-    a.click();
-    URL.revokeObjectURL(a.href);
-}
-
-function printReport() {
-    if (!currentReportHtml) return;
-    const win = window.open("", "_blank");
-    win.document.write(currentReportHtml);
-    win.document.close();
-    win.focus();
-    setTimeout(() => win.print(), 500);
-}
-
-async function loadReportHistory() {
-    try {
-        const res = await fetch(`${API_BASE}/reports`);
-        const reports = await res.json();
-        if (!Array.isArray(reports) || reports.length === 0) {
-            reportHistoryList.innerHTML = `<div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">Chưa có báo cáo nào được lưu.</div>`;
-            return;
-        }
-        reportHistoryList.innerHTML = reports.map(r => `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--panel-border); border-radius: 8px; cursor: pointer; transition: background 0.2s;"
-                 onclick="loadSavedReport('${r.filename}')"
-                 onmouseover="this.style.background='rgba(255,255,255,0.07)'"
-                 onmouseout="this.style.background='rgba(255,255,255,0.04)'">
-                <div>
-                    <div style="font-size: 13px; color: var(--text-main); font-weight: 500;">📄 ${r.filename.replace("report_", "").replace(".html", "").replace(/_/g, " / ")}</div>
-                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${r.modified} · ${(r.size / 1024).toFixed(1)} KB</div>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 11px;"></i>
-            </div>
-        `).join("");
-    } catch (err) {
-        console.error("Failed to load report history", err);
-    }
-}
-
-async function loadSavedReport(filename) {
-    try {
-        const res = await fetch(`${API_BASE}/report-file?name=${encodeURIComponent(filename)}`);
+    const btnRawDel = document.getElementById("btn-raw-delete-selected");
+    if (btnRawDel) btnRawDel.addEventListener("click", async () => {
+        const names = [...manageRawListEl.querySelectorAll("input[data-cb-raw]:checked")]
+            .map(cb => cb.closest("[data-name]")?.dataset.name).filter(Boolean);
+        if (!names.length) return;
+        if (!confirm(`Xóa ${names.length} file nguồn đã chọn?`)) return;
+        const res = await fetch(`${API_BASE}/delete-bulk`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filenames: names, type: "raw" })
+        });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+        showToast(data.message || `Đã xóa ${names.length} file.`);
+        loadManagementData();
+    });
 
-        currentReportHtml = data.html;
-        currentReportFilename = data.filename;
-        reportResultTitle.textContent = `📄 ${data.filename}`;
-        reportResultArea.style.display = "block";
+    const btnDraftApprove = document.getElementById("btn-approve-selected");
+    if (btnDraftApprove) btnDraftApprove.addEventListener("click", async () => {
+        const names = [...draftsListEl.querySelectorAll("input[data-cb-draft]:checked")]
+            .map(cb => cb.closest("[data-name]")?.dataset.name).filter(Boolean);
+        if (!names.length) return;
+        const res = await fetch(`${API_BASE}/approve-bulk`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filenames: names })
+        });
+        const data = await res.json();
+        showToast(data.message || `Đã duyệt ${names.length} bản thảo.`);
+        loadDrafts();
+    });
 
-        const blob = new Blob([data.html], { type: "text/html" });
-        reportPreviewFrame.src = URL.createObjectURL(blob);
-    } catch (err) {
-        showToast("Lỗi khi tải báo cáo: " + err.message, true);
-    }
-}
+    const btnDraftDel = document.getElementById("btn-delete-selected-drafts");
+    if (btnDraftDel) btnDraftDel.addEventListener("click", async () => {
+        const names = [...draftsListEl.querySelectorAll("input[data-cb-draft]:checked")]
+            .map(cb => cb.closest("[data-name]")?.dataset.name).filter(Boolean);
+        if (!names.length) return;
+        if (!confirm(`Xóa ${names.length} bản thảo đã chọn?`)) return;
+        const res = await fetch(`${API_BASE}/delete-bulk`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filenames: names, type: "draft" })
+        });
+        const data = await res.json();
+        showToast(data.message || `Đã xóa ${names.length} bản thảo.`);
+        loadDrafts();
+    });
+});
 
-window.loadSavedReport = loadSavedReport;
+window.updateWikiBulkBar = updateWikiBulkBar;
+window.updateRawBulkBar = updateRawBulkBar;
+window.updateDraftsBulkBar = updateDraftsBulkBar;
