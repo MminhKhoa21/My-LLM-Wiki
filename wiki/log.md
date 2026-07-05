@@ -27,3 +27,7 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 ## [2026-07-05] system | Deletion of wiki file
 - Deleted file: test_deletion.md
 - Automatically ran indexer script.
+
+## [2026-07-05] system | Deletion of raw file
+- Deleted file: example_ui_test.txt
+- Automatically ran indexer script.
