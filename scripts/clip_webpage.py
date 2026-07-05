@@ -4,6 +4,8 @@ import re
 import argparse
 import urllib.request
 import urllib.parse
+import io
+import zipfile
 from pathlib import Path
 
 def sanitize_filename(name):
@@ -52,6 +54,138 @@ def clean_html(html_text):
     
     return clean_text.strip()
 
+def fetch_and_save_single_file(raw_url, name, raw_dir):
+    try:
+        req = urllib.request.Request(
+            raw_url,
+            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        )
+        with urllib.request.urlopen(req, timeout=15) as response:
+            content = response.read().decode("utf-8", errors="replace")
+            
+        filename = sanitize_filename(name)
+        output_path = raw_dir / f"{filename}.txt"
+        output_path.write_text(content, encoding="utf-8")
+        print(f"Successfully clipped page and saved to: raw/{filename}.txt")
+        return True
+    except Exception as e:
+        print(f"Error fetching raw file: {e}")
+        return False
+
+def handle_github_url(url, raw_dir):
+    parsed = urllib.parse.urlparse(url)
+    path_parts = [p for p in parsed.path.strip("/").split("/") if p]
+    
+    if parsed.netloc != "github.com" or len(path_parts) < 2:
+        return False
+        
+    owner = path_parts[0]
+    repo = path_parts[1]
+    
+    # 1. Check if it's a file blob URL: github.com/owner/repo/blob/branch/path/to/file
+    if len(path_parts) >= 4 and path_parts[2] == "blob":
+        branch = path_parts[3]
+        file_path = "/".join(path_parts[4:])
+        raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{file_path}"
+        print(f"Detected GitHub blob URL. Rewriting to raw: {raw_url}")
+        return fetch_and_save_single_file(raw_url, file_path.replace("/", "_"), raw_dir)
+        
+    # 2. Check if it's a repository root or a branch tree: github.com/owner/repo or github.com/owner/repo/tree/branch
+    is_repo = False
+    branch = "main"
+    
+    if len(path_parts) == 2:
+        is_repo = True
+    elif len(path_parts) >= 4 and path_parts[2] == "tree":
+        is_repo = True
+        branch = path_parts[3]
+        
+    if is_repo:
+        print(f"Detected GitHub repository: {owner}/{repo} (branch: {branch})")
+        zip_url = f"https://github.com/{owner}/{repo}/archive/refs/heads/{branch}.zip"
+        
+        # Download ZIP in-memory
+        try:
+            print(f"Downloading repository ZIP in-memory: {zip_url}...")
+            req = urllib.request.Request(
+                zip_url,
+                headers={'User-Agent': 'Mozilla/5.0'}
+            )
+            with urllib.request.urlopen(req, timeout=30) as response:
+                zip_data = response.read()
+        except Exception as e:
+            if branch == "main":
+                branch = "master"
+                zip_url = f"https://github.com/{owner}/{repo}/archive/refs/heads/master.zip"
+                print(f"Main branch download failed. Retrying with master branch: {zip_url}...")
+                try:
+                    req = urllib.request.Request(
+                        zip_url,
+                        headers={'User-Agent': 'Mozilla/5.0'}
+                    )
+                    with urllib.request.urlopen(req, timeout=30) as response:
+                        zip_data = response.read()
+                except Exception as ex:
+                    print(f"Error downloading repository ZIP: {ex}")
+                    return False
+            else:
+                print(f"Error downloading repository ZIP: {e}")
+                return False
+                
+        # Parse ZIP in-memory
+        try:
+            print("Extracting markdown files from ZIP in-memory...")
+            with zipfile.ZipFile(io.BytesIO(zip_data)) as z:
+                # Find all .md files in the repository
+                md_files = [f for f in z.namelist() if f.lower().endswith(".md")]
+                
+                if not md_files:
+                    print("No markdown files found in the repository.")
+                    return False
+                    
+                # Sort: README.md first, then docs/, then others
+                def sort_key(f):
+                    f_lower = f.lower()
+                    if "readme" in f_lower:
+                        return (0, f)
+                    if "docs/" in f_lower or "doc/" in f_lower:
+                        return (1, f)
+                    return (2, f)
+                    
+                md_files.sort(key=sort_key)
+                
+                # Keep top 15 files to prevent disk overflow
+                files_to_extract = md_files[:15]
+                print(f"Found {len(md_files)} markdown files. Extracting top {len(files_to_extract)} files...")
+                
+                extracted_count = 0
+                for f in files_to_extract:
+                    with z.open(f) as file_in_zip:
+                        file_content = file_in_zip.read().decode("utf-8", errors="replace")
+                    
+                    # Compute relative path inside zip (ignoring the root repo-branch folder)
+                    rel_parts = f.split("/")[1:]
+                    rel_path = "/".join(rel_parts)
+                    if not rel_path:
+                        continue
+                        
+                    clean_name = sanitize_filename(rel_path.replace(".md", ""))
+                    filename = f"github_{repo}_{clean_name}"
+                    
+                    # Convert to text and save
+                    output_path = raw_dir / f"{filename}.txt"
+                    output_path.write_text(file_content, encoding="utf-8")
+                    print(f"  - Extracted: raw/{filename}.txt")
+                    extracted_count += 1
+                    
+                print(f"Successfully ingested {extracted_count} raw documents from GitHub repository!")
+                return True
+        except Exception as e:
+            print(f"Error processing ZIP file: {e}")
+            return False
+            
+    return False
+
 def main():
     parser = argparse.ArgumentParser(description="Download and clean web pages into raw text.")
     parser.add_argument("--url", "-u", required=True, help="URL to download")
@@ -62,20 +196,23 @@ def main():
     raw_dir = root_dir / "raw"
     raw_dir.mkdir(parents=True, exist_ok=True)
     
+    # 1. Handle GitHub URLs (repositories or file paths)
+    if handle_github_url(args.url, raw_dir):
+        sys.exit(0)
+        
+    # 2. Fallback to standard Web Page Clipper
     print(f"Fetching URL: {args.url}...")
     try:
-        # Pretend to be a modern browser to avoid basic HTTP 403 blocks
         req = urllib.request.Request(
             args.url, 
             headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         )
-        with urllib.request.urlopen(req, timeout=10) as response:
+        with urllib.request.urlopen(req, timeout=15) as response:
             html = response.read().decode("utf-8", errors="replace")
     except Exception as e:
         print(f"Error fetching URL: {e}")
         sys.exit(1)
         
-    # Extract Title if not provided
     filename = args.name
     if not filename:
         title_match = re.search(r"<title.*?>(.*?)</title>", html, re.IGNORECASE)

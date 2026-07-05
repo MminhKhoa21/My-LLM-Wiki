@@ -63,6 +63,21 @@
                     <input type="file" id="file-uploader" style="display: none;">
                 </div>
             </div>
+            
+            <!-- Git status widget -->
+            <div class="git-widget">
+                <h3 class="section-title"><i class="fa-brands fa-git-alt"></i> Git Sync</h3>
+                <div class="git-status-line">
+                    <span data-i18n="git-status-lbl">Status:</span>
+                    <span id="git-status-badge" class="git-badge badge-clean">Checking...</span>
+                </div>
+                <div id="git-controls" class="git-controls" style="display: none;">
+                    <input type="text" id="git-commit-msg" data-i18n-placeholder="git-commit-placeholder" placeholder="Commit message...">
+                    <button class="btn btn-secondary" id="btn-git-commit" style="width: 100%; border-radius: 8px; margin-top: 6px; font-size: 11px;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> <span data-i18n="action-git-commit">Commit changes</span>
+                    </button>
+                </div>
+            </div>
         </aside>
 
         <!-- Main Content Area -->
@@ -92,7 +107,7 @@
             <div class="tab-container">
                 <!-- 1. Graph Tab -->
                 <div class="tab-content active" id="graph-tab">
-                    <div class="card graph-card">
+                    <div class="card graph-card" style="position: relative;">
                         <div class="card-header">
                             <h3 data-i18n="graph-title">Interactive Knowledge Network</h3>
                             <span class="card-subtitle" data-i18n="graph-subtitle">Click on notes to browse their contents</span>
@@ -100,12 +115,31 @@
                         <div id="network-graph" class="graph-viewport">
                             <!-- Vis.js will render the graph here -->
                         </div>
+                        <!-- Legend Overlay -->
+                        <div class="graph-legend">
+                            <div class="legend-header">
+                                <span data-i18n="legend-title">Filter Nodes</span>
+                            </div>
+                            <div class="legend-items">
+                                <label class="legend-item"><input type="checkbox" checked data-filter="overview"> <span class="dot dot-overview"></span> <span data-i18n="type-overview">Overviews</span></label>
+                                <label class="legend-item"><input type="checkbox" checked data-filter="summary"> <span class="dot dot-summary"></span> <span data-i18n="type-summary">Summaries</span></label>
+                                <label class="legend-item"><input type="checkbox" checked data-filter="concept"> <span class="dot dot-concept"></span> <span data-i18n="type-concept">Concepts</span></label>
+                                <label class="legend-item"><input type="checkbox" checked data-filter="entity"> <span class="dot dot-entity"></span> <span data-i18n="type-entity">Entities</span></label>
+                                <label class="legend-item"><input type="checkbox" checked data-filter="system"> <span class="dot dot-system"></span> <span data-i18n="type-system">System Core</span></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 2. Note Viewer Tab -->
                 <div class="tab-content" id="note-tab">
                     <div class="card note-card">
+                        <div class="card-header note-viewer-header" style="display: none; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 15px; margin-bottom: 15px;">
+                            <h3 id="note-viewer-title">Note Detail</h3>
+                            <button class="btn btn-secondary" id="btn-copy-obsidian" title="Copy Obsidian vault link">
+                                <i class="fa-solid fa-copy"></i> <span data-i18n="action-copy-obsidian">Obsidian Link</span>
+                            </button>
+                        </div>
                         <div id="note-content-area" class="note-viewer-empty">
                             <i class="fa-solid fa-file-import empty-icon"></i>
                             <p data-i18n="note-empty">Select a note from the sidebar or click a node in the graph view to inspect it.</p>
@@ -143,9 +177,14 @@
                 <!-- 5. Manage Notes Tab -->
                 <div class="tab-content" id="manage-tab">
                     <div class="card manage-card">
-                        <div class="card-header">
-                            <h3 data-i18n="manage-title">Lesson & File Management</h3>
-                            <span class="card-subtitle" data-i18n="manage-subtitle">Delete and manage raw sources and generated wiki pages</span>
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3 data-i18n="manage-title">Lesson & File Management</h3>
+                                <span class="card-subtitle" data-i18n="manage-subtitle">Delete and manage raw sources and generated wiki pages</span>
+                            </div>
+                            <button class="btn btn-secondary" id="btn-cleanup-raw">
+                                <i class="fa-solid fa-dumpster"></i> <span data-i18n="action-cleanup-raw">Clean Orphan Raw</span>
+                            </button>
                         </div>
                         <div class="manage-split-container">
                             <div class="manage-column">

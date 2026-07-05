@@ -105,10 +105,20 @@ const manageWikiListEl = document.getElementById("manage-wiki-list");
 const manageRawListEl = document.getElementById("manage-raw-list");
 const clipperUrlInput = document.getElementById("clipper-url");
 const btnClip = document.getElementById("btn-clip");
+const gitStatusBadge = document.getElementById("git-status-badge");
+const gitControls = document.getElementById("git-controls");
+const gitCommitMsgInput = document.getElementById("git-commit-msg");
+const btnGitCommit = document.getElementById("btn-git-commit");
+const noteViewerHeader = document.querySelector(".note-viewer-header");
+const noteViewerTitle = document.getElementById("note-viewer-title");
+const btnCopyObsidian = document.getElementById("btn-copy-obsidian");
+const btnCleanupRaw = document.getElementById("btn-cleanup-raw");
 
 // State variables
 let notesData = [];
 let network = null;
+let rawGraphData = null;
+let activeGraphFilters = { overview: true, summary: true, concept: true, entity: true, system: true };
 
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
@@ -117,6 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadNotes();
     loadGraph();
     updateLanguageUI();
+    checkGitStatus();
+    initGraphFilters();
     
     // Actions
     btnReindex.addEventListener("click", runIndexer);
@@ -124,6 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
     btnRefreshLint.addEventListener("click", runLinter);
     btnLangToggle.addEventListener("click", toggleLanguage);
     btnClip.addEventListener("click", runWebClipper);
+    btnGitCommit.addEventListener("click", commitGitChanges);
+    btnCopyObsidian.addEventListener("click", copyObsidianLink);
+    btnCleanupRaw.addEventListener("click", cleanupRawSources);
     
     // Search on enter key
     sidebarSearchInput.addEventListener("keydown", (e) => {
@@ -245,13 +260,20 @@ async function loadNoteDetail(noteName) {
         switchTab("note-tab");
         
         noteContentArea.innerHTML = `<div class="note-viewer-empty"><i class="fa-solid fa-spinner fa-spin empty-icon"></i><p>Reading note contents...</p></div>`;
+        noteViewerHeader.style.display = "none";
         
         const res = await fetch(`${API_BASE}/note?name=${encodeURIComponent(noteName)}`);
         if (!res.ok) throw new Error(`Failed to load note: ${noteName}`);
         const data = await res.json();
         
+        // Show and configure header
+        noteViewerTitle.innerText = data.meta.title || noteName;
+        btnCopyObsidian.setAttribute("data-file", noteName);
+        noteViewerHeader.style.display = "flex";
+        
         renderNoteMarkdown(data);
     } catch (err) {
+        noteViewerHeader.style.display = "none";
         noteContentArea.innerHTML = `<div class="note-viewer-empty"><i class="fa-solid fa-triangle-exclamation empty-icon" style="color: #ef4444;"></i><p>${err.message}</p></div>`;
         showToast(err.message, true);
     }
@@ -260,19 +282,15 @@ async function loadNoteDetail(noteName) {
 function renderNoteMarkdown(data) {
     const rawMarkdown = data.markdown;
     
-    // Parse double bracket wikilinks: [[note_name]] or [[note_name|Display Text]]
-    // E.g., [[isaac_newton]] -> <a href="#" class="wikilink" data-target="isaac_newton">Isaac Newton</a>
-    // E.g., [[differentiation_rules|Rules]] -> <a href="#" class="wikilink" data-target="differentiation_rules">Rules</a>
+    // Parse double bracket wikilinks
     let parsedMarkdown = rawMarkdown.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, target, alias) => {
         const cleanTarget = target.trim();
         const displayLabel = alias ? alias.trim() : cleanTarget.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
         return `<a href="#" class="wikilink" data-target="${cleanTarget}">${displayLabel}</a>`;
     });
 
-    // Custom marked renderer to support links nicely
     const htmlContent = marked.parse(parsedMarkdown);
     
-    // Create view container
     noteContentArea.innerHTML = `
         <article class="markdown-body">
             <div style="margin-bottom: 20px; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 12px;">
@@ -283,7 +301,7 @@ function renderNoteMarkdown(data) {
         </article>
     `;
     
-    // Add event listeners to interlinked wikilinks inside the rendered note
+    // Add event listeners to interlinked wikilinks
     noteContentArea.querySelectorAll(".wikilink").forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
@@ -308,6 +326,7 @@ async function loadGraph() {
 
 function renderGraph(data) {
     const container = document.getElementById("network-graph");
+    rawGraphData = data;
     
     // Map group types to neon colors
     const colors = {
@@ -319,7 +338,12 @@ function renderGraph(data) {
     };
     
     // Process nodes
-    const nodes = data.nodes.map(node => {
+    const filteredNodes = data.nodes.filter(node => {
+        const group = node.group || "concept";
+        return activeGraphFilters[group] !== false;
+    });
+    
+    const nodes = filteredNodes.map(node => {
         const c = colors[node.group] || colors.concept;
         return {
             id: node.id,
@@ -718,4 +742,147 @@ async function runWebClipper() {
     }
 }
 
+// 11. Git status checking & commit
+async function checkGitStatus() {
+    const langData = translations[currentLang];
+    try {
+        const res = await fetch(`${API_BASE}/git-status`);
+        if (!res.ok) throw new Error("Failed to check Git status");
+        const data = await res.json();
+        
+        if (data.is_clean) {
+            gitStatusBadge.innerText = langData["git-status-clean"];
+            gitStatusBadge.className = "git-badge badge-clean";
+            gitControls.style.display = "none";
+        } else {
+            gitStatusBadge.innerText = langData["git-status-dirty"];
+            gitStatusBadge.className = "git-badge badge-dirty";
+            gitControls.style.display = "block";
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
 
+async function commitGitChanges() {
+    const langData = translations[currentLang];
+    const message = gitCommitMsgInput.value.trim();
+    if (!message) {
+        showToast("Commit message is required", true);
+        return;
+    }
+    
+    try {
+        btnGitCommit.disabled = true;
+        showToast(langData["toast-git-committing"]);
+        
+        const res = await fetch(`${API_BASE}/git-commit`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to commit");
+        
+        showToast(langData["toast-git-committed"]);
+        gitCommitMsgInput.value = "";
+        checkGitStatus();
+    } catch (err) {
+        showToast(err.message, true);
+    } finally {
+        btnGitCommit.disabled = false;
+    }
+}
+
+// 12. Garbage collection of unreferenced raw sources
+async function cleanupRawSources() {
+    const langData = translations[currentLang];
+    try {
+        btnCleanupRaw.disabled = true;
+        const res = await fetch(`${API_BASE}/cleanup-raw`, { method: "POST" });
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error || "Cleanup failed");
+        
+        const freedKb = (data.space_freed_bytes / 1024).toFixed(1);
+        showToast(langData["toast-cleanup-raw-success"] + `${data.deleted_count} files (${freedKb} KB)`);
+        
+        // Refresh raw files view in management tab
+        loadManagementData();
+        checkGitStatus(); // Changes to raw files might trigger git modifications
+    } catch (err) {
+        showToast(err.message, true);
+    } finally {
+        btnCleanupRaw.disabled = false;
+    }
+}
+
+// 13. Deep-linking to local Obsidian app
+function copyObsidianLink() {
+    const langData = translations[currentLang];
+    const fileName = btnCopyObsidian.getAttribute("data-file");
+    if (!fileName) return;
+    
+    const vaultName = "Wiki";
+    const filePath = `wiki/${fileName}`;
+    const obsidianUri = `obsidian://open?vault=${encodeURIComponent(vaultName)}&file=${encodeURIComponent(filePath)}`;
+    
+    navigator.clipboard.writeText(obsidianUri).then(() => {
+        showToast(langData["toast-copy-obsidian"]);
+    }).catch(err => {
+        showToast("Failed to copy link: " + err, true);
+    });
+}
+
+// 14. Graph Filter Legend
+function initGraphFilters() {
+    document.querySelectorAll(".graph-legend input[type='checkbox']").forEach(cb => {
+        cb.addEventListener("change", (e) => {
+            const filterType = cb.getAttribute("data-filter");
+            activeGraphFilters[filterType] = cb.checked;
+            filterGraph();
+        });
+    });
+}
+
+function filterGraph() {
+    if (!network || !rawGraphData) return;
+    
+    const colors = {
+        overview: { background: "#78350f", border: "#f59e0b", highlight: { background: "#fbbf24", border: "#f59e0b" } },
+        summary: { background: "#064e3b", border: "#10b981", highlight: { background: "#34d399", border: "#10b981" } },
+        concept: { background: "#0c4a6e", border: "#06b6d4", highlight: { background: "#67e8f9", border: "#06b6d4" } },
+        entity: { background: "#4c1d95", border: "#8b5cf6", highlight: { background: "#c084fc", border: "#8b5cf6" } },
+        system: { background: "#1e293b", border: "#475569", highlight: { background: "#64748b", border: "#475569" } }
+    };
+    
+    const filteredNodes = rawGraphData.nodes.filter(node => {
+        const group = node.group || "concept";
+        return activeGraphFilters[group] !== false;
+    });
+    
+    const nodes = filteredNodes.map(node => {
+        const c = colors[node.group] || colors.concept;
+        return {
+            id: node.id,
+            label: node.label,
+            color: {
+                background: c.background,
+                border: c.border,
+                highlight: c.highlight
+            },
+            font: { color: "#f8fafc", face: "Plus Jakarta Sans", size: 14 },
+            shape: node.group === "system" ? "box" : "dot",
+            size: node.group === "overview" ? 22 : 16,
+            borderWidth: 2
+        };
+    });
+    
+    network.setData({
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(rawGraphData.edges)
+    });
+}

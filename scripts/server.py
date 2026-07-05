@@ -109,6 +109,10 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_delete()
         elif path == "/api/clip":
             self.handle_clip()
+        elif path == "/api/git-commit":
+            self.handle_git_commit()
+        elif path == "/api/cleanup-raw":
+            self.handle_cleanup_raw()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -133,6 +137,8 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.api_get_search(query)
         elif path == "/api/raw-files":
             self.api_get_raw_files()
+        elif path == "/api/git-status":
+            self.api_get_git_status()
         else:
             self.send_json({"error": "Endpoint not found"}, 404)
 
@@ -407,6 +413,88 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                 })
             else:
                 self.send_json({"error": res.stderr.strip() or res.stdout.strip()}, 500)
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def api_get_git_status(self):
+        try:
+            res = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, encoding="utf-8")
+            status_output = res.stdout.strip()
+            is_clean = len(status_output) == 0
+            self.send_json({
+                "status": "success",
+                "is_clean": is_clean,
+                "output": status_output
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_git_commit(self):
+        content_length = int(self.headers.get('Content-Length', 0))
+        try:
+            body = self.rfile.read(content_length).decode('utf-8')
+            params = json.loads(body)
+            message = params.get("message", "").strip()
+            
+            if not message:
+                self.send_json({"error": "Commit message is required"}, 400)
+                return
+                
+            # Stage all changes
+            subprocess.run(["git", "add", "."], capture_output=True)
+            
+            # Commit
+            res = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True, encoding="utf-8")
+            
+            if res.returncode == 0:
+                self.send_json({
+                    "status": "success",
+                    "message": f"Committed successfully:\n{res.stdout.strip()}"
+                })
+            else:
+                self.send_json({"error": f"Failed to commit:\n{res.stderr.strip() or res.stdout.strip()}"}, 500)
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_cleanup_raw(self):
+        try:
+            referenced_files = set()
+            
+            # 1. Parse all wiki markdown files frontmatter to get referenced raw sources
+            for p in WIKI_DIR.glob("*.md"):
+                if p.name not in ["index.md", "log.md", "overview.md"]:
+                    try:
+                        content = p.read_text(encoding="utf-8")
+                        match = re.search(r"sources:\s*\[(.*?)\]", content)
+                        if match:
+                            sources_list = match.group(1).split(",")
+                            for s in sources_list:
+                                s = s.strip().strip('"').strip("'")
+                                if s.startswith("raw/"):
+                                    referenced_files.add(Path(s).name)
+                    except Exception:
+                        pass
+                        
+            # 2. Scan raw/ directory for files
+            deleted_files = []
+            space_freed = 0
+            
+            if RAW_DIR.exists():
+                for p in RAW_DIR.glob("*"):
+                    if p.is_file():
+                        # If not referenced, delete it
+                        if p.name not in referenced_files:
+                            file_size = p.stat().st_size
+                            p.unlink()
+                            deleted_files.append(p.name)
+                            space_freed += file_size
+                            
+            self.send_json({
+                "status": "success",
+                "deleted_count": len(deleted_files),
+                "deleted_files": deleted_files,
+                "space_freed_bytes": space_freed
+            })
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
 
