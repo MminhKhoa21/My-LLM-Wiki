@@ -142,6 +142,23 @@ def run_lint():
         if len(files) > 1:
             warnings.append((", ".join(files), "DuplicateTitle", [f"Multiple files share the title '{title}'"]))
 
+    # 2.5 AI Contradiction Check
+    ai_warnings = []
+    try:
+        import sys
+        curr_dir = os.path.dirname(os.path.abspath(__file__))
+        if curr_dir not in sys.path:
+            sys.path.append(curr_dir)
+        from contradiction_checker import run_contradiction_check
+        
+        mock_mode = "--mock-ai" in sys.argv
+        ai_warnings = run_contradiction_check(mock_mode=mock_mode)
+    except Exception as e:
+        warnings.append(("AI-Checker", "ContradictionCheckError", [str(e)]))
+        
+    for ai_warn in ai_warnings:
+        warnings.append((ai_warn["file"], "AI-Contradiction", [ai_warn["explanation"]]))
+
     # 3. Output Report
     print("# Wiki Lint Report")
     print("=" * 30)
