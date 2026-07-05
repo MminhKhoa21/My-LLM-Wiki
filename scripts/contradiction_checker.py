@@ -28,20 +28,35 @@ def load_env():
             print(f"[WARN] Failed to read .env: {e}")
     return env_vars
 
-def call_llm(text_a, name_a, text_b, name_b, env_vars):
-    # Determine API configurations
-    api_key = env_vars.get("DEEPSEEK_API_KEY")
-    api_url = env_vars.get("DEEPSEEK_API_URL", "https://api.deepseek.com").rstrip("/") + "/chat/completions"
-    model = env_vars.get("DEEPSEEK_MODEL", "deepseek-chat")
-    
-    if not api_key:
-        api_key = env_vars.get("MISTRAL_API_KEY")
-        api_url = "https://api.mistral.ai/v1/chat/completions"
-        model = env_vars.get("MISTRAL_MODEL", "mistral-tiny")
-        
-    if not api_key:
-        raise ValueError("No API Key found for DeepSeek or Mistral. Set them in .env file.")
+def make_api_request(api_url, api_key, payload):
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    try:
+        data = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(api_url, data=data, headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=30) as response:
+            res_body = response.read().decode("utf-8")
+            res_data = json.loads(res_body)
+            content = res_data["choices"][0]["message"]["content"]
+            # Clean possible markdown wrapping
+            if content.startswith("```json"):
+                content = content.replace("```json", "").replace("```", "").strip()
+            return json.loads(content)
+    except urllib.error.HTTPError as e:
+        err_msg = e.read().decode("utf-8")
+        raise RuntimeError(f"API Error ({e.code}): {err_msg}")
+    except Exception as e:
+        raise RuntimeError(f"HTTP Connection failed: {e}")
 
+def call_mistral(text_a, name_a, text_b, name_b, env_vars):
+    api_key = env_vars.get("MISTRAL_API_KEY")
+    if not api_key:
+        raise ValueError("Mistral API key missing.")
+    api_url = "https://api.mistral.ai/v1/chat/completions"
+    model = env_vars.get("MISTRAL_MODEL", "mistral-tiny")
+    
     system_prompt = (
         "You are a logical validation engine.\n"
         "Analyze the two texts provided and check if they contain any direct factual contradictions or logical inconsistencies.\n"
@@ -69,33 +84,85 @@ def call_llm(text_a, name_a, text_b, name_b, env_vars):
             {"role": "user", "content": prompt}
         ]
     }
+    return make_api_request(api_url, api_key, payload)
+
+def call_deepseek(text_a, name_a, text_b, name_b, env_vars):
+    api_key = env_vars.get("DEEPSEEK_API_KEY")
+    if not api_key:
+        raise ValueError("DeepSeek API key missing.")
+    api_url = env_vars.get("DEEPSEEK_API_URL", "https://api.deepseek.com").rstrip("/") + "/chat/completions"
+    model = env_vars.get("DEEPSEEK_MODEL", "deepseek-chat")
     
-    # Mistral tiny or older models might not support JSON response format parameter, 
-    # but DeepSeek does. We add it conditionally.
-    if "deepseek" in model.lower():
-        payload["response_format"] = {"type": "json_object"}
+    system_prompt = (
+        "You are a logical validation engine.\n"
+        "Analyze the two texts provided and check if they contain any direct factual contradictions or logical inconsistencies.\n"
+        "Respond strictly in JSON format with the following keys:\n"
+        "{\n"
+        "  \"contradiction_found\": true/false,\n"
+        "  \"explanation\": \"Clear explanation of the factual conflict if found, else empty\",\n"
+        "  \"claim_a\": \"The claim made in Text A that conflicts\",\n"
+        "  \"claim_b\": \"The claim made in Text B that conflicts\"\n"
+        "}"
+    )
 
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
+    prompt = (
+        f"Compare these two sources for factual contradictions:\n\n"
+        f"--- Text A (Source: {name_a}) ---\n"
+        f"{text_a[:3000]}\n\n"
+        f"--- Text B (Source: {name_b}) ---\n"
+        f"{text_b[:3000]}\n"
+    )
+
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
+        ],
+        "response_format": {"type": "json_object"}
     }
+    return make_api_request(api_url, api_key, payload)
 
-    try:
-        data = json.dumps(payload).encode("utf-8")
-        req = urllib.request.Request(api_url, data=data, headers=headers, method="POST")
-        with urllib.request.urlopen(req, timeout=30) as response:
-            res_body = response.read().decode("utf-8")
-            res_data = json.loads(res_body)
-            content = res_data["choices"][0]["message"]["content"]
-            # Clean possible markdown wrapping
-            if content.startswith("```json"):
-                content = content.replace("```json", "").replace("```", "").strip()
-            return json.loads(content)
-    except urllib.error.HTTPError as e:
-        err_msg = e.read().decode("utf-8")
-        raise RuntimeError(f"API Error ({e.code}): {err_msg}")
-    except Exception as e:
-        raise RuntimeError(f"HTTP Connection failed: {e}")
+def call_deepseek_verifier(text_a, name_a, text_b, name_b, mistral_finding, env_vars):
+    api_key = env_vars.get("DEEPSEEK_API_KEY")
+    if not api_key:
+        raise ValueError("DeepSeek API key missing.")
+    api_url = env_vars.get("DEEPSEEK_API_URL", "https://api.deepseek.com").rstrip("/") + "/chat/completions"
+    model = env_vars.get("DEEPSEEK_MODEL", "deepseek-chat")
+    
+    system_prompt = (
+        "You are an expert logical verification assistant. A smaller model (Mistral) has flagged a factual contradiction between two texts.\n"
+        "Evaluate the two texts and check if Mistral's finding is logically correct and factually true.\n"
+        "Respond strictly in JSON format with the following keys:\n"
+        "{\n"
+        "  \"contradiction_verified\": true/false,\n"
+        "  \"explanation\": \"DeepSeek's final refined explanation of the conflict, or empty if not verified\",\n"
+        "  \"claim_a\": \"The verified claim in Text A that conflicts\",\n"
+        "  \"claim_b\": \"The verified claim in Text B that conflicts\"\n"
+        "}"
+    )
+
+    prompt = (
+        f"Mistral detected the following contradiction:\n"
+        f"Conflict explanation: {mistral_finding.get('explanation')}\n"
+        f"- Claim A: {mistral_finding.get('claim_a')}\n"
+        f"- Claim B: {mistral_finding.get('claim_b')}\n\n"
+        f"Now, verify this claim against the original texts:\n\n"
+        f"--- Text A (Source: {name_a}) ---\n"
+        f"{text_a[:3000]}\n\n"
+        f"--- Text B (Source: {name_b}) ---\n"
+        f"{text_b[:3000]}\n"
+    )
+
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
+        ],
+        "response_format": {"type": "json_object"}
+    }
+    return make_api_request(api_url, api_key, payload)
 
 def parse_frontmatter(content):
     frontmatter = {}
@@ -194,7 +261,7 @@ def run_contradiction_check(target_file=None, mock_mode=False):
         # Simulate finding a contradiction on the first note
         test_file = files_to_scan[0]
         name = test_file.stem
-        explanation = "Mock contradiction: Text conflicts on dates/attribution claims."
+        explanation = "Mock contradiction (Dual-Model Pipeline): Mistral detected and DeepSeek verified the conflict."
         claim_a = "Isaac Newton discovered calculus in 1665."
         claim_b = "Gottfried Leibniz invented calculus independently in 1675."
         
@@ -227,13 +294,50 @@ def run_contradiction_check(target_file=None, mock_mode=False):
                 src_text = src_path.read_text(encoding="utf-8")
                 
                 print(f"Comparing [[{file_path.stem}]] with source '{src}'...")
-                res = call_llm(clean_note_text, file_path.name, src_text, src_path.name, env_vars)
                 
-                if res.get("contradiction_found"):
-                    explanation = res.get("explanation", "Factual conflict detected.")
-                    claim_a = res.get("claim_a", "N/A")
-                    claim_b = res.get("claim_b", "N/A")
-                    
+                # Logic for dual model vs single model
+                has_mistral = bool(env_vars.get("MISTRAL_API_KEY"))
+                has_deepseek = bool(env_vars.get("DEEPSEEK_API_KEY"))
+                
+                is_contradiction = False
+                explanation = ""
+                claim_a = ""
+                claim_b = ""
+                
+                if has_mistral and has_deepseek:
+                    print("Dual-model active: Mistral detecting, DeepSeek verifying...")
+                    mistral_res = call_mistral(clean_note_text, file_path.name, src_text, src_path.name, env_vars)
+                    if mistral_res.get("contradiction_found"):
+                        print(f"Mistral flagged a contradiction: {mistral_res.get('explanation')}. Sending to DeepSeek for verification...")
+                        deepseek_res = call_deepseek_verifier(
+                            clean_note_text, file_path.name, src_text, src_path.name, mistral_res, env_vars
+                        )
+                        if deepseek_res.get("contradiction_verified"):
+                            is_contradiction = True
+                            explanation = deepseek_res.get("explanation", "Factual conflict verified.")
+                            claim_a = deepseek_res.get("claim_a", "N/A")
+                            claim_b = deepseek_res.get("claim_b", "N/A")
+                            print("DeepSeek verified the contradiction!")
+                        else:
+                            print("DeepSeek rejected Mistral's contradiction flag. Skipping to avoid false positive.")
+                elif has_mistral:
+                    print("Single-model active: Mistral detecting...")
+                    mistral_res = call_mistral(clean_note_text, file_path.name, src_text, src_path.name, env_vars)
+                    if mistral_res.get("contradiction_found"):
+                        is_contradiction = True
+                        explanation = mistral_res.get("explanation", "Factual conflict detected.")
+                        claim_a = mistral_res.get("claim_a", "N/A")
+                        claim_b = mistral_res.get("claim_b", "N/A")
+                elif has_deepseek:
+                    print("Single-model active: DeepSeek detecting...")
+                    deepseek_res = call_deepseek(clean_note_text, file_path.name, src_text, src_path.name, env_vars)
+                    if deepseek_res.get("contradiction_found"):
+                        is_contradiction = True
+                        explanation = deepseek_res.get("explanation", "Factual conflict detected.")
+                        claim_a = deepseek_res.get("claim_a", "N/A")
+                        claim_b = deepseek_res.get("claim_b", "N/A")
+                
+                if is_contradiction:
                     print(f"[ALERT] Contradiction found between {file_path.name} and {src_path.name}!")
                     print(f"Detail: {explanation}")
                     
