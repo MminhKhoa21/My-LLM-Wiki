@@ -389,15 +389,19 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                 if name in ["index", "log", "overview"]:
                     self.send_json({"error": "Deletion of system core files is blocked"}, 400)
                     return
-                file_path = WIKI_DIR / f"{name}.md"
+                file_paths = list(WIKI_DIR.rglob(f"{name}.md"))
+                if not file_paths:
+                    self.send_json({"error": f"File '{name}' not found"}, 404)
+                    return
+                file_path = file_paths[0]
             elif ftype == "raw":
-                file_path = RAW_DIR / name
+                file_paths = list(RAW_DIR.rglob(name))
+                if not file_paths:
+                    self.send_json({"error": f"File '{name}' not found"}, 404)
+                    return
+                file_path = file_paths[0]
             else:
                 self.send_json({"error": "Invalid file type"}, 400)
-                return
-                
-            if not file_path.exists() or not file_path.is_file():
-                self.send_json({"error": f"File '{name}' not found"}, 404)
                 return
                 
             # Perform deletion
