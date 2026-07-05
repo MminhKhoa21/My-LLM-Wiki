@@ -14,10 +14,8 @@ from datetime import datetime
 SERVER_ROOT = Path(__file__).parent.parent
 DASHBOARD_DIR = SERVER_ROOT / "dashboard"
 
-# Content resides in the user's Obsidian Vault (fallback to SERVER_ROOT if deployed)
-ROOT_DIR = Path(os.environ.get("WIKI_ROOT", "D:/Obsidian/My Wiki"))
-if not ROOT_DIR.exists():
-    ROOT_DIR = SERVER_ROOT
+# Content resides in the repository root (d:\Wiki)
+ROOT_DIR = Path(os.environ.get("WIKI_ROOT", SERVER_ROOT))
 WIKI_DIR = ROOT_DIR / "wiki"
 RAW_DIR = ROOT_DIR / "raw"
 DRAFTS_DIR = ROOT_DIR / "drafts"
