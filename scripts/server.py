@@ -126,6 +126,8 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_approve_all()
         elif path == "/api/reject-all":
             self.handle_reject_all()
+        elif path == "/api/repo-report":
+            self.handle_repo_report()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -158,6 +160,10 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.api_get_draft_detail(query)
         elif path == "/api/recent":
             self.api_get_recent()
+        elif path == "/api/reports":
+            self.api_get_reports()
+        elif path == "/api/report-file":
+            self.api_get_report_file(query)
         else:
             self.send_json({"error": "Endpoint not found"}, 404)
 
@@ -779,7 +785,87 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
 
+    def handle_repo_report(self):
+        """POST /api/repo-report — generate a Vietnamese HTML summary of a GitHub repo."""
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8")
+            params = json.loads(body)
+            url = params.get("url", "").strip()
+            if not url:
+                self.send_json({"error": "Missing 'url' parameter"}, 400)
+                return
+
+            script_path = SERVER_ROOT / "scripts" / "repo_summary.py"
+            res = subprocess.run(
+                ["python", str(script_path), "--url", url],
+                capture_output=True, text=True, encoding="utf-8", timeout=120
+            )
+
+            if res.returncode != 0:
+                err = res.stderr or res.stdout
+                self.send_json({"error": f"Report generation failed: {err}"}, 500)
+                return
+
+            # Parse output
+            out = res.stdout
+            filename = ""
+            filepath = ""
+            ai_content = ""
+
+            for line in out.splitlines():
+                if line.startswith("SUCCESS:"):
+                    filename = line.replace("SUCCESS:", "").strip()
+                elif line.startswith("PATH:"):
+                    filepath = line.replace("PATH:", "").strip()
+
+            if "AI_CONTENT_START" in out and "AI_CONTENT_END" in out:
+                ai_content = out.split("AI_CONTENT_START\n", 1)[1].split("\nAI_CONTENT_END", 1)[0]
+
+            # Read the HTML file
+            html_path = Path(filepath)
+            html_content = html_path.read_text(encoding="utf-8") if html_path.exists() else ""
+
+            self.send_json({
+                "status": "success",
+                "filename": filename,
+                "filepath": filepath,
+                "html": html_content,
+                "summary": ai_content
+            })
+        except subprocess.TimeoutExpired:
+            self.send_json({"error": "Report generation timed out (>120s). Try a smaller repo."}, 500)
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def api_get_reports(self):
+        """GET /api/reports — list all saved HTML reports."""
+        reports_dir = ROOT_DIR / "reports"
+        reports = []
+        if reports_dir.exists():
+            for f in sorted(reports_dir.glob("report_*.html"), key=lambda x: x.stat().st_mtime, reverse=True):
+                reports.append({
+                    "filename": f.name,
+                    "size": f.stat().st_size,
+                    "modified": datetime.fromtimestamp(f.stat().st_mtime).strftime("%Y-%m-%d %H:%M")
+                })
+        self.send_json(reports)
+
+    def api_get_report_file(self, query):
+        """GET /api/report-file?name=report_xxx.html — return HTML content of a report."""
+        name = query.get("name", [None])[0]
+        if not name:
+            self.send_json({"error": "Missing 'name' parameter"}, 400)
+            return
+        report_path = ROOT_DIR / "reports" / Path(name).name
+        if not report_path.exists():
+            self.send_json({"error": "Report not found"}, 404)
+            return
+        html = report_path.read_text(encoding="utf-8")
+        self.send_json({"html": html, "filename": name})
+
 def run_server(port=8000):
+
     handler = WikiHTTPHandler
     # Bind to localhost
     socketserver.TCPServer.allow_reuse_address = True

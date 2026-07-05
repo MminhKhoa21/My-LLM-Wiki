@@ -55,7 +55,18 @@ const translations = {
         "btn-reject-all": "Reject All",
         "btn-approve-all": "Approve All",
         "toast-drafts-approved-all": "Approved and published all drafts!",
-        "toast-drafts-rejected-all": "Rejected and deleted all drafts."
+        "toast-drafts-rejected-all": "Rejected and deleted all drafts.",
+        "tab-report": "Quick Report",
+        "report-title": "GitHub Repo Quick Report",
+        "report-subtitle": "Paste a GitHub link to generate a Vietnamese AI analysis report",
+        "report-placeholder": "https://github.com/owner/repo",
+        "btn-generate-report": "Generate Report",
+        "btn-download-report": "Download HTML",
+        "btn-print-report": "Print / PDF",
+        "report-history": "Saved Reports",
+        "toast-report-generating": "Analyzing repository... This may take 30-60 seconds.",
+        "toast-report-done": "Report generated successfully!",
+        "toast-report-fail": "Failed to generate report: "
     },
     vi: {
         "logo-title": "LLM Wiki",
@@ -109,7 +120,18 @@ const translations = {
         "btn-reject-all": "Xóa tất cả",
         "btn-approve-all": "Duyệt tất cả",
         "toast-drafts-approved-all": "Đã duyệt và xuất bản tất cả bản thảo!",
-        "toast-drafts-rejected-all": "Đã từ chối và xóa sạch hàng đợi bản thảo."
+        "toast-drafts-rejected-all": "Đã từ chối và xóa sạch hàng đợi bản thảo.",
+        "tab-report": "Báo cáo nhanh",
+        "report-title": "Báo cáo nhanh GitHub Repo",
+        "report-subtitle": "Dán link GitHub để AI tự động phân tích và tạo báo cáo bằng Tiếng Việt",
+        "report-placeholder": "https://github.com/owner/repo",
+        "btn-generate-report": "Tạo báo cáo",
+        "btn-download-report": "Tải xuống HTML",
+        "btn-print-report": "In / PDF",
+        "report-history": "Báo cáo đã lưu",
+        "toast-report-generating": "Đang phân tích repo... Quá trình này có thể mất 30-60 giây.",
+        "toast-report-done": "Tạo báo cáo thành công!",
+        "toast-report-fail": "Lỗi khi tạo báo cáo: "
     }
 };
 
@@ -155,6 +177,19 @@ const btnApproveDraft = document.getElementById("btn-approve-draft");
 const btnRejectDraft = document.getElementById("btn-reject-draft");
 const btnApproveAll = document.getElementById("btn-approve-all");
 const btnRejectAll = document.getElementById("btn-reject-all");
+const reportUrlInput = document.getElementById("report-url-input");
+const btnGenerateReport = document.getElementById("btn-generate-report");
+const btnDownloadReport = document.getElementById("btn-download-report");
+const btnPrintReport = document.getElementById("btn-print-report");
+const reportStatus = document.getElementById("report-status");
+const reportStatusText = document.getElementById("report-status-text");
+const reportResultArea = document.getElementById("report-result-area");
+const reportResultTitle = document.getElementById("report-result-title");
+const reportPreviewFrame = document.getElementById("report-preview-frame");
+const reportHistoryList = document.getElementById("report-history-list");
+
+let currentReportHtml = null;
+let currentReportFilename = null;
 
 // State variables
 let notesData = [];
@@ -189,6 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
     btnRejectDraft.addEventListener("click", rejectCurrentDraft);
     btnApproveAll.addEventListener("click", approveAllDrafts);
     btnRejectAll.addEventListener("click", rejectAllDrafts);
+    btnGenerateReport.addEventListener("click", generateRepoReport);
+    btnDownloadReport.addEventListener("click", downloadReport);
+    btnPrintReport.addEventListener("click", printReport);
+    loadReportHistory();
     
     // Top Search listeners
     topSearchInput.addEventListener("input", handleTopSearchInput);
@@ -1229,3 +1268,125 @@ async function rejectAllDrafts() {
     }
 }
 
+// ═══════════════════════════════════════════
+// QUICK REPORT FUNCTIONS
+// ═══════════════════════════════════════════
+
+async function generateRepoReport() {
+    const langData = translations[currentLang];
+    const url = reportUrlInput.value.trim();
+    if (!url) {
+        showToast("Vui lòng nhập link GitHub hợp lệ.", true);
+        return;
+    }
+    if (!url.includes("github.com")) {
+        showToast("Chỉ hỗ trợ link GitHub (https://github.com/...)", true);
+        return;
+    }
+
+    // Show loading state
+    reportStatus.style.display = "block";
+    reportStatusText.textContent = langData["toast-report-generating"];
+    reportResultArea.style.display = "none";
+    btnGenerateReport.disabled = true;
+    btnGenerateReport.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...`;
+    showToast(langData["toast-report-generating"]);
+
+    try {
+        const res = await fetch(`${API_BASE}/repo-report`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Report generation failed");
+
+        // Save for download/print
+        currentReportHtml = data.html;
+        currentReportFilename = data.filename;
+
+        // Show result
+        reportResultTitle.textContent = `📄 ${data.filename}`;
+        reportResultArea.style.display = "block";
+
+        // Load HTML into iframe
+        const blob = new Blob([data.html], { type: "text/html" });
+        reportPreviewFrame.src = URL.createObjectURL(blob);
+
+        reportStatus.style.display = "none";
+        showToast(langData["toast-report-done"]);
+        loadReportHistory();
+
+    } catch (err) {
+        reportStatus.style.display = "none";
+        showToast(langData["toast-report-fail"] + err.message, true);
+    } finally {
+        btnGenerateReport.disabled = false;
+        btnGenerateReport.innerHTML = `<i class="fa-solid fa-wand-sparkles"></i> <span>${langData["btn-generate-report"]}</span>`;
+    }
+}
+
+function downloadReport() {
+    if (!currentReportHtml || !currentReportFilename) return;
+    const blob = new Blob([currentReportHtml], { type: "text/html;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = currentReportFilename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+function printReport() {
+    if (!currentReportHtml) return;
+    const win = window.open("", "_blank");
+    win.document.write(currentReportHtml);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 500);
+}
+
+async function loadReportHistory() {
+    try {
+        const res = await fetch(`${API_BASE}/reports`);
+        const reports = await res.json();
+        if (!Array.isArray(reports) || reports.length === 0) {
+            reportHistoryList.innerHTML = `<div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">Chưa có báo cáo nào được lưu.</div>`;
+            return;
+        }
+        reportHistoryList.innerHTML = reports.map(r => `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--panel-border); border-radius: 8px; cursor: pointer; transition: background 0.2s;"
+                 onclick="loadSavedReport('${r.filename}')"
+                 onmouseover="this.style.background='rgba(255,255,255,0.07)'"
+                 onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                <div>
+                    <div style="font-size: 13px; color: var(--text-main); font-weight: 500;">📄 ${r.filename.replace("report_", "").replace(".html", "").replace(/_/g, " / ")}</div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${r.modified} · ${(r.size / 1024).toFixed(1)} KB</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 11px;"></i>
+            </div>
+        `).join("");
+    } catch (err) {
+        console.error("Failed to load report history", err);
+    }
+}
+
+async function loadSavedReport(filename) {
+    try {
+        const res = await fetch(`${API_BASE}/report-file?name=${encodeURIComponent(filename)}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        currentReportHtml = data.html;
+        currentReportFilename = data.filename;
+        reportResultTitle.textContent = `📄 ${data.filename}`;
+        reportResultArea.style.display = "block";
+
+        const blob = new Blob([data.html], { type: "text/html" });
+        reportPreviewFrame.src = URL.createObjectURL(blob);
+    } catch (err) {
+        showToast("Lỗi khi tải báo cáo: " + err.message, true);
+    }
+}
+
+window.loadSavedReport = loadSavedReport;
