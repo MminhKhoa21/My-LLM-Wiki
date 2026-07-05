@@ -1,0 +1,13 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Obsidian workspace state (user-specific session state)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/backups/
+
+# System files
+.DS_Store
+Thumbs.db

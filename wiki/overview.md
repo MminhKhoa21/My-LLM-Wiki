@@ -1,0 +1,32 @@
+---
+type: overview
+title: "Learning Wiki Overview"
+description: "The primary entry point and high-level summary of your personal learning wiki."
+tags: [learning, meta, documentation]
+timestamp: 2026-07-05
+sources: []
+---
+
+# Personal Learning Wiki
+
+Welcome to your AI-managed learning wiki. This wiki compiles and aggregates knowledge from your raw study materials, lecture notes, textbook chapters, and articles into a compounding, structured knowledge base.
+
+## How It Works
+
+1. **Raw Materials**: Drop new learning documents into the `raw/` directory.
+2. **LLM Synthesis**: The LLM reads these sources and synthesizes them into structured markdown notes in the `wiki/` directory.
+3. **Automated Indexing**: Deterministic Python scripts maintain a catalog of concepts and entities in the index file.
+4. **Link Integrity**: Everything is interlinked using `[[wiki-links]]` to form a graph of knowledge.
+
+## Quick Links
+
+- [[index]] - The full auto-generated index of all concepts, entities, and summaries.
+- [[log]] - Chronological log of ingestion, query, and maintenance operations.
+
+## Major Learning Areas
+
+### Mathematics (Calculus)
+- [[summary_calculus_derivatives]] - Summary of Calculus Derivatives Study Guide.
+- [[derivative]] - Definition and core principles of the derivative.
+- [[differentiation_rules]] - Standard algebraic rules for differentiation.
+

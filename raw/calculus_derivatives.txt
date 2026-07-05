@@ -1,0 +1,33 @@
+Calculus Derivatives Study Guide
+================================
+
+Introduction
+------------
+In calculus, the derivative of a function of a real variable measures the sensitivity to change of the function value (output value) with respect to a change in its argument (input value). Derivatives are a fundamental tool of calculus. For example, the derivative of the position of a moving object with respect to time is the object's velocity: this measures how quickly the position of the object changes when time advances.
+
+Definition of Derivative
+------------------------
+For a function f(x), the derivative at a point x=a is defined as the limit:
+
+    f'(a) = lim_{h -> 0} [f(a + h) - f(a)] / h
+
+If this limit exists, f is differentiable at a.
+
+Basic Derivative Rules
+----------------------
+1. Power Rule: For any real number n, the derivative of x^n is n * x^(n-1).
+2. Constant Rule: The derivative of any constant c is 0.
+3. Sum Rule: The derivative of f(x) + g(x) is f'(x) + g'(x).
+4. Product Rule: The derivative of f(x) * g(x) is f'(x)*g(x) + f(x)*g'(x).
+5. Chain Rule: The derivative of f(g(x)) is f'(g(x)) * g'(x).
+
+Key Concepts
+------------
+- Differentiability: A function is differentiable if its derivative exists at each point in its domain. Differentiability implies continuity, but continuity does not imply differentiability (e.g., the absolute value function f(x) = |x| is continuous but not differentiable at x=0).
+- Rates of Change: The derivative is the instantaneous rate of change of the function at a given point.
+- Slopes of Tangent Lines: Geometrically, the derivative is the slope of the tangent line to the graph of the function at a given point.
+
+Key Entities
+------------
+- Isaac Newton: Co-inventor of calculus, developed the concept of fluxions (derivatives).
+- Gottfried Wilhelm Leibniz: Co-inventor of calculus, introduced the widely used dx/dy notation for derivatives.

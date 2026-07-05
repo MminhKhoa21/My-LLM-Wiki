@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Wiki Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Vis.js Network CDN -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- Marked.js CDN (Markdown parser) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-brain logo-icon"></i>
+                <h2>LLM Wiki</h2>
+            </div>
+            
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="sidebar-search" placeholder="Quick search...">
+            </div>
+            
+            <div class="note-list-container">
+                <h3 class="section-title">Wiki Pages</h3>
+                <ul id="note-list" class="note-list">
+                    <li class="loading-item">Loading notes...</li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-actions">
+                <h3 class="section-title">Quick Actions</h3>
+                <div class="action-grid">
+                    <button class="btn btn-secondary" id="btn-reindex" title="Run Indexer">
+                        <i class="fa-solid fa-list-check"></i> Rebuild Index
+                    </button>
+                    <button class="btn btn-secondary" id="btn-relint" title="Run Linter">
+                        <i class="fa-solid fa-heart-pulse"></i> Check Health
+                    </button>
+                </div>
+                
+                <div class="upload-area" id="upload-zone">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <span>Drop new raw source or click</span>
+                    <input type="file" id="file-uploader" style="display: none;">
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Tabs Navigation -->
+            <header class="tab-header">
+                <nav class="tab-nav">
+                    <button class="tab-btn active" data-tab="graph-tab">
+                        <i class="fa-solid fa-circle-nodes"></i> Knowledge Graph
+                    </button>
+                    <button class="tab-btn" data-tab="note-tab" id="tab-note-btn">
+                        <i class="fa-solid fa-file-lines"></i> Note Viewer
+                    </button>
+                    <button class="tab-btn" data-tab="lint-tab">
+                        <i class="fa-solid fa-shield-halved"></i> Health Report
+                    </button>
+                    <button class="tab-btn" data-tab="search-tab" id="tab-search-btn">
+                        <i class="fa-solid fa-list"></i> Search Results
+                    </button>
+                </nav>
+            </header>
+
+            <!-- Tab Content -->
+            <div class="tab-container">
+                <!-- 1. Graph Tab -->
+                <div class="tab-content active" id="graph-tab">
+                    <div class="card graph-card">
+                        <div class="card-header">
+                            <h3>Interactive Knowledge Network</h3>
+                            <span class="card-subtitle">Click on notes to browse their contents</span>
+                        </div>
+                        <div id="network-graph" class="graph-viewport">
+                            <!-- Vis.js will render the graph here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Note Viewer Tab -->
+                <div class="tab-content" id="note-tab">
+                    <div class="card note-card">
+                        <div id="note-content-area" class="note-viewer-empty">
+                            <i class="fa-solid fa-file-import empty-icon"></i>
+                            <p>Select a note from the sidebar or click a node in the graph view to inspect it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Health/Lint Report Tab -->
+                <div class="tab-content" id="lint-tab">
+                    <div class="card lint-card">
+                        <div class="card-header">
+                            <h3>Linter Status Report</h3>
+                            <button class="btn btn-primary" id="btn-refresh-lint">
+                                <i class="fa-solid fa-rotate"></i> Run Health Check
+                            </button>
+                        </div>
+                        <div id="lint-report-area" class="lint-report-viewport">
+                            <p>Click "Run Health Check" to scan the repository for schema violations, broken links, and orphans.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Search Results Tab -->
+                <div class="tab-content" id="search-tab">
+                    <div class="card search-card">
+                        <div class="card-header">
+                            <h3>Query Search Matches</h3>
+                        </div>
+                        <div id="search-results-area" class="search-viewport">
+                            <p class="empty-message">Search query matches will appear here. Enter a query in the sidebar search box to search.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <span id="toast-message">Message goes here</span>
+    </div>
+
+    <!-- Core App JS -->
+    <script src="app.js"></script>
+</body>
+</html>
