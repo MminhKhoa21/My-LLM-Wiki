@@ -8,12 +8,14 @@ import http.server
 import socketserver
 import subprocess
 from pathlib import Path
+from datetime import datetime
 
 # Paths
 ROOT_DIR = Path(__file__).parent.parent
 DASHBOARD_DIR = ROOT_DIR / "dashboard"
 WIKI_DIR = ROOT_DIR / "wiki"
 RAW_DIR = ROOT_DIR / "raw"
+DRAFTS_DIR = ROOT_DIR / "drafts"
 
 # Regex for frontmatter and links
 YAML_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
@@ -113,6 +115,10 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_git_commit()
         elif path == "/api/cleanup-raw":
             self.handle_cleanup_raw()
+        elif path == "/api/approve-draft":
+            self.handle_approve_draft()
+        elif path == "/api/reject-draft":
+            self.handle_reject_draft()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -139,6 +145,12 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.api_get_raw_files()
         elif path == "/api/git-status":
             self.api_get_git_status()
+        elif path == "/api/drafts":
+            self.api_get_drafts()
+        elif path == "/api/draft-detail":
+            self.api_get_draft_detail(query)
+        elif path == "/api/recent":
+            self.api_get_recent()
         else:
             self.send_json({"error": "Endpoint not found"}, 404)
 
@@ -299,10 +311,13 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             
             dest_path.write_bytes(file_data)
             
-            # Write a system log
+            # Trigger auto-ingestion pipeline in background
+            auto_ingest_path = ROOT_DIR / "scripts" / "auto_ingest.py"
+            subprocess.Popen(["python", str(auto_ingest_path), "--file", str(dest_path)])
+            
             self.send_json({
                 "status": "success",
-                "message": f"Successfully uploaded file to raw/{file_name}"
+                "message": f"Uploaded raw/{file_name}. AI auto-ingestion pipeline triggered."
             })
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
@@ -407,9 +422,19 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             res = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
             
             if res.returncode == 0:
+                # Run auto-ingest in background for each saved file
+                stdout_text = res.stdout
+                raw_files = re.findall(r'raw/([a-zA-Z0-9_\-\.]+)', stdout_text)
+                
+                auto_ingest_path = ROOT_DIR / "scripts" / "auto_ingest.py"
+                for rf in set(raw_files):
+                    rf_path = RAW_DIR / rf
+                    if rf_path.exists():
+                        subprocess.Popen(["python", str(auto_ingest_path), "--file", str(rf_path)])
+                        
                 self.send_json({
                     "status": "success",
-                    "message": res.stdout.strip()
+                    "message": res.stdout.strip() + " (AI auto-ingestion triggered)"
                 })
             else:
                 self.send_json({"error": res.stderr.strip() or res.stdout.strip()}, 500)
@@ -494,6 +519,187 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
                 "deleted_count": len(deleted_files),
                 "deleted_files": deleted_files,
                 "space_freed_bytes": space_freed
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def api_get_drafts(self):
+        try:
+            drafts = []
+            if DRAFTS_DIR.exists():
+                for p in DRAFTS_DIR.glob("*.md"):
+                    if p.is_file() and p.name != ".gitkeep":
+                        content = p.read_text(encoding="utf-8")
+                        # Extract helper comments
+                        target_match = re.search(r"<!--\s*target:\s*(.*?)\s*-->", content)
+                        title_match = re.search(r"<!--\s*title:\s*(.*?)\s*-->", content)
+                        
+                        target = target_match.group(1) if target_match else f"wiki/{p.name}"
+                        title = title_match.group(1) if title_match else p.name.replace(".md", "").replace("_", " ").capitalize()
+                        
+                        # Find tags if any from frontmatter
+                        tags = []
+                        tags_match = re.search(r"tags:\s*\[(.*?)\]", content)
+                        if tags_match:
+                            tags = [t.strip().strip('"').strip("'") for t in tags_match.group(1).split(",") if t.strip()]
+                            
+                        # Find type
+                        type_val = "concept"
+                        type_match = re.search(r"type:\s*(\w+)", content)
+                        if type_match:
+                            type_val = type_match.group(1).strip()
+                            
+                        drafts.append({
+                            "name": p.name,
+                            "title": title,
+                            "target": target,
+                            "type": type_val,
+                            "tags": tags,
+                            "timestamp": datetime.fromtimestamp(p.stat().st_mtime).strftime("%Y-%m-%d %H:%M")
+                        })
+            # Sort by newest draft modification time
+            drafts.sort(key=lambda x: x["timestamp"], reverse=True)
+            self.send_json(drafts)
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def api_get_draft_detail(self, query):
+        name = query.get("name", [None])[0]
+        if not name:
+            self.send_json({"error": "Missing parameter 'name'"}, 400)
+            return
+            
+        draft_path = DRAFTS_DIR / name
+        if not draft_path.exists() or not draft_path.is_file():
+            self.send_json({"error": f"Draft '{name}' not found"}, 404)
+            return
+            
+        try:
+            content = draft_path.read_text(encoding="utf-8")
+            self.send_json({
+                "name": name,
+                "content": content
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def api_get_recent(self):
+        try:
+            recent = []
+            for p in WIKI_DIR.glob("*.md"):
+                if p.name not in ["index.md", "log.md", "overview.md"]:
+                    try:
+                        content = p.read_text(encoding="utf-8")
+                        title = p.name.replace(".md", "").replace("_", " ").capitalize()
+                        type_val = "concept"
+                        timestamp = datetime.fromtimestamp(p.stat().st_mtime).strftime("%Y-%m-%d")
+                        
+                        # Extract yaml info
+                        fm_match = YAML_RE.search(content)
+                        if fm_match:
+                            fm_text = fm_match.group(1)
+                            t_match = re.search(r"title:\s*\"(.*?)\"", fm_text)
+                            if t_match: title = t_match.group(1)
+                            
+                            ty_match = re.search(r"type:\s*(\w+)", fm_text)
+                            if ty_match: type_val = ty_match.group(1).strip()
+                            
+                            ts_match = re.search(r"timestamp:\s*([\d\-]+)", fm_text)
+                            if ts_match: timestamp = ts_match.group(1).strip()
+                            
+                        recent.append({
+                            "name": p.name.replace(".md", ""),
+                            "title": title,
+                            "type": type_val,
+                            "timestamp": timestamp
+                        })
+                    except Exception:
+                        pass
+            # Sort by timestamp descending
+            recent.sort(key=lambda x: x["timestamp"], reverse=True)
+            self.send_json(recent[:5])
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_approve_draft(self):
+        content_length = int(self.headers.get('Content-Length', 0))
+        try:
+            body = self.rfile.read(content_length).decode('utf-8')
+            params = json.loads(body)
+            name = params.get("name")
+            new_content = params.get("content", "").strip()
+            
+            if not name or not new_content:
+                self.send_json({"error": "Parameters 'name' and 'content' are required"}, 400)
+                return
+                
+            draft_path = DRAFTS_DIR / name
+            if not draft_path.exists():
+                self.send_json({"error": f"Draft '{name}' not found"}, 404)
+                return
+                
+            # Extract target destination
+            target_match = re.search(r"<!--\s*target:\s*(.*?)\s*-->", new_content)
+            title_match = re.search(r"<!--\s*title:\s*(.*?)\s*-->", new_content)
+            
+            target = target_match.group(1) if target_match else f"wiki/{name}"
+            title = title_match.group(1) if title_match else name.replace(".md", "").replace("_", " ").capitalize()
+            
+            # Clean up target content (strip the helper comments)
+            clean_content = re.sub(r"<!--\s*target:\s*.*?\s*-->\n?", "", new_content)
+            clean_content = re.sub(r"<!--\s*title:\s*.*?\s*-->\n?", "", clean_content).strip()
+            
+            # Make sure it writes to correct location
+            dest_file = ROOT_DIR / target
+            dest_file.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Write to wiki/
+            dest_file.write_text(clean_content, encoding="utf-8")
+            
+            # Remove from drafts/
+            draft_path.unlink()
+            
+            # Run indexer
+            indexer_path = ROOT_DIR / "scripts" / "indexer.py"
+            subprocess.run(["python", str(indexer_path)], capture_output=True)
+            
+            # Add log entry
+            log_path = WIKI_DIR / "log.md"
+            curr_date = datetime.now().strftime("%Y-%m-%d")
+            log_entry = f"\n## [{curr_date}] ingest | {title}\n- Approved and published note from drafts queue.\n"
+            if log_path.exists():
+                with open(log_path, "a", encoding="utf-8") as lf:
+                    lf.write(log_entry)
+                    
+            # Run linter
+            linter_path = ROOT_DIR / "scripts" / "linter.py"
+            subprocess.run(["python", str(linter_path)], capture_output=True)
+            
+            self.send_json({
+                "status": "success",
+                "message": f"Successfully approved draft. Note published to {target}."
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_reject_draft(self):
+        content_length = int(self.headers.get('Content-Length', 0))
+        try:
+            body = self.rfile.read(content_length).decode('utf-8')
+            params = json.loads(body)
+            name = params.get("name")
+            
+            if not name:
+                self.send_json({"error": "Parameter 'name' is required"}, 400)
+                return
+                
+            draft_path = DRAFTS_DIR / name
+            if draft_path.exists():
+                draft_path.unlink()
+                
+            self.send_json({
+                "status": "success",
+                "message": f"Successfully rejected draft: {name}"
             })
         except Exception as e:
             self.send_json({"error": str(e)}, 500)

@@ -40,7 +40,18 @@ const translations = {
         "action-clip": "Clip & Ingest",
         "toast-clipping": "Clipping website...",
         "toast-clip-success": "Successfully clipped: ",
-        "toast-clip-fail": "Failed to clip webpage: "
+        "toast-clip-fail": "Failed to clip webpage: ",
+        "tab-drafts": "Review Drafts",
+        "recent-title": "Recent Updates",
+        "drafts-title": "AI Proposed Drafts",
+        "drafts-subtitle": "Review, edit, and approve AI-generated wiki articles",
+        "drafts-pending-hdr": "Pending Review",
+        "draft-editor-empty-msg": "Select a draft from the queue to review and approve.",
+        "btn-reject": "Reject",
+        "btn-approve": "Approve & Publish",
+        "toast-draft-approved": "Draft approved and published!",
+        "toast-draft-rejected": "Draft rejected and deleted.",
+        "toast-draft-loading": "AI analyzing raw sources... Drafts will appear in Review Drafts tab shortly."
     },
     vi: {
         "logo-title": "LLM Wiki",
@@ -79,7 +90,18 @@ const translations = {
         "action-clip": "Tải bài viết",
         "toast-clipping": "Đang tải bài viết...",
         "toast-clip-success": "Tải bài viết thành công: ",
-        "toast-clip-fail": "Lỗi khi tải bài viết: "
+        "toast-clip-fail": "Lỗi khi tải bài viết: ",
+        "tab-drafts": "Duyệt bản thảo",
+        "recent-title": "Bài học mới cập nhật",
+        "drafts-title": "Bản thảo AI đề xuất",
+        "drafts-subtitle": "Rà soát, chỉnh sửa và phê duyệt các bài học do AI biên soạn",
+        "drafts-pending-hdr": "Chờ phê duyệt",
+        "draft-editor-empty-msg": "Chọn một bản thảo ở hàng đợi để tiến hành rà soát và phê duyệt.",
+        "btn-reject": "Từ chối",
+        "btn-approve": "Duyệt & Xuất bản",
+        "toast-draft-approved": "Đã phê duyệt và xuất bản bài viết!",
+        "toast-draft-rejected": "Đã từ chối và xóa bản thảo.",
+        "toast-draft-loading": "AI đang phân tích tài liệu thô... Bản thảo đề xuất sẽ xuất hiện trong tab Duyệt Bản Thảo sớm."
     }
 };
 
@@ -87,7 +109,6 @@ let currentLang = "vi";
 
 // DOM Elements
 const noteListEl = document.getElementById("note-list");
-const sidebarSearchInput = document.getElementById("sidebar-search");
 const btnReindex = document.getElementById("btn-reindex");
 const btnRelint = document.getElementById("btn-relint");
 const btnRefreshLint = document.getElementById("btn-refresh-lint");
@@ -113,12 +134,25 @@ const noteViewerHeader = document.querySelector(".note-viewer-header");
 const noteViewerTitle = document.getElementById("note-viewer-title");
 const btnCopyObsidian = document.getElementById("btn-copy-obsidian");
 const btnCleanupRaw = document.getElementById("btn-cleanup-raw");
+const topSearchInput = document.getElementById("top-search");
+const topSearchResults = document.getElementById("top-search-results");
+const recentUpdatesList = document.getElementById("recent-updates-list");
+const draftsCountBadge = document.getElementById("drafts-count-badge");
+const draftsListEl = document.getElementById("drafts-list");
+const draftEditorEmpty = document.getElementById("draft-editor-empty");
+const draftEditorContent = document.getElementById("draft-editor-content");
+const draftReviewTitle = document.getElementById("draft-review-title");
+const draftEditorTextarea = document.getElementById("draft-editor-textarea");
+const btnApproveDraft = document.getElementById("btn-approve-draft");
+const btnRejectDraft = document.getElementById("btn-reject-draft");
 
 // State variables
 let notesData = [];
 let network = null;
 let rawGraphData = null;
 let activeGraphFilters = { overview: true, summary: true, concept: true, entity: true, system: true };
+let activeDrafts = [];
+let currentDraftName = null;
 
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
@@ -129,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
     updateLanguageUI();
     checkGitStatus();
     initGraphFilters();
+    loadRecentUpdates();
+    loadDrafts();
     
     // Actions
     btnReindex.addEventListener("click", runIndexer);
@@ -139,14 +175,14 @@ document.addEventListener("DOMContentLoaded", () => {
     btnGitCommit.addEventListener("click", commitGitChanges);
     btnCopyObsidian.addEventListener("click", copyObsidianLink);
     btnCleanupRaw.addEventListener("click", cleanupRawSources);
+    btnApproveDraft.addEventListener("click", approveCurrentDraft);
+    btnRejectDraft.addEventListener("click", rejectCurrentDraft);
     
-    // Search on enter key
-    sidebarSearchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const query = sidebarSearchInput.value.trim();
-            if (query) {
-                switchTab("search-tab", () => runSearch(query));
-            }
+    // Top Search listeners
+    topSearchInput.addEventListener("input", handleTopSearchInput);
+    document.addEventListener("click", (e) => {
+        if (!topSearchInput.contains(e.target) && !topSearchResults.contains(e.target)) {
+            topSearchResults.style.display = "none";
         }
     });
 });
@@ -171,6 +207,8 @@ function initTabs() {
             switchTab(tabId, () => {
                 if (tabId === "manage-tab") {
                     loadManagementData();
+                } else if (tabId === "drafts-tab") {
+                    loadDrafts();
                 }
             });
         });
@@ -886,3 +924,234 @@ function filterGraph() {
         edges: new vis.DataSet(rawGraphData.edges)
     });
 }
+
+// 15. Load and render Recent Updates
+async function loadRecentUpdates() {
+    try {
+        const res = await fetch(`${API_BASE}/recent`);
+        if (!res.ok) throw new Error("Failed to load recent updates");
+        const data = await res.json();
+        
+        if (data.length === 0) {
+            recentUpdatesList.innerHTML = `<li style="font-size: 10px; color: var(--text-muted); text-align: center; padding: 10px 0;">No updates yet</li>`;
+            return;
+        }
+        
+        recentUpdatesList.innerHTML = data.map(item => `
+            <li class="recent-item" onclick="loadNoteDetail('${item.name}')">
+                <div class="recent-item-title">${item.title}</div>
+                <div class="recent-item-meta">
+                    <span class="note-type-badge type-${item.type}" style="font-size: 8px; padding: 1px 4px;">${item.type}</span>
+                    <span>${item.timestamp}</span>
+                </div>
+            </li>
+        `).join("");
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// 16. Load and render Drafts Review Queue
+async function loadDrafts() {
+    try {
+        const res = await fetch(`${API_BASE}/drafts`);
+        if (!res.ok) throw new Error("Failed to load drafts list");
+        activeDrafts = await res.json();
+        
+        // Update tab badge count
+        if (activeDrafts.length > 0) {
+            draftsCountBadge.innerText = activeDrafts.length;
+            draftsCountBadge.style.display = "inline-block";
+        } else {
+            draftsCountBadge.style.display = "none";
+        }
+        
+        renderDraftsList(activeDrafts);
+    } catch (err) {
+        showToast(err.message, true);
+    }
+}
+
+function renderDraftsList(drafts) {
+    if (drafts.length === 0) {
+        draftsListEl.innerHTML = `<div style="font-size: 11px; color: var(--text-muted); text-align: center; padding: 20px 0;">Queue is empty</div>`;
+        draftEditorContent.style.display = "none";
+        draftEditorEmpty.style.display = "flex";
+        currentDraftName = null;
+        return;
+    }
+    
+    draftsListEl.innerHTML = drafts.map(draft => {
+        const isActive = draft.name === currentDraftName ? "active" : "";
+        return `
+            <div class="draft-item ${isActive}" data-name="${draft.name}">
+                <div class="draft-title"><i class="fa-solid fa-file-pen"></i> ${draft.title}</div>
+                <div class="draft-meta">
+                    <span class="note-type-badge type-${draft.type}" style="font-size: 8px; padding: 1px 4px;">${draft.type}</span>
+                    <span>${draft.timestamp}</span>
+                </div>
+            </div>
+        `;
+    }).join("");
+    
+    // Add click event listeners
+    draftsListEl.querySelectorAll(".draft-item").forEach(item => {
+        item.addEventListener("click", () => {
+            const name = item.getAttribute("data-name");
+            loadDraftDetail(name);
+        });
+    });
+}
+
+async function loadDraftDetail(name) {
+    try {
+        currentDraftName = name;
+        draftsListEl.querySelectorAll(".draft-item").forEach(item => {
+            if (item.getAttribute("data-name") === name) {
+                item.classList.add("active");
+            } else {
+                item.classList.remove("active");
+            }
+        });
+        
+        draftEditorEmpty.style.display = "none";
+        draftEditorContent.style.display = "flex";
+        draftEditorTextarea.value = "Loading draft content...";
+        
+        const res = await fetch(`${API_BASE}/draft-detail?name=${encodeURIComponent(name)}`);
+        if (!res.ok) throw new Error("Failed to load draft detail");
+        const data = await res.json();
+        
+        draftReviewTitle.innerText = `Reviewing: ${data.name}`;
+        draftEditorTextarea.value = data.content;
+    } catch (err) {
+        showToast(err.message, true);
+    }
+}
+
+async function approveCurrentDraft() {
+    if (!currentDraftName) return;
+    const langData = translations[currentLang];
+    
+    try {
+        btnApproveDraft.disabled = true;
+        btnApproveDraft.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+        
+        const res = await fetch(`${API_BASE}/approve-draft`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: currentDraftName,
+                content: draftEditorTextarea.value
+            })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Approval failed");
+        
+        showToast(langData["toast-draft-approved"]);
+        currentDraftName = null;
+        
+        loadDrafts();
+        loadNotes();
+        loadGraph();
+        loadRecentUpdates();
+        checkGitStatus();
+    } catch (err) {
+        showToast(err.message, true);
+    } finally {
+        btnApproveDraft.disabled = false;
+        btnApproveDraft.innerHTML = `<i class="fa-solid fa-check"></i> <span data-i18n="btn-approve">${langData["btn-approve"]}</span>`;
+    }
+}
+
+async function rejectCurrentDraft() {
+    if (!currentDraftName) return;
+    const langData = translations[currentLang];
+    
+    if (!confirm(langData["confirm-delete"])) return;
+    
+    try {
+        btnRejectDraft.disabled = true;
+        
+        const res = await fetch(`${API_BASE}/reject-draft`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: currentDraftName })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Rejection failed");
+        
+        showToast(langData["toast-draft-rejected"]);
+        currentDraftName = null;
+        loadDrafts();
+    } catch (err) {
+        showToast(err.message, true);
+    } finally {
+        btnRejectDraft.disabled = false;
+    }
+}
+
+// 17. Top search live matching dropdown
+let topSearchTimeout = null;
+function handleTopSearchInput(e) {
+    clearTimeout(topSearchTimeout);
+    const query = topSearchInput.value.trim();
+    
+    if (!query) {
+        topSearchResults.style.display = "none";
+        return;
+    }
+    
+    topSearchTimeout = setTimeout(() => {
+        runTopSearch(query);
+    }, 250);
+}
+
+async function runTopSearch(query) {
+    try {
+        const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+        if (!res.ok) throw new Error("Search failed");
+        
+        const matches = notesData.filter(note => 
+            note.title.toLowerCase().includes(query.toLowerCase()) || 
+            note.description.toLowerCase().includes(query.toLowerCase())
+        ).slice(0, 8);
+        
+        renderTopSearchResults(matches);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function renderTopSearchResults(results) {
+    if (results.length === 0) {
+        topSearchResults.innerHTML = `<div style="padding: 10px 16px; font-size: 12px; color: var(--text-muted); text-align: center;">No matches found</div>`;
+        topSearchResults.style.display = "block";
+        return;
+    }
+    
+    topSearchResults.innerHTML = results.map(item => `
+        <div class="search-dropdown-item" onclick="selectTopSearchResult('${item.name}')">
+            <span class="search-dropdown-title"><i class="fa-solid fa-file-invoice"></i> ${item.title}</span>
+            <span class="note-type-badge type-${item.type}" style="font-size: 8px; padding: 1px 4px;">${item.type}</span>
+        </div>
+    `).join("");
+    topSearchResults.style.display = "block";
+}
+
+function selectTopSearchResult(name) {
+    topSearchInput.value = "";
+    topSearchResults.style.display = "none";
+    loadNoteDetail(name);
+}
+
+// Bind to window to prevent event scope errors
+window.selectTopSearchResult = selectTopSearchResult;
+window.loadNoteDetail = loadNoteDetail;
+

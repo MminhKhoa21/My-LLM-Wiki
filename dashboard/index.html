@@ -27,9 +27,12 @@
                 <button class="lang-toggle-btn" id="btn-lang-toggle">VI</button>
             </div>
             
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" id="sidebar-search" data-i18n-placeholder="search-placeholder" placeholder="Quick search...">
+            <!-- Recent Updates Widget -->
+            <div class="recent-widget" style="margin-bottom: 20px; border-bottom: 1px solid var(--panel-border); padding-bottom: 15px;">
+                <h3 class="section-title"><i class="fa-regular fa-clock"></i> <span data-i18n="recent-title">Recent Updates</span></h3>
+                <ul class="recent-list" id="recent-updates-list" style="list-style: none; padding: 0; margin: 8px 0 0 0; display: flex; flex-direction: column; gap: 8px;">
+                    <!-- Dynamic recent updates list -->
+                </ul>
             </div>
             
             <div class="note-list-container">
@@ -82,6 +85,18 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
+            <!-- Top Header with Search -->
+            <div class="top-search-header" style="position: relative; margin-bottom: 20px;">
+                <div class="search-input-wrapper" style="position: relative; width: 100%;">
+                    <i class="fa-solid fa-magnifying-glass top-search-icon" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px;"></i>
+                    <input type="text" id="top-search" data-i18n-placeholder="search-placeholder" placeholder="Search knowledge base..." style="width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--panel-border); border-radius: 12px; padding: 12px 16px 12px 42px; color: var(--text-main); font-family: inherit; font-size: 14px; transition: var(--transition-fast);">
+                </div>
+                <!-- Instant Search Dropdown Results -->
+                <div id="top-search-results" class="search-results-dropdown" style="display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0; background: rgba(13, 18, 36, 0.95); border: 1px solid var(--panel-border); border-radius: 12px; z-index: 100; max-height: 300px; overflow-y: auto; box-shadow: var(--shadow-glass); backdrop-filter: blur(12px); padding: 8px 0;">
+                    <!-- Live matching results appear here -->
+                </div>
+            </div>
+
             <!-- Tabs Navigation -->
             <header class="tab-header">
                 <nav class="tab-nav">
@@ -99,6 +114,10 @@
                     </button>
                     <button class="tab-btn" data-tab="manage-tab" id="tab-manage-btn">
                         <i class="fa-solid fa-folder-gear"></i> <span data-i18n="tab-manage">Manage Notes</span>
+                    </button>
+                    <button class="tab-btn" data-tab="drafts-tab" id="tab-drafts-btn" style="position: relative;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="tab-drafts">Review Drafts</span>
+                        <span id="drafts-count-badge" class="drafts-count" style="position: absolute; top: -5px; right: -5px; background: var(--secondary); color: #0d1224; font-size: 10px; font-weight: bold; border-radius: 10px; padding: 2px 6px; display: none;">0</span>
                     </button>
                 </nav>
             </header>
@@ -197,6 +216,44 @@
                                 <h4 class="column-title"><i class="fa-solid fa-file-code"></i> <span data-i18n="manage-raw-header">Raw Sources (immutability rule)</span></h4>
                                 <div id="manage-raw-list" class="manage-list-viewport">
                                     <!-- Dynamic list of raw files -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Review Drafts Tab -->
+                <div class="tab-content" id="drafts-tab">
+                    <div class="card drafts-card">
+                        <div class="card-header">
+                            <h3 data-i18n="drafts-title">AI Proposed Drafts</h3>
+                            <span class="card-subtitle" data-i18n="drafts-subtitle">Review, edit, and approve AI-generated wiki articles</span>
+                        </div>
+                        <div class="drafts-split-container" style="display: flex; gap: 20px; height: 550px;">
+                            <div class="drafts-sidebar" style="width: 250px; border-right: 1px solid var(--panel-border); padding-right: 15px; display: flex; flex-direction: column; gap: 10px;">
+                                <h4 class="column-title" data-i18n="drafts-pending-hdr" style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin: 0 0 5px 0;">Pending Review</h4>
+                                <div id="drafts-list" class="drafts-list-viewport" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+                                    <!-- Dynamic drafts list -->
+                                </div>
+                            </div>
+                            <div class="drafts-editor" style="flex-grow: 1; display: flex; flex-direction: column; gap: 12px;">
+                                <div id="draft-editor-empty" class="note-viewer-empty" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-wand-magic-sparkles empty-icon" style="font-size: 40px; color: var(--panel-border); margin-bottom: 12px;"></i>
+                                    <p data-i18n="draft-editor-empty-msg" style="color: var(--text-muted); font-size: 13px;">Select a draft from the queue to review and approve.</p>
+                                </div>
+                                <div id="draft-editor-content" style="display: none; flex-direction: column; gap: 12px; height: 100%;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <h4 id="draft-review-title" style="margin: 0; font-size: 14px;">Reviewing draft</h4>
+                                        <div style="display: flex; gap: 8px;">
+                                            <button class="btn btn-secondary" id="btn-reject-draft" style="border-radius: 8px; font-size: 11px; background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.2); padding: 6px 12px;">
+                                                <i class="fa-solid fa-trash-can"></i> <span data-i18n="btn-reject">Reject</span>
+                                            </button>
+                                            <button class="btn btn-primary" id="btn-approve-draft" style="border-radius: 8px; font-size: 11px; padding: 6px 12px;">
+                                                <i class="fa-solid fa-check"></i> <span data-i18n="btn-approve">Approve & Publish</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <textarea id="draft-editor-textarea" style="width: 100%; flex-grow: 1; background: rgba(0, 0, 0, 0.25); border: 1px solid var(--panel-border); border-radius: 10px; color: var(--text-main); font-family: 'Courier New', Courier, monospace; font-size: 12px; padding: 15px; resize: none; outline: none; line-height: 1.5;"></textarea>
                                 </div>
                             </div>
                         </div>

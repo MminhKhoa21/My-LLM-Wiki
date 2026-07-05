@@ -870,3 +870,121 @@ a:hover {
 .dot-concept { background: #8b5cf6; }
 .dot-entity { background: #10b981; }
 .dot-system { background: #ef4444; }
+
+/* Top Search Styles */
+.top-search-header {
+    margin-bottom: 20px;
+}
+
+#top-search:focus {
+    outline: none;
+    border-color: var(--secondary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px var(--secondary-glow);
+}
+
+.search-results-dropdown {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.search-dropdown-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    transition: var(--transition-fast);
+}
+
+.search-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.search-dropdown-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.search-dropdown-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Recent Updates Widget */
+.recent-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.recent-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--panel-border);
+}
+
+.recent-item-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-item-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Drafts Review tab styles */
+.drafts-list-viewport::-webkit-scrollbar {
+    width: 4px;
+}
+
+.drafts-list-viewport::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.draft-item {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--panel-border);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.draft-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--secondary);
+}
+
+.draft-item.active {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
+}
+
+.draft-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.draft-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
