@@ -131,13 +131,10 @@
                             <h3 data-i18n="graph-title">Interactive Knowledge Network</h3>
                             <span class="card-subtitle" data-i18n="graph-subtitle">Click on notes to browse their contents</span>
                         </div>
-                        <div id="network-graph" class="graph-viewport">
-                            <!-- Vis.js will render the graph here -->
-                        </div>
-                        <!-- Legend Overlay -->
+                        <!-- Legend Toolbar -->
                         <div class="graph-legend">
                             <div class="legend-header">
-                                <span data-i18n="legend-title">Filter Nodes</span>
+                                <span data-i18n="legend-title">Filter Nodes:</span>
                             </div>
                             <div class="legend-items">
                                 <label class="legend-item"><input type="checkbox" checked data-filter="overview"> <span class="dot dot-overview"></span> <span data-i18n="type-overview">Overviews</span></label>
@@ -146,6 +143,9 @@
                                 <label class="legend-item"><input type="checkbox" checked data-filter="entity"> <span class="dot dot-entity"></span> <span data-i18n="type-entity">Entities</span></label>
                                 <label class="legend-item"><input type="checkbox" checked data-filter="system"> <span class="dot dot-system"></span> <span data-i18n="type-system">System Core</span></label>
                             </div>
+                        </div>
+                        <div id="network-graph" class="graph-viewport">
+                            <!-- Vis.js will render the graph here -->
                         </div>
                     </div>
                 </div>
