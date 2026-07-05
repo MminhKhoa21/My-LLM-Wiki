@@ -450,9 +450,9 @@ function renderGraph(data) {
                 border: c.border,
                 highlight: c.highlight
             },
-            font: { color: "#f8fafc", face: "Plus Jakarta Sans", size: 14 },
+            font: { color: "#f8fafc", face: "Plus Jakarta Sans", size: 11 },
             shape: node.group === "system" ? "box" : "dot",
-            size: node.group === "overview" ? 22 : 16,
+            size: node.group === "overview" ? 12 : 6,
             borderWidth: 2
         };
     });
@@ -962,9 +962,9 @@ function filterGraph() {
                 border: c.border,
                 highlight: c.highlight
             },
-            font: { color: "#f8fafc", face: "Plus Jakarta Sans", size: 14 },
+            font: { color: "#f8fafc", face: "Plus Jakarta Sans", size: 11 },
             shape: node.group === "system" ? "box" : "dot",
-            size: node.group === "overview" ? 22 : 16,
+            size: node.group === "overview" ? 12 : 6,
             borderWidth: 2
         };
     });
