@@ -192,8 +192,7 @@ def main():
     parser.add_argument("--name", "-n", help="Output file name (excluding path and extension)")
     args = parser.parse_args()
     
-    root_dir = Path(__file__).parent.parent
-    raw_dir = root_dir / "raw"
+    raw_dir = Path("D:/Obsidian/My Wiki/raw")
     raw_dir.mkdir(parents=True, exist_ok=True)
     
     # 1. Handle GitHub URLs (repositories or file paths)
