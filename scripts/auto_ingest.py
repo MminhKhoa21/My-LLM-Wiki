@@ -34,17 +34,13 @@ def load_env():
     return env_vars
 
 def call_llm(prompt, system_prompt, env_vars):
-    api_key = env_vars.get("DEEPSEEK_API_KEY")
-    api_url = env_vars.get("DEEPSEEK_API_URL", "https://api.deepseek.com").rstrip("/") + "/chat/completions"
-    model = env_vars.get("DEEPSEEK_MODEL", "deepseek-chat")
-    
-    if not api_key:
-        api_key = env_vars.get("MISTRAL_API_KEY")
-        api_url = "https://api.mistral.ai/v1/chat/completions"
-        model = env_vars.get("MISTRAL_MODEL", "mistral-tiny")
+    # Only use Mistral (DeepSeek is currently disabled)
+    api_key = env_vars.get("MISTRAL_API_KEY")
+    api_url = "https://api.mistral.ai/v1/chat/completions"
+    model = env_vars.get("MISTRAL_MODEL", "mistral-small-latest")
         
     if not api_key:
-        raise ValueError("No API Key found for DeepSeek or Mistral. Set them in .env file.")
+        raise ValueError("No Mistral API Key found. Set MISTRAL_API_KEY in your .env file.")
 
     payload = {
         "model": model,
@@ -96,7 +92,7 @@ def make_fallback_drafts(file_path):
         f"---\n\n"
         f"# Summary of {name.replace('_', ' ').capitalize()}\n\n"
         f"This is a placeholder draft note generated automatically because no AI API Keys are configured in your `.env` file.\n\n"
-        f"Please fill in Mistral or DeepSeek API keys to activate full AI summarization and note drafting!\n"
+        f"Please fill in your Mistral API key (MISTRAL_API_KEY) in the .env file to activate full AI summarization and note drafting!\n"
     )
     
     draft_file = DRAFTS_DIR / f"summary_{name}.md"
@@ -115,8 +111,8 @@ def main():
         
     env_vars = load_env()
     
-    if not env_vars.get("DEEPSEEK_API_KEY") and not env_vars.get("MISTRAL_API_KEY"):
-        print("[WARN] No Mistral or DeepSeek keys found. Generating fallback drafts...")
+    if not env_vars.get("MISTRAL_API_KEY"):
+        print("[WARN] No Mistral API Key found. Generating fallback drafts...")
         make_fallback_drafts(file_path)
         sys.exit(0)
         
