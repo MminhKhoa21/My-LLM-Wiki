@@ -360,6 +360,32 @@ function renderNoteMarkdown(data) {
         return `<a href="#" class="wikilink" data-target="${cleanTarget}">${displayLabel}</a>`;
     });
 
+    // Parse Obsidian callouts
+    parsedMarkdown = parsedMarkdown.replace(/(?:^|\n)> \[!(\w+)\](.*)(?:\n>.*)*/gi, (match) => {
+        const lines = match.trim().split('\n');
+        const headerMatch = lines[0].match(/> \[!(\w+)\](.*)/i);
+        const type = headerMatch[1].toLowerCase();
+        const title = headerMatch[2].trim() || type.toUpperCase();
+        
+        const contentLines = lines.slice(1).map(l => l.replace(/^>\s?/, '')).join('\n');
+        
+        let icon = "fa-circle-info";
+        if (type === "warning") icon = "fa-triangle-exclamation";
+        else if (type === "important" || type === "danger") icon = "fa-circle-exclamation";
+        else if (type === "success" || type === "check") icon = "fa-circle-check";
+        
+        return `
+<div class="callout callout-${type}">
+<div class="callout-title"><i class="fa-solid ${icon}"></i> ${title}</div>
+<div class="callout-content">
+
+${contentLines}
+
+</div>
+</div>
+`;
+    });
+
     const htmlContent = marked.parse(parsedMarkdown);
     
     noteContentArea.innerHTML = `
