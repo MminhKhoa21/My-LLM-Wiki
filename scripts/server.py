@@ -122,6 +122,10 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_approve_draft()
         elif path == "/api/reject-draft":
             self.handle_reject_draft()
+        elif path == "/api/approve-all":
+            self.handle_approve_all()
+        elif path == "/api/reject-all":
+            self.handle_reject_all()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -703,6 +707,74 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json({
                 "status": "success",
                 "message": f"Successfully rejected draft: {name}"
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_approve_all(self):
+        try:
+            approved_count = 0
+            titles = []
+            
+            if DRAFTS_DIR.exists():
+                for p in DRAFTS_DIR.glob("*.md"):
+                    if p.is_file() and p.name != ".gitkeep":
+                        content = p.read_text(encoding="utf-8")
+                        
+                        target_match = re.search(r"<!--\s*target:\s*(.*?)\s*-->", content)
+                        title_match = re.search(r"<!--\s*title:\s*(.*?)\s*-->", content)
+                        
+                        target = target_match.group(1) if target_match else f"wiki/{p.name}"
+                        title = title_match.group(1) if title_match else p.name.replace(".md", "").replace("_", " ").capitalize()
+                        
+                        # Clean up
+                        clean_content = re.sub(r"<!--\s*target:\s*.*?\s*-->\n?", "", content)
+                        clean_content = re.sub(r"<!--\s*title:\s*.*?\s*-->\n?", "", clean_content).strip()
+                        
+                        dest_file = ROOT_DIR / target
+                        dest_file.parent.mkdir(parents=True, exist_ok=True)
+                        dest_file.write_text(clean_content, encoding="utf-8")
+                        
+                        p.unlink()
+                        approved_count += 1
+                        titles.append(title)
+            
+            if approved_count > 0:
+                # Run indexer
+                indexer_path = SERVER_ROOT / "scripts" / "indexer.py"
+                subprocess.run(["python", str(indexer_path)], capture_output=True)
+                
+                # Combined log entry
+                log_path = WIKI_DIR / "log.md"
+                curr_date = datetime.now().strftime("%Y-%m-%d")
+                log_entry = f"\n## [{curr_date}] ingest | Batch approval\n- Approved and published {approved_count} notes: {', '.join(titles)}.\n"
+                if log_path.exists():
+                    with open(log_path, "a", encoding="utf-8") as lf:
+                        lf.write(log_entry)
+                        
+                # Run linter
+                linter_path = SERVER_ROOT / "scripts" / "linter.py"
+                subprocess.run(["python", str(linter_path)], capture_output=True)
+                
+            self.send_json({
+                "status": "success",
+                "message": f"Successfully approved and published {approved_count} drafts."
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_reject_all(self):
+        try:
+            rejected_count = 0
+            if DRAFTS_DIR.exists():
+                for p in DRAFTS_DIR.glob("*.md"):
+                    if p.is_file() and p.name != ".gitkeep":
+                        p.unlink()
+                        rejected_count += 1
+                        
+            self.send_json({
+                "status": "success",
+                "message": f"Successfully rejected and deleted {rejected_count} drafts."
             })
         except Exception as e:
             self.send_json({"error": str(e)}, 500)

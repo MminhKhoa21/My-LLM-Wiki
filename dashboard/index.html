@@ -232,6 +232,14 @@
                         <div class="drafts-split-container" style="display: flex; gap: 20px; height: 550px;">
                             <div class="drafts-sidebar" style="width: 250px; border-right: 1px solid var(--panel-border); padding-right: 15px; display: flex; flex-direction: column; gap: 10px;">
                                 <h4 class="column-title" data-i18n="drafts-pending-hdr" style="font-size: 12px; text-transform: uppercase; color: var(--text-muted); margin: 0 0 5px 0;">Pending Review</h4>
+                                <div class="batch-actions-row" style="display: flex; gap: 6px; margin-bottom: 8px;">
+                                    <button class="btn btn-secondary" id="btn-reject-all" style="flex: 1; border-radius: 6px; font-size: 10px; padding: 6px 8px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.2);">
+                                        <i class="fa-solid fa-trash-can"></i> <span data-i18n="btn-reject-all">Reject All</span>
+                                    </button>
+                                    <button class="btn btn-primary" id="btn-approve-all" style="flex: 1; border-radius: 6px; font-size: 10px; padding: 6px 8px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25);">
+                                        <i class="fa-solid fa-check-double"></i> <span data-i18n="btn-approve-all">Approve All</span>
+                                    </button>
+                                </div>
                                 <div id="drafts-list" class="drafts-list-viewport" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                                     <!-- Dynamic drafts list -->
                                 </div>

@@ -51,7 +51,11 @@ const translations = {
         "btn-approve": "Approve & Publish",
         "toast-draft-approved": "Draft approved and published!",
         "toast-draft-rejected": "Draft rejected and deleted.",
-        "toast-draft-loading": "AI analyzing raw sources... Drafts will appear in Review Drafts tab shortly."
+        "toast-draft-loading": "AI analyzing raw sources... Drafts will appear in Review Drafts tab shortly.",
+        "btn-reject-all": "Reject All",
+        "btn-approve-all": "Approve All",
+        "toast-drafts-approved-all": "Approved and published all drafts!",
+        "toast-drafts-rejected-all": "Rejected and deleted all drafts."
     },
     vi: {
         "logo-title": "LLM Wiki",
@@ -101,7 +105,11 @@ const translations = {
         "btn-approve": "Duyệt & Xuất bản",
         "toast-draft-approved": "Đã phê duyệt và xuất bản bài viết!",
         "toast-draft-rejected": "Đã từ chối và xóa bản thảo.",
-        "toast-draft-loading": "AI đang phân tích tài liệu thô... Bản thảo đề xuất sẽ xuất hiện trong tab Duyệt Bản Thảo sớm."
+        "toast-draft-loading": "AI đang phân tích tài liệu thô... Bản thảo đề xuất sẽ xuất hiện trong tab Duyệt Bản Thảo sớm.",
+        "btn-reject-all": "Xóa tất cả",
+        "btn-approve-all": "Duyệt tất cả",
+        "toast-drafts-approved-all": "Đã duyệt và xuất bản tất cả bản thảo!",
+        "toast-drafts-rejected-all": "Đã từ chối và xóa sạch hàng đợi bản thảo."
     }
 };
 
@@ -145,6 +153,8 @@ const draftReviewTitle = document.getElementById("draft-review-title");
 const draftEditorTextarea = document.getElementById("draft-editor-textarea");
 const btnApproveDraft = document.getElementById("btn-approve-draft");
 const btnRejectDraft = document.getElementById("btn-reject-draft");
+const btnApproveAll = document.getElementById("btn-approve-all");
+const btnRejectAll = document.getElementById("btn-reject-all");
 
 // State variables
 let notesData = [];
@@ -177,6 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCleanupRaw.addEventListener("click", cleanupRawSources);
     btnApproveDraft.addEventListener("click", approveCurrentDraft);
     btnRejectDraft.addEventListener("click", rejectCurrentDraft);
+    btnApproveAll.addEventListener("click", approveAllDrafts);
+    btnRejectAll.addEventListener("click", rejectAllDrafts);
     
     // Top Search listeners
     topSearchInput.addEventListener("input", handleTopSearchInput);
@@ -1154,4 +1166,66 @@ function selectTopSearchResult(name) {
 // Bind to window to prevent event scope errors
 window.selectTopSearchResult = selectTopSearchResult;
 window.loadNoteDetail = loadNoteDetail;
+
+async function approveAllDrafts() {
+    const langData = translations[currentLang];
+    if (activeDrafts.length === 0) return;
+    
+    if (!confirm(langData["confirm-delete"])) return;
+    
+    try {
+        btnApproveAll.disabled = true;
+        btnApproveAll.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+        showToast(langData["toast-git-committing"] || "Processing...");
+        
+        const res = await fetch(`${API_BASE}/approve-all`, {
+            method: "POST"
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Batch approval failed");
+        
+        showToast(langData["toast-drafts-approved-all"]);
+        currentDraftName = null;
+        
+        loadDrafts();
+        loadNotes();
+        loadGraph();
+        loadRecentUpdates();
+        checkGitStatus();
+    } catch (err) {
+        showToast(err.message, true);
+    } finally {
+        btnApproveAll.disabled = false;
+        btnApproveAll.innerHTML = `<i class="fa-solid fa-check-double"></i> <span data-i18n="btn-approve-all">${langData["btn-approve-all"]}</span>`;
+    }
+}
+
+async function rejectAllDrafts() {
+    const langData = translations[currentLang];
+    if (activeDrafts.length === 0) return;
+    
+    if (!confirm(langData["confirm-delete"])) return;
+    
+    try {
+        btnRejectAll.disabled = true;
+        btnRejectAll.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+        
+        const res = await fetch(`${API_BASE}/reject-all`, {
+            method: "POST"
+        });
+        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Batch rejection failed");
+        
+        showToast(langData["toast-drafts-rejected-all"]);
+        currentDraftName = null;
+        loadDrafts();
+    } catch (err) {
+        showToast(err.message, true);
+    } finally {
+        btnRejectAll.disabled = false;
+        btnRejectAll.innerHTML = `<i class="fa-solid fa-trash-can"></i> <span data-i18n="btn-reject-all">${langData["btn-reject-all"]}</span>`;
+    }
+}
 
