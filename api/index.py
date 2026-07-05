@@ -186,7 +186,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
             self.send_json([])
             return
         
-        for file_path in WIKI_DIR.glob("*.md"):
+        for file_path in WIKI_DIR.rglob("*.md"):
             if file_path.name in ["index.md", "log.md"]:
                 continue
             try:
@@ -210,7 +210,8 @@ class handler(http.server.SimpleHTTPRequestHandler):
             self.send_json({"error": "Missing parameter 'name'"}, 400)
             return
 
-        file_path = WIKI_DIR / f"{note_name}.md"
+        found = list(WIKI_DIR.rglob(f"{note_name}.md"))
+        file_path = found[0] if found else WIKI_DIR / f"{note_name}.md"
         if not file_path.exists() or not file_path.is_file():
             self.send_json({"error": f"Note '{note_name}' not found"}, 404)
             return
@@ -242,7 +243,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
             return
 
         # Phase 1: Collect nodes
-        for file_path in WIKI_DIR.glob("*.md"):
+        for file_path in WIKI_DIR.rglob("*.md"):
             stem = file_path.stem
             all_stems.add(stem)
             
@@ -265,7 +266,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
             })
 
         # Phase 2: Collect edges
-        for file_path in WIKI_DIR.glob("*.md"):
+        for file_path in WIKI_DIR.rglob("*.md"):
             source_stem = file_path.stem
             try:
                 content = file_path.read_text(encoding="utf-8")
@@ -391,7 +392,8 @@ class handler(http.server.SimpleHTTPRequestHandler):
                 if name in ["index", "log", "overview"]:
                     self.send_json({"error": "Deletion of system core files is blocked"}, 400)
                     return
-                file_path = WIKI_DIR / f"{name}.md"
+                found = list(WIKI_DIR.rglob(f"{name}.md"))
+                file_path = found[0] if found else WIKI_DIR / f"{name}.md"
             elif ftype == "raw":
                 file_path = RAW_DIR / name
             else:
@@ -513,7 +515,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
             referenced_files = set()
             
             # 1. Parse all wiki markdown files frontmatter to get referenced raw sources
-            for p in WIKI_DIR.glob("*.md"):
+            for p in WIKI_DIR.rglob("*.md"):
                 if p.name not in ["index.md", "log.md", "overview.md"]:
                     try:
                         content = p.read_text(encoding="utf-8")
@@ -613,7 +615,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
     def api_get_recent(self):
         try:
             recent = []
-            for p in WIKI_DIR.glob("*.md"):
+            for p in WIKI_DIR.rglob("*.md"):
                 if p.name not in ["index.md", "log.md", "overview.md"]:
                     try:
                         content = p.read_text(encoding="utf-8")
