@@ -14,8 +14,10 @@ from datetime import datetime
 SERVER_ROOT = Path(__file__).parent.parent
 DASHBOARD_DIR = SERVER_ROOT / "dashboard"
 
-# Content resides in the user's Obsidian Vault
-ROOT_DIR = Path("D:/Obsidian/My Wiki")
+# Content resides in the user's Obsidian Vault (fallback to SERVER_ROOT if deployed)
+ROOT_DIR = Path(os.environ.get("WIKI_ROOT", "D:/Obsidian/My Wiki"))
+if not ROOT_DIR.exists():
+    ROOT_DIR = SERVER_ROOT
 WIKI_DIR = ROOT_DIR / "wiki"
 RAW_DIR = ROOT_DIR / "raw"
 DRAFTS_DIR = ROOT_DIR / "drafts"
@@ -976,9 +978,9 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
 def run_server(port=8000):
 
     handler = WikiHTTPHandler
-    # Bind to localhost
+    # Bind to all interfaces (0.0.0.0) for Docker/Cloud compatibility
     socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("127.0.0.1", port), handler) as httpd:
+    with socketserver.TCPServer(("0.0.0.0", port), handler) as httpd:
         print(f"=== LLM Wiki Local Server Running ===")
         print(f"URL: http://localhost:{port}")
         print(f"Root: {ROOT_DIR}")
@@ -990,7 +992,7 @@ def run_server(port=8000):
             print("\nShutting down server...")
 
 if __name__ == "__main__":
-    port = 8000
+    port = int(os.environ.get("PORT", 8080))
     if len(sys.argv) > 1:
         try:
             port = int(sys.argv[1])
