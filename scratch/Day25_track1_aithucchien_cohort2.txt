@@ -1,0 +1,442 @@
+AI THỰC CHIẾN · TRACK 1 · COHORT 2
+Con Người Trong Dự Án AI
+Từ Stakeholder Đến AI Team Performance
+"Công nghệ tốt không tự thắng — con người, cách giao tiếp và hiệu suất của team mới
+quyết định một dự án AI có thành công hay không."
+4 phần liền mạch — dành cho những team sẽ trở thành startup
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 1 / 37
+AI Thực Chiến · Track 1 · Cohort 2 · 2026
+09:00-09:15 · MỞ ĐẦU
+"Ý tưởng AI của team bạn rất hay — demo chạy mượt, ai xem
+cũng gật gù. Nhưng đến buổi pitch, nhà đầu tư vẫn chưa bị
+thuyết phục, và chính các founder trong team cũng bắt đầu
+bất đồng ý kiến với nhau." 
+Vì sao một sản phẩm tốt vẫn có thể "thất bại"? 
+Giữ câu hỏi này trong đầu suốt buổi học hôm nay.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 2 / 37
+Chương trình 09:00–13:00 — 4 phần, mỗi phần có lý thuyết +
+thực hànhTừ hiểu stakeholder, thuyết phục & phân quyền, đến cấu trúc và hiệu suất của AI team.
+Giờ Phần Chủ đề Nội dung chính
+09:00-09:15 Mở đầu Câu hỏi khởi động · Chương trình Sản phẩm cần hoàn thành
+09:15-10:05 Phần 1 Hiểu Stakeholder Của Dự Án Case study · Vì sao quan trọng · Sơ đồ 4 nhóm · Chiến lược
+10:05-11:00 Phần 2 Thuyết Phục, Giao Tiếp & Phân Quyền Case study · Kết luận trước · Phản biện · RACI Matrix
+11:00-11:15 — Giải lao —
+11:15-12:05 Phần 3 Cấu Trúc & Vai Trò Của AI T eam Case study · Thành phần & kiến trúc team · AI PM · Squad model
+12:05-12:55 Phần 4 Vận Hành AI T eam Hiệu Suất Cao Case study · Phương pháp vận hành · Agentic SDLC · Competency ·
+T uyển dụng
+12:55-13:00 Kết thúc Tổng kết · Giải đáp thắc mắc —
+Quy tắc buổi học: mỗi phần có 1 case study thực tế, lý thuyết cô đọng, rồi thực hành ngay bằng chính dự án của team bạn.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 3 / 37
+Cuối buổi hoàn thành gì?4 phần — 4 sản phẩm thực hành, gắn liền với chính dự án của team bạn.
+4 sản phẩm cần nộp
+Phần 1: Sơ đồ stakeholder + chiến lược cho từng nhóm
+Phần 2: Bài pitch "kết luận trước" + RACI Matrix của dự án
+Phần 3: Thiết kế cấu trúc AI team (vai trò, kiến trúc, priority hire)
+Phần 4: T eam Health & Growth Plan (vận hành, năng lực, tuyển
+dụng)
+Hạng mục Điểm
+Phần 1 — Sơ đồ stakeholder 20
+Phần 2 — Pitch + RACI Matrix 25
+Phần 3 — Thiết kế AI team 25
+Phần 4 — T eam Health & Growth Plan 20
+Tham gia & đóng góp chung 10
+Tổng 100
+Lưu ý: hoàn thành từng phần ngay trong buổi học. Không cần trình bày — chỉ cần đúng format, nộp lại bằng file/ảnh chụp trong nhóm chat của
+team trước khi kết thúc.
+1. 
+2. 
+3. 
+4. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 4 / 37
+Giảng viên chương trình
+Nguyễn Tiến Đồng
+Giảng viên · AI Thực Chiến — Track 1 · Cohort 2
+Đồng hành cùng các team trong chương trình AI Thực Chiến về stakeholder, cách thuyết
+phục và xây dựng AI team hiệu suất cao — những kỹ năng cần thiết để một ý tưởng AI
+thật sự trở thành startup. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 5 / 37
+PHẦN 1 · 09:15–10:05
+Hiểu Stakeholder Của Dự Án
+Case study · Stakeholder management, sơ đồ 4 nhóm, chiến lược từng nhóm · Thực
+hành: vẽ sơ đồ stakeholder (Cá nhân → T eam)
+01
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 6 / 37
+Case study: Vì sao IBM Watson Health thất bại tại MD Anderson62 triệu USD, 4 năm, và 0 bệnh nhân được điều trị.
+CASE STUDY
+IBM Watson for Oncology tại MD Anderson Cancer Center (2013–2016)
+IBM triển khai Watson để hỗ trợ bác sĩ ung thư ra quyết định điều trị. Sau 4 năm và 62 triệu USD, dự án bị huỷ bỏ hoàn toàn — chưa từng dùng để điều trị một bệnh
+nhân thực tế nào. Nguyên nhân chính không phải công nghệ: đội sales/marketing quảng bá khả năng của Watson vượt xa thực tế, tạo khoảng cách lớn giữa "AI trong
+phòng lab" và "AI trong lâm sàng". Các bác sĩ — nhóm stakeholder quan trọng nhất — mất niềm tin vì bị hứa hẹn quá đà, trong khi hệ thống lại đưa khuyến nghị dựa
+trên dữ liệu giả định thay vì dữ liệu bệnh nhân thật. 
+Bài học: bác sĩ chính là nhóm "Blockers" trong sơ đồ stakeholder — ảnh hưởng cao nhưng ít được tham gia thiết kế hệ thống từ đầu. Đừng để
+truyền thông đi trước năng lực thực tế, và luôn đưa Blockers vào cuộc sớm.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 7 / 37
+Stakeholder Management là gì? Vì sao quan trọng?Quản lý các mối quan hệ xung quanh dự án — không phải việc "làm màu", mà là rủi ro lớn nhất cần kiểm soát.
+Định nghĩa
+Stakeholder management là quá trình xác định, phân tích và xây dựng chiến lược làm việc với những người có ảnh hưởng đến dự án của
+bạn, hoặc bị ảnh hưởng bởi kết quả của dự án đó.
+70%dự án AI gặp khó khăn vì lý do
+con người
+95%dự án AI doanh nghiệp (2025) không tạo ra tác động lợi
+nhuận đo được*
+3 lý do stakeholder quan trọng với một startup AI: (1) Nguồn lực — vốn, dữ liệu, quyền truy cập — nằm trong tay stakeholder; (2) Sản phẩm AI chỉ tạo giá trị khi
+được "tin dùng"; (3) Rủi ro lớn nhất thường không phải công nghệ, mà là mất sự ủng hộ giữa chừng. 
+*Nguồn: MIT NANDA Initiative, khảo sát 300 dự án AI doanh nghiệp,
+2025.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 8 / 37
+Sơ đồ 4 nhóm stakeholder — họ là ai, vai trò là gì?Xếp mỗi người theo 2 câu hỏi: họ có ẢNH HƯỞNG đến kết quả không? Họ có QUAN TÂM đến dự án không?
+QUAN TÂM: THẤP QUAN TÂM: CAO
+Ảnh hưởng
+cao
+Người cần thuyết phục (Blockers)
+VD: nhà đầu tư mới, đối tác lớn. Vai trò: quyết định go/no-go, cấp vốn, ký hợp
+đồng — nhưng chưa thấy đủ lý do ưu tiên dự án của bạn.
+Đồng minh thân thiết (Champions)
+VD: giảng viên chương trình, nhà đầu tư đã cam kết. Vai trò: đóng góp nguồn
+lực, mở quan hệ, bảo trợ dự án trước các bên khác.
+Ảnh hưởng
+thấp
+Người ít liên quan (Bystanders)
+VD: người ở cohort khác chưa biết đến sản phẩm của bạn. Vai trò: gần như
+không tác động, nhưng có thể chuyển nhóm nếu dự án phát triển.
+Người ủng hộ nhiệt tình (Supporters)
+VD: khách hàng dùng thử, founder khác trong cohort. Vai trò: cung cấp feedback
+thật, lan tỏa truyền miệng, làm nhân chứng cho case study.
+Lưu ý: vẽ sơ đồ này TRƯỚC khi bắt đầu làm — không phải sau khi gặp khó khăn.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 9 / 37
+Chiến lược cho từng nhóm stakeholderMỗi nhóm cần một cách tiếp cận riêng — không có công thức chung cho tất cả.
+Nhóm Mục tiêu chiến lược Hành động cụ thể
+Champions Duy trì & tận dụng Cập nhật tiến độ thường xuyên, nhờ giới thiệu thêm quan hệ, mời làm cố vấn
+không chính thức.
+Blockers Thuyết phục & giảm rủi ro Chuẩn bị pitch/dữ liệu kỹ, giải quyết thẳng mối lo (chi phí, rủi ro, độ tin cậy AI)
+trước khi họ hỏi.
+Supporters Trao quyền & khuếch đại Mời tham gia sớm (early access), biến họ thành người giới thiệu (referral), lắng
+nghe feedback nghiêm túc.
+Bystanders Theo dõi, không đầu tư quá nhiềuThông báo định kỳ, không cần họp riêng, quan sát xem họ có chuyển nhóm không.
+Một stakeholder có thể đổi nhóm theo thời gian — sơ đồ này cần cập nhật định kỳ, không phải vẽ 1 lần rồi thôi.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 10 / 37
+Thực hành: Sơ đồ stakeholder + chiến lược cho dự án của bạnThực hành Phần 1 — Cá nhân → T eam.
+Cá nhân → Team · 25 phút
+Cá nhân (10 phút): liệt kê ít nhất 6 stakeholder của dự án bạn (giảng viên, thành viên team, nhà đầu tư tiềm năng, khách hàng dùng
+thử...), xếp vào 1 trong 4 nhóm.
+Team (15 phút): thống nhất 1 sơ đồ chung; chọn T op 2 Champion và T op 2 Blocker, viết chiến lược tiếp cận cụ thể cho từng người (không chỉ
+chung chung theo nhóm).
+Format nộp bài: 1 ảnh chụp/trang tài liệu gồm sơ đồ stakeholder + chiến lược cho T op 2 Champion, T op 2 Blocker. Không cần trình bày — gửi vào
+nhóm chat của team.
+1. 
+2. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 11 / 37
+PHẦN 2 · 10:05–11:00
+Thuyết Phục, Giao Tiếp & Phân Quyền Với
+Stakeholder
+Case study · Kết luận trước, xử lý phản biện, RACI Matrix · Thực hành: pitch + cập
+nhật RACI (T eam)
+02
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 12 / 37
+Case study: Klarna và bài học về lời hứa với stakeholderTruyền thông xuất sắc — nhưng chất lượng không theo kịp lời hứa.
+CASE STUDY
+Klarna — từ "700 nhân viên" đến tuyển lại người thật (2024–2025)
+Tháng 2/2024, Klarna công bố: trợ lý AI của họ xử lý khối lượng công việc tương đương 700 nhân viên chăm sóc khách hàng — một thông điệp "kết luận trước"
+hoàn hảo, gây tiếng vang lớn với nhà đầu tư và báo chí toàn cầu. Nhưng đến 2025, sau làn sóng phàn nàn về chất lượng dịch vụ giảm sút, CEO Klarna phải thừa nhận
+việc cắt giảm nhân sự đã đi quá xa, và công ty bắt đầu tuyển lại nhân viên chăm sóc khách hàng. 
+Bài học: nói kết luận trước giúp thuyết phục nhanh, nhưng nếu lời hứa vượt quá chất lượng thực tế, niềm tin của stakeholder (khách hàng, nhà
+đầu tư, nhân viên) sẽ mất đi nhanh hơn nhiều so với thời gian xây dựng nó.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 13 / 37
+Nguyên tắc "Kết luận trước" — mỗi stakeholder nghe một ngôn
+ngữ khácNgười nghe thường chỉ thật sự tập trung trong 30 giây đầu tiên.
+Nhà đầu tư
+Nghe bằng tăng trưởng, ROI, quy mô
+thị trường
+Giảng viên
+Nghe bằng rủi ro, tính khả thi, bài học
+rút ra
+Khách hàng
+Nghe bằng lợi ích trực tiếp, dễ dùng,
+giá cả
+Cấu trúc: Kết luận → vài lý do chính → số liệu/ví dụ minh hoạ. Nhưng nhớ bài học Klarna: lời hứa trong phần "kết luận" phải có chất lượng thật phía sau.
+✗ Cách trình bày thường gặp
+"Sau khi team mình phân tích rất nhiều dữ liệu và thử
+nhiều hướng khác nhau, cuối cùng team mình đề
+xuất…"
+✓ Kết luận trước, dữ liệu sau
+"T eam mình đề xuất chatbot hỗ trợ học tập — tiết
+kiệm 50% thời gian tra cứu tài liệu." Nói ngay điều
+quan trọng nhất.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 14 / 37
+Xử lý phản biện từ stakeholderMỗi lời từ chối đều có một lý do cụ thể phía sau — và một cách phản biện tương ứng.
+Phản biện thường gặpCách đối đáp
+"Ý tưởng hay nhưng rủi ro quá" Pilot nhỏ, dữ liệu thử nghiệm thực tế, thiết kế human-in-the-loop để giảm rủi ro.
+"Chi phí/thời gian không đáng" So sánh chi phí cơ hội nếu KHÔNG làm, ROI cụ thể, mốc thời gian rõ ràng.
+"Tôi không tin AI làm được" Demo thực tế, số liệu độ chính xác, case study tương tự đã thành công.
+"Để tôi suy nghĩ thêm" (trì hoãn) Đề xuất ngay 1 hành động nhỏ, cụ thể (small ask) thay vì chờ quyết định lớn.
+4 kỹ thuật chung: Giải thích rõ (Education) → Mời tham gia (Participation) → Hỗ trợ (Facilitation) → Thoả thuận hai bên cùng lợi (Negotiation).
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 15 / 37
+RACI Matrix — phân công trách nhiệm rõ ràngAi làm, ai duyệt, ai được hỏi, ai chỉ cần biết — ví dụ cho một dự án AI của startup.
+Công việc PM / Founder Kỹ thuật PO Nhà đầu tư
+Xác định vấn đề & use case R C A I
+Xây dựng MVP C R A I
+Chuẩn bị pitch gọi vốn R I A C
+Quyết định rót vốn / hợp tác R I C A
+Ra mắt sản phẩm (launch) A R I I
+R = Responsible (người thực hiện) · A = Accountable (chịu trách nhiệm cuối, chỉ 1 người) · C = Consulted (hỏi ý kiến trước) · I = Informed (chỉ cần biết sau)
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 16 / 37
+Nguyên tắc vàng khi dùng RACIRACI sai còn nguy hiểm hơn không có RACI.
+Quy tắc 1 chữ A: mỗi hàng chỉ đúng 1 người Accountable. Nếu ai cũng chịu trách nhiệm = không ai chịu trách nhiệm.
+R trước A: người Responsible làm việc, người Accountable phê duyệt — không nên là cùng một người.
+C khác I: Consulted cần input TRƯỚC khi quyết định; Informed chỉ cần biết SAU khi quyết định xong.
+RACI không phải tài liệu tĩnh: stakeholder mới xuất hiện (nhà đầu tư mới, thành viên mới)? Cập nhật ngay.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 17 / 37
+Thực hành: Pitch "Kết luận trước" + Cập nhật RACI MatrixThực hành Phần 2 — T eam.
+Team · 35 phút
+Team (15 phút): chọn 1 ý tưởng của dự án, viết lại theo cấu trúc Kết luận → lý do → số liệu; chuẩn bị sẵn cách đối đáp cho 1 phản biện thường gặp
+nhất với stakeholder chính của bạn.
+Cá nhân (10 phút): mỗi thành viên tự viết lại bài pitch của mình theo cấu trúc trên (không cần tập nói trước lớp).
+RACI (10 phút): xây dựng/cập nhật RACI Matrix cho dự án của team, áp dụng nguyên tắc 1 chữ A.
+Format nộp bài: văn bản pitch (Kết luận → lý do → số liệu, tối đa nửa trang) + RACI Matrix. Không cần trình bày — gửi vào nhóm chat của
+team.
+1. 
+2. 
+3. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 18 / 37
+PHẦN 3 · 11:15–12:05
+Cấu Trúc & Vai Trò Của AI Team
+Case study · Thành phần AI team, kiến trúc team, AI Product Manager, mô hình
+Squad · Thực hành: thiết kế AI team (T eam)
+03
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 19 / 37
+Case study: Vai trò mới đang định hình lại AI teamMột demo AI ấn tượng không tự chạy được trong hệ thống thật của khách hàng.
+CASE STUDY
+Sự trỗi dậy của Forward Deployed Engineer (2025–2026)
+Mô hình "Forward Deployed Engineer" (FDE) — kỹ sư AI làm việc trực tiếp trong hệ thống của khách hàng — do Palantir khởi xướng từ đầu 2010s. Đến 2026, mô hình
+này thành chuẩn ngành: OpenAI lập công ty con "The Deployment Company" với hơn 4 tỷ USD vốn cam kết; Anthropic liên doanh 1,5 tỷ USD với Blackstone &
+Goldman Sachs để nhúng kỹ sư AI vào các tổ chức tài chính. Tin tuyển FDE tăng hơn 800% trong 2025. 
+Bài học: xây kiến trúc AI team không chỉ dựa trên ai giỏi công nghệ nhất, mà còn phải tính ai đủ khả năng "mang AI vào thực tế" — làm việc trực
+tiếp với khách hàng, dữ liệu thật, quy trình có sẵn của họ.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 20 / 37
+AI Team gồm những thành phần nào?Vẽ org chart + mức độ ưu tiên theo giai đoạn: MVP → Growth → Scale.
+Core Team (luôn cần) Extended (scale-up) Advisory Layer
+Xu hướng 2025–2026: "AI Engineer" đã vượt "ML Engineer" để trở thành chức danh tăng trưởng nhanh nhất trên LinkedIn — công việc chính chuyển từ
+huấn luyện mô hình sang xây hệ thống dùng AI (RAG, agent, đánh giá chất lượng). Startup (3 người): PM + AI Engineer + Data Engineer.
+AI Product Manager• 
+AI Engineer (RAG, agent, tích hợp
+LLM API)
+• 
+Data Engineer• 
+UX Designer (AI-focused)• 
+Fullstack Developer• 
+ML Research Engineer (fine-tune
+model)
+• 
+Forward Deployed Engineer• 
+AI Ethics Researcher• 
+MLOps / Evals Engineer• 
+AI Ethics Advisor (ext.)• 
+Legal / Compliance• 
+Domain Expert• 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 21 / 37
+AI Team Architecture có những dạng nào?Cách tổ chức con người xung quanh AI, không chỉ là danh sách vai trò.
+Mô hình Cách hoạt động Ưu / nhược điểm
+Centralized
+(Tập trung)
+1 đội AI trung tâm phục vụ toàn bộ công ty/sản phẩm. + Dễ chia sẻ kiến thức · − Dễ nghẽn
+(bottleneck)
+Embedded
+(Nhúng)
+Mỗi đội sản phẩm có 1-2 người AI riêng, làm việc sát nhu cầu thực tế. + Nhanh, sát thực tế · − Khó nhất quán, khó
+chia sẻ
+Hybrid
+(Hub-and-Spoke)
+1 "hub" trung tâm chuẩn hoá công cụ + các AI engineer "spoke" nhúng vào từng đội.+ Cân bằng tốc độ & nhất quán · − Cần điều
+phối tốt
+Forward Deployed Engineer (case study trước) chính là dạng "Embedded" đặc biệt — nhúng thẳng vào hệ thống của khách hàng thay vì chỉ nhúng vào đội
+sản phẩm nội bộ. Với 1 startup nhỏ (3-5 người): Embedded đơn giản — cả team làm chung — là phù hợp nhất.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 22 / 37
+AI Product Manager là ai? Khác gì PM truyền thống?Người quyết định bài toán nào nên dùng AI, và đánh giá được chất lượng của mô hình.
+Năng lực PM truyền thống AI Product Manager
+T echnical depth Feature specs, user stories ML pipeline, precision/recall, prompt engineering
+Data literacy Basic analytics, dashboard Confusion matrix, A/B test, statistical significance
+Uncertainty Requirement rõ ràng Model uncertainty, hallucination edge case
+User flows Deterministic flows Human-in-the-loop (HITL), fallback mechanism
+Khác biệt cốt lõi: tính bất định của AI. AI PM phải biết bài toán nào đáng dùng AI, bài toán nào không nên AI-first.
+Xu hướng 2026: ranh giới vai trò đang mờ dần — nhờ AI, PM cũng code prototype được, Engineer cũng tham gia thiết kế. Nhưng vai trò cốt lõi của AI PM
+(quyết định dùng AI ở đâu, đánh giá chất lượng mô hình) thì không đổi.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 23 / 37
+Mô hình Squad của Spotify — áp dụng cho AI TeamMột trong những cách tổ chức team sản phẩm được các công ty công nghệ áp dụng rộng rãi nhất.
+Squad
+Đội nhỏ, tự chủ, đa chức
+năng — sở hữu trọn 1 sản
+phẩm/mục tiêu, hoạt động
+như 1 mini-startup.
+Tribe
+Tập hợp nhiều Squad liên
+quan trong cùng 1 mảng
+sản phẩm lớn.
+Chapter
+Người cùng chuyên môn
+(VD: AI Engineer) ở các
+Squad khác nhau, họp
+định kỳ để chia sẻ kỹ
+thuật.
+Guild
+Cộng đồng cùng mối quan
+tâm, xuyên suốt cả công
+ty, tham gia tự nguyện
+(VD: Responsible AI).
+Với AI Thực Chiến: coi team của bạn như 1 Squad — tự chủ, đa chức năng, sở hữu trọn vẹn 1 sản phẩm AI từ đầu đến cuối.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 24 / 37
+Thực hành: Thiết kế AI Team cho dự án của bạnThực hành Phần 3 — T eam.
+Team · 30 phút
+Chọn mô hình kiến trúc phù hợp với giai đoạn của team (Centralized / Embedded / Hybrid) và giải thích vì sao.
+Liệt kê các vai trò cần thiết hiện tại (Core) và trong 6 tháng tới (Extended), xác định priority hire sequence.
+Nếu team hình dung theo mô hình Squad: Squad của bạn đang sở hữu sản phẩm/mục tiêu gì?
+Format nộp bài: 1 trang/slide đơn giản gồm sơ đồ AI team (kiến trúc + vai trò + priority hire). Không cần trình bày — gửi vào nhóm chat
+của team.
+1. 
+2. 
+3. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 25 / 37
+PHẦN 4 · 12:05–12:55
+Vận Hành AI Team Hiệu Suất Cao
+Case study · Phương pháp vận hành, Agentic SDLC, competency framework, tuyển
+dụng · Thực hành: T eam Health & Growth Plan (Cá nhân → T eam)
+04
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 26 / 37
+Case study: Một AI team vận hành lại từ đầu khi có AIĐội ngũ đứng sau Claude Code (Anthropic) chia sẻ cách họ đổi toàn bộ quy trình làm việc, 2026.
+CASE STUDY
+Claude Code Team (Anthropic) — vận hành lại quy trình khi AI viết code nhanh hơn con người
+Khi AI tạo code nhanh và tốt, các quy trình cũ (roadmap 6 tháng, review 100% bởi con người, vai trò cố định) không còn phù hợp. Thay đổi chính: lập kế
+hoạch "vừa đủ, đúng lúc" (just-in-time) thay vì roadmap dài hạn; hỏi AI trước khi đi tìm tác giả đoạn code; con người chỉ review sâu ở phần cần chuyên môn
+(bảo mật, pháp lý, trải nghiệm người dùng); vai trò "nhoè" vào nhau — PM cũng code, Engineer cũng làm thiết kế; team giữ phẳng, chia thành các nhóm
+nhỏ (pods) tự chủ. 
+Bài học: đo hiệu suất bằng tốc độ hoà nhập nhân sự mới, tốc độ hoàn thành công việc — nhưng đừng nhầm "làm nhanh" với "làm đúng việc". Competency
+framework và văn hoá an toàn tâm lý ở phần sau chính là cách kiểm soát điều đó.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 27 / 37
+Vận hành AI team hiệu quả — phương pháp nào?3 thay đổi chính khi team của bạn dùng AI làm đòn bẩy, không chỉ 1 công cụ phụ.
+Đo 4 khía cạnh: Chất lượng AI (model tốt lên không) · Tiến độ (đúng deadline không) · Tinh thần team (mọi người có ổn không) · Tốc độ ra sản phẩm (bao
+lâu để đưa 1 thay đổi vào thực tế).
+Yếu tố quan trọng nhất để vận hành tốt: an toàn tâm lý — team dám thử, dám sai, dám nói thật, vì mô hình AI không phải lúc nào cũng đúng ngay từ đầu
+(Google Project Aristotle, 2016: an toàn tâm lý là yếu tố dự đoán hiệu suất team #1, hơn cả năng lực cá nhân).
+Lập kế hoạch: Just-in-time
+Bỏ roadmap 6 tháng cứng nhắc — dễ lỗi thời chỉ sau vài tuần—
+Prototype nhanh, đưa người dùng thật vào sớm, điều chỉnh
+theo feedback
+—
+Review công việc theo tuần thay vì theo quý—
+Review: Trust but verify
+Để AI xử lý việc lặp lại (style, lỗi cú pháp, viết test)—
+Con người tập trung review nơi cần chuyên môn thật: bảo
+mật, pháp lý, trải nghiệm người dùng
+—
+Vai trò "nhoè" vào nhau — ai cũng có thể đóng góp nhiều
+phần việc hơn trước
+—
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 28 / 37
+Competency Framework — 3 cấp độ chi tiếtLộ trình phát triển năng lực rõ ràng cho từng thành viên trong AI team.
+Cấp độ Thời gian điển
+hình Kỹ năng cụ thể Ví dụ công việc
+L1
+AI Literate
+0-6 tháng làm quen Hiểu khái niệm cơ bản (LLM, RAG, agent), dùng thành thạo công cụ AI có sẵn
+(ChatGPT, Claude, Copilot)
+Dùng AI tăng tốc công việc cá nhân: viết nội dung,
+research, tổng hợp
+L2
+AI Practitioner
+6-18 tháng thực hành Xây tính năng có AI (RAG đơn giản, tích hợp API), viết prompt hiệu quả, đọc
+hiểu chỉ số mô hình
+AI Engineer/PM triển khai 1 tính năng AI cụ thể
+trong sản phẩm
+L3
+AI Builder
+18+ tháng chuyên sâu Thiết kế kiến trúc AI phức tạp (multi-agent, fine-tuning), xây eval framework,
+chính sách AI có trách nhiệm
+Lead AI Engineer, Head of AI dẫn dắt chiến lược cả
+team
+Mỗi cấp độ được đánh giá trên 3 trục độc lập: Technical, Business, Governance — một người có thể L2 về T echnical nhưng L1 về Governance, hoàn toàn
+bình thường. Không skip cấp độ.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 29 / 37
+Áp dụng Competency Framework trong team của bạnMột framework chỉ có giá trị khi được dùng để ra quyết định thật.
+Bước áp dụng Cách làm cụ thể
+Đánh giá định kỳ Tự đánh giá (self-assessment) + đánh giá chéo/leader review, mỗi quý 1 lần.
+Gắn với vai trò AI Engineer ưu tiên lên L3 T echnical trước; PM ưu tiên lên L2-L3 Business trước.
+Xây lộ trình học Mỗi trục (T echnical/Business/Governance) có tài liệu, khoá học, dự án thực hành riêng để lên cấp.
+Gắn với career path Dùng kết quả đánh giá để quyết định thăng vai trò, tăng phạm vi trách nhiệm.
+Liên kết ngược với RACI (Phần 2): người đạt Business L3 thường là ứng viên phù hợp để làm Accountable (A) cho các quyết định chiến lược của team.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 30 / 37
+Hiring Talent cho AI TeamMột startup mới khó cạnh tranh lương với công ty lớn — nhưng có lợi thế khác.
+Build vs Buy vs Partner: đánh giá năng lực hiện có (dùng Competency Framework) → xác định khoảng trống → tự tuyển (Hire), thuê ngoài
+(Outsource), hoặc hợp tác với đối tác AI (Partner).
+Thực tế thị trường VN
+AI Engineer/Forward Deployed Engineer giỏi rất khan hiếm—
+Ứng viên giỏi thường có 2-3 lời mời cùng lúc—
+Mức lương AI tăng 15-25%/năm—
+Lợi thế của một startup nhỏ
+Bài toán thú vị, không chỉ CRUD—
+Học hỏi nhanh, va chạm thực tế sớm—
+Cổ phần (equity), lộ trình phát triển rõ ràng—
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 31 / 37
+Agentic Software Development LifecycleKhi AI agent không chỉ hỗ trợ gõ code, mà tham gia vào mọi bước của quy trình phát triển.
+Định nghĩa
+Agentic SDLC là cách phát triển phần mềm trong đó AI agent tham gia thực chất vào toàn bộ vòng đời: lên kế hoạch, viết code, kiểm thử, review, triển khai và vận hành
+— không chỉ là "trợ lý gõ code" như trước.
+Giai đoạn SDLC truyền thống Agentic SDLC
+Lên kế hoạch Con người viết requirement chi tiếtCon người nêu mục tiêu (intent); agent tự lập kế hoạch thực hiện
+Viết code Lập trình viên viết từng dòng Agent viết code, tự chạy thử trong "vòng lặp trong" (inner loop)
+Kiểm thử QA kiểm thử theo kịch bản có sẵn Agent tự sinh test, kiểm thử hành vi, tự phát hiện lỗi
+Review Con người review 100% Con người review sâu ở phần cần chuyên môn — "trust but verify"
+Triển khai & vận hành Lịch cố định, duyệt nhiều bước Agent hỗ trợ triển khai & giám sát liên tục, cần guardrail rõ ràng (governance)
+Đây chính là điều Claude Code T eam (case study Phần 4) đã áp dụng: lập kế hoạch just-in-time, hỏi AI trước khi tìm tác giả đoạn code, review theo kiểu "trust
+but verify".
+Governance vẫn cần con người: xác định rõ agent được tự quyết ở đâu, và phải dừng lại hỏi người ở đâu — đặc biệt khi động đến dữ liệu khách hàng, bảo
+mật, hoặc tiền bạc.
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 32 / 37
+Thực hành: Team Health & Growth PlanThực hành Phần 4 — Cá nhân → T eam.
+Cá nhân → Team · 30 phút
+Cá nhân (10 phút): tự chấm nhanh (1-5) team hiện tại theo 4 khía cạnh: chất lượng AI, tiến độ, tinh thần team, tốc độ ra sản phẩm.
+Team (15 phút): chia sẻ điểm số, chọn 1 cấp độ competency cần nâng cấp sớm nhất cho 1 vai trò cụ thể, và 1 vị trí cần tuyển/hỗ trợ thêm (hire/
+outsource/partner).
+Viết gọn 1 trang Team Health & Growth Plan: hiện trạng, 2-3 điều cần cải thiện, kế hoạch trong 30 ngày tới.
+Format nộp bài: 1-trang T eam Health & Growth Plan. Không cần trình bày — gửi vào nhóm chat của team.
+1. 
+2. 
+3. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 33 / 37
+Tổng kết — Những điều cần nhớ6 điều chính của buổi học hôm nay.
+Vẽ sơ đồ stakeholder trước khi bắt tay vào làm (bài học IBM Watson) — biết ai cần thuyết phục, ai đang ủng hộ mình.
+Kết luận trước giúp thuyết phục nhanh, nhưng lời hứa phải có chất lượng thật phía sau (bài học Klarna).
+RACI Matrix giúp cả team không nhầm lẫn ai chịu trách nhiệm việc gì.
+AI team hiện đại cần cả AI Engineer lẫn Forward Deployed Engineer — không chỉ người giỏi mô hình, mà cả người giỏi triển khai
+thực tế.
+Chọn kiến trúc team (Centralized/Embedded/Hybrid) và cách tổ chức (Squad) phù hợp với giai đoạn của bạn.
+Vận hành hiệu quả (bài học Claude Code team) = phương pháp phù hợp + competency framework rõ ràng + an toàn tâm lý để
+dám thử, dám sai.
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 34 / 37
+Checklist hoàn thành — 4 phầnRà soát trước khi kết thúc buổi học.
+Hạng mục Điểm
+Phần 1 — Sơ đồ stakeholder 20
+Phần 2 — Pitch + RACI Matrix 25
+Phần 3 — Thiết kế AI team 25
+Phần 4 — T eam Health & Growth Plan 20
+Tham gia & đóng góp chung 10
+Tổng 100
+Không cần trình bày — chỉ cần đúng format, gửi lại trong nhóm chat của team trước khi kết thúc buổi học.
+Đã hoàn thành?
+☐ Phần 1 — Sơ đồ stakeholder + chiến lược—
+☐ Phần 2 — Pitch "kết luận trước" + RACI Matrix—
+☐ Phần 3 — Thiết kế cấu trúc AI team—
+☐ Phần 4 — T eam Health & Growth Plan—
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 35 / 37
+Hỏi & Đáp 
+Có điều gì về stakeholder, RACI, cấu trúc AI team, hay cách vận hành hiệu suất cao bạn muốn hỏi
+thêm không? 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 36 / 37
+Cảm ơn!
+AI Thực Chiến · Track 1 · Cohort 2
+Con Người Trong Dự Án AI — Từ Stakeholder Đến AI T eam Performance 
+Giảng viên: Nguyễn Tiến Đồng AI Thực Chiến - Track 1 - Cohort 2 37 / 37

@@ -1,81 +1,65 @@
 ---
 type: summary
-title: "Day 27 – Track 1: Human-in-the-Loop UX"
-description: "Khi nào Agent cần xin phép? HITL taxonomy, confidence routing, approval workflows và UX best practices."
-tags: [ai, 20k, day27, track1, hitl, ux, human-in-the-loop]
+title: "Summary: Day 27 Track 1 - Stakeholder Management & AI Team Performance"
+description: "A summary of stakeholder management, communication, RACI matrix, AI team structure, and high-performance operations for AI projects."
+tags: [stakeholder-management, ai-team, raci, agentic-sdlc, product-management]
 timestamp: 2026-07-05
-sources: ["raw/AI_20K_2A202600974/27/Day12 - Track 3 - Human-in-the-loop-ux-khi-nao-agent-can-xin-phep.pdf"]
+sources: ["../raw/AI_20K_2A202600974/27/Day25_track1_aithucchien_cohort2.pdf"]
 ---
 
-> **Lộ trình:** [[track1_ba|Track 1: AI Product / BA]]
+# Day 27 Track 1 - Stakeholder Management & AI Team Performance
 
+This document summarizes the Day 27 Track 1 lecture on human factors in AI projects, covering stakeholder management, effective communication, team structures, and performance operations.
 
-# Day 27 – Track 1: Human-in-the-Loop UX
+## 1. Stakeholder Management
 
-**Giảng viên**: VinUniversity  
-**Khóa**: AICB Phase 2 · Track 3 · Ngày 27
+A good AI product can fail if the human element is not managed properly (e.g., IBM Watson Health at MD Anderson failed due to overpromising sales and neglecting doctors, the core blockers). Stakeholders must be mapped early using a 4-quadrant diagram based on **Influence** (Ảnh hưởng) and **Interest** (Quan tâm):
+- **Blockers (High Influence, Low Interest):** e.g., Investors, major partners. Strategy: Persuade, mitigate risks early, address concerns before they ask.
+- **Champions (High Influence, High Interest):** e.g., Instructors, committed investors. Strategy: Maintain engagement, leverage their resources and network.
+- **Bystanders (Low Influence, Low Interest):** e.g., Unrelated cohort members. Strategy: Monitor and inform periodically.
+- **Supporters (Low Influence, High Interest):** e.g., Trial customers. Strategy: Empower them, gather feedback, turn them into advocates.
 
-> **Câu hỏi trọng tâm**: Agent tự quyết hay hỏi người dùng – ranh giới nào là an toàn và không làm phiền?
+## 2. Communication and RACI Matrix
 
----
+### The "Conclusion First" Principle
+Different stakeholders listen for different things (Investors: ROI; Instructors: feasibility/risks; Customers: benefits). Always start with the conclusion, followed by reasons and data. **Case study:** Klarna overpromised AI capabilities, leading to customer dissatisfaction when the quality dropped.
 
-## Tại sao Full Autonomy nguy hiểm?
+### Handling Objections
+- **"Too risky"**: Propose small pilots, human-in-the-loop designs.
+- **"Not worth the cost"**: Show the opportunity cost of not doing it.
+- **"I don't trust AI"**: Provide real demos and case studies.
+- **"Let me think about it"**: Propose a small, concrete action (small ask).
 
-Các sự cố thực tế cho thấy Agent hoạt động hoàn toàn tự động dẫn đến:
-- Hành động không thể hoàn tác (gửi email, xóa file, thực hiện giao dịch)
-- Tích lũy sai lệch qua nhiều bước (error compounding)
-- Mất trust từ phía người dùng khi xảy ra lỗi
+### RACI Matrix
+A critical tool for AI project delegation:
+- **R (Responsible):** Does the work.
+- **A (Accountable):** Final decision maker (Must be exactly ONE person per task).
+- **C (Consulted):** Provides input *before* the decision.
+- **I (Informed):** Notified *after* the decision.
 
----
+## 3. AI Team Structure & Roles
 
-## HITL Taxonomy – 6 Interaction Patterns
+### Evolving Roles
+The role of **Forward Deployed Engineer (FDE)** is critical—engineers who embed with the customer to integrate AI into existing workflows (e.g., Anthropic, Palantir). An **AI Product Manager** differs from a traditional PM by managing uncertainty, model evaluation (precision/recall, halluncinations), and human-in-the-loop workflows.
 
-| Pattern | Khi nào dùng | Ví dụ |
-|---------|-------------|-------|
-| **Always ask** | Action có rủi ro cao, không thể hoàn tác | Gửi email cho client |
-| **Ask if uncertain** | Agent confidence thấp | Chưa chắc về địa chỉ giao hàng |
-| **Show then do** | Action quan trọng, có thể undo | Tạo file, book meeting |
-| **Do then show** | Low-risk, reversible | Tóm tắt tài liệu |
-| **Silent execution** | Routine, high-confidence, reversible | Log ghi chú |
-| **Async approval** | Không cần phản hồi ngay | Approve PR sau khi review |
+### Team Architectures
+- **Centralized:** One core AI team serving the company (easy to share knowledge, but can bottleneck).
+- **Embedded:** AI engineers join product teams (fast, realistic, but hard to maintain consistency).
+- **Hybrid (Hub-and-Spoke):** Central hub for tools, embedded spokes for product execution.
+- **Squad Model (Spotify style):** Autonomous, cross-functional teams owning an entire AI product lifecycle.
 
----
+## 4. High-Performance AI Team Operations
 
-## Confidence Routing – Khi nào Interrupt?
+### Agentic SDLC
+AI agents now participate in the entire Software Development Life Cycle (SDLC):
+- **Planning:** Human sets intent; agent plans. Just-in-time planning replaces 6-month roadmaps.
+- **Coding & Testing:** Agent writes code and self-tests; human acts as reviewer.
+- **Review:** "Trust but verify". Humans focus on security, legal, and UX.
 
-```python
-def route_action(action, confidence_score):
-    if action.is_irreversible and confidence_score < 0.95:
-        return "request_approval"
-    elif confidence_score < 0.70:
-        return "request_clarification"
-    elif action.risk_level == "high":
-        return "show_then_do"
-    else:
-        return "silent_execution"
-```
+### Competency Framework
+- **L1 (AI Literate):** Uses AI tools to accelerate personal work.
+- **L2 (AI Practitioner):** Builds simple AI features (RAG, API integrations).
+- **L3 (AI Builder):** Designs complex multi-agent systems and governance frameworks.
 
----
-
-## Approval Workflows
-
-**Synchronous**: User phải approve ngay → block execution  
-**Asynchronous**: Gửi notification, tiếp tục sau khi có approval  
-**Timeout policy**: Nếu không có approval sau X phút → cancel hoặc escalate
-
----
-
-## HITL UX Best Practices
-
-1. **Rõ ràng**: Hiển thị chính xác Agent định làm gì
-2. **Preview**: Cho xem kết quả trước khi thực thi
-3. **Easy reject**: Nút "Từ chối" luôn dễ bấm, không bị che khuất
-4. **Undo**: Với action đã thực hiện, cung cấp cách hoàn tác
-5. **Audit trail**: Log mọi quyết định để debug sau này
-
----
-
-## Liên kết
-- [[day23_track3]] – LangGraph HITL implementation
-- [[day11_overview]] – Guardrails & AI Safety
-- [[day27_overview]]
+### Psychological Safety
+The most important factor for an AI team is psychological safety (Project Aristotle). Teams must feel safe to experiment, fail, and speak up, as AI models are inherently uncertain.

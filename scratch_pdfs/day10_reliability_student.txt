@@ -1,0 +1,411 @@
+--- Page 1 ---
+Circuit Breakers, Caching & Re-
+liability for Production Agents
+AICB-P2T3 · Day 10 · Agent Production-Ready
+Instructor
+VinUniversity · Phase2·Track3·Week5
+--- Page 2 ---
+?
+HÃ Y SUY NGHĨ...
+“Khi LLM provider timeout trong
+production, agent của bạn sẽ tự
+phục hồi hay làm sập cả workflow?”
+Giữcâuhỏinàytrongđầukhihọcbàihômnay
+--- Page 3 ---
+Nội dung bài học
+1. Mụctiêu&timeline2giờ
+2. FailureModes
+3. CircuitBreaker&Fallback
+4. Caching&CostBudgeting
+5. Observability&SLO
+6. Lab: ReliabilityEngineering
+7. Tổngkết
+Instructor (VinUni) AICB·Day10 Week5 1/23
+--- Page 4 ---
+01
+Mục tiêu & timeline 2 giờ
+Tậptrungvàoreliabilityprimitives: circuitbreaker,fall-
+back,cache,metrics,chaostest.
+--- Page 5 ---
+Sau buổi học, học viên làm được gì?
+Conceptual outcomes
+■ Nhậndiện6nhómlỗiproduction
+củaLLMagent.
+■ Giảithích3trạngtháicircuit
+breaker.
+■ Phânbiệtexactcache,semantic
+cache,tool-resultcache.
+■ ThiếtkếSLI/SLO/SLAchoagent.
+Practical outcomes
+■ Xâygatewaycófallbackchain.
+■ Loglatency/cost/cachehit/circuit
+state.
+■ Chạychaostestvàloadtestnhỏ.
+■ Viếtreportcómetricđểchấm
+điểm.
+Trong lớp: hoàn thành baseline reliability harness. Bài lab mở rộng 4 giờ
+giúpphânloạinhómhoànthànhsớmvànhómđàosâu.
+Instructor (VinUni) AICB·Day10 Week5 2/23
+--- Page 6 ---
+Timeline trên lớp: 2 giờ
+00:00 00:20 00:45 01:10 01:35 02:00
+Failuremodes+CB Cache+budget Observability Labkickoff
+Lý thuyết có tương tác
+■ 20’reliabilityfailuremap
+■ 25’circuitbreaker+fallback
+■ 25’caching+costbudget
+■ 25’metrics+chaosthinking
+Lab kickoff trong lớp
+■ 10’repowalkthrough
+■ 15’teamplanning+firstrun
+■ Saulớp: hoànthiện4hlab/report
+Instructor (VinUni) AICB·Day10 Week5 3/23
+--- Page 7 ---
+02
+Failure Modes
+Reliabilitybắtđầutừviệcgọiđúngtênlỗi: transient,out-
+age,degraded,stale,costly,unsafe.
+--- Page 8 ---
+Production agent fail như thế nào?
+UserRequest
+LLMGateway
+ProviderA ProviderB
+Cache/ToolAPIs
+Lỗi có thể xuất hiện ở provider,
+gateway,cache,tool,hoặcbusi-
+ness action. Reliability làsys-
+tem property,khôngphảichỉlà
+thêmretry.
+6 loại lỗi cần monitor
+1. Providertransient:
+429/500/timeout.
+2. Degradedlatency: P95tăngmạnh.
+3. Fulloutage: providerkhôngphản
+hồi.
+4. Orchestrationloop: state/retrysai.
+5. Tool/cachefailure:
+stale/schema/auth.
+6. Businessactionsai: sideeffect
+khôngrollback.
+Instructor (VinUni) AICB·Day10 Week5 4/23
+--- Page 9 ---
+Case: cascading failure từ retry vô tội vạ
+Providertimeout Clientretry3lần Quota/rate
+limitcạn Workflowoutage
+Think-pair-share: 5phút
+Hãychọnmộtsảnphẩmagentbạnbiết. Nếuproviderchínhbịtimeout30
+giây, người dùng sẽ thấy gì? Nhóm đề xuất một cáchcontain, isolate,
+recover.
+Retrychỉlàbướcđầu. Nếukhôngcócircuitbreaker+fallback+budget,
+retrycóthểbiếnlỗinhỏthànhoutagelớn.
+Instructor (VinUni) AICB·Day10 Week5 5/23
+--- Page 10 ---
+Silent degradation: không lỗi nhưng chất lượng giảm
+time
+quality
+errorrate=0%
+faithfulness
+giảmdần
+Nguyên nhân thường gặp
+■ Providercậpnhậtmodel
+silently.
+■ Prompt/schemathayđổi
+nhưngevalkhôngđổi.
+■ Knowledgebasestalehoặc
+retrievalyếu.
+■ Cachetrảcâuđúngcũnhưng
+saihiệntại.
+Lưu ý: Quality SLO phải đi
+cùnguptimeSLO.Errorrate=
+0%khôngđủ.
+Instructor (VinUni) AICB·Day10 Week5 6/23
+--- Page 11 ---
+03
+Circuit Breaker & Fallback
+Circuitbreakerngắtgọiproviderđanghỏng;fallback
+chaingiữtrảinghiệmuserởmứcchấpnhậnđược.
+--- Page 12 ---
+Circuit Breaker: 3 trạng thái
+CLOSED
+normalcalls
+OPEN
+failfast
+HALF-OPEN
+probecall
+failurethreshold resettimeout
+success
+fail
+Nêncóbreakertheotừngprovider/model/task. ProviderAopenkhôngnên
+kéoproviderBhoặccachelayersậptheo.
+Instructor (VinUni) AICB·Day10 Week5 7/23
+--- Page 13 ---
+Circuit breaker ở mức code
+class CircuitBreaker:
+def call(self, fn, *args, **kwargs):
+if self.state == "OPEN":
+if not self.ready_to_probe():
+raise CircuitOpenError()
+self.state = "HALF_OPEN"
+try:
+result = fn(*args, **kwargs)
+self.record_success()
+return result
+except Exception:
+self.record_failure()
+raise
+Các tham số chính
+■ failure_threshold
+■ reset_timeout_seconds
+■ success_threshold
+■ exceptionnàođượctínhlà
+failure
+Lưu ý: Production multi-
+instance: state nên có
+backend chung như Redis,
+khôngchỉin-memory.
+Instructor (VinUni) AICB·Day10 Week5 8/23
+--- Page 14 ---
+Fallback ladder: graceful degradation
+Bestmodel
+highestquality
+Backupprovider
+samefeatureset
+Cheaper/smallermodel
+limitedquality
+Cachedresponse
+Staticfallbackmessage
+Fallbackkhôngchỉlàđổimodel.
+Cầnkiểmtra feature compatibil-
+ity: JSONmode,toolcalling,context
+length,latency/cost,policybehavior.
+Instructor (VinUni) AICB·Day10 Week5 9/23
+--- Page 15 ---
+Interactive: thiết kế fallback policy
+Nhóm3người-8phút
+Mỗinhómchọn1task:customersupport,codereview,medicaltriage,hoặc
+internalHRchatbot. Thiếtkếfallbackladder4bậcvànêutasknào không
+được phép fallbacksangmodelyếuhơn.
+Gợi ý trade-off
+■ Qualityvslatency
+■ Costvssafety
+■ Cachedanswervsfreshness
+■ Staticresponsevsusertrust
+Output cần nộp
+■ Ladder4bậc
+■ Điềukiệnchuyểnbậc
+■ Metricđểkiểmchứng
+■ Rủirolớnnhất
+Instructor (VinUni) AICB·Day10 Week5 10/23
+--- Page 16 ---
+04
+Caching & Cost Budgeting
+Cacheđúngchỗcóthểgiảmlatency/cost;cachesaichỗ
+tạostaleanswervàhallucinationổnđịnh.
+--- Page 17 ---
+3 tầng cache cho LLM applications
+1. Providerprompt/prefixcache:
+giảmcostkhiprefixdàiđượcreuse
+2. Appsemanticresponsecache:
+querytươngtự →reuseresponse
+3. Tool/resultcache: API/DB/re-
+sultexpensivenhưngdeterministic
+cachestack
+Cache deterministic và low-risk trước. Với semantic response cache, cần
+threshold,TTL,invalidation,vàallowlisttheotask.
+Instructor (VinUni) AICB·Day10 Week5 11/23
+--- Page 18 ---
+Semantic cache flow
+Userquery Embed Vectorsearch
+HIT
+returncache
+MISS
+callLLM Storeresult
+sim >threshold
+sim <threshold
+Lưu ý: Cache poisoning: hai query cosine gần nhau nhưng intent khác
+nhau. Metricquantrọng: hitrate vàfalse-hitrate.
+Instructor (VinUni) AICB·Day10 Week5 12/23
+--- Page 19 ---
+Cost budgeting: reliability của ví tiền
+3 lớp control
+1. Per-requestcap: maxtokens,
+maxtools,timeout.
+2. Per-user/appratelimit: token
+bucket.
+3. Monthlybudget: warn80%,hard
+stop/routecheapat100%.
+Metric cần log
+■ provider,model,routereason
+■ input/outputtokens,estimated
+cost
+■ cachehit/miss,similarityscore
+■ latency,status,circuitstate
+Đừng chỉ tổng cost theo ngày. Cần cost theo feature/user/model để tìm
+đườngcallđắtvàtốiưuđúngnơi.
+Instructor (VinUni) AICB·Day10 Week5 13/23
+--- Page 20 ---
+Interactive: cache hay không cache?
+Usecase Cachedecision Rủirochính
+FAQadmissions nêncachesemantic thôngtindeadlinestale
+Accountbalance khôngcacheresponse privacy+freshness
+Codeexplanation cachecóđiềukiện contextkhácnhau
+Weathertoday toolcacheTTLngắn staletheothờigian
+Policysummary cache+eventinvalidation policyupdate
+Votenhanh-5phút
+Vớimỗidòng,giơtay: cache/khôngcache/cachecóđiềukiện. Giảngviênchọn
+2ýkiếntráichiềuđểtranhluận.
+Instructor (VinUni) AICB·Day10 Week5 14/23
+--- Page 21 ---
+05
+Observability & SLO
+Khôngđothìkhôngbiếtsystemđangtốt,chậm,đắt,hay
+đangtrảlờisai.
+--- Page 22 ---
+SLI, SLO, SLA cho LLM agent
+Kháiniệm Ýnghĩa Vídụtronglab
+SLI metricđođược availability,P95latency,cache
+hitrate,false-hitrate
+SLO targetnộibộ availability ≥99%,P95 <2.5s,
+fallbacksuccess ≥95%
+SLA camkếtbênngoài 99.5% uptime/tháng cho
+customer-facingAPI
+Errorbudget mứclỗiđượcphép nếuburnratecao →freezefea-
+ture,ưutiênreliability
+Lưu ý: LLMagentcầnthêmqualitySLO:faithfulness,safetypassrate,escalation
+correctness.
+Instructor (VinUni) AICB·Day10 Week5 15/23
+--- Page 23 ---
+Metrics instrumentation tối thiểu
+REQUESTS = Counter( "agent_requests_total", [
+"provider", "status", "route"])
+LATENCY = Histogram( "agent_latency_seconds", [
+"provider", "route"])
+CACHE_HITS = Counter( "cache_hits_total", [
+"cache_type"])
+CIRCUIT_STATE = Gauge( "circuit_state", [
+"provider"]) # 0 closed, 1 open, 2 half-open
+Report cần có
+■ LatencyP50/P95/P99.
+■ Availability/errorrate.
+■ Fallbacksuccessrate.
+■ Cachehitratevàfalse-hit
+examples.
+■ Recoverytimetrongchaos
+test.
+Instructor (VinUni) AICB·Day10 Week5 16/23
+--- Page 24 ---
+Chaos testing: cố tình làm hỏng
+Chaos scenarios trong lab
+1. Primaryprovidertimeout100%.
+2. Primaryproviderintermittent
+50%.
+3. Cachereturnsstalecandidate.
+4. Costcapgầncạn.
+Expected evidence
+■ CircuitchuyểnCLOSED →OPEN.
+■ Gatewayroutesangfallback.
+■ Khôngretrystorm.
+■ Metrics/reportghirõrecovery
+time.
+Minidesignreview-7phút
+Mỗinhómviết1chaosscenariomớivàmetricchứngminhsystemrecover.
+Nhómkhácphảnbiện: scenariođócósideeffectkhông?
+Instructor (VinUni) AICB·Day10 Week5 17/23
+--- Page 25 ---
+06
+Lab: Reliability Engineering
+Labđượcthiếtkế4giờ;trênlớpkickoff2giờ. Họcviên
+giỏicóthểhoànthànhcoresớmvàlàmstretchtasks.
+--- Page 26 ---
+Lab #10
+Mục tiêu: Buildreliabilitygateway:circuitbreaker+semantic/toolcache
++metrics+chaosreport
+Deliverable:Repohoànchỉnh,metricsJSON/CSV,reportMarkdown/PDF,
+democommandchạyđược
+Thời gian: 2giờtrênlớp+2giờmởrộng
+Instructor (VinUni) AICB·Day10 Week5 18/23
+--- Page 27 ---
+Lab milestones: 4 giờ nhưng timeline lớp 2 giờ
+Thờigian Việccầnlàm Deliverable
+0–30’ Setup repo, chạy tests baseline, đọc
+TODO
+screenshot/testlog
+30–75’ Implement circuit breaker + fallback
+router
+statetransitionlog
+75–120’ Implement metrics + run mini chaos
+test
+metrics.jsonlần1
+120–180’ Implementcache+TTL/thresholdtun-
+ing
+cachecomparisontable
+180–240’ Loadtest+report+rubricself-check finalreport+plots/CSV
+Corepasskhoảng2giờchonhómmạnh. Stretch2giờcònlại: false-hitanalysis,
+costsimulation,reportchấtlượngcao,vàtestcoverage.
+Instructor (VinUni) AICB·Day10 Week5 19/23
+--- Page 28 ---
+Metric & report bắt buộc để chấm điểm
+Metrics bắt buộc
+■ availability,errorrate
+■ latencyP50/P95/P99
+■ fallbacksuccessrate
+■ circuitopencount+recoverytime
+■ cachehitrate+estimatedcost
+saved
+■ chaosscenariopass/fail
+Report bắt buộc
+■ architecturediagramngắn
+■ configtable
+■ experimentsetup
+■ metricstabletrước/saucache
+■ failureanalysis
+■ nextsteps
+Lưu ý: Reportkhôngcómetricđịnhlượng=khôngđạtphầngrading.
+Instructor (VinUni) AICB·Day10 Week5 20/23
+--- Page 29 ---
+Rubric tổng quan
+Hạngmục Điểm Kỳvọng
+Circuitbreaker/fallback 25 state machine đúng, không retry storm,
+fallbackcóroutereason
+Cache/cost 20 hitrate/costsavedrõ,TTL/thresholdcógiải
+thích,false-hitexamples
+Observability/metrics 20 P50/P95/P99, availability, circuit state,
+cachemetricsreproducible
+Chaos/loadtest 20 ítnhất3scenarios,córecoveryevidence
+Report/codequality 15 READMErõ,tests,typehints,config,report
+dễchấm
+Instructor (VinUni) AICB·Day10 Week5 21/23
+--- Page 30 ---
+Demo cuối buổi / cuối lab
+1. Chạymộtcommandtạometrics: make run-chaos hoặctươngđương.
+2. Chỉrabreakerchuyểnstatekhiprimaryfail.
+3. Sosánhlatency/costcócachevàkhôngcache.
+4. Mởreportvàgiảithích1failuremodecòntồntại.
+5. Nêu1configbạnsẽđổinếudeployproduction.
+Instructor (VinUni) AICB·Day10 Week5 22/23
+--- Page 31 ---
+07
+Tổng kết
+Reliabilityengineeringgiúpagentfailgracefully,đođược,
+vàcóthểcảithiệnbằngdữliệu.
+--- Page 32 ---
+Tổng kết — Key T akeaways
+Những ý chính cần nhớ trướckhisangbàitiếptheo
+1 Circuitbreaker+fallbacklàminimumviablereliabilitychoagentproduction.
+2
+CachecóROIcaonhưngcầnguardrail: TTL,threshold,invalidation,false-hittrack-
+ing.
+3 Metricsphảibaophủlatency,availability,cost,cache,circuitstatevàquality.
+4 Chaos/loadtestbiếngiảđịnhthànhbằngchứng;reportđịnhlượnggiúpchấmđiểm
+côngbằng.
+Instructor (VinUni) AICB·Day10 Week5 22/23
+--- Page 33 ---
+References
+1. MicrosoftAzureArchitectureCenter: CircuitBreakerpattern.
+2. ReleaseIt! DesignandDeployProduction-ReadySoftware,MichaelNygard.
+3. PrometheusclientPython: Counter,Gauge,Histogramdocs.
+4. LiteLLMdocumentation: routing,retries,fallbacks.
+5. Langfusedocumentation: LLMobservability,traces,costandlatencymetrics.
+Instructor (VinUni) AICB·Day10 Week5 23/23
+--- Page 34 ---
+Hỏi & Đáp

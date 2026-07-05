@@ -138,17 +138,16 @@
                             <span class="card-subtitle" data-i18n="graph-subtitle">Click on notes to browse their contents</span>
                         </div>
                         <!-- Legend Toolbar -->
-                        <div class="graph-legend">
-                            <div class="legend-header">
-                                <span data-i18n="legend-title">Filter Nodes:</span>
-                            </div>
-                            <div class="legend-items">
-                                <label class="legend-item"><input type="checkbox" checked data-filter="overview"> <span class="dot dot-overview"></span> <span data-i18n="type-overview">Overviews</span></label>
-                                <label class="legend-item"><input type="checkbox" checked data-filter="summary"> <span class="dot dot-summary"></span> <span data-i18n="type-summary">Summaries</span></label>
-                                <label class="legend-item"><input type="checkbox" checked data-filter="concept"> <span class="dot dot-concept"></span> <span data-i18n="type-concept">Concepts</span></label>
-                                <label class="legend-item"><input type="checkbox" checked data-filter="entity"> <span class="dot dot-entity"></span> <span data-i18n="type-entity">Entities</span></label>
-                                <label class="legend-item"><input type="checkbox" checked data-filter="system"> <span class="dot dot-system"></span> <span data-i18n="type-system">System Core</span></label>
-                            </div>
+                        <div class="graph-legend" style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                            <span data-i18n="legend-title" style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Filter Nodes:</span>
+                            <select id="graph-filter-select" class="graph-filter-select" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--panel-border); color: var(--text-main); border-radius: 8px; padding: 8px 12px; font-family: inherit; font-size: 13px; outline: none; cursor: pointer; transition: var(--transition-fast);">
+                                <option value="all" style="background: #0d1224;">All Nodes</option>
+                                <option value="overview" style="background: #0d1224;">Overviews</option>
+                                <option value="summary" style="background: #0d1224;">Summaries</option>
+                                <option value="concept" style="background: #0d1224;">Concepts</option>
+                                <option value="entity" style="background: #0d1224;">Entities</option>
+                                <option value="system" style="background: #0d1224;">System Core</option>
+                            </select>
                         </div>
                         <div id="network-graph" class="graph-viewport">
                             <!-- Vis.js will render the graph here -->

@@ -1,0 +1,454 @@
+--- Page 1 ---
+Day20
+Roadmap& Execution
+Kếhoạch sinh tồn của AIstartup
+“Visionwithout execution is just hallucination.”
+—Thomas Edison
+Câuhỏi trung tâm
+Có tiền rồi — đi đâu trước? Làm gì trước?
+--- Page 2 ---
+Cótiền rồi — bài toánmới bắt đầu 2/35
+“Hômquacácbạnvừagọivốnthànhcông. Termsheetđãký,tiềnđãvềtàikhoản. Tưởng
+đãxong? Không. Đây mới là lúc cơnác mộng thật sự bắt đầu.”
+Tìnhhuống điển hình của Founderngày 1 sau khi gọi vốn
+• TechCo-founder muốn xây model to nhất,dùng Llama 70B fine-tune
+• ĐộiSales đòi tính năng dễbán nhất để chốt deal cuốitháng
+• CEOvừa đọc TechCrunch,muốn pivot theotrend agentic AI
+• Usertừ pilot phản hồi 100ý tưởng tính năng khác nhau
+• Investorhỏi: “Khi nàora mắt? Roadmap đâu?”
+Nếulao vào code tất cả— tiền cạn trước khi sảnphẩm ra đời.
+Day20 trang bị 4 frameworkđể biết làm gì trước, làmgì sau, đo bằng gì, rủiro ở đâu.
+--- Page 3 ---
+Outputvs Outcome — căn bệnhcủa founder tech 3/35
+BAD:Đo bằng Output
+Founderdân tech tự hào:
+• “Emcode 10,000 dòng tuần này”
+• “Emship được 12 tính năngtháng này”
+• “Modelem đạt accuracy 99.7%”
+• “Codecoverage 95%”
+VCnghĩ thầm:
+“Đẹp. Nhưng có ai dùng không? Doanh thu đâu?
+Userretention thế nào?”
+→Outputkhông trả lời được
+GOOD:Đo bằng Outcome
+Founderpro:
+• “Usertiết kiệm 1.7 giờ/ngày”
+• “Doanhsố khách +18% sau 3tháng”
+• “Churngiảm từ 8% xuống 3%”
+• “50paying customer mới”
+VCnghĩ:
+“Đây là business thật. Mỗi action đều tạo value cho
+user. Số liệu defendable.”
+→Outcome= ngôn ngữ của business
+Day20 dạy cách build roadmapđo bằngoutcome—không phải output.
+--- Page 4 ---
+Today’sSpine /4 framework sống còn 4/35
+Block1. Chọn hànhtrang Làmgì trước? —RICE & 2x2 Matrix 09:15– 10:00
+Casestudy: Intercom &sự ra đời của RICE
+Block2. Vẽ bảnđồ Sắpxếp thế nào? — Now/Next/Later 10:00– 10:45
+Casestudy: ProdPad chốnglại Gantt Chart
+Block3. Đặt cộtmốc Đobằng gì? —OKRs 11:00– 11:45
+Casestudy: Google Chrome2008
+Block4. Cạm bẫyký sinh Rủiro ở đâu? — Dependency & Critical Path 11:45– 12:30
+Casestudy: Startup chếtvì OpenAI rate limit
+Outputcuối buổi: Milestone1 Investor Package — gộp5 ngày Day 16-20.
+Đâylà “tấm vé” để đi gọivốn Seed Round ngoài đời thực.
+--- Page 5 ---
+BLOCK1
+Chọnhành trang
+Làmgì trước trong 100 ýtưởng?
+Câuhỏi mở
+Có100 ý tưởng tính năng. Tiềnđủ làm 5.
+Chọn5 nào?
+--- Page 6 ---
+IdeaOverload — căn bệnh phònghọp 6/35
+Cuộchọp roadmap điển hình củastartup early-stage
+• ĐộiSales: “KháchX muốn integration với HubSpot. Làm ngay đi đểchốt deal.”
+• TechCo-founder: “Bọnem phải build vector DB riêngđể có moat. Làm trước.”
+• CEO:“ĐọcTechCrunchhôm nay — agentic AIđang hot. Pivot sangđó.”
+• Designer: “UIhiện tại tệ. Phải redesign từ đầu.”
+• CustomerSuccess: “20ticket support tuần này vềonboarding. Fix gấp.”
+Quyếtđịnh kiểu này = “ainói to hơn thì thắng”.
+Hậuquả: làm rấtnhiều thứ. Không thứnào đến nơi đến chốn. Tiềncạn dần. Teammệt mỏi.
+Cầnmột thứ: toán học để chấm dứt cãi vã .
+--- Page 7 ---
+Case1 ·Intercom& sự ra đời củaRICE 7/35
+CaseStudy
+Năm 2015. Intercom đang là công ty SaaS hot — sau này định giá hàng tỷ USD. Nhưng họ rơi vào
+khủnghoảng IdeaOverload.
+Mỗi cuộc họp roadmap = chiến trường. Sales đòi feature A, Tech đòi feature B, CEO đòi feature C.
+Quyếtđịnh dựa trêngutfeeling hoặcai pitch to nhất.
+Hậuquả: 6tháng làm 30 features. Đa số không ai dùng.
+Sean McBride, Product Manager, quyết định chấm dứt cãi vãbằng toán học. Anh tạo ra công thức
+RICE.
+Insightcốt lõi:
+Cảmtính tạo ra cãi vã. Toánhọc tạo ra quyết định.
+RICEgiờ là chuẩn industry — dùngở mọi product team từ Slack,Linear,Notion, đến Stripe.
+--- Page 8 ---
+RICEFramework — Biến cảm tínhthành toán học 8/35
+Reach ×Impact ×Confidence
+Effort
+=RICE Score
+Yếutố Câuhỏi Đơnvị
+R— Reach Baonhiêu user sẽ đụng tính năngnày / quý? Sốngười
+I— Impact Tácđộng đến user mạnh cỡ nào? 0.25 (tiny) / 0.5 (low) / 1 (medium) / 2 (high) / 3
+(massive)
+C— Confidence Bạntự tin về số R, Ibao nhiêu %? 50%/ 80% / 100%
+E— Effort Tốnbao nhiêu person-month? Person-month
+Lưu ý: Confidencequan trọng nhất. Đa số founder cho 100% —nhưng chưa hỏi user nào.
+--- Page 9 ---
+Vídụ RICE /Startup AI cho SME e-commerce 9/35
+Tínhnăng R I C E
+Score
+Auto-replytrên Shopee 5000 2.0 0.8 2
+4000
+Voicecloning shop owner 1000 3.0 0.5 6
+250
+Sentimentanalysis dashboard 2000 0.5 0.8 3
+267
+Multi-language(EN/VN/TH) 500 1.0 1.0 4
+125
+A/Btest message templates 3000 1.0 0.9 1
+2700
+Đọckết quả
+Top2ưutiên: Auto-reply(4000) vàA/Btest(2700) →làmtrước. Voicecloning điểmthấpdùIcao—vì Effort
+6tháng vàConfidence50%. Bàihọc: tính năngcool không nhất thiết là tínhnăng đáng làm trước.
+--- Page 10 ---
+Value-EffortMatrix /Sau RICE, ném vào 4ô 10/35
+Effort
+Value
+QuickWins
+Làmngay — lấy đà
+A/Btest templates
+StrategicBets
+Đầutư dài hạn = moat
+Auto-replyintegration
+Fill-ins
+Làmkhi rảnh
+Sentimentdashboard
+Non-starters
+VỨTvào sọt rác
+Voicecloning
+Low High
+Low
+High
+Quick Wins buildmomentum và trust với team.Strategic Bets buildmoat dài hạn.Non-starterslàcái VC ghét nhất
+nếuthấy trong roadmap.
+--- Page 11 ---
+3lỗi phổ biến khi chấmRICE 11/35
+Lỗi1: Confidence ảo
+“Emchấm Confidence 100% cho tínhnăng này.”
+→Câuhỏi: Em đã interviewbao nhiêu user?“Chưaai cả.”
+→Confidencechưa từng test = 50% MAX.
+Lỗi2: Reach lạcquan
+“Tínhnăng này 100% user sẽdùng.”
+→Reality: chỉ 20–40% userdùng tính năng mới sau khilaunch (Mixpanel benchmark).
+→Alwaysdiscount Reach by 50%.
+Lỗi3: Effort underestimate
+“2tuần là xong.”
+→Reality: cộng QA +bug fix + integration test =1.5–2x estimate ban đầu.
+→Alwaysmultiply Effort by 1.5.
+--- Page 12 ---
+Workshop1 /Chấm RICE cho startupcủa bạn 12/35
+Solo— 15 phút
+Bước1. MởPRD Day 17. Chọn5tính năngcốtlõi.
+Bước2. Chomỗi tính năng, chấm:
+• Reach: bao nhiêu user/quýsẽ đụng?
+• Impact: 0.25 / 0.5/ 1 / 2 / 3
+• Confidence: 50% / 80%/ 100% (honest!)
+• Effort: bao nhiêu person-month?
+Bước3. TínhScore = (R ×I ×C)/E
+Bước4. Vẽ2x2Value-Effort. Xácđịnh: 1 QuickWin làmtrước,1 StrategicBet moatdàihạn,1 Non-starterbỏ
+thẳng.
+Output: BảngRICE 5 dòng + 2x2 Matrix— input cho Block 2.
+--- Page 13 ---
+BLOCK2
+Vẽbản đồ
+Sắpxếp thế nào? — Now/Next/Later
+Câuhỏi cốt lõi
+Đãbiết làm GÌ. Giờ là: làm KHI NÀO?
+--- Page 14 ---
+Cáibẫy Gantt Chart 14/35
+Founderamateur làm Gantt Chart kiểunày
+Tínhnăng Bắtđầu Ramắt
+Auto-replyv1 1/8/2026 15/8/2026
+IntegrationShopee 16/8/2026 30/8/2026
+A/Btesting 1/9/2026 15/9/2026
+Multi-language 16/9/2026 30/9/2026
+Nghecó vẻ “professional”. Thực tế — đây là mộtlời nói dối trắng trợn.
+TrongAI: model hallucinate, APIsập, data bẩn.Bất định là tuyệt đối. Bạnkhông bao giờ đoán đúng
+ngày.
+Hệquả: bạn camkết với VC “15/8 ra mắt”. Đến 15/8 chưa xong→bạnép team ship sản phẩm lỗiđể kịp deadline.
+Kháchhàng phẫn nộ. Trustgone.
+--- Page 15 ---
+Case2 ·ProdPad& sự trả giá 15/35
+CaseStudy
+Janna Bastow, founder của ProdPad (công ty làm SaaS cho Product Manager), từng tự tin vẽ Gantt
+Chartcho roadmap. Côcam kết với khách enterprise:“Tínhnăng X sẽ ra mắt ngày15/3.”
+Đến14/3 đêm: serversập. Bug critical pháthiện vào phút 90. Teamcó 2 lựa chọn:
+A.Shipbuggy product để giữ deadline→kháchphát hiện bug, mất trust
+B.Trễhạn →kháchphẫn nộ, đòi huỷ contract
+Côchọn A. Khách nhận sảnphẩm lỗi, gọi điện chửi quaphone.Mất1 contract $50K/năm.
+Janna nhận ra:Gantt Chart ép team ship sản phẩm lỗi chỉ để giữ deadline.Cô xé bỏ toàn bộ
+timelinecứng và sáng tạo raformatNow/Next/Later.
+Insightcốt lõi:
+Roadmapkhông phải là contract — làla bàn.
+--- Page 16 ---
+Now/ Next / Later Framework 16/35
+NOW
+Đanglàm hôm nay
+Chitiết: cao
+Rủiro: thấp
+Thờigian: 1–3tháng
+“Tuần này dev đang code fea-
+tureX.”
+→QuickWins từ slide 10
+→Cóspecs rõ ràng
+NEXT
+Sẽlàm sau Now
+Chitiết: medium
+Rủiro: trungbình
+Thờigian: 3–6tháng
+“Saukhi Now xong, sẽ làm Y.”
+→StrategicBets
+→ Có thể đổi nếu thị trường
+thayđổi
+LATER
+Tầmnhìn dài hạn
+Chitiết: mơhồ
+Rủiro: cao
+Thờigian: 6–18tháng
+“Một ngày nào đó bọn em sẽ
+buildZ.”
+→Visionpitch cho VC
+→Cóthể bỏ hoàn toàn
+KHÔNG có ngày tháng cụ thể. Chỉcó thứ tự ưu tiên. Mỗi cột làmột nhóm problem cần giải, khôngphải feature cần
+ship.
+--- Page 17 ---
+Vídụ Now/Next/Later /ShopReplyAI 17/35
+NOW
+Vấnđề: 50shop pilot đang dùng AIauto-reply,nhưng chỉ chạy đượctrên Shopee.
+Đang code: integration với TikTok Shop + chuyển từ webhook sang real-time WebSocket. Dự kiến 2
+tháng.
+NEXT
+Vấnđề: Shopowner cần insight về câuhỏi nào AI trả lời tốt,câu nào kém — để improvecatalog.
+Sẽlàm: Analyticsdashboard + sentiment analysis. Bắt đầu khi Now xong.
+LATER
+Vấnđề: Shopowner muốn AI trả lờivoice messages (đặc biệt TikTokShoplivestream Q&A).
+Cóthểlàm: VoiceAIagent. Nhưngcầnresearchthêm—chiphíASR+TTSvớiVietnameseaccentchưa
+rõ. Có thể bỏnếu Vendorcost không kinhtế.
+Protip: Mỗiô nói vềvấnđề (problem),không phảitínhnăng (feature).
+Vìsao? Vì problemstable hơn solution. Solutioncó thể thay đổi — problemthì không.
+--- Page 18 ---
+Workshop2 /Vẽ la bàn chostartup 18/35
+Solo— 15 phút.Lấybảng RICE từ Workshop1. Sắp xếp 5tính năng vào Now/Next/Later:
+NOW
+QuickWins từ 2x2 + tính năngRICE score cao nhất
+NEXT
+StrategicBets từ 2x2
+LATER
+Visionlớn — có thể chưatechnically khả thi
+Quy tắc:KHÔNG ghi ngày tháng. Mỗi ô viết làvấn đềcần giải, không phảitính năng. Now: 1–3 vấn đề. Next:
+2–4vấn đề. Later: 1–2 vấn đề lớn.
+Output: RoadmapNow/Next/Later 1 trang — tài liệuduy nhất nên gửi VC khihọ hỏi “Roadmap thế nào?”
+--- Page 19 ---
+BLOCK3
+Đặtcột mốc
+Đobằng gì? —OKRs
+Câuhỏi cốt lõi
+Córoadmap rồi — nhưng làmsao biết
+mìnhđang đi đúng hướng?
+--- Page 20 ---
+Đolường sai = đi saihướng 20/35
+“Ifyou can’t measure it, you can’timprove it.” —Peter Drucker
+Tìnhhuống thật
+CTO:“Tuầnnày em ship 3 features. Roadmap đang đúng tiếnđộ.”
+CEO:“Tốt. Nhưng MRR thángnày có tăng không?”
+CTO:“Emkhông biết. Emchỉ tập trung vào engineering.”
+VC:“Vậy3 tính năng đó tạo ragiá trị gì cho user?”
+Imlặng.
+Nếuteam chỉ đo Output (sốtính năng ship, dòng code), teamsẽ ship rất nhiều thứ vôgiá trị.
+Cầnmột framework để align roadmapvới outcome thực tế.
+--- Page 21 ---
+Case3 ·GoogleChrome 2008 & OKRs 21/35
+CaseStudy
+2008. Sundar Pichai(giờ là CEO Google) được giao project Chrome — trình duyệt mới của Google.
+Mụctiêu cao cấp:“Tạora trình duyệt tốt nhất thếgiới.”
+Nhưng“tốtnhất” làgì? Đo bằnggì? Số features? Performance benchmark? Code quality?
+Sundarđặt 1Key Result duy nhất: “Đạt20 triệu user thường xuyên.”
+Năm2009: Chỉđạt 9triệu. Thấtbại.
+Nhưngquan trọng: biếtrõ shortfall ở đâu. Chrome thiếu 11triệuuser nữa. Tại sao?
+→Đổichiến lược: từ“làm browser tốt” sang “làm browserdễ install”.
+→Bundlevới Adobe Flash installer + chạymassive paid acquisition.
+Năm2010: 37triệu user.Năm2011: 111triệu. Hôm nay: 3tỷ user.
+Insight: OKRkhông phải là KPI đểđánh giá performance.
+OKRlà cái la bàn — giúpbạn biết khi nào cần đổichiến lược.
+--- Page 22 ---
+Cấutrúc OKR 22/35
+Objective + 3Key Results
+Mụctiêu định tính (truyền cảmhứng) + Kết quả định lượng(đo lường được)
+Objective(O) KeyResults (KRs)
+Đặcđiểm Địnhtính, ngắn, nhớ được Địnhlượng, có số
+Sốlượng 1per quarter 3per Objective
+Câuhỏi “Chúngta đi đâu?” “Làmsao biết đã đến?”
+Vídụ “Trở thành tool AI reply số 1 cho SME e-commerce
+VN”
+“Đạt200 paying shop”
+Quytắc 70%: nếuhoàn thành 100% KR —objectivequádễ,set lần sau cao hơn.
+--- Page 23 ---
+OKRcho AI startup — Badvs Good 23/35
+BAD:Output-focused KRs
+Objective: BuildAI product tốt nhất
+KR1: Modelaccuracy đạt 95%
+KR2: Ship12 features trong quý
+KR3: Codecoverage 90%
+Vấnđề: User KHÔNGquan tâm accuracy. Họ quan tâm tiết kiệmbao nhiêu giờ. KRđo cái user không care.
+GOOD:Outcome-focused KRs — kết hợpLeading + Lagging + Quality
+Objective: Trởthành tool AI reply khôngthể thiếu của SME e-commerce VN
+KR1(Leading): 100paying shop pilot dùng app≥5ngày/tuần
+KR2(Lagging): MRRđạt 500M VND, tăng 50% sovới Q3
+KR3(Quality): NPS ≥50,churn ≤3%/tháng
+MỗiKR đo OUTCOME. Leading sửakịp, Lagging xác nhận, Quality bảovệ growth bền vững.
+--- Page 24 ---
+Workshop3 /ViếtOKR cho cộtNOW 24/35
+Solo— 15 phút.Nhìncột NOWtrongroadmap. ViếtOKRcho 1 quý:
+Bước1. Viết1Objective: định tính, khôngsố, truyền cảm hứng, match vấnđề ở NOW.
+Bước2. Viết3Key Results:
+• KR1— Leading (dự báo): user behavior metric
+• KR2— Lagging (kết quả): revenue/business metric
+• KR3— Quality: NPS/ retention / churn
+Quytắc nghiêm:
+• KHÔNGdùng từ kỹ thuật (model,API, latency)
+• KHÔNGđo Output (số features, codelines)
+• Phảicó consố cụ thểmỗiKR
+Output: 1Objective + 3 Key Results,dùng được trong investor pitch.
+--- Page 25 ---
+BLOCK4
+Cạmbẫy ký sinh
+Rủiro ở đâu? — Dependency Mapping
+Câuhỏi sống còn
+Córoadmap, có OKR — nhưng nếuOpenAI sập
+ngàymai, bạn còn chạy được không?
+--- Page 26 ---
+Nềnkinh tế ký sinh 26/35
+“99%AI startup hiện nay là kýsinh trùng. Họkhông sở hữu tài sản gì.”
+Cáibạn nghĩ là sản phẩm Thựcra là ký sinh trên... Nếuhọ thay đổi
+AIchatbot OpenAI/ Anthropic API APIdown = product down
+AIimage generator StableDiffusion/ Replicate Pricing5x = margin về 0
+AIsales tool HubSpot/ Salesforce data Họthu hồi access = không códata
+AICRM extension Chromebrowser Googleđổi extension policy
+AIvoice assistant Deepgram/ Whisper Latencytăng = UX hỏng
+Sựthật phũ phàng:Bạnkhông kiểm soát được vận mệnhcủa mình.
+Mỗiexternal dependency là một cái daotreo trên đầu — có thểrơi bất kỳ lúc nào.
+--- Page 27 ---
+Case4 ·Đêmtrước ngày launch 27/35
+CaseStudy
+StartupAItómtắttàiliệupháplý. Đãpilot6thángvới3firmluậtlớn. Pitchdeckđẹp. VCinterested.
+Hứavới VC:thứHai launch public, ký SAFE $500Ktrong 1 tuần.
+ThứBảy đêm. Teamcodexuyên đêm cuối cùng. Mọi thứ ổn.
+ChủNhật chiều. Demointernal cho board.“Tuyệtvời.”
+Chủ Nhật đêm.OpenAI ra announcement: rate limit cho GPT-4 API tier mid bị siết từ500 req/min
+xuống50req/min. Effectivengaylập tức.
+Sángthứ Hai 6h.Foundermở email — 47 ticket support: “app không trảlời.”
+Lýdo: startupnàytómtắt1tàiliệupháplýdài50trang=trungbình80GPT-4calls. Vớiratelimitmới
+—xử lý 1 tài liệumất 20 phút (trước đây 30giây).
+User experience: sập. Demo ngày launch fail trước mặt 200 đăng ký.VC pause SAFE.Trong 3
+thángtiếp theo, không gọi vốnđược nữa.Phásản.
+Họđã vẽ Gantt Chart, viếtOKR, làm RICE đầy đủ. Nhưng bỏ qua1 thứ duy nhất: Dependency Map.
+--- Page 28 ---
+DependencyMap /3 lớp ký sinh 28/35
+Lớp Ai? Họcó thể làm gì? Mitigation
+Tier1 — Critical OpenAI/AnthropicAPI Khóa account, tăng giá 5x,
+ratelimit
+Multi-vendor(Claude+Gemini
+fallback)
+Cloud(AWS/GCP) Down1 region, ban account Multi-region deployment
+Tier2 — Important Apple/GooglePlay Rejectsubmission, ban app Web app fallback, comply pol-
+icyday-1
+3rd-partyAPIs (Twilio,Stripe) Tăng giá, đổi API Abstractlayer,cóbackupven-
+dor
+Tier3 — Watch Browserextension stores Đổipolicy Directdownload fallback
+Datasources Cấmscraping, đóng API NegotiateB2B contract
+Quytắc: MỗiTier1 dependency phải cóPlanB sẵnsàng deploy trong 24h.
+Nếukhông có Plan B — đókhông phải startup, đó là kinhdoanh nhà thuê (rent business).
+--- Page 29 ---
+CriticalPath /Đường găng của dự án 29/35
+Data
+Pipeline
+Legal
+Compliance
+Model
+Fine-tune
+API
+Integration Launch
+UI/UX
+Design
+Marketing
+Site Docs Analytics
+CRITICALPATH(đỏ)
+Tasksphụ (xám) có buffer time —không quyết định launch date
+CriticalPath = chuỗi tasks dài nhất& bắt buộc tuần tự.
+Trễ1 ngày trên CriticalPath = trễ launch 1 ngày. Trễ1 ngày trên non-critical = khôngsao.
+Trong AI startup: DataPipeline + Legal Compliance hầunhư luôn nằm trên Critical Path.
+--- Page 30 ---
+Workshop4 /Vẽ Dependency Map 30/35
+Solo— 15 phút.Nhìncột NOWtrongroadmap. Trảlời:
+Bước 1. Liệt kê3 external dependenciescó thể giết dự án trong 30 ngày tới.Ví dụ: OpenAI API rate limit,
+AppleApp Review,GDPR audit,Shopee API access.
+Bước2. Vớimỗi dependency,viết:
+• Worst-casescenario (1câu)
+• PlanB cụthể (1–2 câu, có thểdeploy trong 7 ngày)
+• CostcủaPlan B (tiền + thời gian)
+Bước3. VẽCritical Path đơn giản:
+• Liệtkê 5–7 task chính choNOW
+• Đánhdấu task nào blocking taskkhác
+• Highlightchuỗi dài nhất = CriticalPath
+Output: 3dependencies + Plan B + CriticalPath 1 trang — tài liệucuối cho Investor Package.
+--- Page 31 ---
+MILESTONE1
+Investor-ReadyPackage
+30phút cuối — không học gìmới.
+Hợpnhất tất cả công việc Day16 đến Day 20
+thành1 bộ hồ sơ Seed Roundduy nhất.
+Đâylà tấm vé thông hành đigọi vốn ngoài đời thực.
+--- Page 32 ---
+Milestone1 Package — 5 thànhphần 32/35
+# Tàiliệu Từ
+1 MarketAnalysis + PRD (Customer + Pain+ Solution) Day 16-17
+2 FinancialModel + Unit Economics (LTV,CAC,Payback) Day 18
+3 InvestorPitch Deck (TwitterPitch +Pitch Memo) Day19
+4 RoadmapNow/Next/Later + OKRs (1 quý) Day20
+5 DependencyMap + Critical Path Day20
+Đónggói thành 1 PDF
+Tênfile: [Tên]_Milestone1_InvestorPackage.pdf
+Cấutrúc9trang: Trang1Cover+TwitterPitch ·Trang2-5PitchMemo+Market+PRD ·Trang6-7Financial+
+UnitEconomics ·Trang8 Roadmap + OKRs·Trang9 Dependency + CriticalPath.
+Phụlục: linkđến file Excel chi tiếtDay 18, file PRD đầy đủDay 17.
+--- Page 33 ---
+Submission /Trước13:00 33/35
+Mộtthư mục duy nhất:[Tên]_Day20/
+Baogồm:
+1. rice_matrix.md—Bảng RICE 5 dòng +2x2 Value-Effort
+2. roadmap_nnl.md—Now/Next/Later 1 trang
+3. okrs.md—1 Objective + 3 Key Results
+4. dependency_map.md—3 dependencies + Plan B+ Critical Path
+5. milestone1_package.pdf—bộ hồ sơ gộp Day16-20
+NénZIP: [Tên]_Day20.zip →NộpLMS.
+KHÔNGcó BTVN. Day 20 hoàn tấttrong buổi sáng.
+Day20 là milestone cuối Chương 4. Hãy tự hàovề 5 ngày qua.
+--- Page 34 ---
+Wrap-up /Day 20 hoàn tất 34/35
+Day20 đã trả lời:
+✓ Làmgì trước? —RICE Framework & 2x2 Value-EffortMatrix
+✓ Sắpxếp thế nào?—Now/Next/Later thay cho Gantt Chart
+✓ Đobằng gì? —OKRs với Outcome (không Output)
+✓ Rủiro ở đâu?—Dependency Map + Critical Path
+“Visionwithout execution is just hallucination.”—Edison
+Sau5 ngày: từý tưởng Day 16→InvestorPackage Day 20.
+Đây là hành trang đầy đủ để startup AI của bạn đi gọi vốn thật.
+Ngàymai (Day 21) — bướcsang Chương 5: Quảntrị rủi ro & Pháp lýAI.
+Sảnphẩm có tiền, có user,có kế hoạch — vẫn cóthể đóng cửa nếu vi phạmpháp luật.
+--- Page 35 ---
+Cảmơn
+Chúccác bạn execute không hallucinate
+Fromidea →topackage →toround.

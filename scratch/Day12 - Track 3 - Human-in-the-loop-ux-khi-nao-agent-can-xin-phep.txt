@@ -1,0 +1,638 @@
+Human-in-the-
+Loop UX — Khi Nào
+Agent Cần Xin Phép?
+AICB-P2T3 · Ngày 27 · Chương 6 — Agent trong Production
+Giảng viên
+VinUniversity · Phase 2 · Track 3 · T uần 6
+?
+HÃ Y SUY NGHĨ...
+“Agent tự quyết hay hỏi người dùng — ranh
+giới nào là an toàn và không làm phiền?”
+Giữ câu hỏi này trong đầu khi học bài hôm nay
+Nội dung bài học
+1. Tại sao Full Autonomy nguy hiểm?
+2. HITL Taxonomy — 6 Interaction Patterns
+3. Confidence Routing — Khi nào interrupt?
+4. Approval Workflows & Implementation
+5. 2026 Product Landscape
+6. Feedback Loops & Audit Trails
+7. HITL UX Best Practices
+8. Demo & Thực hành
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 1 / 30
+01
+T ại sao Full Autonomy nguy
+hiểm?
+T ừ sự cố thực tế đến nhu cầu Human-in-the-Loop
+Agent tự ý hành động — chuyện gì xảy ra?
+User request
+Agent suy luận
+Xoá database
+Mất dữ liệu
+confidence 62%
+không ai kiểm tra!
+Không có
+approval gate
+Bài học từ agent products
+2025–2026:
+■ Read/search/debug dần được
+auto vì reversible và dễ audit
+■ Write/delete/deploy vẫn cần
+human checkpoint hoặc
+sandbox boundary
+■ External side effects (email,
+Slack, Git push, prod API) là nơi
+products hiện đại dừng lại để hỏi
+Lưu ý: Xu hướng mới không
+phải “agent hỏi mọi thứ” mà là
+bounded autonomy : auto bên
+trong ranh giới đã định, hỏi khi
+chạm risk / policy / side effect
+/ ambiguity.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 2 / 30
+Analogy: Quy trình duyệt chi công ty
+<5 triệu
+T ự duyệt
+5–50 triệu
+Trưởng phòng ký
+>50 triệu
+Giám đốc duyệt
+Auto-approve 1 approval Multi-level
+Dưới threshold → agent tự xử lý
+Vùng trung gian → cần 1 lần
+duyệt
+Rủi ro cao → phải escalate lên
+người có thẩm quyền
+Cùng nguyên tắc: chi phí sai
+lầm quyết định mức kiểm soát
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 3 / 30
+02
+HITL T axonomy — 6 Interac-
+tion Patterns
+Phân loại cách con người tham gia vào quyết định của
+agent
+Autonomy Spectrum — Từ tự động đến kiểm soát hoàn toàn
+Full Manual
+Người làm hết
+HITL Strict
+Duyệt mọi action
+HITL Bal-
+anced
+Duyệt theo risk
+HITL Light
+Chỉ audit log
+Full Auto
+Agent tự quyết
+An toàn cao Tốc độ caoSweet spot
+Không có vị trí “đúng” cố định — sweet spot phụ thuộc vàodomain risk, agent
+maturity, và user tolerance. Bắt đầu strict, nới dần khi trust được xây dựng.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 4 / 30
+6 HITL Interaction Patterns
+# Pattern Khi nào? Ví dụ
+1 Approval Side effect / policy boundary Deploy, xoá data, gửi email
+2 Clarification Input mơ hồ “Report Q1 hay Q2?”
+3 Structured Elicitation Thiếu field bắt buộc Form chọn env, repo, approver
+4 Review Checkpoint Output cần kiểm Draft email, code PR, SQL patch
+5 Edit / Correction Human muốn chỉnh Sửa args trước khi chạy tool
+6 Escalation Vượt thẩm quyền Pháp lý, tài chính, security
+Read-only = auto
+Write in sandbox = auto hoặc re-
+view
+External / destructive = manda-
+tory approval
+Approval UX tốt không chỉ có Ap-
+prove / Reject.
+Nó phải hỗ trợ edit args, fill form,
+hoặc respond as human tool.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 5 / 30
+03
+Confidence Routing — Khi nào
+interrupt?
+Agent tự đánh giá confidence để quyết định hỏi hay tự làm
+Confidence Routing — Luồng quyết định
+Action requestRisk + Policy + Ambiguity?
+Auto-execute
+reversible + in-boundary
+Review / Edit
+human checks proposed args
+Ask / Escalate
+missing info or high risk
+low risk
+needs confirmation
+blocked / unclear
+Hard gates
+prod deploy / PII / payments
+/ git push / outbound comms
+Lưu ý: Update quan trọng: confidence không đủ . Products mới ưu tiên
+policy-aware gating: dù model rất tự tin, action vẫn phải dừng nếu chạm
+dữ liệu nhạy cảm, network, hoặc side effect bên ngoài.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 6 / 30
+2026 Heuristic — Khi nào nên interrupt?
+Reversible
+Có thể undo?
+Nếu có, ưu
+tiên auto
+External
+Có side effect?
+Nếu có, ưu
+tiên review
+Unknown
+Thiếu field?
+Nếu có, hỏi
+bằng form
+Thay vì chỉ tune một số confidence, hãy đo 4 biến: reversibility, blast radius,
+policy sensitivity, và missing information. Trend mới là interrupt by action
+class, không phải chỉ interrupt by score.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 7 / 30
+04
+Approval Workflows & Imple-
+mentation
+LangGraph interrupt/resume và Streamlit approval UI
+LangGraph HITL — Interrupt & Resume
+plan act
+INTERRUPT human review
+resume END
+destructive approve
+reject→abort
+2026 LangGraph mindset:
+■ Pause tại tool call hoặc custom
+node khi chạm policy
+■ Human có thể approve / edit /
+reject / respond
+■ Resume phải dùng same
+thread/checkpoint để state bền
+vững
+1. Surface interrupt payload + re-
+view config
+2. Human chọn decision cho từng
+action
+3. Command(resume=^^.) đưa quyết
+định trở lại agent
+4. Nhiều action → quyết định phải
+theo đúng thứ tự
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 8 / 30
+LangGraph HITL — Code-Level
+from langchain.agents import create_agent
+from langchain.agents.middleware import
+HumanInTheLoopMiddleware
+from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.types import Command
+agent = create_agent(
+model="gpt-5.5",
+tools=[write_file, send_email, ask_user],
+middleware=[HumanInTheLoopMiddleware(
+interrupt_on={
+"write_file": { "allowed_decisions": [ "approve"
+, "edit", "reject"]},
+"send_email": { "allowed_decisions": [ "approve"
+, "edit", "reject"]},
+"ask_user": { "allowed_decisions": [ "respond"
+]},
+})],
+checkpointer=InMemorySaver(),
+)
+agent.invoke(Command(resume={"decisions": [{
+"type": "edit",
+"edited_action": { "name": "send_email", "args": { "to":
+"ops@vinuni.edu.vn"}}
+}]}), config=config)
+3 cập nhật quan trọng:
+1. Policy per tool: tool nào cho
+approve/edit/reject/respond
+2. Checkpointer bắt buộc: pause
+phải survive refresh / reconnect
+3. Respond dành cho “ask human”
+tool, không dùng để từ chối
+action nguy hiểm
+Lưu ý: Nếu edit args quá mạnh,
+model có thể re-plan lại. Vì vậy
+approval UI nên khuyến khích
+small edits thay vì viết lại toàn
+bộ action.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 9 / 30
+Review Card + Structured Form
+Agent Review Request
+Action:send_email(campaign=launch)
+Risk:external side effect• policy review
+Why now: draft ready, recipients need confirmation
+Recipients: [All users v] Send time: [Tomorrow 09:00]
+Comment: [Please exclude trial users and confirm subject line]
+Approve Reject Submit Edit
+Approval UX đang dịch chuyển sang:
+1. Review card: what / why / risk /
+rollback
+2. Editable fields: dropdown, text
+box, date/time
+3. Scoped approvals: once / session
+/ specific destination
+4. Form-first elicitation: hỏi đúng
+field còn thiếu thay vì “Bạn có
+đồng ý không?”
+Codex đã có
+tool/requestUserInput.
+Claude Code có permission modes
++ hooks để xử lý prompt xin phép.
+UI tốt biến interrupt thành small
+form, không phải modal mơ hồ.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 10 / 30
+05
+2026 Product Landscape
+OpenAI, Anthropic, Google, Cursor — các agent lớn đang
+làm Human-in-the-Loop như thế nào?
+Vì sao Human-in-the-Loop nóng trở lại trong 2026?
+4 lực đẩy chính:
+1. Agent không còn chỉ trả lời mà đã
+thực thi
+2. Enterprise muốn autonomy nhưng
+không chấp nhận “YOLO
+production”
+3. Mobile / remote control làm
+approval không cần ngồi cạnh
+máy
+4. Compliance team đòi audit trail +
+named approver
+2024: hỏi rất nhiều, dễ phiền
+2025: bắt đầu phân biệt read vs
+write
+2026: hỏi ít hơn nhưng hỏi ở đúng
+ranh giới
+T ừ khóa:bounded autonomy
+Lưu ý: HITL mới không phải “hu-
+man babysitting”. Nó là control
+plane cho các action có blast ra-
+dius cao.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 11 / 30
+OpenAI Codex — HITL = permissions + approvals + reviewer
+Từ docs hiện tại của Codex:
+■ Sandbox mode xác định agent có
+thể làm gì
+■ Approval policy xác định agent khi
+nào phải dừng lại để hỏi
+■ App / MCP tools có side effects
+cũng có thể trigger approval
+■ Có granular approval policy thay vì
+một mode duy nhất
+Codex tách rõ
+permission boundary
+khỏi
+model reasoning quality
+Trong docs/changelog đến June
+25, 2026 , Codex còn hỗ trợ
+auto-review cho approval re-
+quests đủ điều kiện thay vì luôn
+bắt user bấm tay.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 12 / 30
+OpenAI Codex — Human input không chỉ là Approve / Reject
+2 pattern mới đáng chú ý:
+1. tool/requestUserInput:
+agent có thể hỏi bằng câu hỏi có
+header, lựa chọn, và timeout
+2. Codex Remote GA (June 25, 2026):
+review progress và approve actions
+từ điện thoại
+Human input đang chuyển từ
+modal yes/no
+sang
+small structured interaction
+Lưu ý: Đây là shift rất lớn: HITL
+không còn bị khóa trong IDE/ter-
+minal. Approval có thể trở thành
+async workflow.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 13 / 30
+Anthropic Claude Code — permission modes là UX primitive
+Current CLI/docs expose rõ các mode:
+■ default
+■ acceptEdits
+■ plan
+■ auto
+■ dontAsk
+■ bypassPermissions
+Claude Code biến mức auton-
+omy thành user-facing mode ,
+không phải config ẩn.
+Điều này giúp team dạy user: khi
+nào chỉ plan, khi nào cho edit, khi
+nào cho auto.
+Lưu ý: HITL tốt không chỉ là
+prompt đẹp. Nó phải có mode
+model để user hiểu hệ thống
+đang ở mức rủi ro nào.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 14 / 30
+Anthropic Claude Code — hooks biến HITL thành programmable policy
+Điểm rất mạnh trong current docs:
+■ PreT oolUse: allow / deny / ask /
+defer
+■ PermissionRequest: auto-handle
+prompt nếu match hẹp
+■ updatedInput: hook có thể chỉnh
+input trước khi chạy
+■ defer: pause tool call, hỏi user qua UI
+khác, rồi resume
+Claude Code cho phép HITL
+sống ở policy layer, không chỉ
+trong model prompt.
+Đây là hướng rất enterprise-
+friendly.
+Lưu ý: Nhưng nếu matcher quá
+rộng, hook có thể vô tình auto-
+approve quá nhiều. Bài học:
+luôn scope hẹp.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 15 / 30
+Google Gemini — Computer Use được thiết kế để xin xác nhận đúng lúc
+Theo docs hiện tại của Gemini Computer
+Use:
+■ Model có thể trả về
+safety_decision.require_confirmation
+■ App phải surface prompt xin phép rồi
+gửi lại safety_acknowledgement
+■ Có prompt injection detection ở mức
+screenshot
+■ Hỗ trợ browser / mobile / desktop
+environments
+Điền hết form trước
+rồi chỉ hỏi ở
+final irreversible step
+như Send / Submit / Confirm
+Purchase
+Gemini push rất mạnh idea: ask
+at the last responsible mo-
+ment. Đây là pattern đáng đưa
+vào mọi agent UX.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 16 / 30
+Cursor — giảm approval fatigue bằng Plan Mode + Auto-review
+2 hướng HITL nổi bật của Cursor trong
+2026:
+1. Plan Mode: research codebase, hỏi
+làm rõ, xuất plan có thể review trước
+khi code
+2. Auto-review Run Mode (May 29,
+2026):
+allowlisted calls chạy ngay,
+sandboxed calls chạy trong sandbox,
+còn lại qua classifier subagent
+Cursor tối ưu cho coding work-
+flow:
+review-before-write
+và
+classifier-before-risky-exec
+Lưu ý: Điểm mới là human
+không phải review mọi step. Hệ
+thống tự cố gắng classify trước
+để giảm số lần interrupt.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 17 / 30
+OpenAI, Anthropic, Google, Cursor — Human-in-the-Loop khác nhau ở
+đâu?
+Vendor Boundary Human input UX Special thing Risk model
+Codex sandbox + approval
+policy
+approval prompt,
+remote approval,
+requestUserInput
+tách permissions khỏi
+elicitation
+boundary-first
+Claude
+Code
+permission modes +
+hooks
+ask / allow / defer /
+resume
+programmable ap-
+proval layer
+policy-first
+Gemini safety decision +
+system instruction
+require_confirmation
++ acknowledge
+ask after prep, before
+final click
+action-class-
+first
+Cursor plan + classifier +
+sandbox
+plan review + auto-
+review + approval
+giảm approval fatigue
+bằng classifier
+classifier-first
+Các product lớn đang hội tụ về một pattern:bounded autonomy + resumable
+checkpoints + structured human input. Khác biệt chính nằm ở ai quyết định
+gate và user thấy gate đó dưới dạng nào .
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 18 / 30
+4 design patterns đang hội tụ giữa các big-tech agents
+1. Permission Modes
+Auto / Plan / Re-
+view / Full access
+2. Structured Input
+forms, choices, edited
+args, scoped approvals
+3. Resumable
+Checkpoints
+interrupt, defer, resume,
+same thread/state
+4. Classifier or
+Reviewer Layer
+auto-review, safety
+decision, policy engine
+Không vendor nào còn tin vào một threshold confidence duy nhất. Họ đang
+xây agent quanh modes, policies, checkpoints, và reviewer layers.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 19 / 30
+Những anti-pattern vẫn còn rất phổ biến
+Anti-pattern 1: Y es/No mọi thứ
+■ User mệt
+■ Approve cho xong
+■ Log không giúp học được gì
+Anti-pattern 2: Hỏi quá sớm
+■ Chưa thấy diff
+■ Chưa điền đủ field
+■ Human chưa đủ context để quyết
+Anti-pattern 3: Chỉ dựa vào
+confidence
+■ Model rất tự tin vẫn có thể click
+nhầm
+■ Không encode policy/legal
+boundaries
+Anti-pattern 4: Không có edit path
+■ Reject xong agent phải làm lại từ
+đầu
+■ Human không sửa được một field
+nhỏ
+Lưu ý: Nếu approval UI không cho human edit, scope, hoặc defer, hệ thống
+sẽ vừa chậm vừa bực.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 20 / 30
+Enterprise đang mua gì từ HITL ngoài safety?
+Checklist của enterprise buyer:
+■ Ai phê duyệt action nào?
+■ Có scoped approvals không?
+■ Có replay / audit log / reviewer
+identity không?
+■ Có quản trị permission mode bằng
+admin policy không?
+■ Có chặn data exfiltration / legal
+acceptances / purchases không?
+HITL đang trở thành
+governance surface
+chứ không chỉ là UI pattern.
+Nếu muốn deck này cập nhật,
+hãy dạy sinh viên map action
+classes trước rồi mới vẽ approval
+UI.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 21 / 30
+Nếu build lab hôm nay, nên bắt chước big-tech ở đâu?
+1. Bắt đầu bằng action classes : read, write-in-sandbox, external, destructive
+2. Thiết kế 3 loại human input: approve, edit args, fill structured form
+3. Pause đúng lúc: sau khi prepare xong, trước final irreversible step
+4. Persist state: interrupt phải resume cùng thread/checkpoint
+5. Đo sau khi ship: approval rate, latency, regret, rollback
+Big tech không cố bỏ human hoàn toàn. Họ đang nén human attention vào
+vài thời điểm có giá trị nhất.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 22 / 30
+06
+Feedback Loops & Audit Trails
+Thu thập phản hồi, ghi log, và tăng autonomy dần
+Audit Trail — Mỗi quyết định đều được ghi lại
+class AuditEntry(BaseModel):
+timestamp: datetime
+agent_id: str
+action: str
+confidence: float
+risk_level: str # low/med/high
+reviewer_id: str | None
+decision: str # auto/approve/reject
+reason: str | None
+execution_time_ms: int
+# Immutable: append-only PostgreSQL
+# Backup: S3 daily snapshot
+# Replay: reconstruct full session
+Mỗi event ghi:
+■ Who: agent nào, reviewer nào
+■ What: action gì, confidence bao
+nhiêu
+■ When: timestamp chính xác
+■ Why: reasoning của agent +
+decision
+Lưu ý: Audit trail là compliance
+requirement (GDPR, SOC2).
+Build from day one — cannot
+retrofit sau khi đã production.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 23 / 30
+Decision Analytics — Đo lường để cải thiện
+Approval rate
+bao nhiêu action được duyệt?
+Review latency
+mất bao lâu để trả lời?
+Regret / override
+đã duyệt rồi có phải rollback?
+Ít regret + latency thấp
+→nới autonomy
+3 metrics mới nên theo dõi:
+1. Approval rate: quá thấp → agent
+đang xin phép sai chỗ
+2. Review latency: cao → form/UI
+chưa đủ rõ hoặc hỏi quá nhiều
+3. Regret rate: human approve xong
+vẫn rollback → gating chưa đủ tốt
+Chỉ tăng autonomy khi approval
+cao và regret thấp.
+Nếu approval cao nhưng regret
+cũng cao, nghĩa là reviewer đang
+approve “cho xong”.
+Đo trust bằng hành vi, không đo
+bằng cảm giác.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 24 / 30
+07
+HITL UX Best Practices
+Thiết kế trải nghiệm không làm phiền user
+HITL UX — 5 Nguyên tắc vàng (1/2)
+Thiếu input thì hỏi sớm.
+Side effect thì hỏi muộn, sát lúc
+thực thi.
+Chỉ hiện what / why / risk / diff /
+rollback.
+Đừng bắt user đọc transcript dài
+mới dám bấm.
+Nếu field đã biết cấu trúc, dùng
+dropdown / checkbox / date
+picker.
+Không nên bắt user gõ lại cả câu.
+Giảm cognitive load để human chỉ
+dùng attention cho chỗ thật sự
+quan trọng.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 25 / 30
+HITL UX — 5 Nguyên tắc vàng (2/2)
+Hỗ trợ approve once , approve
+this session , hoặc approve for
+this destination.
+Đây là cách giảm fatigue mà vẫn
+giữ boundary.
+Log decision, latency, regret, roll-
+back.
+Mỗi interrupt phải giúp policy tốt
+hơn ở lần sau.
+Lưu ý: Nếu một approval screen
+không cho edit, scope, hoặc defer,
+nó thường sẽ tạo ra ma sát thay vì
+tạo trust.
+Một HITL screen tốt phải giúp user
+quyết nhanh hơn, không phải khiến
+user làm lại công việc của agent.
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 26 / 30
+08
+Demo & Thực hành
+HITL Code Review Agent + Lab hands-on
+HITL Code Review Agent — Side-by-side
+1. Agent đọc PR, phân loại action: comment-only, edit patch, push
+branch, gọi external tool
+2. Low-risk: auto draft review comments; medium-risk: hiển thị diff +
+suggested patch để reviewer edit
+3. High-risk: push branch / trigger CI / post external comment → approval
+card hoặc structured form
+4. Mỗi decision lưu thành audit event để đo latency, regret, và các chỗ
+agent hỏi quá nhiều
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 27 / 30
+Lab #27
+Mục tiêu: Build HITL agent với LangGraph interrupt + Streamlit approval UI
+Deliverable: HITL agent + approval UI + confidence-based routing + Post-
+greSQL audit trail
+Thời gian: 2 giờ
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 28 / 30
+Lab 27 — Các bước thực hành
+1. Policy map: phân loại tool nào auto, tool nào review, tool nào chỉ được hỏi
+bằng form
+2. LangGraph HITL: approve/edit/reject/respond + checkpointer
+3. Approval UI: review card + editable args + one field dạng dropdown/text
+input
+4. Analytics: log approval rate, review latency, regret rate thay vì chỉ log
+confidence
+A/B test 2 UXs: modal yes/no vs structured form — đo completion time, ap-
+proval quality, và regret rate trên 20 test cases
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 29 / 30
+T ổng kết — Key T akeaways
+Những ý chính cần nhớ trước khi sang bài tiếp theo
+1
+Xu hướng mới là bounded autonomy: agent tự làm trong boundary, hỏi khi chạm risk
+/ policy / ambiguity
+2
+HITL hiện đại không chỉ có approve/reject — còn cóedit, respond, và structured form
+input
+3 Audit trail + decision analytics là bắt buộc nếu muốn tăng autonomy mà vẫn giữ com-
+pliance
+4 Progressive autonomy chỉ nên tăng khi approval cao và regret thấp
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 29 / 30
+Tiếp theo & Bài tập
+Ngày 28: Workshop T ổng Hợp —
+Full Production Agent System
+“Tất cả components đã build xong
+— N28 là ngày ghép lại thành hệ
+thống production hoàn chỉnh”
+■ Hoàn thành Lab 27: HITL
+agent + audit trail
+■ Review lại tất cả labs
+N16–N27 — chuẩn bị
+integration
+Giảng viên (VinUni) AICB · Ngày 27 T uần 6 30 / 30
+Hỏi & Đáp
+HITL có làm chậm agent không? Khi nào nên bỏ approval gate?
+Cảm ơn!
+AICB-P2T3 · Ngày 27 · Human-in-the-Loop UX
+github.com/vinuni-aicb
+Liên hệ: instructor@vinuni.edu.vn

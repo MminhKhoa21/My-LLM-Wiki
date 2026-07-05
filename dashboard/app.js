@@ -952,12 +952,18 @@ function copyObsidianLink() {
 
 // 14. Graph Filter Legend
 function initGraphFilters() {
-    document.querySelectorAll(".graph-legend input[type='checkbox']").forEach(cb => {
-        cb.addEventListener("change", (e) => {
-            const filterType = cb.getAttribute("data-filter");
-            activeGraphFilters[filterType] = cb.checked;
-            filterGraph();
-        });
+    const select = document.getElementById("graph-filter-select");
+    if (!select) return;
+    select.addEventListener("change", (e) => {
+        const filterType = e.target.value;
+        // Reset all to false first if not "all"
+        if (filterType !== "all") {
+            Object.keys(activeGraphFilters).forEach(k => activeGraphFilters[k] = false);
+            activeGraphFilters[filterType] = true;
+        } else {
+            Object.keys(activeGraphFilters).forEach(k => activeGraphFilters[k] = true);
+        }
+        filterGraph();
     });
 }
 

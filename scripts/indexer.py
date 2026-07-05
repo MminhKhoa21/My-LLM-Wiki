@@ -28,15 +28,15 @@ def parse_frontmatter(content):
     return metadata
 
 def generate_index():
-    wiki_dir = Path("D:/Obsidian/My Wiki/wiki")
+    wiki_dir = Path("d:/Wiki/wiki")
     if not wiki_dir.exists():
         print(f"Error: wiki directory does not exist at {wiki_dir}")
         return
 
     pages = []
     
-    # Scan all markdown files in wiki/
-    for file_path in wiki_dir.glob("*.md"):
+    # Scan all markdown files in wiki/ and subdirectories
+    for file_path in wiki_dir.rglob("*.md"):
         if file_path.name in ["index.md", "log.md"]:
             continue
         

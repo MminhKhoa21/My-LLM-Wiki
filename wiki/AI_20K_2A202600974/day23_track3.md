@@ -9,61 +9,48 @@ sources: ["raw/AI_20K_2A202600974/23/day08_langgraph_student.pdf"]
 
 > **Lộ trình:** [[track3_ai_app|Track 3: AI Application]]
 
-
 # Day 23 – Track 3: LangGraph & Agentic Orchestration
 
 **Giảng viên**: VinUniversity  
-**Khóa**: AICB Phase 2 · Track 3 · Ngày 23
+**Khóa**: AICB Phase 2 · Track 3 · Tuần 5
 
-> **Câu hỏi trọng tâm**: Khi agent cần loop, retry, human approval và resume sau crash, chain một chiều còn đủ không?
+> **Câu hỏi trọng tâm**: Khi agent cần loop, retry, human approval và resume sau crash, chain một chiều (LCEL) còn đủ không?
 
----
+## 1. Khi Nào Chain Không Đủ?
+LCEL (LangChain Expression Language) phù hợp cho các pipeline tuyến tính một chiều. Tuy nhiên, production agent thường cần:
+- **Loop & Retry**: Vòng lặp tự động sửa lỗi và thử lại khi tool bị lỗi.
+- **Human-in-the-loop (HITL)**: Tạm dừng để con người duyệt trước các hành động phá hủy (destructive actions).
+- **Dynamic Routing**: Quyết định rẽ nhánh linh hoạt (conditional edges) dựa trên kết quả bước trước.
+- **Crash Recovery**: Checkpointing để tiếp tục lại luồng từ điểm dừng.
 
-## Khi nào Chain không đủ?
+*=> Giải pháp là LangGraph - orchestration framework thiết kế theo dạng State Machine.*
 
-| Vấn đề | Chain truyền thống | LangGraph |
-|--------|-------------------|-----------|
-| Loop & retry | ❌ Không hỗ trợ | ✅ State machine |
-| Human approval giữa chừng | ❌ Không thể pause | ✅ Interrupt + resume |
-| Resume sau crash | ❌ Mất state | ✅ Checkpointing |
-| Nhánh điều kiện phức tạp | ❌ Khó viết | ✅ Conditional edges |
+## 2. Core API của LangGraph
+Bốn khái niệm nền tảng của StateGraph:
+- **State**: Một `TypedDict` chia sẻ giữa tất cả các nodes. Thiết kế cần flat, có reducer (overwrite hoặc append).
+- **Nodes**: Các Python functions nhận vào state và trả về bản cập nhật state (partial update).
+- **Edges & Conditional Edges**: Các đường kết nối (tĩnh hoặc có điều kiện) quyết định nhánh chạy tiếp theo.
+- **Reducer**: Luật merge state khi cập nhật (ví dụ mặc định là overwrite, dùng append cho message history hoặc errors).
 
----
+## 3. Persistence & Time Travel
+- **Checkpointing**: State snapshot lại sau mỗi bước. Các adapter gồm `MemorySaver` (nhanh, in-memory), `SqliteSaver` (bền vững), hoặc `Postgres` cho production.
+- **Thread ID**: Định danh riêng biệt cho một phiên làm việc/workflow (vd một request hay một ticket).
+- **Time Travel**: Tính năng replay lại từ một checkpoint bất kỳ để debug hoặc A/B testing hướng đi khác. Cập nhật state (Update State) ở checkpoint rồi resume.
 
-## Core API
+## 4. Human-in-the-Loop (HITL) & Error Recovery
+- **Interrupt / Resume**: Dùng `interrupt()` để tạm dừng graph. Sau khi nhận được duyệt (approve), resume đồ thị bằng `Command(resume=...)`.
+- **Error Recovery (3 Tầng)**:
+  1. Retry node bị lỗi với giới hạn (`max attempts`).
+  2. Fallback sang mô hình hoặc công cụ dự phòng.
+  3. Đẩy vào Dead-letter queue để đợi human review.
 
-| Thành phần | Vai trò |
-|-----------|---------|
-| **StateGraph** | Container chứa toàn bộ workflow |
-| **Nodes** | Các hàm xử lý (llm call, tool call, router...) |
-| **Edges** | Kết nối giữa nodes (normal hoặc conditional) |
-| **State** | TypedDict chia sẻ giữa tất cả nodes |
-| **Callbacks** | Hook để log, trace, monitor |
+## 5. Observability cho Graph
+Cần báo cáo và theo dõi:
+- Task success rate, Nodes visited.
+- Retry count, Interrupt count, State validation errors.
+- Architecture diagram & state schema.
 
----
-
-## Persistence & Time Travel
-
-- **Checkpointer**: Lưu state sau mỗi node (dùng `MemorySaver` hoặc `SqliteSaver`)
-- **Time Travel**: Replay lại từ bất kỳ checkpoint nào để debug hoặc branch
-- **Thread ID**: Mỗi conversation có thread riêng → hỗ trợ multi-user
-
----
-
-## Human-in-the-Loop & Error Recovery
-
-```python
-# Pause tại node cần human approval
-graph.add_node("human_review", human_review_node)
-graph.interrupt_before(["human_review"])
-
-# Resume sau khi human approve
-graph.invoke(state, config={"configurable": {"thread_id": "abc"}})
-```
-
----
-
-## Liên kết
+## 6. Liên Kết
 - [[day9_overview]] – Multi-Agent & MCP (foundation)
 - [[day27_track1]] – Human-in-the-Loop UX (nâng cao)
 - [[day23_overview]]

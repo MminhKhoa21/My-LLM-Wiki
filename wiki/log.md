@@ -134,3 +134,18 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 - Deleted wiki/concept_agent_harness.md (user request).
 - Deleted wiki/summary_repository-harness.md (user request).
 - Re-running indexer to update index.md.
+
+## [2026-07-05] ingest | Circuit Breakers, Caching & Reliability for Production Agents
+- Synthesized raw/AI_20K_2A202600974/25/day10_reliability_student.pdf.
+- Created summary page wiki/AI_20K_2A202600974/day25_track3.md.
+- Rebuilt index.md.
+## [2026-07-06] ingest | Summary of day11-guardrails-ai-safety.pdf
+## [2026-07-06] ingest | Summary of day11-guardrails-ai-safety_E402_thien.pdf
+## [2026-07-06] ingest | Summary of batch02-day12-cloud-services-and-deployment 16.31.52.pdf
+
+## [2026-07-06] ingest | day13-monitoring-logging-observability
+## [2026-07-06] ingest | 2-day14-ai-evaluation-benchmarking-v2
+## [2026-07-06] ingest | Day 14
+## [2026-07-06] ingest | day14-ai-evaluation-benchmarking
+## [2026-07-06] ingest | 2026_Work_Trend_Index_Annual_Report_050526-7_69fc5b1c4e265
+## [2026-07-06] ingest | ITviec_Salary_Report_2025_2026_VN

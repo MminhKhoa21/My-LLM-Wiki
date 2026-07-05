@@ -1,0 +1,521 @@
+Multi-AgentSystems
+AICB-P2T3·Ngày20·Chương4—AgentNângCao
+VinUniversity
+VinUniversity · Phase2·Track3·Tuần4
+?
+HÃYSUYNGHĨ...
+“Khimộtagentkhôngđủ—Su-
+pervisor,Debate,Parallelpatterns
+giảiquyếtbàitoánnhưthếnào?”
+Giữcâuhỏinàytrongđầukhihọcbàihômnay
+Nộidungbàihọc
+1. TạisaocầnnhiềuAgent?
+2. 5AgenticWorkflowPatterns(Anthropic)
+3. SupervisorPattern—Orchestration
+4. DebateAgents—AdversarialCollaboration
+5. ParallelExecution&SharedState
+6. Multi-AgentFrameworks
+7. Demo&Thựchành
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 1/25
+01
+TạisaocầnnhiềuAgent?
+Taxonomy,failuremodes,vànguyêntắc“Startsimplest”
+Trựcgiáccốtlõi
+Multi-Agent=Teamdựán
+Multi-agentgiốngteamdựán:có PM(supervisor),specialists(workers),
+shareddocument (state).
+Singleagent =1ngườilàmhết: research,phântích,viếtbáocáo. Tốt
+chotaskđơngiản.
+Multi-agent = team 3 người: researcher tìm data, analyst phân tích,
+writerviết—mỗingườimaster1việc.
+Nhưng:Teamcũngcóoverhead—họp,miscommunication,conflict. Chỉ
+scalekhi1ngườikhôngđủ.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 2/25
+Multi-AgentTaxonomy—KhinàocầnnhiềuAgent?
+SingleAgent
+SpecializationParallelizationCross-checking
+“BagofAgents”
+dưới80% latency hallucination
+Nhiềuagents+khôngcleardecomposition=chaos
+3lýdochínhđểmulti-agent:
+1. Specialization: mỗiagent
+master1domain
+2. Parallelization: concurrent
+subtasks,giảmlatency
+3. Cross-checking: consensus
+giảmhallucination
+Lưuý: Decisionrule: nếusin-
+gle agent đạt trên 80% accu-
+racythì KHÔNGthêmagents
+—complexitykhôngjustify.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 3/25
+Vídụthựctiễn—multi-agentgiảiquyếtvấnđềgì?
+Usecase Cấutrúcagent Điểmhọcviêncầnnhớ
+Customer support
+triage
+TriageagentroutesangBilling/Refund/
+FAQagent. Reference: OpenAIAgents
+SDKhandoffs, https://developers.openai.
+com/api/docs/guides/agents/orchestration
+Đâylàroutingpatterndễhiểunhất: mỗi
+intentcóspecialistriêng;sairoutethì
+usernhậncâutrảlờisai.
+Code review assis-
+tant
+Plannerchiatask,Codeagentsửa,Test
+agentchạytest,Revieweragentcritique.
+Reference: GitHubAgentHQ/coding
+agentsdiscussion, https://github.blog/
+Multi-agenthữuíchkhicần
+plan–implement–verify,nhưngphảicó
+test/CIlàmgroundtruth.
+Researchreport Searcherthuthậpnguồn,Analysttrích
+insight,Writerviết,Criticfact-check.
+Reference: Anthropicworkflows,
+https://www.anthropic.com/engineering/
+building-effective-agents
+Phùhợplabhômnayvìdễsosánhsingle
+vsmulti-agenttheoquality,latency,
+cost.
+Enterprise work-
+flow
+ADKagentteamsphốihợpvớitoolsvà
+observability. Reference: GoogleADK,
+https://adk.dev/
+Productionkhôngchỉlàprompt: cần
+deploy,evaluate,trace,auth,guardrails.
+Role-based au-
+tomation
+CrewAIcrews: role,goal,tools,task.
+Reference: https://crewai.com/
+Tốtđểprototypenhanhkhimuốnhọc
+viênthấy“agentnhưmộtvaitròtrong
+team”.
+Conversationalcol-
+laboration
+AutoGengroupchat/agent
+conversations. Reference:https:
+//microsoft.github.io/autogen/stable/
+Dùngđểminhhọadebate,
+human-in-loop,multi-turncoordination.
+Mỗinhómchọn1vídụ,trảlời: agentroleslàgì? sharedstatechứagì?
+failuremodenguyhiểmnhấtlàgì?
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 4/25
+Hoạtđộng1—Singleagenthaymulti-agent?
+Nhiệmvụnhóm(8phút):
+1. Vớimỗitask,chọn: singleagent,
+workflow,hay multi-agent.
+2. Giảithíchbottleneckchính: accuracy,
+latency,cost,hayownership.
+3. Nêuítnhất1lỗimớinếudùngnhiều
+agent.
+Task:FAQđơngiản;researchreport;
+refundworkflow;codemigration.
+“Nếu dùng nhiều agent, lỗi
+mớinàoxuấthiện? Nếudùng
+một agent, lỗi nào khó kiểm
+soát?”
+Lưu ý:Mục tiêu không phải
+chọnmulti-agentcàngnhiều
+càngtốt;mụctiêulàbiết khi
+nàokhôngnêndùng .
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 5/25
+MAST: lỗi thường đến từ thiết kế hệ thống, không chỉ từ model
+14
+Failuremodes
+identified
+3
+Nhómlỗi:
+spec,align-
+ment,verification
+150+
+Tasksđược
+phântích
+“WhyDoMulti-AgentLLMSystemsFail?” (arXiv:2503.13657)chỉranhiều
+lỗiđến từspecification / system design,inter-agent misalignment,
+vàverification/termination . Vìvậycầndefineroles,stopcondition,và
+rubrictrướckhicode.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 6/25
+02
+5AgenticWorkflowPat-
+terns(Anthropic)
+Từđơngiảnđếnphứctạp—escalatedần
+5Patterns—EscalationLadder
+1. Prompt
+Chaining 2. Routing 3. Parallel 4. Orchestrator
+Workers
+5. Evaluator
+Optimizer
+Complexity+Failuremodestăng
+Sequential
+validateeach
+Classify
+route
+Sectioning
+Voting
+Supervisor
+delegates
+Generate
+critiqueloop
+“Start simplest. Only add agents
+whenmeasurablyneeded.” Thử
+PromptChainingtrước. Chỉesca-
+latekhicóbằngchứngcần.
+Sectioning: splittasks →parallel
+workers
+Voting: same task → multiple
+LLMs →aggregate
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 7/25
+Hoạtđộng2—PatternCardSorting
+Chianhóm3người,mỗinhómnhận
+1case:
+■ Tổnghợpreviewkháchhàngtừ
+1.000comment
+■ Xửlýticketrefund/billing/
+technicalsupport
+■ Viếtbáocáothịtrườngcófact-check
+nguồn
+■ Migratecodebasevàđảmbảotest
+pass
+Nhiệmvụ: chọn1trong5patterns,vẽ
+flowtrong4phút.
+Mỗinhómnói30giây: pattern,
+lý do, metric đo thành công,
+failureguard.
+Lưu ý:Không được mặc định
+“supervisorchomọithứ”. Hãy
+chứng minh pattern đơn giản
+hơnchưađủ.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 8/25
+RoutingPattern—CostOptimization
+Routing — Classify input rồi
+chuyển đến specialized handler.
+Easy queries dùng small model,
+hardqueriesdùnglargemodel.
+■ 70%querieseasy=smallmodel
+(GPT-4o-mini)
+■ 30%querieshard=largemodel
+(GPT-4o)
+■ Giảm50%+chiphítổngthể
+Khi workload cóbimodal diffi-
+culty — nhiều query đơn giản +
+ítqueryphứctạp.
+Lưu ý:Routing chỉ hiệu quả khi
+phânloạichínhxác. Saiphânloại
+=queryhardgửichosmallmodel
+=kếtquảkém.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 9/25
+03
+SupervisorPattern—Or-
+chestration
+Hub-spokedelegationvớiLangGraph
+SupervisorPattern—Hub-SpokeArchitecture
+Supervisor
+(LLMRouter)
+Search
+Agent
+Analysis
+Agent
+Writer
+Agent
+Code
+Agent
+SharedState
+messages,worker_results,final_answer
+delegate delegate
+delegate delegate
+Supervisor — LLM router:
+nhận task, decompose, route
+đến workers, aggregate re-
+sults
+■ Mỗiworkerlànoderiêngvới
+owntools
+■ Supervisorquyếtđịnh: gọiai,
+theothứtựnào
+■ Costinsight: cheapmodel
+chorouting,expensivemodel
+choworkers
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 10/25
+SupervisorState—LangGraphImplementation
+class SupervisorState(TypedDict):
+messages: list[BaseMessage]
+next_worker: str
+worker_results: dict[str, str]
+final_answer: str
+# Supervisor routing via tool calls
+def supervisor(state):
+response = llm.invoke(
+system= "Route task to workers",
+tools=[search, analyze, write],
+messages=state[ "messages"]
+)
+return {"next_worker": response.tool}
+# Build graph
+graph = StateGraph(SupervisorState)
+graph.add_node("supervisor", supervisor)
+graph.add_node("search", search_agent)
+graph.add_node("analyze", analysis_agent)
+Stategồm4thànhphần:
+1. messages: conversation
+context
+2. next_worker: aiđượcgọitiếp
+3. worker_results: outputtừmỗi
+worker
+4. final_answer: kếtquảtổng
+hợp
+Lưu ý:Failure modes:#1in-
+finite routing loop (A→ B →
+A).#2wrongworkerselection.
+Cầnmaxiterations guard.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 11/25
+04
+DebateAgents—Adversar-
+ialCollaboration
+Giảmhallucinationquatranhluậncókiểmsoát
+DebatePattern—AdversarialCollaboration
+AgentA
+(GPT-4o)
+AgentB
+(Claude)
+AnswerA AnswerB
+critique
+critique
+Judge
+Synthesize
+FinalAnswer
+Flow:
+1. AgentA&Banswer
+independently
+2. Critiquenhau(adversarial)
+3. Judgesynthesizefinalanswer
+Debategiảmhallucination 15–
+25%. Hiệu quả nhất cho am-
+biguous queries, high-stakes
+decisions.
+Lưuý: “Collectivedelusion”: cảhaiđồngýsai
+→Judgekhôngcatch. Fix: dùngdiverse
+models.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 12/25
+SocietyofMind—HeterogeneousAgents
+Agent Model Strength
+Researcher GPT-4o Broadknowledge
+Analyst Claude Nuancedreasoning
+Critic Gemini Differenttrainingdata
+Judge Best-of Finalsynthesis
+Mỗi model cóblind spots
+khác nhaudo training data
+diversity.
+GPT-4 + Claude + Gemini
+→ better coverage hơn 3 in-
+stancesGPT-4.
+Trade-off: thêmlatency(sequential
+critique)+cost(3models). Chỉjustifycho
+high-stakes.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 13/25
+05
+ParallelExecution&Shared
+State
+Map-reduce,AsyncIO,vàcoordinationpatterns
+ParallelAgentExecution—Map-Reduce
+Task
+Worker1
+Worker2
+WorkerN
+Merge
+Aggregate Result
+...
+concurrent
+LangGraphSendAPI
+Dynamic fan-out + parallel
+branches — built-in parallelism.
+Mỗi worker chạy concurrent,
+mergekhitấtcảdone.
+Lưuý: “Parallel ̸=alwaysfaster”:
+DAG dependencies, shared state
+locks, merge conflicts có thể
+negatespeedup. Đotrướckhias-
+sume.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 14/25
+SharedState—CoordinationArchitecture
+Shared state (blackboard)—
+Agents read/write central state
+— simple, cần locks cho con-
+current writes. LangGraph dùng
+TypedDictstatemặcđịnh.
+Message passing — Async
+queue (Redis Pub/Sub, Kafka) —
+decoupled, scalable, thêm net-
+worklatency. Tốtchodistributed
+systems.
+Lưuý: Contextlossacrosshand-
+offs: biggest coordination failure.
+Mỗi agent nhận partial context,
+qualitygiảm.
+Multi-agent without tracing = im-
+possible to debug. Dùng Lang-
+Smith hoặc Langfuse cho mọi
+multi-agentsystem.
+Failurehandling: supervisordetecttimeoutthì
+retrydifferentworkerhoặcfallback.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 15/25
+AsyncIOvàAgentPools—ProductionConcurrency
+Trueconcurrentexecutionchomultipleagents.
+asyncio.gather(agent1(), agent2())
+→ParallelAPIcalls,sharedeventloop
+Pre-initializeNinstances,usequeue
+→Amortizeinitcost,controlconcurrency
+GiốngthreadpoolnhưngchoLLMagents
+Productionfailurehandling:
+■ Supervisordetect timeout →retryhoặc
+fallback
+■ Circuitbreaker: fail3lần →skip,log,
+backup
+■ Deadletterqueue : failedtaskslưulạiđể
+debug
+Lưuý: Poolsize=concurrentAPI
+rate limit. Quá nhiều agents→
+ratelimiterrors.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 16/25
+06
+Multi-AgentFrameworks
+LangGraph,AutoGen,CrewAI—chọnđúngcôngcụ
+FrameworkComparison—Chọntheousecase
+Framework Flexibility Setup Bestfor Ghichú
+LangGraph Cao Trungbình Production Statemachines,fullcontrol
+CrewAI Trungbình Dễ Prototype Role-based,nhanhonboard
+AutoGen Cao Trungbình Codeexec GroupChat,human-in-loop
+OpenAISDK Thấp Rấtdễ Simple Lightweight,tool-usefocused
+GoogleADK Trungbình Trungbình GCP VertexAI,A2Aprotocol
+AutoGen/CrewAItốtchoprototypenhanh. LangGraphchoproduction —
+fullstatecontrol,debugging,conditionalrouting. Migratekhicầnscale.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 17/25
+07
+Demo&Thựchành
+Multi-AgentResearchSystem+2giờlabcópeerreview
+Predict-before-demo—họcviênđoántracetrước
+Cho học viên xem task: “Re-
+search GraphRAG state-of-the-art,
+write 500-word summary”. Hỏi:
+agent nào nên chạy trước? bước
+nàocóthểparallel?
+SosánhdựđoánvớiLangSmith
+trace: route có đúng không?
+worker nào tốn token nhất? lỗi
+nàocầnguardrail?
+Biếndemotừ“giảngviênbiểudiễn”thành“họcviêndebugmộthệthống
+thật”.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 18/25
+Multi-AgentResearchSystem—LiveDemo
+1. Pipeline: Supervisor+SearchAgent+AnalysisAgent+WriterAgent
+2. Task: “ResearchGraphRAGstate-of-the-art,write500-word
+summary”—supervisorcoordinates
+3. LangSmithtrace: routingdecisions,paralleltimeline,workeroutputs,
+finalsynthesis
+4. Sosánh: single-agentvsmulti-agenttrêncùngtask—quality,
+latency,cost
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 19/25
+Lab#20
+Mụctiêu: Build3-agentresearchsystem: Researcher+Analyst+Writer
+vớiLangGraph
+Deliverable: Benchmarkreport: single-agentvsmulti-agent(accuracy,
+latency,cost)+LangSmithtraces
+Thờigian: 2giờ
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 20/25
+Lab20—2giờthựchànhtheomilestone
+1. 0–15’Setup: clonestarter,setAPIkey,chạysingle-agentbaseline.
+2. 15–45’Buildsupervisor: LangGraphstatemachine,routingviatoolcalls.
+3. 45–75’Add3workers: SearchAgent,AnalysisAgent,WriterAgent;lưu
+outputvàosharedstate.
+4. 75–95’Trace&benchmark: singlevsmultitrên3–5researchqueries;đo
+quality,latency,cost.
+5. 95–115’Peerreview: đổinhóm,đọctracecủanhau,tìm1failuremodevà
+đềxuấtfix.
+6. 115–120’Exitticket: mỗinhómghi1điềunêndùngmulti-agentvà1điều
+khôngnêndùng.
+GitHubrepo+benchmarkreport+1LangSmith/Langfusetracescreenshot.
+Bonus: thêmCriticAgentđểfact-check.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 21/25
+Peer Review Rubric — giảm nhàm chán, tăng chất lượng lab
+Tiêuchí Câuhỏipeerreviewerphảitrảlời Điểm
+Roleclarity Mỗiagentcónhiệmvụrõ,khôngoverlapquá
+nhiềukhông?
+0–2
+Statedesign Sharedstatecóđủthôngtinđểhandoffmàkhông
+mấtcontextkhông?
+0–2
+Failureguard Cómaxiterations,timeout,retry/fallback,hoặc
+validationkhông?
+0–2
+Benchmark Cósosánhsinglevsmulti-agentbằngmetriccụ
+thểkhông?
+0–2
+Traceexplanation Nhómgiảithíchđượctrace: ailàmgì,tốnbao
+nhiêu,saiởđâukhông?
+0–2
+Mỗinhómreview1nhómkháctrong8phút, sauđóownercó5phútsửa
+nhanh.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 22/25
+QUIZChương4+MILESTONE1
+10 câu trắc nghiệm + short an-
+swer:
+Scope: Reflexion, Memory Sys-
+tems,ProductionRAG,GraphRAG,
+Multi-Agent
+Format: 7MC+3shortanswer
+Câu hỏi test understanding, không test nhớ
+syntax
+SubmitportfoliotừN16–N20:
+•Lab16: Reflexionagent
+•Lab17: Memorysystem
+•Lab18: ProductionRAG
+•Lab19: GraphRAG
+•Lab20: Multi-agentsystem
+Deadline: 1tuầnsauN20
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 23/25
+Referencelinkschohọcviêntựđọcthêm
+Anthropic: Buildingeffectiveagents
+anthropic.com/engineering/building-effective-agents
+OpenAI: Agents SDK orchestration
++handoffs
+developers.openai.com/.../orchestration
+LangGraphsupervisorlibrary
+reference.langchain.com/python/langgraph-supervisor
+AutoGen:
+microsoft.github.io/autogen
+CrewAI: crewai.com
+GoogleADK: adk.dev
+MASTpaper:WhyDoMulti-AgentLLM
+SystemsFail?
+arxiv.org/abs/2503.13657
+Lưuý: Gợiýđọc: họcviênchỉcầnđọcAnthropic+OpenAIhandoffstrước
+lab;cáclinkcònlạidùngkhichọnframeworkchoproject.
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 24/25
+Tổngkết—KeyTakeaways
+Nhữngýchínhcầnnhớ trướckhisangbàitiếptheo
+1
+Supervisorlàmostpracticalmulti-agentarchitecture—clearownership,easyde-
+bug,production-ready
+2 Debate giảm hallucination 15–25% nhưng tốn 2–3× cost — chỉ dùng cho high-
+stakesdecisions
+3 Parallelexecutioncắtlatencynhưngcầncarefulstatemergestrategy—“parallel
+̸=alwaysfaster”
+4 Buổihọcgiữlýthuyếttrong2giờ;2giờcònlạibuild,trace,benchmark,peerreview
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 24/25
+Tiếptheo&Bàitập
+Ngày21: Fine-tuningLLMs—
+LoRA/QLoRA
+“Khi nào nên fine-tune — và khi
+nàopromptengineeringđủrồi?”
+■ HoànthànhLab20+submit
+Milestone1portfolio
+■ Đọc: MASTpaper(NeurIPS
+2025)—multi-agentfailure
+taxonomy
+VinUniversity (VinUni) AICB·Ngày20 Tuần4 25/25
+Hỏi&Đáp
+SupervisorvsDebatevsParallel—khinào
+dùngpatternnào? Singleagentcókhinàođủ?
+Cảmơn!
+AICB-P2T3·Ngày20·Multi-AgentSystems
+github.com/vinuni-aicb
+Liênhệ: instructor@vinuni.edu.vn

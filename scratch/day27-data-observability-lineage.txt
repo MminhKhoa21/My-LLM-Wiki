@@ -1,0 +1,951 @@
+Data Observability & Lineage
+AICB-P2T2 · Ngày 27 · Chương 6: Tổng Hợp
+· Quan sát chính DỮ LIỆU, không chỉ hệ thống
+Giảngviên
+VinUniversity · Phase 2 · Track2· Tuần6
+?
+HÃYSUY NGHĨ...
+“Pipeline báothành công. Dashboard vẫn xanh.
+Nhưng 74% đội ngũ data nói: người đầu tiên
+phát hiện dữ liệu sai làbusiness stakeholder
+— không phải hệ thống giám sát của họ.
+Dashboard xanh không có nghĩa là dữ liệu
+đúng. Hôm nay: quan sát chính DỮ LIỆU .”
+Giữcâu hỏi này trong đầukhi học bài hôm nay
+Bàihọc hôm nay — 15chủ đề
+1. Tạisao quan sát DATA,không chỉ hệ thống
+2. 7chiều của data observability
+3. Bứctranh thị trường 2026
+4. Bộcông cụ OSS chạy ngay(GX 1.0, Soda 4.0)
+5. Nềntảng SaaS & trục rules-vs-ML
+6. Drift& anomaly detection (PSI/KS/KL/MMD)
+7. DataContracts I — chuẩn ODCS
+8. DataContracts II — thực thi& shift-left
+9. LineageI — OpenLineage & môhình sự kiện
+10. LineageII — catalog, column-level, impact
+11. AI-InfraI — Feature Stores (skew)
+12. AI-InfraII — Vector/Embedding&RAG
+13. AI-InfraIII — Training/LLM/Agentdata
+14. Frontier& chi phí (lakehouse, streaming)
+15. Tuânthủ (PDPL), sự cố &Lab 27
+Ranhgiới với Ngày 23
+Ngày 23 quan sátHỆ THỐNG(service healthy?). Ngày 27 quan sátDỮ LIỆU(data
+đúng/tươi/đầyđủ/truy vết được?). Không dạy lại Prometheus/SLO burn-rate.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 1 / 50
+Mụctiêu học tập (Bloom’s)
+■ Hiểu(Understand): phânbiệt data observability vs pipeline/system monitoring;7
+chiềuchất lượng dữ liệu.
+■ Ápdụng (Apply): viếtchecks bằng Great Expectations 1.0 +Soda 4.0; tính
+PSI/KS/MMDđể phát hiện drift.
+■ Phântích(Analyze): đọclineageđểlàm impactanalysis (blastradius)& root-cause.
+■ Thiếtkế (Create): mộtdatacontract (ODCS)+ quan sát skew của featurestore &
+embeddingdrift của RAG.
+■ Đánhgiá(Evaluate): chọncôngcụ(build-vs-buy,rules-vs-ML)chotừngtìnhhuống.
+Tưduy cốt lõi
+Schemacheckschỉbắtđược7,8%sựcốdữliệuthật. Phầncònlạicầnfreshness,
+volume,distribution, lineage, contracts & ML anomalydetection.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 2 / 50
+Deliverablecuối ngày
+Artifactcần nộp (Lab 27)
+Mộtbộdata-observabilitychạyđượczero-keytrênDuckDB+lineagegraphtrênMar-
+quez.
+■ GX1.0 / Soda 4.0 checkpoint chặnpipeline khi data vi phạm
+(freshness/volume/distribution/schema).
+■ Mộtdatacontract .odcs.yaml + datacontract test pass/failtrong CI.
+■ Phátsinh OpenLineageevents →MarquezUI; trả lời “cột này hỏngthì ai chịu ảnh
+hưởng?”.
+■ Mộtbài kiểm tratraining-servingskew (PSI)trên feature store +embeddingdrift
+(domain-classifierAUC) cho corpus RAG.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 3 / 50
+01
+Tại sao quan sát DỮ LIỆU,
+không chỉ hệ thống
+Pipeline “thành công” không có nghĩa là data đúng. Schema
+checks bắt< 8% sự cố.
+Pipeline/SystemMonitoring vs Data Observability
+Pipeline&SystemMonitoring(Ngày
+23)
+Gócnhìn hạ tầng — “servicecó khoẻ không?”
+■ Jobcó chạy? Mấtbao lâu? Có lỗiexit?
+■ CPU/RAM/GPU,p99 latency,error rate
+■ Prometheus,Grafana, OTel,SLO burn-rate
+→Tấtcả xanhmàdata vẫn có thểsai.
+DataObservability (Ngày 27)
+Gócnhìn dữ liệu — “datacó ĐÚNG không?”
+■ Fresh? (tươi)Complete? (đủrecords)
+■ Distribution? (phânphối hợp lý)Schema?
+■ Lineage? (truyvết) Contract? (đúngcam
+kết)
+→Bắtsilentdataissues TRƯỚCkhimodel/agent
+/dashboard tiêu thụ.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 4 / 50
+Bằngchứng: vì saoschema checks là chưa đủ
+Phântích nguyên nhân gốc 2026của Monte Carlo trên11triệu+ bảng: schema drift —thứ hầu hết mọi người dựngđầu
+tiên— chỉ gây7,8%sựcố.
+Nguyênnhân gốc của sự cốdữ liệu %
+Lỗipipeline (logic biến đổi) 26,2%
+Biếnđộng dữ liệu thực tế(distribution) 20,0%
+Ingestion(nguồn vào) 16,6%
+Platform/hạtầng 15,2%
+Thayđổi chủ ý / backfill 14,2%
+Schemadrift 7,8%
+Nguồn: Monte Carlo, 2026Data Quality Statistics (11M+bảng)— trích dẫn là số liệucủa Monte Carlo.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 5 / 50
+DataDowntime — KPI cốt lõicủa dữ liệu
+Côngthức (analog của MTTD/MTTR)
+DataDowntime =Nincidents×(TTD+TTR)
+TTD = time-to-detect, TTR = time-to-resolve. Mục tiêu:
+giảmcả ba thừa số.
+■ 74%độingũ: business pháthiện sự cốtrước(so
+với47% năm 2022).
+■ 68%sựcố mất ≥4giờ chỉ đểpháthiện.
+■ TTRtrung bình ≈9–15giờ tuỳnguồn (9h = số
+thậntrọng, Monte Carlo 2022; chitiết ở §10);≈1
+sựcố / 10 bảng /năm.
+Lưuý: “Tấtcảdashboardxanh”+“kháchhànggọibáosốliệusai”=bạnđangthiếu
+dataobservability,không phải thiếu system monitoring.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 6 / 50
+Chiphí của dữ liệu xấu— dùng số liệu CÓ chúthích
+Sốliệu thường gặp Nguồnthật Cảnhbáo
+$12,9M/nămchi phí data quality kém Gartner(Melody Chien) số2021,mẫu lệch enterprise
+$3,1ngàn tỷ/năm (US) Redman,HBR 2016(khôngphải IBM) 1 thập kỷ, phươngpháp mờ
+Dataengineer tốn ∼40%thời gian vì data xấu MonteCarlo/Wakefield2022 (n=300) dùngđược
+“80%thời gian để dọn data” CrowdFlower/Forbes2016 folklore—dùng 40%
+Bàihọc nghề
+Luôn truy về nguồn gốccủa một con số trước khi đưa lên slide — nhiều “stat kinh
+điển”là tam sao thất bản.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 7 / 50
+Khidata xấu thành tiền thật— 4 sự cố có thật
+Sựcố Nguyênnhân dữ liệu Hậuquả
+UnitySoftware (5/2022) Ingesttrainingdata xấutừ1 khách lớn −$110Mguidance, cổ phiếu−37%( ∼$5B)
+Equifax(2022) Lỗicode →điểmtín dụng sai∼2,5Mngười NYAG phạt $725K (1/2025) +giám sát
+ZillowOffers (11/2021) Model/datadrift vs thị trường biếnđộng writedown >$500M,sa thải ∼25%
+Citigroup(4/2024) Nhậpliệu: số 0không bị xoá→$81ngàntỷ “near-miss”,qua 2 checker,bắtsau ∼90phút
+Mẫusố chung
+Cả 4 đềukhôngphải lỗi “service down”. Pipeline chạy ngon;nội dung dữ liệumới là thứ sai. Citigroup⇒ưu tiên
+automatedrange/anomaly checkshơnreview thủ công.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 8 / 50
+02
+7 chiều của Data Observability
+Từ 5 trụ cột của Monte Carlo, mở rộng sang contracts & trust.
+5trụ cột (Monte Carlo)→7chiều
+Freshness
+Datamới?
+Trễbao lâu?
+Volume
+Đủrecords?
+Độtbiến?
+Distribution
+Giátrị hợp lý?
+Outliers?
+Schema
+Cộtđổi?
+Typedrift?
+Lineage
+Nguồnnào?
+Impactgì?
+Contract
+Đúngcam kết?
+Trust
+Điểmtin cậy?
+5trụ cột gốc(Barr
+Moses/MonteCarlo, 2019): Freshness· Volume· Distribution ·Schema · Lineage.+2chiều 2026: Contract-conformant
+(đúnghợp đồng dữ liệu) &Trustworthy(điểmtin cậy tổng hợp).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 9 / 50
+2“từ vựng” chất lượng dữliệu — ánh xạ
+6chiều DQ cổ điển (DAMA)
+■ Accuracy—đúng giá trị thực
+■ Completeness—không thiếu (null rate)
+■ Consistency—khớp giữa các nguồn
+■ Timeliness—kịp thời (= freshness)
+■ Validity—đúng định dạng/miền giá trị
+■ Uniqueness—không trùng lặp
+Ánhxạ sang 5 trụ cộtobservability
+■ Timeliness →Freshness
+■ Completeness/Uniqueness →Volume
+■ Accuracy/Validity →Distribution
+■ (cấutrúc) →Schema
+■ (xuấtxứ) →Lineage
+DQ = “data có tốt không” (trạng thái). Observability
+=“làm sao BIẾT khi nóhết tốt” (đo liên tục).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 10 / 50
+Môhình trưởng thành (Maturity Model)
+Level0
+Reactive— user báo lỗi
+Level1
+Rules— GX/Soda/dbt
+Level2
+MLanomaly detection
+Level3
+Predictive+ contracts
+Level4
+Agenticself-healing
+Hầuhết đội ngũ ởLevel0–1. Mục tiêu
+khoánày: vững Level1 (rules + contracts), đạtLevel2 (MLanomaly), hiểu lộ trình Level3–4 (agentic DQ — xem §14).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 11/ 50
+03
+Bức tranh thị trường 2026
+Hợp nhất mạnh, mọi tool gắn AI agent, contracts “ăn” checks.
+Bảnđồ: sống /bị mua / xoay trục /OSS
+Nhóm Thànhviên & ghi chú
+SaaSđộc lập, đang sống MonteCarlo, Anomalo, Bigeye, Sifflet,SodaCloud — đều “data + AI”
+Bịmua Metaplane →Datadog(∼4/2025)— gộp vào hãng system-observability
+Xoaytrục Datafold— sunsetOSS data-diff (5/2024),chuyển sang “AI for datateams”
+OSS-first/ dbt-native GreatExpectations (GX Core), Soda Core,Pandera, Elementary,dbt-expectations
+Quymô thị trường (dùng KHOẢNG,không dùng điểm)
+Data observability≈ $3,1B (2025–26)→ $6–8B (2031–34), CAGR∼11–12% (Mordor / Fortune BI).Đừng nhầm
+vớithị trường “observability” hệ thống/APM(∼$28–34B).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 12 / 50
+Bridge: data & systemobservability đang hội tụ
+Hộitụ ở tầng vendor
+■ Metaplane →Datadog: hãng APM muatool
+dataobservability.
+■ Mọivendor SaaS lớn đang gắnthêm “agent” AI
+(dựđoán / ghi nhớ /tự sửa) lên nền tảng sẵn
+có— chi tiết kỹ thuật(Monte Carlo Agent
+Observability,SiffletSentinel/Sage/Forge) →
+xem§5.
+Lưu ý: Nhưng công việcvẫn khác
+nhau: Metaplane (dù thuộc Datadog)
+vẫn quan sát bảng/schema/phân
+phối — không phải CPU/latency của
+service. Đừng để marketing “unified”
+xoámất ranh giới data-vs-service.
+“First/onlyto unify data+AI” làđịnh vị marketing,không phải sự thật đãkiểm toán — trình bày nhưvậy trên lớp.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 13 / 50
+04
+Bộ công cụ OSS chạy ngay —
+$0
+Great Expectations 1.0, Soda 4.0, Pandera, Elementary, dbt
+tests.
+GreatExpectations 1.0 (GX Core) —API mới
+import great_expectations as gx
+context = gx.get_context() # ephemeral|file|cloud
+ds = context.data_sources.add_pandas( "src")
+asset = ds.add_dataframe_asset( "orders")
+bd = asset.add_batch_definition_whole_dataframe( "bd")
+suite = context.suites.add(gx.ExpectationSuite( "orders"))
+suite.add_expectation(gx.expectations
+.ExpectColumnValuesToNotBeNull(column= "user_id"))
+suite.add_expectation(gx.expectations
+.ExpectColumnValuesToBeBetween(column= "amount",
+min_value=0, max_value=1e6))
+vd = context.validation_definitions.add(gx.ValidationDefinition(
+data=bd, suite=suite, name= "vd"))
+cp = context.checkpoints.add(gx.Checkpoint(
+name= "cp", validation_definitions=[vd], actions=[]))
+print(cp.run(batch_parameters={ "dataframe": df}).success)
+Chuỗichuẩn 1.0
+get_context →source/asset →batchdef-
+inition → suite → validation definition
+→ checkpoint.run().
+Lưu ý: GX 1.0 (28/8/2024)
+phá vỡ tương thích. ∼90%
+tutorial online là tiền-1.0
+(YAML config, Validator,
+batch_request)— sẽKHÔNG
+chạy. Phiên bản hiện tại
+∼1.18.x.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 14 / 50
+SodaCore 4.0 — “contracts ănchecks”
+Thayđổi lớn (4.0.5, 28/1/2026)
+Tríchreleasenotes: “introducesDataContractsasthe
+default way to define data quality rules”— breaking
+change, chuyển từ “checks language” sang cú pháp
+dựa-contract. Có tool tựchuyển đổi từ SodaCL v3.
+Bổsung AI & vận hành
+■ ContractCopilot —viết rule bằng ngôn ngữ
+tựnhiên
+■ ContractAutopilot —tự sinh (Private
+Preview)
+■ SmartAnomaly Treatment
+■ SodaAgent đổi tên→SodaRunner (chạy
+in-VPC)
+“70%ít false-positive hơn Prophet” làbenchmark của Soda,chưa được kiểm chứng độclập — ghi rõ trên slide.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 15 / 50
+Pandera,Elementary,dbt — vàsự khác biệt then chốt
+Côngcụ Làgì Dùngkhi
+Pandera Validate DataFrame trong code
+(DataFrameModel)
+boundary check trong pipeline Python; hỗ trợPo-
+lars/PySpark
+Elementary Gói dbt + CLI ghi kết quả test vào
+warehouse
+dbtshop muốn report + Slackalert miễn phí
+dbt-
+expectations
+50+assertion kiểu GX cho dbt (doMetaplaneduytrì →mộtmắt xích hợp nhất)
+dbt unit
+tests
+GAdbt1.8(5/2024): test LOGICvới
+fixturetĩnh
+kiểmtra biến đổi TRƯỚC khimaterialize
+Phânbiệt sống còn
+Unit test = kiểm tra LOGIC biến đổi(cho input X có ra output Y?).Data test/observability = quan sát TRẠNG
+THÁIdữ liệu thật(datađã materialize có đúng?). Cả hai đều cần; khôngcái nào thay cái nào.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 16 / 50
+Chọncông cụ OSS nào?
+dbt shop, miễn
+phí, trong repo?
+Elementary OSS
++ dbt-expectations
++ dbt unit tests
+Pipeline Python,
+validate tại biên?
+Pandera(hoặc GX
+Core cho declara-
+tive + Data Docs)
+Muốn contract khai báo
+làm đơn vị chất lượng?
+Soda Core 4.0
+/ Soda Cloud
+Nguyêntắc
+Rules-based (GX/Soda/dbt) =bạn BIẾT “tốt” trông như thế nào. ML-based (§5) =
+đểmáy học “bình thường” rồi báolệch.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 17 / 50
+05
+Nền tảng SaaS & trục Rules-vs-
+ML
+ML tự học ngưỡng; agent tự dự đoán/sửa. Khi nào nên mua?
+Sosánh 4 nền tảng SaaSdẫn đầu
+Nềntảng Điểmnhấn kỹ thuật Địnhvị
+MonteCarlo MLanomaly + lineage; tác giả“5 trụ cột” category-definer;Agent Observability
+Anomalo Unsupervised,tìm “unknown unknowns” mức record DQcho GenAI/unstructured(RAGcorpora)
+Bigeye Autometrics+Autothresholds(MLđặt ngưỡng) “AITrustPlatform”
+Sifflet 3agent: Sentinel/Sage/Forge agentic;giá theo asset
+Kháiniệm cốt lõi cần nhớ
+Autothresholds: MLhọckhoảngcảnhbáotừlịchsử →bạnkhôngphảiviếtngưỡngtĩnh. Agentic: predict(Sentinel)
+→remember(Sage) →fix(Forge).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 18 / 50
+Trụcquyết định “khi nàocần mua SaaS”
+Đãcó câu trả lời OSSở §4 (dbt shop→Elementary;validate biên Python→Pandera/GXCore; contract khai báo→
+SodaCore). Bảng dướichỉ thêm các tình huống cầntrả tiền:
+Tìnhhuống Lựachọn
+ML auto-detect nhiều bảng + lineage + UI
+sựcố, có ngân sách
+MonteCarlo / Bigeye / Sifflet/ Anomalo
+Đãdùng Datadog Metaplane-by-Datadog
+CorporaGenAI/unstructured Anomalo
+Kiểm tra refactor không đổi output (value
+diff)
+dbtunit tests (data-diffOSS đãchết)
+Lưuý: Build-vs-buy: OSS=$0nhưngbạntựviết/chạychecks;SaaS=MLautodetect+lineage+incidentUI,tính
+tiềntheo bảng/asset/volume. Đasố OSS đều có anh em“cloud” (open-core).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 19 / 50
+06
+Drift & Anomaly Detection — lõi
+thống kê
+Vượt ngưỡng tĩnh: bộ phát hiện phân tầng + chọn đúng phép đo
+khoảng cách.
+Hộpcông cụ anomaly — KHÔNGdùng ngưỡng tĩnh
+Model Bảnchất Dùngkhi
+OnlineZ-score (def 2.5) lệch chuẩn, đãde-trend univariaterẻ
+OnlineMAD (2.5) medianabs deviation univariate,kháng outlier
+RollingQuantile 10–100điểm tiến hoá ngưỡngđộng không giả định phânphối
+Holt-Winters 1xu hướng + 1 mùavụ chuỗicó trend+season
+Prophet/ STL nhiềuchu kỳ mùa vụ, change-points seasonalityphức tạp
+IsolationForest tuyếntính, đa biến, no-normality high-cardinality,đa biến
+Thamchiếu: VictoriaMetricsanomaly-detection(OSS). Quy tắc: MAD/IQR/z-score cho univariate rẻ; Prophet/Holt-Winters
+khicó season+trend; Isolation Forest chođa biến.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 20 / 50
+Decompose-then-detect: giết false positives
+Vấnđề
+Ngưỡng tĩnh báo động giả mỗi cuối tuần (volume giảm)
+haymùathuế(spike). →Độingũ alertfatigue →tắtcảnh
+báo.
+Giảipháp
+Trừ đi thành phần trend + seasonal (Prophet/STL)
+TRƯỚC, rồi mới phát hiện bất thường trên phần dư.
+Databricks DQM (2/2026): “học mẫu lịch sử & hành vi
+mùavụ”.
+∼40%
+ít bảo trì hơn: anomaly monitors
+1,33 lần chạm/bảng vs 2,03 (vali-
+dation tests) vs 2,35 (custom SQL)
+Sốliệu của Monte Carlo (11M+bảng, 2026).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 21 / 50
+Chọnphép đo khoảng cách phânphối
+Tìnhhuống Phépđo
+numeric,N nhỏ (<1000) KS
+numeric,N lớn PSI/Wasserstein
+categorical Chi-square/ JS
+embeddings(high-dim) MMD/domain-classifier
+Lưu ý: KS cực nhạy khi >1000
+dòng — hãy sample trước. PSI
+khôngphụ thuộc cỡ mẫu.
+# PSI: tabular, sample-size independent
+# PSI = sum( (A_i - E_i) * ln(A_i / E_i) )
+# <0.1 no shift | 0.1-0.25 moderate | >0.25 significant
+# KS: max gap between two empirical CDFs
+# D = sup_x | F_cur(x) - F_ref(x) |
+# KL: categorical, asymmetric, needs Q(i)>0
+# D_KL(P||Q) = sum P(i)*ln(P(i)/Q(i))
+# -> prefer symmetric Jensen-Shannon (~0.1)
+# MMD: high-dim embeddings, no binning (RBF kernel)
+# MMD^2 = E[k(x,x')]+E[k(y,y')]-2E[k(x,y)]
+# default threshold ~0.015 (Evidently)
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 22 / 50
+07
+Data Contracts I — chuẩn ODCS
+Hợp đồng = lời hứa (YAML trong git). Test = thực thi.
+ODCSv3.1.0 — chuẩn của LinuxFoundation
+Hànhtrình: template YAMLnội bộPayPal →open-source2023 →Bitol(LFAI & Data, 11/2023)→v3.0(10/2024) →
+v3.1.0(12/2025).
+0
+PayPal YAML
+nội bộ
+1
+Open 2023
+Bitol LF
+2
+v3.0 10·2024
++ data quality
+3
+v3.1.0 12·2025
+Relationships,
+SLA exec
+∼11khối top-level (máy đọcđược, versioned như code)
+fundamentals · schema · quality · slaProperties · support · team · roles · servers · price · tags ·
+customProperties. Mới ở 3.1.0:Relationships (FK), JSON Schema chặt hơn,Scheduled SLAs(thực thi, không
+chỉtài liệu) — 0 breakingchange vs 3.0.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 23 / 50
+ODCSYAML— mỗi khối là một chiềuobservability
+apiVersion: v3.1.0
+kind: DataContract
+version: 1.2.0
+schema: # <- schema-stable
+- name: orders # physical: analytics.daily_orders
+properties:
+- {name: order_id, logicalType: string, required: true, unique:
+true}
+- {name: amount, logicalType: number, required: true}
+quality: # <- distribution / complete
+- name: amount_non_negative
+type: sql
+query: SELECT COUNT(*) FROM analytics.daily_orders WHERE amount < 0
+mustBe: 0
+slaProperties: # <- freshness
+- {property: latency, value: 24, unit: h}
+team: [{username: data-eng, role: owner}]
+support: [{channel: "#data-orders", tool: slack}]
+Ánhxạ
+schema → schema-stable;
+quality → complete/distribution;
+slaProperties.latency → fresh-
+ness; team/support → owner để gọi
+khivỡ.
+Chạy(Data Contract CLI)
+datacontract lint → test (kết nối
+nguồn thật) → changelog v1 v2
+(phát hiện breaking change). v1.x
+giữa-2026, native ODCS, 28 định
+dạngexport.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 24 / 50
+08
+Data Contracts II — thực thi &
+shift-left
+Catalog có YAML̸= thực thi. 3 tầng enforcement.
+dbtmodel contracts & schema evolution(streaming)
+dbtmodel contracts (batch)
+GA từ dbt 1.5.contract.enforced: true + columns
+(name/data_type/constraints). dbtsinhDDL; preflight
+failbuildnếucột/typelệch. CIbắtbreakingchangequa
+state:modified.contract.
+Postgresthựcthitấtcả;Snowflake/BQ/Databricksthực
+thi not_null lúcbuild.
+SchemaRegistry (streaming)
+Mộtđăng ký không hợp lệbịtừchối:
+■ BACKWARD(mặcđịnh): consumer mớiđọc
+datacũ →updateconsumer trước
+■ FORWARD:consumer cũ đọc data mới
+■ FULL:cả hai; _TRANSITIVE =vs mọi version
+BACKWARDưutiênchoKafka(replaytừđầutopic).
+Confluent“Data Contracts” (v7.4+): rule CEL chạy lúc WRITE/READ (vdsize(message.ssn)==9 );migrationRules
+JSONata;fail →DLQ.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 25 / 50
+Myth-buster: “registry” không phải“enforcement”
+Lưu ý:“Catalog không có ý kiến gì về data chảy qua nó. Nếu câu trả lời là ‘catalog
+đã có file YAML’ thì công việc còn CHƯA bắt đầu.”— một góc nhìn của giới hành
+nghề(Zircote, 2026), không phải số liệuđo lường.
+Tầng Cơchế Côngcụ
+Shift-leftCI gate chặn TRƯỚC khi deploy datacontract-cli,Buf (buf breaking )
+Streamingruntime xácthực schema-ID phía broker Redpanda(OSS,broker-side) vs Confluent (Enterprise)
+Batchpost-ingest scheduled validation OpenMetadata1.10+ (OSS) / DataHub Cloud
+Cảnhbáo tinh tế
+Confluent SRopen-source kiểm traphía client— một producer cũ/raw có thểvượt
+qua. Thực thi phíabroker thật mới chặn được.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 26 / 50
+09
+Lineage I — OpenLineage & mô
+hình sự kiện
+Lineage là SỰ KIỆN, không phải bản quét hằng đêm. Chất
+lượng cưỡi cùng dòng sự kiện.
+OpenLineage— chuẩn mở de-facto
+Job
+tiếntrình
+Run
+1lần chạy
+Dataset
+dữliệu
+LFAI & Data — Graduateproject
+Contributed 5/2021 (Datakin), graduate 7/2023. Lõi =
+JSON event spec (chỉ định nghĩawire format, tách khỏi
+storage/UI).
+3loại event: RunEvent (START+ COMPLETE/FAIL/ABORT)·
+DatasetEvent (đổischema ngoài run) ·JobEvent. Run ID =
+UUIDv7. Clientopenlineage-python ∼1.50(6/2026).
+Bắttự động ở tầng engine(không sửa code DAG)
+Airflow(providertừ2.7)·Spark( SparkListenerđọcqueryplan)·Flink(agentstream-
+ing)· dbt (dbt-olmỗimodel + ref()/source()).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 27 / 50
+Facets: chất lượng cưỡicùng dòng lineage
+{ "eventType": "COMPLETE",
+"job": { "namespace":"etl.prod","name":"orders.daily_aggregate"},
+"outputs": [{
+"namespace":"snowflake://acct","name":"analytics.daily_orders",
+"facets": {
+"columnLineage": { // <- which inputs feed
+each col
+"fields": { "total_amount": {
+"inputFields": [
+{"name":"raw.orders","field":"amount"} ] } } },
+"schema": { "fields": [
+{"name":"order_date","type":"DATE"},
+{"name":"total_amount","type":"DECIMAL"} ] },
+"dataQualityMetrics": { // <- freshness/volume/
+quality
+"rowCount": 15234,
+"columnMetrics": { "amount": { "nullCount":0,"distinctCount"
+:8123}} }
+} }] }
+Điểmmấu chốt
+Freshness/volume/quality là facets
+GẮN trên lineage event. → Lineage
+& quality làMỘT dòng sự kiện, không
+phải2 hệ thống tách rời.
+Marquez(lab target)
+Server tham chiếu OpenLineage + UI.
+./docker/up.sh →UI localhost:3000.
+macOS: dùng --api-port 9000 để né
+cổngAirPlay.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 28 / 50
+10
+Lineage II — catalog, column-
+level, impact
+Catalog hiện đại nói OpenLineage. Lineage = root-cause + blast-
+radius.
+Vìsao lineage quan trọng: 2 truy vấn ngược chiều
+Xuôi= Impact / “blast radius”
+“Nếucộtnàyhỏng/đổi, dashboard/model/reportnào
+vỡ?” →đánhgiá rủi ro trước khideploy.
+Ngược= Root cause
+“Bảng này sai — cái gìnuôi nó?” → tìm nguồn lỗi
+trongphút thay vì giờ.
+■ TTRthực tế ∼9giờ (MonteCarlo 2022, n=300+); khảo sátsau cho∼15h— 9h là số thậntrọng.
+■ “Nhanhhơn58%”khiresolveoutage=IDC, DataHubtàitrợ,n=5 —trìnhbàynhưsốdovendorđặthàng,mẫunhỏ.
+Lưu ý:Đừng nói quá “biến sự cố nhiều giờ thành vài phút”. Bằng chứng tốt nhất là
+nhanhhơn ∼58%(≈9h → ≈3,8h). 3cơchếbắtlineageđềubỏsót: PATH-referenced
+tables,UDF mờ, transform non-SQL→tựđộng 90%, chú thích tay 10%.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 29 / 50
+Catalog+ lineage platforms (2026)
+Nềntảng 2025–26có gì mới
+DataHub 1.0(1/2025); Acryl đổi tên→DataHub,Series B $35M; push (OpenLineage)hoặc pull
+OpenMetadata GA1.13.x; cascade parserSqlGlot →SqlFluff →SqlParse;Lineage Agent
+UnityCatalog OSS(LF,6/2024); auto column-level cho mọiquery,gồm cảAIassets (model/feature)
+Cloud-native SageMaker/DataZone& PurviewnóiOpenLineage —hyperscaler cũng theo chuẩn
+Atlan/ Collibra ingestOpenLineagechứ không thay thế —phía “buy” của build-vs-buy
+Lưu ý:Unity Catalog: column-level lineageKHÔNG bắt được khi bảng tham chiếu bằngPATH(chỉ bắt khi tham
+chiếubằng tên bảng); chỉ hiệndata bắt sau 1/9/2024.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 30 / 50
+Column-levellineage — bên trong nóhoạt động sao
+Pipeline: parseSQL →AST(đasốdùng sqlglot,30+dialect)
+→qualifytên bảng →lấyschema thật từ metadata→giảimã
+cộtmơ hồ/SELECT * →phátsinh cạnh cột.
+Schema-awarenesslàđiểm khác biệt trên CTE,subquery,
+SELECT * ,join.
+Benchmarkcủa DataHub (column-level SELECT):
+Parser Độchính xác
+DataHub(schema-aware) 97%
+sqllineage 42%
+openlineage-sql 35%
+Khikhông có SQL→dựnglại từ query logs.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 31 / 50
+11
+AI-Infra I — Feature Stores
+Training-serving skew, freshness ceiling, point-in-time correct-
+ness.
+Training-servingskew — silent failurengày-một
+Skew=biểu diễn feature lúc trainkhác lúc serve. Feature
+storegiảmchứkhôngxoá skew(chúng hợp nhấtđịnh
+nghĩa,không hợp nhấtthựcthi: đường batch offlinevs
+đườnglow-latency online phân kỳ).
+Nướcđi quan sát:logfeature thựcsự được serverồi
+key-joinngược về batch train.
+Databricks(2/2025)
+Endpointservingcóthểlog“augmented
+DataFrame” chứa feature values đã
+lookup → inference table = ground-
+truthfeatuređãserveđểdiffvớitraining.
+# 1) Skew: served features vs training batch
+served = read_inference_table() # actual served
+vectors
+train = read_training_batch()
+for f in feature_cols:
+psi = population_stability_index(train[f], served
+[f], bins=10)
+assert psi < 0.25, f "skew on {f}: PSI={ psi:.3f}"
+# 2) Online/offline value consistency (point-in-time)
+mismatch = 0
+for k, t in sample_entity_keys(1000):
+on = online_store.get(k, "x")
+off = offline_store.get_asof(k, "x", asof=t) #
+AS OF
+if abs(on - off) > TOL: mismatch += 1
+consistency = 1 - mismatch/1000 # SLO e.g. >=
+0.999
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 32 / 50
+Freshnessceiling & point-in-time correctness
+Trầnfreshness
+Online store chỉ serve giá trị đã materialize →
+lịch materialization chặn trên độ tươi. staleness
+= now() - feature_event_time so với SLA. CDC
+(Debezium)là đòn bẩy 2025 chosub-minute.
+Point-in-timecorrectness
+Hàng training phải join feature as-of nhãn
+(feature_ts <= label_ts ) — AS OF / time-travel
+join. Thuật ngữ đúng: temporal/look-ahead
+leakage.
+# 3) Point-in-time leakage guard (anti-join)
+# No feature timestamp may exceed its label timestamp.
+assert (features.feature_event_time
+<= labels.label_event_time). all(), \
+"look-ahead leakage detected"
+# All 5 stores expose AS-OF joins:
+# Feast get_historical_features
+# Databricks time-series FeatureLookup
+# Tecton / Hopsworks (Hudi) / SageMaker FS
+Lưuý: Sốkiểu“offlineAUC0,95 →on-
+line 0,78” chỉ làminh hoạtừ 1 tutorial
+khôngnguồn—đừngtríchnhưđođạc.
+On-demand FeatureFunctions (tính lúc
+inference)là mặtskew khó nhất.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 33 / 50
+Mỗifeature store quan sát drift/qualityra sao
+Store Cơchế DQ / drift (đãđính chính)
+Feast GE-basedDQM đãdeprecated trongroadmap; transforms on-read/on-write Beta, streamingAlpha
+Tecton nativeGE DQM + freshness/materialization alerts;tích hợpFiddlerchodrift
+Databricks FeatureSpectrong Unity Catalog;DeclarativeFeature APIs(2025);inference-table logging
+Featureform infra-agnosticVirtualFeature Store (KHÔNG“trên Iceberg”); gia nhậpRedis(10/2025)
+Hopsworks time-travel qua Hudi ( point_in_time_join)
+Hệquả quan sát
+Online/offline consistency(công thức: xem code 2 slide trước) là một SLOriêng, tách khỏi freshness. Phân kỳ
+daidẳng = bug materialization hoặc2 đường code (online/offline)đã lệchnhau — không tự lành, cầnalert riêng.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 34 / 50
+12
+AI-Infra II — Vector/Embedding &
+RAG
+Embedding drift, corpus freshness “silent failure”, re-embedding.
+Embeddingdrift — 5 phương phápcode được
+Phươngpháp Ngưỡng/ khi dùng
+Euclideancentroid một-sốnhanh
+Cosinecentroid scale-invariant
+Domainclassifier (AUC) alert ∼0,55—mặcđịnh
+Shareof drifted dims Wasserstein/dim
+MMD(§6) 0,015;high-dim, chậm nhất
+ArizePhoenix: Euclidean centroid+ UMAP 3D + HDBSCAN
+đểkhoanh cụm nào drift.
+# Domain classifier = recommended default
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
+import numpy as np
+X = np.vstack([ref_emb, cur_emb])
+y = np.r_[np.zeros( len(ref_emb)), np.ones( len(cur_emb
+))]
+auc = cross_val_score(LogisticRegression(max_iter
+=1000),
+X, y, cv=5, scoring= "roc_auc").
+mean()
+# ~0.5 no drift | ~0.55 alert | ->1.0 strong drift
+# one-number centroid distance (Phoenix/Evidently)
+euclid = np.linalg.norm(ref_emb.mean(0) - cur_emb.
+mean(0))
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 35 / 50
+RAGcorpus freshness — một silentfailure tinh vi
+Lưu ý:Cosine similarity tính thuần trong không gian ngữ nghĩa —không có chiều
+thời gian. Một chunk 18 tháng tuổi vẫn “điểm cao” như chunk mới. Model lấy ra tài
+liệucũ mà mọi metric vẫn xanh(arXiv 2509.19376, 2025).
+4monitor chạy được (ngưỡng làmặc định để tinh chỉnh, KHÔNGphải hằng số):
+■ ingestion_timestamp + last_verified TTLtheo lớp nội dung:∼6tháng chodoc kiến trúc/nền tảng;∼2–4tuần
+choAPI/release notes.
+■ Weeklytop-k nearest-neighbor overlap (85–95% khoẻ/<70%mất mát — minh hoạ).
+■ Orphan-chunkGC + document-TTL.
+■ Cosine-distanceband trên ref đã re-embed(minh hoạ).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 36 / 50
+Re-embedding& telemetry sức khoẻ vector-DB
+Re-embedsau khi đổi model
+Cosine KHÔNG so sánh đượcgiữa các thế hệ em-
+bedding model — trộn 2 generation trong 1 index→
+retrieval suy giảm âm thầm. Patterns: shadow deploy
+·lazy/parallel re-embed · CDC selective.
+Drift-Adapter (EMNLP 2025): map query mới về
+không gian cũ, hồi 95–99% recall,<10µs, ∼100×tiết
+kiệmtính lại.
+1metric sức khoẻ / vectorDB
+■ Qdrant: /telemetry +Prometheus /metrics
+■ Weaviate: vectorQueueLength (backlog
+chưaindex)
+■ pgvector: không có recallsẵn→soHNSW
+xấpxỉ vs exact; tinh chỉnhhnsw.ef_search
+Lưuý: Versioningbắtbuộc: gắnmỗivector embedding_model_id+chunkerconfig
++source-docid →truyđược“blastradius”khiupgrade. Đừngbaogiờsocosinekhác
+version.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 37 / 50
+Chấtlượng retrieval — đo khôngcần nhãn vàng
+Reference-free(chạy trên live traffic)
+Ragas: Context Precision / Recall / Entities Recall /
+NoiseSensitivity—khôngcầngoldanswer. Phoenix:
+gắn DocumentEvaluations vào retriever span (LLM
+judgetừng chunk relevant?).
+Khicó nhãn
+IR cổ điển: Hit Rate, MRR, NDCG@k(đã học ở
+Ngày 14/19). Bổ trợ reference-free khi không có
+groundtruth.
+Profiletext, không phải vector
+WhyLabslangkittrích tín hiệu prompt/response (sentiment, toxicity, PII, jailbreak-similarity, relevance)→whylogs
+ghiprofile nhẹ theo bucket→driftmonitor, khônglưu raw text.
+Vìsao cần
+Bắt được retrieverâm thầmngừng trả đúng chunk — ngay cả khi generation “nhìn
+vẫnổn”.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 38 / 50
+13
+AI-Infra III — Training / LLM /
+Agent data
+Contamination, dedup, label errors, LLM-as-judge, provenance.
+Benchmarkcontamination — đính chính mộtstat kinh điển
+Lưu ý: Câu “MMLU ∼29% nhiễm, rớt∼13 điểm trên tập sạch” làghép 2 nghiên
+cứu,2 benchmark khác nhaubởimột blog. Dùngđúng:
+■ MMLU29,1% =Deng et al. (arXiv 2311.09783,NAACL’24)quaprobeTS-Guessing—là tín hiệughinhớ,KHÔNG
+phảitỷ lệ trùng lặp verbatimhay mức rớt.
+■ Rớt ∼13điểm =GSM1k(arXiv2405.00332, Scale AI) trên bảnsao mới củaGSM8K—với họ model overfit nhất
+(Phi/Mistral),KHÔNG phải MMLU.
+Côngcụ & benchmark chống nhiễm
+LiveBench(ICLR’25,refreshhằngtháng),DyCodeEval; lm-eval-harnesscódecon-
+taminationn-gram(chạyđượctrênlab). ĐừngtrícharXiv2605.19999(future-dated).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 39 / 50
+Dedup,lọc chất lượng & labelerrors — chạy được
+Dedup+ quality filtering
+(GPU/Ray-native,2025–26)
+■ DataTrove(HF): MinhashDedup (LSH),nuôi
+FineWeb
+■ NeMoCurator: dedup + qualityclassifier; tái
+kiếntrúc trênRay(26.02,2/2026)
+■ FineWeb-2(12/2024): per-language scorer
+Label-errordetection
+Cleanlab (confident learning): điểm chất lượng
+nhãn0–1mỗimẫu,model-agnostic(text/image/tab-
+ular). Tìm lỗi hệthống trong ImageNet/MNIST.
+Argilla (HF): curation no-code cho SFT/preference
+data.
+Lab: chạy cleanlab, sort theo điểm, soi 50 mẫu tệ
+nhất.
+Lưuý: “RewardsignalcũnglàDATA” :nhiễuannotationRLHFthường >20%;nhất
+quánhuman-vs-expert ∼70%. Lọc + goldenquestions để chấm annotator.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 40 / 50
+LLM-as-judgecho data, provenance & agentic
+LLM-as-judgeáp cho DATAQUALITY
+NhiềuLLMchấmmỗidatapoint;giữđiểmconsensus-
+valid—bắtđược validationngữnghĩa rulekhôngbiểu
+đạtnổi (vd “ticket này cóthật sự về billing?”).
+Lưuý: Biasđãghinhận: verbosity,po-
+sition, self-enhancement → LLM-judge
+ở quy mô + human review có chủ
+đích, neo vào ground-truth nhỏ (100–
+200mẫu).
+Hallucination= bài toán provenance
+“Correctness ̸= Faithfulness” (arXiv 2412.18004).
+→ Truy hallucination ngược về corpusqua lin-
+eage.
+Agenticdata observability (frontier 2026)
+Quan sátdata agent ĐỌC & GHI— tool outputs,
+memory, scratchpad, retrieved context — quade-
+cision provenance. Tách fact người-nói khỏi suy
+luận agent-sinh. Croissant +MCP (10/2025): LLM
+tìm/nạpdataset qua MCP.
+GócNgày-27 = nội dung &xuất xứ của data, KHÔNG phảitelemetry runtime của agent (đó làNgày 23).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 41 / 50
+14
+Frontier & chi phí
+Đọc metadata thay vì scan; streaming; trust score; FinOps; agen-
+tic DQ.
+Lakehouse-native: ĐỌC metadata, đừngSCAN data
+■ Iceberg: snapshot summary mangtotal/added-records,
+added-files/commit(volume+freshness miễnphí);
+manifestcó min/max/null-count/record-count theo cột;
+$snapshots/$partitions/$history truyvấn SQL được.
+■ Delta: tương đương trongtransaction log (numRecords,
+minValues, nullCount)+ $history.
+■ IcebergPuffin: stats file chodistinct-count(NDV) xấp
+xỉtheo cộtkhôngscan →monitorcardinality/uniqueness
+trênbảng triệu file.
+DatabricksLakehouse Monitoring
+3 profile khai báo:Snapshot / TimeSeries / In-
+ferenceLog. Một create_monitor → tự sinh
+bảng profile + drift metric + dashboard (data
+drift,predictiondrift,null%,distinct-count,schema
+change).
+Gotcha: profileTimeSeries/Inferencechỉtínhtrên
+30ngày gầnnhất.
+Vìsao quan trọng
+Đọccatalog/manifesttốn gần-0compute —nềntảngchoFinOpsobservability(slide
+kế).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 42 / 50
+Streaming,trust scores & circuit breaker
+Streaming= kỷ luật riêng
+■ Watermarkprogress +tỷ lệ event trễ/lệch thứ
+tự(Flink): late tăng= completeness giảm âm
+thầm.
+■ Kafkaconsumer lag=proxy freshness.
+■ SchemaRegistry reject rate=contract tại
+ingest.
+Batch freshness = last load timevs stream freshness
+=watermark/lag.
+Trustscore + circuit breaker
+Điểm sức khoẻ 0–100 (trọng số các chiều) gắn vào
+catalog → consumer thấy độ tin cậy TRƯỚC khi
+query. Circuit breaker: dừng pipeline khi score<
+ngưỡng(vd <70).
+Lưuý: Mộtconsố chemất chiềunào
+hỏng— luôn cần drill-down.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 43 / 50
+FinOpscủa observability & Agentic DQ(rules→agents)
+4đòn bẩy chi phí
+1. Đẩycheck sangmetadata
+(snapshot/manifest/Puffin)thay vì
+COUNT(DISTINCT) full-scan— warehouse
+computemới là hoá đơn thật.
+2. Samplebảnglớn cho test phân phối
+(PSI/Wassersteinchịu được sampling).
+3. Giớihạn cardinalitymetric(user_id/txn_id làm
+nổtime-series).
+4. Phântầng tầnsuất monitor theo giá trịasset
+(golddaily,raw hourly).
+AgenticDQ (headline 2026)
+Databricks Data Quality Monitoring (4/2/2026,
+publicpreview): monitorschema-level1-click;agent
+học mẫu lịch sử+mùa vụ; dùngUnity Catalog lin-
+eage + query volume để ưu tiên bảng high-impact.
+MonteCarlomonitoring/triageagents;AcceldataDQ
+Agent.
+Cungbậc Maturity
+Cácvídụtrên=bướcnhảy Level2 →
+Level4 trênthangtrưởngthành(xem
+§2).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 44 / 50
+15
+Tuân thủ, sự cố & Lab 27
+Lineage = “siêu năng lực” cho xoá dữ liệu & xác định phạm vi rò
+rỉ.
+Lineage= công cụ tuân thủ(PDPL, EU AI Act)
+ViệtNam — PDPL (Luật 91/2025/QH15)
+Ban hành 26/6/2025, hiệu lực 1/1/2026(Nghị định
+356/2025). DPIA trong 60 ngày kể từ khi xử lý;CTIA
+trong 60 ngày từ lần chuyển ra nước ngoài đầu tiên;
+kiểmtoánA05 hằngnăm;phạttới 5%doanhthunăm
+trước(cross-border).
+EUAI Act — Art. 53(1)(d)
+Template tóm tắt nội dung huấn luyện (24/7/2025);
+buộckhainguồndata →training-datalineagethành
+yêucầu pháp lý.
+Vìsao lineage là “siêu nănglực”
+Mộtgraph lineage trả lời CẢHAI:
+■ Xoá(PDPL/GDPR Art.17): “phảixoá mọi
+bảnsao/dẫn xuất Ở ĐÂU?”
+■ Phạmvi rò rỉ:“truyxuôi tới mọi
+bảng/report/modelbị ảnh hưởng”.
+Không có lineage→ xoá sót→ bản thân việc đó là
+viphạm.
+Xácnhận lại số nghị định/ngàytrước khi giảng (cờ
+needs-verify).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 45 / 50
+LiveDemo: phát hiện& xử lý sự cố dữliệu
+LIVEDEMO
+1. Demo1: Injectschema change vào upstream→GX1.0 checkpoint fail→
+chặnpipeline + Slack alert.
+2. Demo2: Injectvolume anomaly (10% bình thường)→
+MAD/decompose-then-detectbắt →alert(không báo giả cuối tuần).
+3. Demo3: dbt/SQLtransform →phátOpenLineageevent →MarquezUI →“cột
+total_amount hỏngthì report nào vỡ?” (impact).
+4. Demo4: Đổiembedding model →domain-classifierAUC 0, 5 → 0, 8 →cảnh
+báoembedding drift trên corpus RAG.
+5. Flow: alert →lineageroot-cause →contract/checkchặn →verify.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 46 / 50
+ChecklistData Observability sản xuất (mangvề)
+□✓ Mỗinguồn quan trọng có check5 trụ cột (freshness/volume/distribution/schema/lineage).
+□✓ Ítnhất 1datacontract (ODCS)cho interface producer→consumertrọng yếu, test trong CI.
+□✓ Anomalydetection decompose-then-detect(khôngngưỡng tĩnh) cho metric cómùa vụ.
+□✓ OpenLineagebậtở engine (Airflow/Spark/dbt)→impact+ root-cause query được.
+□✓ Featurestore: monitor training-servingskew +online/offlineconsistency SLO.
+□✓ RAG:embeddingdrift (AUC)+ corpus freshness TTL +version theoembedding_model_id.
+□✓ FinOps: đẩy check sangmetadata, sample bảng lớn, phân tầngtần suất theo giá trị asset.
+□✓ Lineagephục vụ tuân thủ: trả lời được câu hỏixoá&phạmvi rò rỉ(PDPL).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 47 / 50
+Lab#27
+LAB#27
+Mụctiêu: XâyData Observability + Lineage chạy được(zero-key,DuckDB)
+Deliverable:
+■ Track1 — Checks:GX1.0 / Soda 4.0 checkpointchặn pipeline khi vi phạm
+freshness/volume/distribution/schema.
+■ Track2 — Contract:orders.odcs.yaml + datacontract lint/test/changelog trongCI.
+■ Track3—Lineage: OpenLineageevents →Marquez( docker/up.sh;macOS --api-port 9000 );impact&
+root-cause.
+■ Track4 — AI-infra:embedding-drift(AUC) + training-serving skew (PSI).
+■ Bonus: decompose-then-detect(Prophet/STL) + trust score 0–100.
+Thờigian: 2.5h
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 48 / 50
+Tổngkết — Key Takeaways
+Nhữngý chính cần nhớtrướckhi sang bài tiếp theo
+1
+Data observability ̸= system monitoring. “Pipeline thành công” + “dashboard xanh” không
+chứngminh data đúng —schemachecks chỉ bắt 7,8%sựcố.
+2 Contract = lời hứa (YAML/git); test = thực thi; lineage = sự kiện, chất lượng cưỡi cùng
+dòngOpenLineage. Lineage choimpact + root-cause + tuân thủ.
+3 AI-infracầnchiềuquansátriêng: training-servingskew,embedding/RAGdrift,contamination,
+labelquality — vàrules →ML →agents.
+4 Luôntruysốliệuvềnguồn(nhiều“statkinhđiển”làfolklore)vàđẩychecksang metadatađể
+rẻ(FinOps).
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 48 / 50
+Tiếptheo & Bài tập
+Bàitiếp theo
+Ngày 28: Platform Engineering &
+Documentation— Milestone 3
+“GhépmọimảnhN16–N27thànhmột
+platform; runbooks, golden paths, C4
+diagrams;demo end-to-end.”
+Bàitập về nhà
+■ Hoànthành Lab 27 (4 tracks):
+checks+ contract + lineage +
+AI-infradrift.
+■ Chuẩnbị data-observability &
+lineagelàm một mục trong tài
+liệuplatform.
+■ Ràsoát toàn bộ stack cho
+Milestone3 demo.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 49 / 50
+Thamkhảo & đọc thêm (đãkiểm chứng)
+■ OpenLineagespec/object-model· Marquezquickstart· OpenLineage CHANGELOG (v1.50, 6/2026).
+■ ODCSv3.1.0 (bitol.io)· DataContract CLI(datacontract.com)· Confluent schema evolution.
+■ GreatExpectations GXCore 1.0 blog ·SodaCore 4.0releasenotes · Pandera · Elementary.
+■ Evidentlyembedding/datadrift ·ArizePhoenix ·Ragas · WhyLabs langkit.
+■ Feast/ Tecton/ Databricks Feature Store· Databricks Lakehouse Monitoring & DQM(2/2026).
+■ MonteCarlo: 5 pillars,2026 Data Quality Statistics · IBMIBV cost-of-poor-data 2025.
+■ Incidents: Unity 8-K (5/2022),Equifax NY AG (1/2025), Zillow (11/2021),Citigroup (2/2025).
+■ Tuânthủ: VN PDPLLuật 91/2025·EU AI Act Art.53(1)(d).
+Chitiết nguồn + cảnh báofolklore:RESEARCH-day27-data-observability-lineage.md.
+Giảngviên (VinUni) AICB· Ngày 27 Tuần6 50 / 50
+Hỏi& Đáp
+Câu hỏi về data observability, contracts (ODCS), lineage
+(OpenLineage), hay quan sát feature/vector/training data?
+Cảmơn!
+AICB-P2T2 · Ngày 27
+Data Observability & Lineage
+lms.vinuni.edu.vn · Slide & Lab 27 trên LMS

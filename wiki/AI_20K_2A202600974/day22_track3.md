@@ -1,14 +1,13 @@
 ---
 type: summary
 title: "Day 22 – Track 3: DPO, ORPO & Alignment"
-description: "Từ SFT đến Preference Learning: DPO, ORPO, SimPO, Constitutional AI và các phương pháp alignment hiện đại."
-tags: [ai, 20k, day22, track3, dpo, orpo, alignment, fine-tuning]
+description: "Sự dịch chuyển từ SFT sang Preference Learning, chi tiết phương pháp DPO, ORPO, SimPO, GRPO và cách đánh giá Alignment qua LLM Benchmarks."
+tags: [ai, 20k, day22, track3, dpo, orpo, alignment, rlhf, grpo]
 timestamp: 2026-07-05
-sources: ["raw/AI_20K_2A202600974/22/Day 22 - Track 3 - DPO-ORPO-Alignment_v2.pdf"]
+sources: ["raw/AI_20K_2A202600974/22/Day 22 - Track 3 - DPO-ORPO-Alignment.pdf", "raw/AI_20K_2A202600974/22/Day 22 - Track 3 - DPO-ORPO-Alignment_v2.pdf"]
 ---
 
 > **Lộ trình:** [[track3_ai_app|Track 3: AI Application]]
-
 
 # Day 22 – Track 3: DPO, ORPO & Alignment
 
@@ -17,48 +16,58 @@ sources: ["raw/AI_20K_2A202600974/22/Day 22 - Track 3 - DPO-ORPO-Alignment_v2.pd
 
 ---
 
-## Tại sao SFT chưa đủ?
+## 1. Từ SFT đến Preference Learning
 
-SFT (Supervised Fine-tuning) dạy model "nói **gì**" – nhưng chưa dạy model "nói **như thế nào**" để phù hợp với giá trị và kỳ vọng của con người.
+SFT (Supervised Fine-Tuning) dạy cho model biết format và style (model học "nói **gì**"). Tuy nhiên, SFT-only thường có tính chất quá thận trọng (over-hedges), lan man (verbose) hoặc từ chối quá mức (refusal). 
 
----
-
-## RLHF – Bức tranh toàn cảnh
-
-1. **SFT**: Train trên demonstration data  
-2. **Reward Model**: Train từ human preference pairs (chosen vs rejected)  
-3. **PPO**: Tối ưu policy bằng RL để tối đa reward  
-
-⚠️ Nhược điểm: Cần reward model riêng, pipeline phức tạp, tốn kém.
+**Alignment** (dạy model "nói **như thế nào**") là bước giúp model học được *margin* giữa một câu trả lời tốt và xấu (helpful, harmless, honest) dựa trên **Preference Data** (Cặp chosen vs rejected).
 
 ---
 
-## DPO – Direct Preference Optimization
+## 2. RLHF và Bước tiến DPO
 
-DPO loại bỏ reward model, tối ưu **trực tiếp** từ preference data:
+### Sự đắt đỏ của RLHF (PPO)
+Quy trình InstructGPT: SFT $\rightarrow$ Reward Model (giám khảo) $\rightarrow$ PPO (tối ưu). Nhược điểm là cần tải đồng thời 3 models, tốn VRAM, PPO instability và hyperparams rất nhạy cảm.
 
-$$\mathcal{L}_{DPO} = -\mathbb{E}_{(x,y_w,y_l)}\left[\log \sigma\left(\beta \log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)}\right)\right]$$
+### DPO (Direct Preference Optimization)
+Ý tưởng cốt lõi của **DPO (2023)**: Loại bỏ hẳn Reward Model trung gian. Toán học chứng minh rằng Optimal RL Policy có closed-form solution. Ta có thể map trực tiếp cặp preference vào Loss để model tự học:
 
-- **y_w**: chosen response, **y_l**: rejected response  
-- β: temperature kiểm soát độ phân kỳ khỏi reference policy  
-- Đơn giản hơn RLHF, kết quả tương đương hoặc tốt hơn
-
----
-
-## ORPO, SimPO & Alternatives
-
-| Phương pháp | Điểm khác biệt |
-|------------|---------------|
-| **ORPO** | Tích hợp preference optimization ngay trong SFT loss, không cần reference model |
-| **SimPO** | Dùng average log-prob thay vì ratio, ổn định hơn |
-| **GRPO** | RL comeback – Group Relative Policy Optimization (DeepSeek R1) |
+- **Công thức DPO Loss:** Tối ưu hóa cross-entropy trên log-ratio probabilities của `chosen` vs `rejected`.
+- **Hyperparameter $\beta$ (KL penalty):** Kiểm soát độ phân kỳ so với Reference Model. 
+  - Tăng $\beta$ (vd 0.2): Ép bảo thủ, gần với SFT base.
+  - Giảm $\beta$ (vd 0.05): Tránh conservative, model tự do hơn.
+- **Ưu điểm:** Offline learning (ổn định hơn PPO), tốn ít components. Vẫn là default choice mạnh mẽ cho các bài toán Helpfulness, tone, safety.
 
 ---
 
-## Constitutional AI & Red-teaming
+## 3. ORPO, SimPO & Alternatives (Thế hệ Single-Stage / No-Ref)
 
-- **Constitutional AI** (Anthropic): Model tự phê bình và sửa output dựa trên "hiến pháp" nguyên tắc  
-- **Red-teaming**: Tìm kiếm chủ động các failure modes trước khi deploy
+DPO vẫn đòi hỏi SFT stage và Reference model. Các phương pháp mới loại bỏ dần các thành phần:
+
+- **SimPO (2024):** Không cần reference model. Dùng *average log-prob* (length-normalized) để tránh model học lách luật viết dài (length hacking). Rất tốt khi VRAM hạn chế.
+- **ORPO (2024):** Single-stage Alignment. Train thẳng từ Base Model lên Aligned Model mà **không cần SFT stage**. Tích hợp Odds Ratio preference vào loss.
+- **KTO:** Cần mỗi nhãn Thumbs Up/Down (phù hợp log từ production) thay vì cặp ranking. Dựa trên Prospect Theory (mô hình loss aversion).
+
+---
+
+## 4. GRPO & RLVR: RL Trở Lại Cho Reasoning
+
+Năm 2025 (DeepSeek R1 series), RL quay lại nhưng với phiên bản tối ưu, **không dùng Value Model / Reward Model mạng nơ-ron**:
+
+- **GRPO (Group Relative Policy Optimization):** Thay vì dùng mạng Value Model, tính Reward trung bình của 1 nhóm $G$ outputs làm baseline. Tiết kiệm 50% VRAM và rất mạnh cho Reasoning.
+- **RLVR (RL from Verifiable Rewards):** Reward không đến từ judge học được, mà từ *programmatic verification* (regex, code unit tests, math format). Chặn đứng learned-RM reward hacking, nhưng đẻ ra Verifier Gaming. Phù hợp cho code/math generation.
+
+> **Rule of Thumb (Tulu 3 / Llama 3):** Alignment pipeline hiện đại thường xếp chồng: **SFT $\rightarrow$ Iterative DPO $\rightarrow$ GRPO/RLVR**.
+
+---
+
+## 5. Đánh Giá Alignment (LLM Benchmarks)
+
+Đánh giá Alignment phức tạp vì open-ended tasks không có Ground-Truth duy nhất. Thường kết hợp 3 lớp:
+
+1. **Static Suites (Capability):** MMLU (Kiến thức), GSM8K/MATH (Lý luận logic), IFEval (Format), HumanEval (Code). Theo dõi hiện tượng *Alignment Tax* (chỉ số logic giảm sau khi alignment).
+2. **Judge-Based Suites (Response Quality):** MT-Bench, AlpacaEval 2 LC (Sửa length-bias), Arena-Hard (Khó hơn, phân loại kỹ năng). LLM-as-Judge đo Win-rate.
+3. **RewardBench:** Benchmark đánh giá chính các "Judges" và Reward Models (meta-evaluation).
 
 ---
 

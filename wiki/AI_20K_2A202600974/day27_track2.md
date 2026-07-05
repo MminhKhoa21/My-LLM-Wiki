@@ -1,114 +1,64 @@
 ---
 type: summary
-title: "Day 27 – Track 2: Data Observability & Lineage"
-description: "Quan sát chính DỮ LIỆU (không chỉ hệ thống): 7 chiều observability, data contracts, OpenLineage, drift detection."
-tags: [ai, 20k, day27, track2, data-observability, lineage, data-quality]
+title: "Summary: Day 27 Track 2 - Data Observability & Lineage"
+description: "A comprehensive guide on data observability, Great Expectations, anomaly detection, SLO engineering, and data incident response."
+tags: [data-observability, data-engineering, great-expectations, slo, anomaly-detection]
 timestamp: 2026-07-05
-sources: ["raw/AI_20K_2A202600974/27/day27-data-observability-lineage.pdf", "raw/AI_20K_2A202600974/27/Day27 - Track 2 - Data-observability-lineage.pdf"]
+sources: ["../raw/AI_20K_2A202600974/27/Day27 - Track 2 - Data-observability-lineage.pdf"]
 ---
 
-> **Lộ trình:** [[track2_ai_engineer|Track 2: AI Engineer]]
+# Day 27 Track 2 - Data Observability & Lineage
 
+This document summarizes the Day 27 Track 2 lecture focusing on ensuring data reliability, moving beyond simple pipeline monitoring to true data observability.
 
-# Day 27 – Track 2: Data Observability & Lineage
+## 1. Pipeline Monitoring vs Data Observability
 
-**Giảng viên**: VinUniversity  
-**Khóa**: AICB Phase 2 · Track 2 · Ngày 27
+- **Pipeline Monitoring:** Asks "Is the machine running?" (e.g., Did the Airflow job finish? Are CPU/logs normal?).
+- **Data Observability:** Asks "Is the data trustworthy?" (e.g., Is the data fresh, complete, consistent?).
+- **Silent Failures:** AI/ML systems often fail due to bad data (silent failures) rather than service crashes. A successful pipeline execution does not guarantee correct data.
 
-> **Reality check**: 74% đội ngũ data nói người đầu tiên phát hiện dữ liệu sai là **business stakeholder** – không phải hệ thống giám sát. Dashboard xanh ≠ dữ liệu đúng.
+## 2. Five Pillars of Data Observability
 
----
+Using the Monte Carlo framework, data observability is defined by 5 pillars:
+1. **Freshness:** Is the data up to date?
+2. **Volume:** Is the row count anomalous?
+3. **Distribution:** Are the values within expected ranges?
+4. **Schema:** Did column names or types change?
+5. **Lineage:** Which downstream assets are affected by an incident?
 
-## Ranh giới với Ngày 23
+Observing unstructured AI data (text, images, embeddings) requires monitoring derived measurable features (e.g., embedding drift, text length distribution, blur scores).
 
-| Ngày 23 | Ngày 27 |
-|---------|---------|
-| Quan sát **HỆ THỐNG** (service healthy?) | Quan sát **DỮ LIỆU** (data đúng/tươi/đầy đủ?) |
-| Prometheus, Grafana, logs | Great Expectations, Soda, Monte Carlo |
+## 3. Great Expectations (GX) & Checkpoints
 
----
+Instead of keeping implicit assumptions about data in engineers' heads, tools like Great Expectations encode them as runnable, version-controlled tests.
+- **Expectation Suite:** A collection of rules (e.g., `ExpectColumnValuesToNotBeNull`, `ExpectColumnValuesToBeBetween`).
+- **Checkpoints:** Integrate suites into production pipelines (e.g., inside Airflow). If a checkpoint fails, actions like Slack alerts or blocking downstream jobs are triggered.
+- **Hard Fails:** Block the pipeline (e.g., duplicate primary keys).
+- **Soft Fails:** Trigger warnings (e.g., slight distribution drift).
 
-## 7 Chiều của Data Observability
+## 4. Anomaly Detection vs Rules
 
-| Chiều | Câu hỏi | Công cụ |
-|-------|---------|---------|
-| **Freshness** | Dữ liệu có cập nhật kịp thời không? | dbt, Airflow |
-| **Distribution** | Giá trị có phân phối bất thường không? | Great Expectations |
-| **Volume** | Số records thay đổi đột ngột không? | Monte Carlo |
-| **Schema** | Cấu trúc có drift không? | dbt schema tests |
-| **Lineage** | Dữ liệu đến từ đâu? Đi đến đâu? | OpenLineage |
-| **Uniqueness** | Có duplicate không? | Soda |
-| **Completeness** | Có null value bất thường không? | Great Expectations |
+- **Rules (e.g., GX, dbt tests):** Catch known issues, deterministic, hard fail pipelines.
+- **Anomaly Detection (e.g., Z-score, Prophet):** Catch unknown unknowns based on historical baselines (e.g., row count drops by 50%). Requires human review due to false positives. Z-score flags anomalies if deviations exceed a threshold (e.g., > 3 standard deviations).
 
----
+## 5. dbt Tests (Transformation Layer)
 
-## Drift & Anomaly Detection
+The SQL transformation layer requires close monitoring because errors here rarely crash the pipeline but heavily corrupt data.
+- **dbt Built-in Tests:** `not_null`, `unique`, `accepted_values`, `relationships`.
+- **Custom SQL Tests:** Ensure business logic holds true.
+- **Test Pyramid:** Unit tests (run fast, close to the model) should be prioritized over costly End-to-End tests.
 
-| Phương pháp | Dùng khi |
-|------------|---------|
-| **PSI** (Population Stability Index) | Detect feature distribution shift |
-| **KS test** | So sánh 2 distributions |
-| **KL Divergence** | Đo "khoảng cách" giữa distributions |
-| **MMD** (Maximum Mean Discrepancy) | High-dimensional data drift |
+## 6. SLO Engineering for Data & AI
 
----
+Data platforms treat reliability as a product feature.
+- **SLI (Service Level Indicator):** A measurable metric (e.g., `freshness_minutes`, `null_rate`).
+- **SLO (Service Level Objective):** The target goal (e.g., "freshness < 60 mins for 99.5% of the time").
+- **Error Budget:** `1 - SLO`. If the budget burns too fast, feature releases are halted to prioritize stability.
 
-## Data Contracts – ODCS Standard
+## 7. Data Incident Response
 
-Data Contract là **thỏa thuận chính thức** giữa data producer và consumer:
-
-```yaml
-# data-contract.yaml (ODCS format)
-apiVersion: v2.3.0
-kind: DataContract
-metadata:
-  name: orders_daily
-  owner: data-team@company.com
-models:
-  - name: orders
-    fields:
-      - name: order_id
-        type: string
-        required: true
-        unique: true
-      - name: amount
-        type: number
-        minimum: 0
-```
-
----
-
-## Lineage với OpenLineage
-
-```python
-from openlineage.client import OpenLineageClient
-
-client = OpenLineageClient(url="http://lineage-server:5000")
-
-# Emit lineage event khi pipeline chạy
-client.emit(RunEvent(
-    eventType=RunState.START,
-    inputs=[Dataset(namespace="postgres", name="raw_orders")],
-    outputs=[Dataset(namespace="snowflake", name="orders_daily")]
-))
-```
-
----
-
-## AI Infrastructure Observability
-
-| Loại | Vấn đề cần quan sát |
-|------|-------------------|
-| **Feature Store** | Training-serving skew |
-| **Vector/Embedding** | Embedding drift, stale vectors |
-| **Training data** | Label drift, data poisoning |
-| **LLM data** | Prompt quality, context relevance |
-| **Agent data** | Tool call patterns, state corruption |
-
----
-
-## Liên kết
-- [[day10_overview]] – Data Pipeline & Observability (nền tảng)
-- [[day23_track2]] – System Observability
-- [[day24_track2]] – Data Governance & Security
-- [[day27_overview]]
+Observability is only valuable if the team knows how to react.
+- **Incident Lifecycle:** Detection → Triage → Mitigation → Root Cause Analysis → Recovery → Postmortem.
+- **Runbooks:** Standardized procedural guides for handling incidents.
+- **Severity Levels:** Classify incidents (P0 to P3) to determine response times.
+- **Blameless Postmortems & Chaos Engineering:** Cultivate learning without pointing fingers. Use "5 Whys" to find systemic root causes.
