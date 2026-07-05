@@ -1137,7 +1137,7 @@ a:hover {
 ══════════════════════════════════════════ */
 
 /* Large (default): sidebar + main side by side */
-.app-layout {
+.app-container {
     display: flex;
     height: 100vh;
     overflow: hidden;
@@ -1179,7 +1179,7 @@ a:hover {
 /* ── 768px — mobile: sidebar becomes overlay ── */
 @media (max-width: 768px) {
     body { overflow: hidden; }
-    .app-layout { flex-direction: column; height: 100dvh; }
+    .app-container { flex-direction: column; height: 100dvh; }
 
     .sidebar {
         width: 100%;
