@@ -1,6 +1,80 @@
 // Constants
 const API_BASE = "/api";
 
+// Translations
+const translations = {
+    en: {
+        "logo-title": "LLM Wiki",
+        "search-placeholder": "Quick search...",
+        "section-wiki": "Wiki Pages",
+        "loading-notes": "Loading notes...",
+        "section-actions": "Quick Actions",
+        "action-reindex": "Rebuild Index",
+        "action-relint": "Check Health",
+        "action-upload": "Drop new raw source or click",
+        "tab-graph": "Knowledge Graph",
+        "tab-note": "Note Viewer",
+        "tab-lint": "Health Report",
+        "tab-search": "Search Results",
+        "tab-manage": "Manage Notes",
+        "graph-title": "Interactive Knowledge Network",
+        "graph-subtitle": "Click on notes to browse their contents",
+        "note-empty": "Select a note from the sidebar or click a node in the graph view to inspect it.",
+        "lint-title": "Linter Status Report",
+        "lint-btn": "Run Health Check",
+        "lint-empty": "Click \"Run Health Check\" to scan the repository for schema violations, broken links, and orphans.",
+        "search-title": "Query Search Matches",
+        "search-empty": "Search query matches will appear here. Enter a query in the sidebar search box to search.",
+        "manage-title": "Lesson & File Management",
+        "manage-subtitle": "Delete and manage raw sources and generated wiki pages",
+        "manage-wiki-header": "Wiki Pages (.md)",
+        "manage-raw-header": "Raw Sources (immutability rule)",
+        "lbl-core": "System Core (Blocked)",
+        "lbl-wiki-page": "Wiki Page (Deletable)",
+        "lbl-raw-src": "Raw Source (Deletable)",
+        "btn-delete": "Delete",
+        "toast-deleted": "File deleted successfully!",
+        "toast-delete-fail": "Failed to delete file: ",
+        "confirm-delete": "Are you sure you want to delete this file?"
+    },
+    vi: {
+        "logo-title": "LLM Wiki",
+        "search-placeholder": "Tìm kiếm nhanh...",
+        "section-wiki": "Danh sách Bài học",
+        "loading-notes": "Đang tải dữ liệu...",
+        "section-actions": "Thao tác nhanh",
+        "action-reindex": "Cập nhật Mục lục",
+        "action-relint": "Kiểm tra sức khỏe",
+        "action-upload": "Kéo thả tài liệu nguồn vào đây",
+        "tab-graph": "Đồ thị tri thức",
+        "tab-note": "Nội dung bài học",
+        "tab-lint": "Báo cáo sức khỏe",
+        "tab-search": "Kết quả tìm kiếm",
+        "tab-manage": "Quản lý bài học",
+        "graph-title": "Đồ thị tri thức tương tác",
+        "graph-subtitle": "Click vào các ghi chú để xem nội dung",
+        "note-empty": "Chọn một bài học ở thanh bên hoặc click vào nút đồ thị để xem nội dung chi tiết.",
+        "lint-title": "Báo cáo chi tiết sức khỏe Wiki",
+        "lint-btn": "Bắt đầu kiểm tra",
+        "lint-empty": "Nhấn \"Bắt đầu kiểm tra\" để rà soát lỗi cấu trúc frontmatter, liên kết hỏng hoặc trang mồ côi.",
+        "search-title": "Kết quả tìm kiếm từ khóa",
+        "search-empty": "Kết quả khớp từ khóa sẽ hiển thị ở đây. Nhập từ khóa tìm kiếm ở thanh bên để tra cứu.",
+        "manage-title": "Quản lý Bài học & Tài liệu",
+        "manage-subtitle": "Xóa và quản lý các tài liệu nguồn thô cùng các trang wiki đã sinh",
+        "manage-wiki-header": "Danh sách trang Wiki (.md)",
+        "manage-raw-header": "Tài liệu nguồn thô (Nguyên tắc bất biến)",
+        "lbl-core": "Không được xóa (Hệ thống)",
+        "lbl-wiki-page": "Có thể xóa (Trang Wiki)",
+        "lbl-raw-src": "Có thể xóa (Nguồn thô)",
+        "btn-delete": "Xóa",
+        "toast-deleted": "Đã xóa file thành công!",
+        "toast-delete-fail": "Lỗi khi xóa file: ",
+        "confirm-delete": "Bạn có chắc chắn muốn xóa tệp này không?"
+    }
+};
+
+let currentLang = "vi";
+
 // DOM Elements
 const noteListEl = document.getElementById("note-list");
 const sidebarSearchInput = document.getElementById("sidebar-search");
@@ -16,6 +90,9 @@ const searchResultsArea = document.getElementById("search-results-area");
 const noteContentArea = document.getElementById("note-content-area");
 const toastEl = document.getElementById("toast");
 const toastMessageEl = document.getElementById("toast-message");
+const btnLangToggle = document.getElementById("btn-lang-toggle");
+const manageWikiListEl = document.getElementById("manage-wiki-list");
+const manageRawListEl = document.getElementById("manage-raw-list");
 
 // State variables
 let notesData = [];
@@ -27,11 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
     initUploadZone();
     loadNotes();
     loadGraph();
+    updateLanguageUI();
     
     // Actions
     btnReindex.addEventListener("click", runIndexer);
     btnRelint.addEventListener("click", () => switchTab("lint-tab", runLinter));
     btnRefreshLint.addEventListener("click", runLinter);
+    btnLangToggle.addEventListener("click", toggleLanguage);
     
     // Search on enter key
     sidebarSearchInput.addEventListener("keydown", (e) => {
@@ -61,7 +140,11 @@ function initTabs() {
     tabButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             const tabId = btn.getAttribute("data-tab");
-            switchTab(tabId);
+            switchTab(tabId, () => {
+                if (tabId === "manage-tab") {
+                    loadManagementData();
+                }
+            });
         });
     });
 }
@@ -401,3 +484,188 @@ async function uploadFile(file) {
         showToast(err.message, true);
     }
 }
+
+// 9. Bilingual Language Switching
+function toggleLanguage() {
+    currentLang = currentLang === "en" ? "vi" : "en";
+    btnLangToggle.innerText = currentLang === "en" ? "VI" : "EN";
+    updateLanguageUI();
+    // Reload dynamically rendered elements
+    loadNotes();
+    if (document.getElementById("manage-tab").classList.contains("active")) {
+        loadManagementData();
+    }
+}
+
+function updateLanguageUI() {
+    const langData = translations[currentLang];
+    
+    // Translate text contents
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (langData[key]) {
+            // Keep child icons if any
+            const icon = el.querySelector("i");
+            if (icon) {
+                el.innerHTML = "";
+                el.appendChild(icon);
+                el.appendChild(document.createTextNode(" " + langData[key]));
+            } else {
+                el.innerText = langData[key];
+            }
+        }
+    });
+    
+    // Translate placeholders
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (langData[key]) {
+            el.setAttribute("placeholder", langData[key]);
+        }
+    });
+}
+
+// 10. Lesson / Note Management & Deletion
+async function loadManagementData() {
+    try {
+        manageWikiListEl.innerHTML = `<div style="padding: 15px; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>`;
+        manageRawListEl.innerHTML = `<div style="padding: 15px; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>`;
+        
+        // Fetch Wiki pages
+        const wikiRes = await fetch(`${API_BASE}/notes`);
+        const wikis = wikiRes.ok ? await wikiRes.json() : [];
+        
+        // Fetch Raw files
+        const rawRes = await fetch(`${API_BASE}/raw-files`);
+        const raws = rawRes.ok ? await rawRes.json() : [];
+        
+        renderManagementWiki(wikis);
+        renderManagementRaw(raws);
+    } catch (err) {
+        showToast("Error loading management data: " + err.message, true);
+    }
+}
+
+function renderManagementWiki(wikis) {
+    const langData = translations[currentLang];
+    
+    // Prepend system core files to the view list for complete transparency, even though they aren't in notes list
+    const allWikis = [
+        { name: "overview", title: "Learning Wiki Overview", isSystem: true },
+        { name: "index", title: "Wiki Index", isSystem: true },
+        { name: "log", title: "Operation Log", isSystem: true },
+        ...wikis.map(w => ({ ...w, isSystem: false }))
+    ];
+    
+    manageWikiListEl.innerHTML = allWikis.map(item => {
+        const badgeClass = item.isSystem ? "policy-unsafe" : "policy-safe";
+        const badgeLabel = item.isSystem ? langData["lbl-core"] : langData["lbl-wiki-page"];
+        const disabledAttr = item.isSystem ? "disabled" : "";
+        const titleText = item.title || item.name;
+        
+        return `
+            <div class="manage-item">
+                <div class="manage-item-info">
+                    <span class="manage-item-title" title="${titleText}">${titleText}</span>
+                    <span style="font-size: 10px; color: var(--text-muted);">${item.name}.md</span>
+                </div>
+                <div class="manage-item-meta">
+                    <span class="policy-badge ${badgeClass}">${badgeLabel}</span>
+                    <button class="btn-delete" ${disabledAttr} data-type="wiki" data-name="${item.name}">
+                        <i class="fa-regular fa-trash-can"></i> ${langData["btn-delete"]}
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    // Add listeners to delete buttons
+    manageWikiListEl.querySelectorAll(".btn-delete").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.getAttribute("data-name");
+            confirmAndDelete("wiki", name);
+        });
+    });
+}
+
+function renderManagementRaw(raws) {
+    const langData = translations[currentLang];
+    
+    if (raws.length === 0) {
+        manageRawListEl.innerHTML = `<div style="padding: 15px; color: var(--text-muted); font-style: italic;">No raw sources found.</div>`;
+        return;
+    }
+    
+    manageRawListEl.innerHTML = raws.map(item => {
+        const kbSize = (item.size / 1024).toFixed(1);
+        return `
+            <div class="manage-item">
+                <div class="manage-item-info">
+                    <span class="manage-item-title" title="${item.name}">${item.name}</span>
+                    <span style="font-size: 10px; color: var(--text-muted);">${kbSize} KB</span>
+                </div>
+                <div class="manage-item-meta">
+                    <span class="policy-badge policy-safe">${langData["lbl-raw-src"]}</span>
+                    <button class="btn-delete" data-type="raw" data-name="${item.name}">
+                        <i class="fa-regular fa-trash-can"></i> ${langData["btn-delete"]}
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    // Add listeners to delete buttons
+    manageRawListEl.querySelectorAll(".btn-delete").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.getAttribute("data-name");
+            confirmAndDelete("raw", name);
+        });
+    });
+}
+
+function confirmAndDelete(type, name) {
+    const langData = translations[currentLang];
+    if (confirm(`${langData["confirm-delete"]}\n(${name})`)) {
+        deleteFile(type, name);
+    }
+}
+
+async function deleteFile(type, name) {
+    const langData = translations[currentLang];
+    try {
+        const res = await fetch(`${API_BASE}/delete`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: json = JSON.stringify({ type, name })
+        });
+        
+        if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.error || "Failed to delete");
+        }
+        
+        showToast(langData["toast-deleted"]);
+        
+        // Refresh everything
+        loadNotes();
+        loadGraph();
+        loadManagementData();
+        
+        // If note viewer is displaying the deleted note, clear it
+        if (type === "wiki") {
+            noteContentArea.innerHTML = `
+                <div class="note-content-area" id="note-content-area">
+                    <div class="note-viewer-empty">
+                        <i class="fa-solid fa-file-import empty-icon"></i>
+                        <p data-i18n="note-empty">${langData["note-empty"]}</p>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (err) {
+        showToast(langData["toast-delete-fail"] + err.message, true);
+    }
+}
+

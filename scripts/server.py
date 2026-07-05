@@ -105,6 +105,8 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_upload()
         elif path == "/api/run-indexer":
             self.handle_run_indexer()
+        elif path == "/api/delete":
+            self.handle_delete()
         else:
             self.send_error(404, "API Endpoint Not Found")
 
@@ -127,6 +129,8 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self.api_get_lint()
         elif path == "/api/search":
             self.api_get_search(query)
+        elif path == "/api/raw-files":
+            self.api_get_raw_files()
         else:
             self.send_json({"error": "Endpoint not found"}, 404)
 
@@ -306,9 +310,79 @@ class WikiHTTPHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
 
+    def api_get_raw_files(self):
+        raw_files = []
+        if not RAW_DIR.exists():
+            self.send_json([])
+            return
+        try:
+            for file_path in RAW_DIR.glob("*"):
+                if file_path.is_file():
+                    raw_files.append({
+                        "name": file_path.name,
+                        "size": file_path.stat().st_size
+                    })
+            self.send_json(raw_files)
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
+    def handle_delete(self):
+        content_length = int(self.headers.get('Content-Length', 0))
+        try:
+            body = self.rfile.read(content_length).decode('utf-8')
+            params = json.loads(body)
+            ftype = params.get("type")
+            name = params.get("name")
+            
+            if not ftype or not name:
+                self.send_json({"error": "Missing parameters 'type' or 'name'"}, 400)
+                return
+                
+            if ftype == "wiki":
+                if name in ["index", "log", "overview"]:
+                    self.send_json({"error": "Deletion of system core files is blocked"}, 400)
+                    return
+                file_path = WIKI_DIR / f"{name}.md"
+            elif ftype == "raw":
+                file_path = RAW_DIR / name
+            else:
+                self.send_json({"error": "Invalid file type"}, 400)
+                return
+                
+            if not file_path.exists() or not file_path.is_file():
+                self.send_json({"error": f"File '{name}' not found"}, 404)
+                return
+                
+            # Perform deletion
+            file_path.unlink()
+            
+            # Run indexer
+            indexer_path = ROOT_DIR / "scripts" / "indexer.py"
+            subprocess.run(["python", str(indexer_path)], capture_output=True)
+            
+            # Log the deletion to log.md
+            log_path = WIKI_DIR / "log.md"
+            if log_path.exists():
+                try:
+                    log_content = log_path.read_text(encoding="utf-8")
+                    from datetime import datetime
+                    curr_date = datetime.now().strftime("%Y-%m-%d")
+                    log_entry = f"\n\n## [{curr_date}] system | Deletion of {ftype} file\n- Deleted file: {file_path.name}\n- Automatically ran indexer script."
+                    log_path.write_text(log_content + log_entry, encoding="utf-8")
+                except Exception:
+                    pass
+            
+            self.send_json({
+                "status": "success",
+                "message": f"Successfully deleted {ftype} file: {file_path.name}"
+            })
+        except Exception as e:
+            self.send_json({"error": str(e)}, 500)
+
 def run_server(port=8000):
     handler = WikiHTTPHandler
     # Bind to localhost
+    socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("127.0.0.1", port), handler) as httpd:
         print(f"=== LLM Wiki Local Server Running ===")
         print(f"URL: http://localhost:{port}")

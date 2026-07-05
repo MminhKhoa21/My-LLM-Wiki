@@ -86,3 +86,19 @@ To prevent "taxonomy drift" and outdated information as knowledge compounds:
   3. Log the contradiction in `wiki/log.md` with the prefix: `## [YYYY-MM-DD] contradiction | Description`.
 - **Reconciliation**: Do not resolve the contradiction unilaterally. Discuss the conflicting claims with the user, present the arguments from both sources, and update the pages once the user confirms which claim is correct.
 
+---
+
+## 6. Deletion Policies
+
+To maintain the system integrity of the wiki:
+- **System Core Files (NON-DELETABLE)**:
+  - `wiki/index.md` (automatic catalog)
+  - `wiki/log.md` (chronological operation log)
+  - `wiki/overview.md` (wiki primary landing page)
+  - Under no circumstances should an agent delete or rename these files. They are essential for navigation.
+- **Deletable Files (USER-APPROVED ONLY)**:
+  - Generated wiki concept pages, entity pages, and source summaries (`wiki/*.md` except core files) are deletable.
+  - Raw source files (`raw/*`) are deletable if the user requests it.
+  - When a deletion occurs, the agent (or UI deletion action) must trigger a re-index (`python scripts/indexer.py`) and log the deletion under the `system | Deletion` tag in `log.md`.
+
+

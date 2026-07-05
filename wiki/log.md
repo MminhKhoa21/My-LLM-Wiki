@@ -22,3 +22,8 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 - Updated existing concept page `wiki/derivative.md` to establish differentiation as the inverse of integration.
 - Updated existing entity pages `wiki/isaac_newton.md` and `wiki/gottfried_leibniz.md` to link to the new integrals guide.
 - Rebuilt index (`wiki/index.md`) and verified linter output is fully clean (0 errors, 0 warnings).
+
+
+## [2026-07-05] system | Deletion of wiki file
+- Deleted file: test_deletion.md
+- Automatically ran indexer script.
