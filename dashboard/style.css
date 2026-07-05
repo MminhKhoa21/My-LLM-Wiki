@@ -422,6 +422,8 @@ a:hover {
     font-size: 15px;
     color: #e2e8f0;
     padding: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     animation: fadeIn 0.4s ease-out forwards;
 }
 
@@ -515,6 +517,9 @@ a:hover {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .markdown-body th, .markdown-body td {
