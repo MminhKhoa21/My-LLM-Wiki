@@ -4,7 +4,7 @@ title: "The Derivative"
 description: "The definition, limit formula, and geometric interpretation of the derivative."
 tags: [calculus, mathematics, limit, derivative]
 timestamp: 2026-07-05
-sources: ["raw/calculus_derivatives.txt"]
+sources: ["raw/calculus_derivatives.txt", "raw/calculus_integrals.txt"]
 ---
 
 # The Derivative
@@ -27,7 +27,7 @@ If this limit exists, the function \(f\) is said to be **differentiable** at \(a
 
 ## Operations
 
-To compute derivatives, we apply specific mathematical techniques known as [[differentiation_rules]].
+To compute derivatives, we apply specific mathematical techniques known as [[differentiation_rules]]. Crucially, differentiation is the inverse operation of integration (calculating the [[integral]]).
 
 ## Historical Development
 

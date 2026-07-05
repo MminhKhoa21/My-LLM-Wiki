@@ -4,7 +4,7 @@ title: "Gottfried Wilhelm Leibniz"
 description: "German mathematician and philosopher who co-developed calculus and its notation."
 tags: [mathematician, philosopher, calculus, notation, history]
 timestamp: 2026-07-05
-sources: ["raw/calculus_derivatives.txt"]
+sources: ["raw/calculus_derivatives.txt", "raw/calculus_integrals.txt"]
 ---
 
 # Gottfried Wilhelm Leibniz

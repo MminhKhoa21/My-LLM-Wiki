@@ -4,7 +4,7 @@ title: "Isaac Newton"
 description: "English physicist and mathematician who co-developed calculus."
 tags: [physicist, mathematician, calculus, history]
 timestamp: 2026-07-05
-sources: ["raw/calculus_derivatives.txt"]
+sources: ["raw/calculus_derivatives.txt", "raw/calculus_integrals.txt"]
 ---
 
 # Isaac Newton

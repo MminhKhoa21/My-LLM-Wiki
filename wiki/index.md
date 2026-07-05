@@ -9,11 +9,13 @@ Welcome to your LLM-maintained Knowledge Base index. This page is automatically 
 ## Source Summaries
 
 - [[summary_calculus_derivatives]] - **Summary of Calculus Derivatives Study Guide**: A summary of the core derivative definitions, rules, and history of calculus. *(Tags: calculus, mathematics, derivatives, study-guide)*
+- [[summary_calculus_integrals]] - **Summary of Calculus Integrals Study Guide**: A summary of definite/indefinite integrals, the Fundamental Theorem of Calculus, and history. *(Tags: calculus, mathematics, integration, study-guide)*
 
 ## Concepts & Topics
 
 - [[differentiation_rules]] - **Differentiation Rules**: Mathematical rules used to compute derivatives of algebraic functions. *(Tags: calculus, mathematics, derivative, rules)*
 - [[derivative]] - **The Derivative**: The definition, limit formula, and geometric interpretation of the derivative. *(Tags: calculus, mathematics, limit, derivative)*
+- [[integral]] - **The Integral**: The definition of integration, definite/indefinite integrals, and the Fundamental Theorem of Calculus. *(Tags: calculus, mathematics, integral, antiderivative)*
 
 ## Entities & Tools
 

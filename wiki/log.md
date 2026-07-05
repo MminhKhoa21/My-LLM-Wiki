@@ -15,3 +15,10 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 - Created entity pages: `wiki/isaac_newton.md` and `wiki/gottfried_leibniz.md`.
 - Updated index (`wiki/index.md`) and ran the linter successfully (0 errors, 0 warnings).
 
+## [2026-07-05] ingest | Calculus Integrals Study Guide
+- Ingested raw source `raw/calculus_integrals.txt`.
+- Created summary page `wiki/summary_calculus_integrals.md`.
+- Created concept page `wiki/integral.md`.
+- Updated existing concept page `wiki/derivative.md` to establish differentiation as the inverse of integration.
+- Updated existing entity pages `wiki/isaac_newton.md` and `wiki/gottfried_leibniz.md` to link to the new integrals guide.
+- Rebuilt index (`wiki/index.md`) and verified linter output is fully clean (0 errors, 0 warnings).

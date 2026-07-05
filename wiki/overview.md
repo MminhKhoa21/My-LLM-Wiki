@@ -27,6 +27,9 @@ Welcome to your AI-managed learning wiki. This wiki compiles and aggregates know
 
 ### Mathematics (Calculus)
 - [[summary_calculus_derivatives]] - Summary of Calculus Derivatives Study Guide.
+- [[summary_calculus_integrals]] - Summary of Calculus Integrals Study Guide.
 - [[derivative]] - Definition and core principles of the derivative.
+- [[integral]] - Definition and core principles of the integral.
 - [[differentiation_rules]] - Standard algebraic rules for differentiation.
+
 

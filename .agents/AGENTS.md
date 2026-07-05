@@ -73,3 +73,16 @@ sources: ["relative/path/to/raw/source.txt", "optional external URL"]
 1. Run `python scripts/linter.py`.
 2. Review the output report.
 3. Address schema errors, broken links, and orphan pages. Do NOT delete files without user permission.
+
+---
+
+## 5. Contradiction Tracking & Reconciliation Rules
+
+To prevent "taxonomy drift" and outdated information as knowledge compounds:
+- **Detect Contradictions**: When ingesting new sources, if the new information directly contradicts a claim in an existing wiki page, you MUST NOT silently overwrite the old claim.
+- **Flag and Document**: Instead, you must:
+  1. Add a warning alert `> [!WARNING]` at the top of the affected wiki page outlining the contradiction (e.g., "Source B claims X, while Source A claims Y").
+  2. Maintain both claims side-by-side with clear citations to their respective raw sources.
+  3. Log the contradiction in `wiki/log.md` with the prefix: `## [YYYY-MM-DD] contradiction | Description`.
+- **Reconciliation**: Do not resolve the contradiction unilaterally. Discuss the conflicting claims with the user, present the arguments from both sources, and update the pages once the user confirms which claim is correct.
+
