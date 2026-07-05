@@ -210,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnRejectDraft.addEventListener("click", rejectCurrentDraft);
     btnApproveAll.addEventListener("click", approveAllDrafts);
     btnRejectAll.addEventListener("click", rejectAllDrafts);
-    
     // Top Search listeners
     topSearchInput.addEventListener("input", handleTopSearchInput);
     document.addEventListener("click", (e) => {
@@ -218,6 +217,29 @@ document.addEventListener("DOMContentLoaded", () => {
             topSearchResults.style.display = "none";
         }
     });
+
+    // Mobile Menu Toggle
+    const btnMobileMenu = document.getElementById("btn-mobile-menu");
+    const sidebar = document.getElementById("sidebar");
+    const mobileOverlay = document.getElementById("mobile-overlay");
+    
+    function toggleMobileMenu() {
+        sidebar.classList.toggle("open");
+        mobileOverlay.classList.toggle("active");
+    }
+    
+    if (btnMobileMenu && sidebar && mobileOverlay) {
+        btnMobileMenu.addEventListener("click", toggleMobileMenu);
+        mobileOverlay.addEventListener("click", toggleMobileMenu);
+        
+        // Close menu automatically when clicking a note item in sidebar on mobile
+        sidebar.addEventListener("click", (e) => {
+            if (window.innerWidth <= 768 && (e.target.closest('.note-item') || e.target.closest('.recent-item') || e.target.closest('.btn'))) {
+                sidebar.classList.remove("open");
+                mobileOverlay.classList.remove("active");
+            }
+        });
+    }
 });
 
 // Toast notification helper

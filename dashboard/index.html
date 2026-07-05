@@ -19,8 +19,11 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Mobile Overlay -->
+        <div id="mobile-overlay" class="mobile-overlay"></div>
+
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <i class="fa-solid fa-brain logo-icon"></i>
                 <h2 data-i18n="logo-title">LLM Wiki</h2>
@@ -86,7 +89,10 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <!-- Top Header with Search -->
-            <div class="top-search-header" style="position: relative; margin-bottom: 20px;">
+            <div class="top-search-header" style="position: relative; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
+                <button id="btn-mobile-menu" class="btn btn-secondary mobile-only" style="padding: 12px; border-radius: 12px; display: none;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <div class="search-input-wrapper" style="position: relative; width: 100%;">
                     <i class="fa-solid fa-magnifying-glass top-search-icon" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px;"></i>
                     <input type="text" id="top-search" data-i18n-placeholder="search-placeholder" placeholder="Search knowledge base..." style="width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--panel-border); border-radius: 12px; padding: 12px 16px 12px 42px; color: var(--text-main); font-family: inherit; font-size: 14px; transition: var(--transition-fast);">
