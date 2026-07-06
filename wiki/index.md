@@ -41,6 +41,9 @@ Welcome to your LLM-maintained Knowledge Base index. This page is automatically 
 
 - [[day17_track1]] - **AI Prototyping & MVP (Track 1)**: Summary of Day 17 Track 1 on AI Prototyping, Wizard of Oz MVPs, and Hypothesis Testing. *(Tags: AI_20K_2A202600974, Day17, Prototyping, MVP)*
 - [[day25_track3]] - **Circuit Breakers, Caching & Reliability for Production Agents**: Summary of Day 10 on reliability primitives including failure modes, circuit breakers, caching, observability, and chaos testing for production LLM agents. *(Tags: reliability, circuit breaker, caching, observability, slo, chaos testing, llm agents)*
+- [[review_questions_track1]] - **Câu hỏi ôn tập - Track1**: Bộ câu hỏi ôn tập tổng hợp cho Track1 *(Tags: review, track1)*
+- [[review_questions_track2]] - **Câu hỏi ôn tập - Track2**: Bộ câu hỏi ôn tập tổng hợp cho Track2 *(Tags: review, track2)*
+- [[review_questions_track3]] - **Câu hỏi ôn tập - Track3**: Bộ câu hỏi ôn tập tổng hợp cho Track3 *(Tags: review, track3)*
 - [[day17_track2]] - **Data Pipeline Engineering (Track 2)**: Summary of Day 17 Track 2 on building robust data pipelines, Medallion Architecture, and streaming ingestion. *(Tags: AI_20K_2A202600974, Day17, Data_Pipeline, ETL, Kafka)*
 - [[day16_track1]] - **Day 16 Track 1: AI Product Strategy**: Chiến lược sản phẩm AI và phương pháp Job-to-be-Done (JTBD) *(Tags: ai, 20k, day16)*
 - [[day16_track2]] - **Day 16 Track 2: Cloud Infrastructure for AI**: Hạ tầng Cloud cho các hệ thống AI: Lựa chọn Provider, GPU, Terraform, K8s và AI Serving *(Tags: ai, 20k, day16)*
