@@ -149,3 +149,9 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 ## [2026-07-06] ingest | day14-ai-evaluation-benchmarking
 ## [2026-07-06] ingest | 2026_Work_Trend_Index_Annual_Report_050526-7_69fc5b1c4e265
 ## [2026-07-06] ingest | ITviec_Salary_Report_2025_2026_VN
+
+## [2026-07-06] ingest | Day 28 System Architectures, Platform Engineering, and Product Deck
+- Ingested 3 PDFs from `raw/AI_20K_2A202600974/28/`.
+- Created summary page `wiki/AI_20K_2A202600974/summary_1-ai_system_architectures_duong_trung_tin_pdf_ready.md`.
+- Created summary page `wiki/AI_20K_2A202600974/summary_Day 28 Deck.md`.
+- Created summary page `wiki/AI_20K_2A202600974/summary_day28-platform-engineering-documentation.md`.
