@@ -41,7 +41,7 @@ def main():
     parser.add_argument("--query", "-q", required=True, help="Search query string")
     args = parser.parse_args()
     
-    root_dir = Path("D:/Obsidian/My Wiki")
+    root_dir = Path("D:/Wiki")
     raw_dir = root_dir / "raw"
     wiki_dir = root_dir / "wiki"
     
