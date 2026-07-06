@@ -67,3 +67,7 @@ The core architectural layers common to these systems are:
 1. **Architecture Beats Benchmark:** A good model requires the correct data path, latency constraints, safety shell, and ops loop.
 2. **End-to-End Doesn't Mean No System:** E2E policies still need ODD and monitoring.
 3. **Data Flywheel:** Systems scale effectively by capturing edge cases and feeding them back into training loops.
+
+
+## Liên kết
+- [[day28_overview]]

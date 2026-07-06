@@ -56,3 +56,7 @@ Sales teams must be armed with documentation, evaluation metrics, and security g
 1. **Choose the Right Value Metric:** Ensure it balances risk and aligns with customer value.
 2. **Embed in Habits:** Integrate into existing workflows rather than forcing new ones.
 3. **Sell Results, Not AI:** Customers care about saving time, reducing costs, and better sleep—not the underlying LLM architecture.
+
+
+## Liên kết
+- [[day28_overview]]

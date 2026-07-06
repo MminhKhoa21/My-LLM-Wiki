@@ -59,3 +59,7 @@ A platform must meet these criteria before deployment:
 1. **Integration:** Integration is where "works on my machine" meets reality. Always test integration points heavily before production.
 2. **Automation:** Checklists for production readiness must be automated.
 3. **Platform Mindset:** A platform implies other teams consume it. Clear API contracts, SLAs, and documentation are more important than isolated internal code quality.
+
+
+## Liên kết
+- [[day28_overview]]
