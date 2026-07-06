@@ -1,0 +1,21 @@
+# Exclude heavy raw materials
+raw/
+extracted_texts.json
+extract_pdfs.py
+extract.py
+t1.txt
+t2.txt
+t3.txt
+
+# Exclude scratch and helper directories
+scratch/
+scratch_pdfs/
+
+# Exclude Obsidian configuration (not needed for web dashboard)
+.obsidian/
+
+# Exclude python virtual environments or cache if any
+__pycache__/
+*.pyc
+.venv/
+venv/
