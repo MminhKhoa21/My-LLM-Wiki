@@ -14,6 +14,18 @@ from datetime import datetime
 SERVER_ROOT = Path(__file__).parent.parent
 DASHBOARD_DIR = SERVER_ROOT / "dashboard"
 
+# Load .env manually if it exists to retrieve READ_ONLY config
+env_path = SERVER_ROOT / ".env"
+if env_path.exists():
+    try:
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line_str = line.strip()
+            if line_str and not line_str.startswith("#") and "=" in line_str:
+                k, v = line_str.split("=", 1)
+                os.environ[k.strip()] = v.strip()
+    except Exception:
+        pass
+
 # Content resides in the user's workspace
 ROOT_DIR = SERVER_ROOT
 WIKI_DIR = ROOT_DIR / "wiki"
@@ -110,6 +122,11 @@ class handler(http.server.SimpleHTTPRequestHandler):
                 self.send_error(404, "File Not Found")
 
     def do_POST(self):
+        # Prevent edits if system is in Read-Only mode
+        if os.environ.get("READ_ONLY", "false").lower() == "true":
+            self.send_json({"error": "This system is running in Read-Only mode. Modifications are blocked."}, 403)
+            return
+
         parsed_url = urllib.parse.urlparse(self.path)
         path = parsed_url.path
 
@@ -156,6 +173,8 @@ class handler(http.server.SimpleHTTPRequestHandler):
     def handle_api_get(self, path, query):
         if path == "/api/notes":
             self.api_get_notes()
+        elif path == "/api/config":
+            self.api_get_config()
         elif path == "/api/note":
             self.api_get_note_detail(query)
         elif path == "/api/graph":
@@ -204,6 +223,10 @@ class handler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 pass
         self.send_json(notes)
+
+    def api_get_config(self):
+        read_only = os.environ.get("READ_ONLY", "false").lower() == "true"
+        self.send_json({"readOnly": read_only})
 
     def api_get_note_detail(self, query):
         note_name = query.get("name", [None])[0]

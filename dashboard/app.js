@@ -185,8 +185,42 @@ let activeGraphFilters = { overview: true, summary: true, concept: true, entity:
 let activeDrafts = [];
 let currentDraftName = null;
 
+// Configuration & Security Check
+async function checkConfig() {
+    try {
+        const res = await fetch(`${API_BASE}/config`);
+        if (!res.ok) return;
+        const config = await res.json();
+        if (config.readOnly) {
+            document.body.classList.add("read-only-mode");
+            const elementsToHide = [
+                document.getElementById("btn-reindex"),
+                document.getElementById("btn-relint"),
+                document.querySelector(".clipper-area"),
+                document.getElementById("upload-zone"),
+                document.getElementById("git-controls"),
+                document.getElementById("tab-manage-btn"),
+                document.getElementById("tab-drafts-btn"),
+                document.getElementById("btn-cleanup-raw")
+            ];
+            elementsToHide.forEach(el => {
+                if (el) el.style.display = "none";
+            });
+            const uploadArea = document.querySelector(".upload-area");
+            if (uploadArea) {
+                uploadArea.innerHTML = '<span style="color: var(--text-muted); font-size: 11px; text-align: center; display: block; padding: 10px;">Chế độ Xem (Read-only)</span>';
+                uploadArea.style.pointerEvents = "none";
+                uploadArea.style.borderStyle = "solid";
+            }
+        }
+    } catch (err) {
+        console.error("Failed to load config", err);
+    }
+}
+
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
+    checkConfig();
     initTabs();
     initUploadZone();
     loadNotes();
