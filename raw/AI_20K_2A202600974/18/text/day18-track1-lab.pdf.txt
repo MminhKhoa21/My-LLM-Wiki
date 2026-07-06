@@ -1,0 +1,742 @@
+--- Page 1 ---
+Bài thực hành Ngày 18 — Human-Centered
+AI Design
+Thiết kế một lát cắt trải nghiệm AI giúp người dùng hiểu đúng, tin đúng mức, giữ quyền
+kiểm soát và tiếp tục hoàn thành mục tiêu khi AI không hoàn hảo.
+Nộp bài
+Tạo repository và đặt tên theo đúng cấu trúc:
+Thay MãHV và Họ Và Tên bằng thông tin của học viên nộp bài.
+1. Bài lab này thực sự đánh giá điều gì?
+Bài lab này không đánh giá khả năng:
+Nghĩ ra thật nhiều tính năng AI.
+Viết câu lệnh cho AI.
+Chọn mô hình.
+Làm giao diện đẹp hoặc nhiều hiệu ứng.
+Xây dựng toàn bộ một ứng dụng hoàn chỉnh.
+Bài lab đánh giá khả năng thiết kế trải nghiệm cho những tình huống mà AI không hoàn hảo.
+Sau phần trình bày, người xem phải trả lời được:
+AI biết gì?
+AI chưa biết gì?
+AI có thể sai ở đâu?
+AI được phép tự làm tới đâu?
+Người dùng kiểm tra, sửa, từ chối hoặc hoàn tác bằng cách nào?
+Khi có lỗi, sản phẩm giúp người dùng tiếp tục hoàn thành mục tiêu ra sao?
+Người dùng và hệ thống phản hồi cho nhau như thế nào?
+Nói ngắn gọn:
+Trọng tâm là trải nghiệm AI, không phải số lượng tính năng.
+Day18-Track1-MãHV-Họ Và Tên
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+VinUni AI20k · Batch 02 1
+
+--- Page 2 ---
+2. Mục tiêu học tập
+Sau bài tập, nhóm cần chứng minh rằng mình có thể:
+Thiết lập kỳ vọng phù hợp ngay từ lần đầu sử dụng.
+Thiết kế một lát cắt tính năng xuyên suốt vòng đời trải nghiệm.
+Chọn mức độ tự chủ phù hợp: Act / Ask / Don't Act.
+Thiết kế khi AI thiếu thông tin, không chắc chắn hoặc đưa ra kết quả sai.
+Giúp người dùng phát hiện lỗi, lấy lại quyền kiểm soát và tiếp tục công việc.
+Thiết kế vòng phản hồi hai chiều giữa người dùng và hệ thống.
+Giải thích được lý do đằng sau các quyết định thiết kế.
+3. Đề bài
+Theo nhóm 3 người, hãy chọn một bối cảnh và thiết kế một lát cắt tính năng AI dưới dạng mockup
+hoặc prototype có thể chạy thử.
+Chọn một trong bốn hướng
+AI Travel Planner — Trợ lý AI lập kế hoạch du lịch.
+AI Personal Assistant for Students — Trợ lý AI cá nhân cho sinh viên.
+AI Customer Support Agent — Nhân viên AI chăm sóc khách hàng.
+Dự án nhóm đang phát triển — Chọn một tính năng AI cụ thể trong MVP hiện tại.
+Nếu chọn dự án đang phát triển:
+Không làm lại toàn bộ MVP.
+Chọn một tính năng AI có tương tác hoặc quyết định đủ rõ.
+Thiết kế lần đầu người dùng tiếp cận tính năng đó, không nhất thiết onboarding lại toàn bộ sản
+phẩm.
+Nếu dự án gần với một trong ba hướng trên, có thể dùng luôn bộ kịch bản tương ứng.
+Nếu dự án thuộc lĩnh vực khác, dùng bộ kịch bản chung ở cuối đề bài và điều chỉnh theo bối
+cảnh.
+Chọn một lát cắt, không chọn toàn bộ sản phẩm
+Ví dụ lát cắt phù hợp:
+AI tạo và điều chỉnh lịch trình cho một chuyến đi.
+AI đọc email và tạo nhiệm vụ học tập cho sinh viên.
+AI xử lý một yêu cầu đổi trả hoặc hoàn tiền.
+AI đề xuất một kế hoạch, sau đó người dùng xem lại và chỉnh sửa.
+Ví dụ phạm vi quá rộng:
+“Toàn bộ ứng dụng du lịch AI.”
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+7. 
+1. 
+2. 
+3. 
+4. 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 2
+
+--- Page 3 ---
+“Một trợ lý làm mọi thứ cho sinh viên.”
+“Hệ thống chăm sóc khách hàng tự động hoàn toàn.”
+Một lát cắt nhỏ nhưng xử lý kỹ tốt hơn một sản phẩm lớn nhưng chỉ có luồng thuận lợi.
+4. Đầu ra bắt buộc: mockup hoặc prototype trực quan
+Đầu ra chính của bài là một prototype thể hiện trực quan flow, UI và sự thay đổi trạng thái của hệ
+thống.
+Có thể sử dụng:
+Figma.
+Framer.
+Bản mô phỏng có thể bấm.
+HTML/CSS/JavaScript.
+Nguyên mẫu giấy có các trạng thái và đường chuyển rõ.
+Công cụ tương đương.
+Prototype cần cho thấy
+Màn hình hoặc trạng thái người dùng thực sự nhìn thấy.
+Người dùng bấm, chọn, sửa hoặc xác nhận ở đâu.
+AI đang xử lý, không chắc chắn, thất bại hoặc hoàn thành ra sao.
+Các nhánh khác nhau khi người dùng lựa chọn khác nhau.
+Trạng thái trước và sau khi người dùng sửa hoặc phản hồi.
+Đường khôi phục sau lỗi.
+Các kỹ thuật prototype có thể dùng
+Các khung được nối thành luồng có thể bấm.
+Biến thể thành phần và trạng thái giao diện.
+Hộp thoại, lớp phủ, bảng bên hoặc thông báo trong ngữ cảnh.
+Nhánh điều kiện bằng các đường chuyển khác nhau.
+Trạng thái chờ, tiến độ, trống, lỗi và không chắc chắn.
+So sánh trước/sau khi sửa.
+Dữ liệu mẫu và phản hồi AI được viết sẵn.
+Chú thích ngắn đặt cạnh khung để giải thích rationale.
+Prototype không cần kết nối mô hình hoặc API thật.
+Không được tính là prototype đạt yêu cầu
+Chỉ có một flowchart bằng chữ.
+Chỉ có tài liệu mô tả ý tưởng.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 3
+
+--- Page 4 ---
+Chỉ có một màn hình chat và mọi đầu vào đều dẫn tới cùng một kiểu câu trả lời.
+Chỉ vẽ màn hình đẹp nhưng không thể hiện trạng thái, quyền kiểm soát hoặc đường khôi phục.
+5. Vòng đời trải nghiệm bắt buộc
+Prototype phải thể hiện một trải nghiệm thống nhất theo bốn giai đoạn:
+Giai đoạn A — Onboarding bắt buộc
+Thiết kế trải nghiệm cho người dùng lần đầu tiếp cận tính năng AI.
+Onboarding phải giúp người dùng hiểu:
+AI có thể hỗ trợ gì.
+AI không thể hoặc không được phép làm gì.
+AI cần dữ liệu hoặc quyền truy cập nào.
+Người dùng nên bắt đầu từ đâu.
+Người dùng có thể kiểm soát, bỏ qua hoặc rút quyền như thế nào.
+Tránh biến onboarding thành một biểu mẫu dài yêu cầu mọi thông tin ngay từ đầu.
+Giai đoạn B — Trong khi AI hỗ trợ hoặc hành động
+Prototype cần thể hiện:
+AI thu thập hoặc sử dụng bối cảnh nào.
+AI đang hiểu yêu cầu theo cách nào.
+Khi nào AI hỏi thêm.
+Khi nào AI đề xuất.
+Khi nào AI được tự hành động.
+Người dùng theo dõi hoặc can thiệp ở đâu.
+Hệ thống phản hồi trạng thái và tiến độ như thế nào.
+Giai đoạn C — Sau hành động hoặc sau đầu ra
+Prototype cần thể hiện:
+Người dùng xem lại kết quả ở đâu.
+Đâu là dữ kiện, đâu là suy luận hoặc đề xuất của AI.
+• 
+• 
+Onboarding
+    ↓
+Trong khi AI hỗ trợ hoặc hành động
+    ↓
+Sau khi AI đưa ra kết quả hoặc thực hiện hành động
+    ↓
+Vòng phản hồi, sửa lỗi và khôi phục
+    ↺
+Quay lại kết quả tốt hơn hoặc lần sử dụng tiếp theo
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 4
+
+--- Page 5 ---
+Người dùng kiểm tra nguồn hoặc bằng chứng như thế nào.
+Người dùng chấp nhận, sửa, từ chối hoặc hoàn tác bằng cách nào.
+Hành động đã thực hiện hay mới chỉ là bản nháp/đề xuất.
+Sản phẩm xác nhận kết quả và bước tiếp theo ra sao.
+Giai đoạn D — Vòng phản hồi và khôi phục
+Khi AI sai hoặc không chắc chắn, flow tốt không dừng ở việc “báo lỗi”.
+Ít nhất một kịch bản trong prototype phải thể hiện trọn vẹn vòng lặp trên.
+6. Số lượng kịch bản cần thực hiện
+Mỗi nhóm thực hiện:
+Một onboarding flow bắt buộc.
+Ít nhất hai kịch bản trong khi tương tác.
+Ít nhất hai kịch bản sai sót, không chắc chắn hoặc khôi phục.
+Tổng cộng tối thiểu: 1 onboarding + 4 kịch bản khác.
+Các kịch bản phải được nối thành một lát cắt sản phẩm tương đối thống nhất. Không dựng năm
+mini-app không liên quan với nhau.
+Một kịch bản có thể đồng thời chứng minh nhiều năng lực. Ví dụ, kịch bản AI gán nhầm deadline có
+thể chứa Ask, lớp bằng chứng, phản hồi tường minh từ người dùng và đường khôi phục. Không cần
+tạo thêm một màn hình riêng cho từng dòng yêu cầu nếu cùng một flow đã thể hiện chúng rõ ràng.
+7. Yêu cầu cho từng kịch bản
+Mỗi kịch bản phải có hai phần nằm ngay trong tệp prototype.
+• 
+• 
+• 
+• 
+AI sai hoặc không chắc chắn
+        ↓
+Người dùng phát hiện hoặc hệ thống tự nêu vấn đề
+        ↓
+Người dùng phản hồi, sửa hoặc cung cấp thêm bối cảnh
+        ↓
+Hệ thống xác nhận đã hiểu vấn đề gì
+        ↓
+Hệ thống đề xuất cách khôi phục
+        ↓
+Người dùng tiếp tục hoàn thành mục tiêu
+        ↓
+Hệ thống nói rõ điều gì được sửa, ghi nhớ hoặc không ghi nhớ
+1. 
+2. 
+3. 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 5
+
+--- Page 6 ---
+7.1. Flow hoặc màn hình
+Thể hiện trực quan:
+Bối cảnh ban đầu.
+Trạng thái AI.
+Điều người dùng nhìn thấy.
+Lựa chọn và quyền kiểm soát.
+Nhánh tiếp theo.
+Trạng thái kết thúc hoặc khôi phục.
+7.2. Design rationale
+Đặt một thẻ chú thích ngắn cạnh flow, trả lời:
+AI đang biết gì?
+AI chưa biết gì hoặc đang không chắc điều gì?
+AI đang đưa ra giả định nào?
+Điều gì có thể sai?
+Nếu AI sai, hậu quả là gì và ai chịu ảnh hưởng?
+Sai sót có dễ phát hiện và dễ hoàn tác không?
+AI nên Act, Ask hay Don't Act? Vì sao?
+Người dùng kiểm tra, sửa, từ chối hoặc hoàn tác ở đâu?
+Phản hồi nào được thu thập hoặc trả lại?
+Flow giúp người dùng tiếp tục hoàn thành mục tiêu như thế nào?
+Không chỉ viết:
+“Nhóm thấy cách này hợp lý.”
+Hãy lập luận bằng rủi ro và khả năng khôi phục:
+“Chi phí khi sai cao và hành động khó hoàn tác, vì vậy AI phải xin xác nhận trước.”
+“Hành động có rủi ro thấp, người dùng nhìn thấy ngay và có thể hoàn tác, vì vậy AI được
+tự thực hiện.”
+8. Yêu cầu về mức độ tự chủ: Act / Ask / Don't Act
+Trong toàn bộ prototype phải có đủ ba mức:
+• 
+• 
+• 
+• 
+• 
+• 
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+7. 
+8. 
+9. 
+10. 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 6
+
+--- Page 7 ---
+Mức độ Ý nghĩa Khi nào phù hợp?
+Act — Hành động AI được phép tự thực hiệnRủi ro thấp, đủ thông tin, dễ phát hiện và dễ
+hoàn tác
+Ask — Hỏi trước AI phải xin xác nhận trước
+khi thực hiện
+Có giả định quan trọng, tác động đáng kể hoặc
+cần người dùng duyệt
+Don't Act — Không
+hành động
+AI không được phép tự
+thực hiện
+Rủi ro cao, khó hoàn tác, thiếu thẩm quyền
+hoặc thiếu dữ liệu đáng tin
+Không ép AI tự làm một việc nguy hiểm chỉ để đủ Act. Hãy chọn một hành động nhỏ, hữu ích và dễ
+hoàn tác.
+9. Yêu cầu về feedback hai chiều
+Feedback không chỉ là nút thích/không thích. Trong AI UX, feedback đi theo hai chiều:
+User feedback: người dùng giúp hệ thống hiểu điều gì đúng, sai hoặc hữu ích.
+System feedback: hệ thống giúp người dùng hiểu AI đang làm gì, giới hạn ở đâu và nên làm gì
+tiếp theo.
+Cả hai chiều đều có dạng explicit — tường minh và implicit — ngầm định.
+Ma trận feedback bắt buộc
+Explicit — Tường minh Implicit — Ngầm định
+User →
+System
+Người dùng chủ động sửa đầu ra,
+báo sai, chọn lý do, từ chối đề xuất
+hoặc chọn phương án tốt hơn
+Hệ thống quan sát hành vi như viết lại yêu cầu, hoàn
+tác, bỏ dở, chấp nhận đề xuất, thời gian dừng hoặc
+hoàn thành tác vụ
+System
+→ User
+Hệ thống nói rõ trạng thái, tiến độ,
+giới hạn, điều chưa biết, lý do,
+nguồn hoặc bước tiếp theo
+Giao diện, vị trí nút, trạng thái mặc định, mức nhấn
+mạnh, affordance và progressive disclosure giúp
+người dùng tự hiểu cách hệ thống hoạt động
+Prototype phải có đủ:
+Ít nhất một explicit user feedback.
+Ít nhất một implicit user feedback signal được chú thích trong flow.
+Ít nhất một explicit system feedback hiển thị trực tiếp trong UI.
+Ít nhất một implicit system feedback thể hiện bằng thiết kế giao diện hoặc tương tác.
+Cách thể hiện trong prototype
+Explicit user feedback phải có màn hình hoặc thao tác thực tế.
+Implicit user feedback không cần hệ thống theo dõi thật; nhóm đánh dấu sự kiện sẽ được ghi
+nhận và cách dự định diễn giải.
+• 
+• 
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 7
+
+--- Page 8 ---
+Explicit system feedback phải thể hiện nội dung, thời điểm và hành động tiếp theo.
+Implicit system feedback phải chỉ rõ cue giao diện nào đang truyền đạt điều gì.
+Rationale bắt buộc cho mỗi loại feedback
+Với mỗi ô trong ma trận, nhóm phải ghi rõ:
+Feedback xuất hiện ở thời điểm nào?
+Nó giúp người dùng hoặc hệ thống đạt mục tiêu gì?
+Vì sao dùng tường minh hoặc ngầm định?
+Tín hiệu có thể mang những ý nghĩa khác nhau nào?
+Sản phẩm phản ứng ngay như thế nào?
+Tín hiệu có được dùng cho cá nhân hoá, đánh giá hay cải thiện hệ thống sau này không?
+Người dùng có biết và kiểm soát việc sử dụng tín hiệu đó không?
+Thiết kế có làm gián đoạn người dùng quá mức không?
+Hành vi không đồng nghĩa với ý định và cũng không phải sự thật chuẩn. Người dùng
+hoàn tác có thể vì AI sai, nhưng cũng có thể vì họ đổi ý.
+Nguyên tắc thiết kế feedback
+Làm cho việc phản hồi dễ thực hiện và nằm đúng trong ngữ cảnh.
+Cho người dùng thấy lợi ích của việc phản hồi.
+Nói rõ feedback được sử dụng như thế nào.
+Dùng cue ngầm trước khi ngắt lời bằng hướng dẫn trực tiếp.
+Tăng mức hướng dẫn dần khi người dùng thực sự gặp khó.
+Đưa đúng công cụ vào đúng thời điểm.
+Đặt feedback tại các điểm dừng tự nhiên, không liên tục làm gián đoạn công việc.
+System feedback phải đủ để dẫn đường nhưng không dày đến mức cản đường.
+Một vòng feedback tốt giúp người dùng hiểu:
+Mình vừa làm gì, hệ thống vừa làm gì, và bước tiếp theo nên là gì.
+10. Yêu cầu về bằng chứng và explainability
+Ít nhất một kịch bản phải có một lớp bằng chứng hoặc giải thích giúp người dùng kiểm tra đề xuất
+của AI.
+Ví dụ:
+Email nguồn của một deadline.
+Chính sách được dùng để trả lời khách hàng.
+Thời điểm cập nhật thông tin địa điểm.
+• 
+• 
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+7. 
+8. 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 8
+
+--- Page 9 ---
+Các tiêu chí AI dùng để xếp hạng khách sạn.
+Dữ liệu và giả định được dùng để đề xuất mức độ ưu tiên.
+Không cần giải thích toàn bộ mô hình. Chỉ hiển thị thông tin giúp người dùng đưa ra quyết định
+hoặc sửa lỗi tốt hơn.
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 9
+
+--- Page 10 ---
+11. Scenario Pack — AI Travel Planner
+T0 — First-time User Onboarding [Bắt buộc]
+Người dùng lần đầu mở Travel Planner. Họ chưa biết ứng dụng chỉ gợi ý lịch trình hay có thể hỗ trợ
+cả khách sạn, phương tiện, ngân sách và đặt dịch vụ.
+AI cũng chưa biết người dùng thích nghỉ dưỡng, khám phá, ăn uống, tiết kiệm, đi cùng gia đình hay
+đi một mình. Hãy thiết kế onboarding giúp người dùng hiểu AI hỗ trợ được gì, không thể tự làm gì và
+nên bắt đầu bằng thông tin nào, nhưng không biến onboarding thành một biểu mẫu dài.
+T1 — Người dùng chỉ có nhu cầu du lịch mơ hồ [Trong tương tác]
+Người dùng chỉ nói rằng họ muốn đi đâu đó vài ngày để nghỉ ngơi. Họ chưa chốt điểm đến, ngân
+sách, số ngày, người đi cùng hay thời điểm.
+AI chưa đủ thông tin để tạo lịch trình chi tiết. Tuy nhiên, nếu hỏi quá nhiều câu liên tục, người dùng
+có thể thấy mệt. Hãy thiết kế cách khai thác nhu cầu từng bước mà chưa quyết định thay người
+dùng.
+T2 — AI cần hỏi thêm trước khi lập kế hoạch [Trong tương tác]
+Người dùng muốn đi Đà Nẵng nhưng chưa nói đi bao lâu, đi với ai, ngân sách bao nhiêu và muốn
+nghỉ dưỡng hay tham quan nhiều.
+Nếu AI tự tạo lịch trình ngay, kết quả dễ lệch nhu cầu. Nếu bắt người dùng điền đủ mọi thông tin,
+trải nghiệm sẽ nặng. Hãy thiết kế flow để AI hỏi những thông tin quan trọng nhất và làm rõ vì sao
+chúng cần thiết.
+T3 — Nhiều tiêu chí khách sạn xung đột [Trong tương tác · Explainability]
+AI tìm thấy ba khách sạn phù hợp: một nơi rẻ nhất, một nơi gần biển nhất và một nơi có đánh giá
+cao nhất. AI đang xếp khách sạn gần biển lên đầu.
+Người dùng không hiểu vì sao phương án đó được ưu tiên hơn phương án rẻ hơn. Hãy thiết kế trải
+nghiệm giúp người dùng hiểu và điều chỉnh các tiêu chí AI đang sử dụng, nhưng không quy định sẵn
+giao diện hoặc giải pháp.
+T4 — Có nhiều lịch trình đều hợp lý [Trong tương tác]
+Cùng một chuyến đi có thể có lịch trình tiết kiệm, nghỉ dưỡng, nhiều điểm tham quan hoặc phù hợp
+với gia đình có trẻ nhỏ.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 10
+
+--- Page 11 ---
+Nếu AI chỉ đưa ra một lịch trình, người dùng có thể tưởng đó là lựa chọn tối ưu duy nhất. Hãy thiết
+kế trải nghiệm giúp người dùng hiểu còn các phương án hợp lý khác và giữ quyền lựa chọn.
+T6 — Lịch trình quá dày hoặc không thực tế [Sai sót & Khôi phục]
+AI tạo một lịch trình hấp dẫn nhưng trong một ngày có quá nhiều điểm đến, thời gian di chuyển dài
+và ít thời gian nghỉ. Người dùng nhận ra lịch trình không thực tế.
+Hãy thiết kế flow giúp người dùng chỉ ra vấn đề cụ thể và tiếp tục sửa lịch trình. Flow không được
+dừng ở việc ghi nhận “không hữu ích”.
+T7 — AI dùng thông tin đã lỗi thời [Sai sót & Khôi phục · Explainability]
+AI đề xuất một địa điểm hoặc nhà hàng nhưng giờ mở cửa, giá vé hoặc tình trạng hoạt động đã
+không còn chính xác.
+Nếu người dùng tin hoàn toàn, chuyến đi có thể bị ảnh hưởng. Hãy thiết kế trải nghiệm giúp người
+dùng đánh giá và kiểm tra thông tin quan trọng, đồng thời có đường thay thế nếu đề xuất không
+còn dùng được.
+T9 — Người dùng muốn đặt dịch vụ [Agency]
+Người dùng đã chọn khách sạn hoặc tour và muốn đi tiếp tới bước đặt dịch vụ. AI có thể hỗ trợ
+điền thông tin hoặc tóm tắt lựa chọn, nhưng đặt chỗ và thanh toán có rủi ro cao.
+Hãy thiết kế rõ phần nào AI được hỗ trợ, phần nào phải hỏi người dùng và phần nào AI không được
+tự thực hiện.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 11
+
+--- Page 12 ---
+12. Scenario Pack — AI Personal Assistant
+for Students
+S0 — First-time User Onboarding [Bắt buộc]
+Sinh viên lần đầu mở Student Assistant. Họ chưa biết AI có thể giúp quản lý deadline, lịch học,
+email trường, nhiệm vụ cá nhân hay kế hoạch học tập.
+AI cũng chưa có dữ liệu về môn học và thói quen học tập. Hãy thiết kế onboarding giúp sinh viên
+hiểu AI hỗ trợ gì, cần quyền truy cập hoặc dữ liệu nào và sẽ không tự làm những việc gì thay sinh
+viên.
+S1 — AI cần kết nối dữ liệu học tập [Trong tương tác · Quyền riêng tư]
+AI muốn hỗ trợ việc học nhưng chưa có lịch học, deadline hoặc email trường. Hệ thống có thể đề
+nghị kết nối email, lịch hoặc nhập thủ công môn học.
+Đây là điểm nhạy cảm vì liên quan đến dữ liệu cá nhân. Hãy thiết kế flow giúp người dùng hiểu lợi
+ích, phạm vi sử dụng dữ liệu và quyền kiểm soát trước khi quyết định.
+S2 — AI phát hiện nhiều deadline trong tuần [Trong tương tác · Explainability]
+AI thấy sinh viên có một bài tập sắp đến hạn, một bài kiểm tra, một buổi họp nhóm và một hạn
+đăng ký hoạt động.
+AI muốn sắp xếp ưu tiên, nhưng mức quan trọng không chỉ phụ thuộc deadline. Hãy thiết kế cách AI
+đề xuất thứ tự ưu tiên để sinh viên có thể hiểu, kiểm tra và điều chỉnh.
+S3 — AI đề xuất kế hoạch học tối nay [Trong tương tác]
+AI thấy sinh viên có hai bài tập và một bài kiểm tra ngắn sắp tới nên đề xuất dành tối nay cho một
+môn cụ thể.
+Người dùng có thể không đồng ý vì môn kia khó hơn hoặc đã có hẹn học nhóm. Hãy thiết kế flow để
+AI đưa ra đề xuất nhưng vẫn cho người dùng bổ sung bối cảnh và tạo kế hoạch phù hợp hơn.
+S4 — AI tạo nhiệm vụ từ email trường [Trong tương tác · Explainability]
+AI đọc email trường và phát hiện một thông báo có vẻ liên quan đến deadline. Tuy nhiên, email có
+thể thuộc môn khác, nhóm khác hoặc chỉ là thông báo chung.
+Hãy thiết kế trải nghiệm tạo nhiệm vụ có khả năng kiểm tra, trong đó người dùng hiểu nguồn và suy
+luận AI đang dùng trước khi chấp nhận.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 12
+
+--- Page 13 ---
+S5 — AI chủ động nhắc việc [Agency]
+AI phát hiện một deadline còn 24 giờ. Nó có thể chỉ hiện thông báo, đề xuất chia nhỏ việc hoặc tự
+tạo một kế hoạch học ngắn.
+Hãy quyết định mức độ chủ động phù hợp và làm rõ điều kiện nào cho phép AI Act, khi nào phải 
+Ask.
+S6 — AI gán nhầm deadline cho môn học [Sai sót & Khôi phục]
+AI đọc email và kết luận deadline thuộc môn A, nhưng thực tế email đang nói về môn B. Nếu sinh
+viên tin thông tin này, họ có thể học sai môn hoặc bỏ lỡ deadline thật.
+Hãy thiết kế cách giúp người dùng phát hiện lỗi, sửa lỗi và tiếp tục tới kết quả đúng. Feedback cần
+chỉ ra được loại lỗi thay vì chỉ có nút không thích.
+S8 — AI nhắc một việc không còn cần làm [Sai sót & Khôi phục]
+AI liên tục nhắc một nhiệm vụ đã được xử lý ngoài hệ thống, ví dụ buổi họp đã huỷ hoặc deadline
+đã gia hạn.
+Nếu hệ thống tiếp tục nhắc, người dùng sẽ khó chịu và mất niềm tin. Hãy thiết kế flow cập nhật
+trạng thái, dừng nhắc sai và làm rõ điều gì hệ thống sẽ ghi nhớ cho lần sau.
+S9 — AI muốn gửi email cho giảng viên [Agency]
+Sinh viên nhờ AI xin dời deadline hoặc hỏi lại yêu cầu bài tập. AI có thể soạn email nháp, nhưng gửi
+trực tiếp có rủi ro vì liên quan đến quan hệ với giảng viên.
+Hãy thiết kế flow từ soạn nháp tới chỉnh sửa, xem lại và quyết định gửi. Nhóm cần lý giải ranh giới tự
+chủ của AI.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 13
+
+--- Page 14 ---
+13. Scenario Pack — AI Customer Support
+Agent
+C0 — First-time User Onboarding [Bắt buộc]
+Khách hàng lần đầu tương tác với AI Support Agent. Họ chưa biết AI xử lý được vấn đề nào, khi nào
+được chuyển sang nhân viên thật và AI có thể truy cập dữ liệu đơn hàng hay không.
+Hãy thiết kế trải nghiệm đầu tiên để thiết lập kỳ vọng đúng và giúp khách biết cách yêu cầu gặp
+người thật.
+C1 — Khách mô tả vấn đề không rõ [Trong tương tác]
+Khách nhắn: “Đơn của tôi có vấn đề.” AI chưa biết đó là giao trễ, sai sản phẩm, hư hỏng, thiếu hàng
+hay muốn hoàn tiền.
+Nếu AI đoán sai, cuộc trao đổi sẽ đi lệch hướng. Hãy thiết kế cách làm rõ mà không bắt khách nhập
+lại quá nhiều thông tin.
+C2 — Nhiều chính sách có thể áp dụng [Trong tương tác · Explainability]
+Khách hỏi liệu họ có được hoàn tiền không. Kho tri thức có chính sách chung, hàng giảm giá, đơn
+quốc tế và hàng đã mở hộp.
+AI cần xác định chính sách phù hợp với trường hợp cụ thể. Hãy thiết kế trải nghiệm giúp khách
+hoặc nhân viên kiểm tra được câu trả lời và cơ sở của nó.
+C3 — Trạng thái đơn hàng mâu thuẫn [Không chắc chắn & Khôi phục]
+Dữ liệu đơn hàng cho thấy sản phẩm đã giao nhưng khách nói chưa nhận. Hệ thống vận chuyển có
+các trạng thái mâu thuẫn.
+AI không đủ chắc để kết luận khách có được hoàn tiền hay không. Hãy thiết kế phản hồi, cách thu
+thập thêm thông tin và đường đi tiếp phù hợp.
+C5 — AI đề xuất hoàn tiền [Agency]
+AI thấy đơn hàng có dấu hiệu đủ điều kiện hoàn tiền. Tuy nhiên, hoàn tiền có tác động tài chính và
+có thể cần kiểm tra thêm.
+Hãy thiết kế mức độ tự chủ phù hợp: AI giải thích điều kiện, tạo đề xuất, xin xác nhận hay chuyển
+cho người có thẩm quyền. Không giả định sẵn giải pháp.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 14
+
+--- Page 15 ---
+C6 — Khách muốn gặp người thật [Khôi phục & Chuyển giao]
+Khách không hài lòng và yêu cầu gặp nhân viên, trong khi AI vẫn nghĩ mình có thể trả lời tiếp.
+Nếu AI cố giữ khách quá lâu, trải nghiệm sẽ tệ. Hãy thiết kế flow chuyển giao để khách không phải
+kể lại vấn đề từ đầu.
+C7 — AI hiểu sai ý khách [Sai sót & Khôi phục]
+Khách hỏi “đơn này đang ở đâu rồi?”, nhưng AI hiểu thành khách muốn huỷ đơn và bắt đầu hướng
+dẫn huỷ.
+Hãy thiết kế cách người dùng phát hiện, sửa hướng và giúp AI quay lại đúng vấn đề mà không bắt
+khách bắt đầu lại.
+C8 — AI trả lời tự tin nhưng sai [Sai sót & Khôi phục · Explainability]
+AI nói “đơn hàng sẽ đến trong hôm nay”, nhưng hệ thống vận chuyển không có dữ liệu chắc chắn
+như vậy. Câu trả lời nghe rất tự tin nên khách khó biết AI đang phỏng đoán.
+Hãy thiết kế trải nghiệm giúp khách hiểu chất lượng bằng chứng và giới hạn của câu trả lời, đồng
+thời có bước tiếp theo khi chưa thể kết luận.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 15
+
+--- Page 16 ---
+14. Scenario Pack chung — Dành cho dự án
+hiện tại
+Nếu dự án không thuộc ba hướng trên, hãy điều chỉnh các kịch bản chung sau theo lĩnh vực của nhóm.
+P0 — Lần đầu sử dụng tính năng AI [Bắt buộc]
+Người dùng chưa biết tính năng AI có thể làm gì, cần dữ liệu nào, có quyền hành động tới đâu và
+cách bắt đầu. Thiết kế onboarding cho riêng lát cắt tính năng.
+P1 — Yêu cầu còn mơ hồ [Trong tương tác]
+Người dùng đưa ra một mục tiêu nhưng thiếu một số bối cảnh quan trọng. AI có thể đoán để đi tiếp
+hoặc hỏi quá nhiều và gây mệt. Xác định thông tin tối thiểu cần làm rõ.
+P2 — Có nhiều phương án đều hợp lý [Trong tương tác]
+AI có nhiều phương án phù hợp với các tiêu chí khác nhau. Nếu chỉ đưa một phương án, người dùng
+có thể tưởng đó là lựa chọn tối ưu duy nhất.
+P3 — AI muốn thực hiện hành động có tác động [Agency]
+AI có thể thực hiện một hành động giúp tiết kiệm thời gian nhưng hành động đó có hậu quả hoặc
+khó hoàn tác. Nhóm phải thiết kế ranh giới giữa Act, Ask và Don't Act.
+P4 — Dữ liệu thiếu, cũ hoặc mâu thuẫn [Không chắc chắn]
+AI không có đủ bằng chứng đáng tin để đưa ra kết luận, nhưng đầu ra vẫn có thể nghe hợp lý. Thiết
+kế cách hệ thống thể hiện giới hạn và giúp người dùng đi tiếp.
+P5 — AI hiểu sai ý định [Sai sót & Khôi phục]
+AI đi theo một hướng khác với mục tiêu thật của người dùng. Thiết kế cách phát hiện, sửa hướng và
+giữ lại phần công việc vẫn còn giá trị.
+P6 — Feedback sau lỗi phải dẫn tới recovery [Sai sót & Khôi phục]
+Người dùng báo đầu ra không hữu ích hoặc sửa một phần kết quả. Thiết kế vòng lặp giúp hệ thống
+hiểu vấn đề, sửa kết quả và đưa người dùng quay lại mục tiêu.
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 16
+
+--- Page 17 ---
+Trước khi dựng prototype, nhóm chọn các kịch bản P0–P6 và viết lại mỗi kịch bản bằng bối cảnh
+cụ thể của dự án. Kịch bản phải nêu bối cảnh, thông tin đang có, rủi ro và quyết định cần thiết kế;
+không được mô tả sẵn giải pháp.
+15. Cách làm trong 120 phút
+Làm trực tiếp trong công cụ prototype ngay từ đầu. Không dành nửa buổi chỉ để viết tài
+liệu.
+Giai
+đoạn Hoạt động Phút Đầu ra trực quan
+0 Chọn track, lát cắt và các kịch bản10 Bản đồ phạm vi và danh sách flow
+1 Nối vòng đời trải nghiệm 10 Sơ đồ Onboarding → During → After →
+Feedback
+2 Thiết kế onboarding 15 Màn hình đầu, kỳ vọng, dữ liệu và quyền
+3 Thiết kế luồng chính và agency 20 Flow chính + Act/Ask/Don't Act
+4 Thiết kế sai sót và khôi phục 30 Ít nhất hai nhánh failure/recovery
+5 Thiết kế feedback hai chiều 20 Ma trận 2×2 + vòng feedback hoàn chỉnh
+6 Nối prototype, thêm rationale và tập
+demo
+15 Prototype có thể chạy trong 5 phút
+16. Cấu trúc tệp prototype
+Để giảng viên có thể đánh giá nhanh, nên tổ chức prototype theo các trang hoặc khu vực:
+Không bắt buộc dùng đúng tên trên, nhưng phải có thể tìm thấy các phần tương đương.
+00 — Flow map và phạm vi tính năng
+01 — Onboarding
+02 — Luồng chính / Trong hành động
+03 — Sau hành động / Review / Agency
+04 — Failure & Recovery
+05 — Feedback loop 2×2
+06 — Design rationale
+07 — Demo path
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 17
+
+--- Page 18 ---
+17. Demo — 5 phút/nhóm
+Thời gian Nội dung
+0:00–0:30 Người dùng, vấn đề và lát cắt tính năng
+0:30–1:15 Flow map và onboarding
+1:15–2:15 Luồng chính + Act/Ask/Don't Act
+2:15–3:45 Hai kịch bản sai sót/không chắc chắn và recovery
+3:45–4:45 Feedback loop hai chiều: đủ bốn loại tín hiệu
+4:45–5:00 Quyết định thiết kế quan trọng nhất và rủi ro còn lại
+18. Những gì nhóm cần nộp
+Một liên kết prototype đã cấp quyền xem.
+Một flow map trực quan nằm trong cùng tệp prototype.
+Các thẻ design rationale đặt cạnh những flow quan trọng.
+Một demo path giúp giảng viên chạy đúng các nhánh trong 5 phút.
+Không cần nộp worksheet hoặc tài liệu PRD riêng.
+1. 
+2. 
+3. 
+4. 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 18
+
+--- Page 19 ---
+19. Tiêu chí đánh giá
+Tiêu chí Tỷ
+trọng Cần chứng minh
+Design rationale 30% Hiểu điều AI biết/chưa biết, giả định, rủi ro, hậu quả và lý do
+của các quyết định
+Failure, uncertainty &
+recovery
+25% Kịch bản cụ thể; người dùng phát hiện, sửa và tiếp tục hoàn
+thành mục tiêu
+Agency design 20% Ranh giới Act/Ask/Don't Act phù hợp với rủi ro và khả năng
+hoàn tác
+Two-way feedback
+design
+15% Đủ user/system × explicit/implicit; có rationale, minh bạch và
+đường phản ứng
+Prototype & demo 10% Flow và UI trực quan, trạng thái rõ, nhánh chạy được, demo
+đúng thời gian
+Tổng 100%
+Điều kiện tối thiểu
+Bài chưa đạt nếu thiếu một trong các nội dung sau:
+Onboarding cho lần đầu sử dụng tính năng.
+Ít nhất bốn kịch bản ngoài onboarding.
+Một lát cắt xuyên suốt Onboarding → During → After → Feedback.
+Đủ Act / Ask / Don't Act.
+Ít nhất một vòng feedback và recovery hoàn chỉnh.
+Đủ bốn loại feedback trong ma trận 2×2.
+Ít nhất một lớp bằng chứng hoặc giải thích.
+Design rationale đặt cạnh flow.
+20. Các lỗi cần tránh
+Chỉ thiết kế chatbot
+Flow này chưa cho thấy trạng thái, quyền kiểm soát, agency, hậu quả hay recovery.
+Chỉ cho người dùng báo lỗi
+Người dùng vẫn chưa hoàn thành mục tiêu.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+Người dùng → Nhập câu hỏi → AI trả lời
+AI sai → Người dùng bấm báo lỗi → Kết thúc
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 19
+
+--- Page 20 ---
+Xem mọi hành vi là sự thật chuẩn
+Người dùng bỏ qua, hoàn tác hoặc thoát có thể mang nhiều ý nghĩa. Không tự động coi một tín
+hiệu ngầm định là nhãn đúng/sai.
+Dùng cảnh báo thay cho thiết kế
+Một dòng “AI có thể mắc lỗi” không thay thế cho nguồn, quyền kiểm soát, review, undo hoặc
+recovery.
+Dành toàn bộ thời gian làm UI đẹp
+Một prototype đơn giản nhưng thể hiện quyết định rõ được đánh giá cao hơn một giao diện đẹp
+nhưng không trả lời được:
+AI đang làm gì?
+AI có thể sai ở đâu?
+Vì sao AI được phép hành động?
+Người dùng lấy lại quyền kiểm soát bằng cách nào?
+Feedback giúp người dùng và hệ thống học gì?
+Bài thực hành Ngày 18 — Human-Centered AI Design · Khoá 02
+• 
+• 
+• 
+• 
+• 
+AI20k · Day 18 — Human-Centered AI Design
+VinUni AI20k · Batch 02 20

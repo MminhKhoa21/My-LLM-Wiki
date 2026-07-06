@@ -1,0 +1,372 @@
+--- Page 1 ---
+Human-centered AI design
+Thiết kế AI lấy con người làm trung tâm
+AI IN ACTION - Day 18 - Track 1
+Instructor: Mai Anh Nguyen (Blue)
+
+--- Page 2 ---
+Instructor
+Mai Anh Nguyen (Blue)
+Generalist Product Builder
+
+2026                FPT Long Châu (PM · Healthcare Product)
+2025                Thongtincuuho.org (Co-founder)
+2025                FPT Software AI Center (PM · AI Agent)
+2021 - 2025    Xantus (PM · On-chain Analytics, AI Agent)
+2016 - 2021    DYNO, Kalapa (PM · OCR, eKYC, Credit Scoring)
+Linkedin  | Facebook
+
+--- Page 3 ---
+Những câu hỏi thiết kế dành cho sản phẩm AI
+Mình đã đặt đúng kỳ vọng cho người dùng chưa?
+Làm thế nào chúng ta biết được AI có thể làm gì, không thể làm gì và cách nó sẽ mắc lỗi?
+Thiết kế phản hồi thế nào khi AI sai?
+Xây dựng vòng lặp feedback 
+
+--- Page 4 ---
+Tài liệu buổi học
+PAIR Guidebook (Google)
+PAIR thiên về AI product framing: chọn đúng bài toán AI, 
+định nghĩa success, trust, feedback, graceful failure.
+HAX Toolkit (Microsoft)
+HAX thiên về AI interaction design: guideline, pattern, 
+planning, và test scenario cho những failure của AI
+
+--- Page 5 ---
+Sách nên đọc
+Krug thiên về how: làm sao để interface bớt 
+rối, bớt bắt người dùng dừng lại để suy nghĩ.
+Norman thiên về why: vì sao user không hiểu hệ thống, vì 
+sao feedback, mapping và conceptual model lại quan trọng
+Link sách
+
+--- Page 6 ---
+Why Johnny Can’t Prompt [CHI 2023]
+
+Người dùng viết prompt thường không biết AI làm 
+được gì / không làm được gì. Vì vậy họ cần ví dụ 
+hoặc chỉ dẫn cụ thể để biết nên tiếp cận thế nào.
+Người dùng viết prompt thường khái quát hóa quá 
+mức từ chỉ một vài ví dụ hoặc một vài lỗi nhỏ (và 
+dễ bỏ cuộc sớm).
+Một số người kỳ vọng AI sẽ hiểu chỉ dẫn giống như 
+con người hiểu
+
+
+
+--- Page 7 ---
+Đừng hứa hẹn quá khả năng của AI
+Đây là vấn đề về kỳ vọng, không chỉ là vấn đề về độ chính xác
+“Don’t let your UI write a check 
+that your AI can’t cash. ”
+- Eytan Adar (2018)
+Guidelines for Human-AI Interaction (Microsoft)
+
+--- Page 8 ---
+AI agent personality: warmth & competence
+warmth: cảm giác thân thiện, dễ gần, thiện chí
+competence: cảm giác giỏi, có chuyên môn, tự tin, đúng về năng lực
+Nghiên cứu Stanford  chỉ ra:
+User sẵn sàng tương tác lâu 
+hơn với agent mang lại cảm 
+giác thân thiện, dễ gần
+Ra tín hiệu “không quá giỏi” đôi 
+khi làm trải nghiệm về sau tốt 
+hơn (vì kỳ vọng ban đầu của 
+user thấp → nên về sau họ hài 
+lòng hơn)
+Warmth cao giúp user sẵn sàng tương tác lâu hơn
+
+--- Page 9 ---
+AI agent personality: warmth & competence
+warmth: cảm giác thân thiện, dễ gần, thiện chí
+competence: cảm giác giỏi, có chuyên môn, tự tin, đúng về năng lực
+Competence calibrated 
+giúp trust bền hơn.
+
+--- Page 10 ---
+Guidelines for Human-AI Interaction (Microsoft)
+Bộ 18 nguyên tắc thiết kế AI UX theo 4 chặng của trải nghiệm người dùng
+
+--- Page 11 ---
+Mô tả tính năng AI
+Loại hệ thống
+Phương thức input: Text/
+Voice
+Có trigger rõ ràng?
+Có phân định rõ input?
+Input có nhiều nghĩa 
+Dạng output: 
+Cách tạo response: 
+Generated/Selected
+Microsoft HAX Playbook
+Github 
+→ Playbook tự suy ra các 
+kiểu lỗi, kịch bản cần test
+Playbook giúp các nhóm phát triển sản phẩm AI xác định những 
+kịch bản kiểm thử quan trọng cần thực hiện trước khi ra mắt tính 
+năng AI, dựa trên đặc điểm cụ thể của hệ thống đó.
+
+--- Page 12 ---
+Email Assistant
+AI gợi ý reply khi nhận email mới
+không còn ở 
+case 2 nữa
+
+--- Page 13 ---
+Trust calibration
+Thiết kế AI nhằm hiệu 
+chỉnh trust đúng mức
+Overtrust = user tin cao hơn năng 
+lực thật của AI  
+Ví dụ AI chỉ nên gợi ý, nhưng UI 
+làm user tưởng nó có thể tự quyết
+Nguy hiểm vì user dễ giao việc 
+quá mức, bỏ qua kiểm tra
+Distrust = user tin thấp hơn năng lực 
+thật của AI  
+Ví dụ AI thực ra giúp tốt, nhưng 
+user không dám dùng hoặc bỏ 
+qua hoàn toàn
+Hậu quả là underuse: có giá trị 
+nhưng không được tận dụng
+Source: Designing Human-Centric AI Experiences Applied UX Design for Artificial Intelligence (Akshay Kore)
+
+--- Page 14 ---
+Trust calibration = expectation + explainability + control
+Expectation
+Nói rõ AI làm được gì, làm tốt tới đâu, 
+khi nào dễ sai.
+Explainability
+Giúp user hiểu vì sao AI ra output 
+này và khi nào nên nghi ngờ.
+Control
+Cho user sửa, bỏ qua, undo, 
+preview, hoặc duyệt trước khi 
+commit.
+
+--- Page 15 ---
+Augmentation vs Automation
+Chọn mức độ tự chủ (agency) theo độ chắc chắn và chi phí khi sai.
+Augmentation Automation
+Cần phán đoán, sáng tạo hoặc sở thích cá nhân.
+Ý định và yêu cầu của user còn mơ hồ
+User phải chịu trách nhiệm cho quyết định cuối cùng.
+Sai sót có hậu quả lớn, khó phục hồi
+Workflow kéo dài, nhiều bước, thường xuyên thay đổi.
+Lặp lại, tốn thời gian hoặc ít giá trị sáng tạo.
+Quy trình rõ ràng; input và output dễ xác định.
+Hệ thống có thể thực hiện ổn định với ít giám sát.
+Nếu AI sai, hậu quả thấp, dễ phát hiện hoặc dễ hoàn tác.
+User muốn giao việc vì không đủ thời gian hoặc nguồn lực.
+
+--- Page 16 ---
+Augmentation vs Automation
+Chọn mức độ tự chủ (agency) theo độ chắc chắn và chi phí khi sai.
+Augmentation Automation
+Inaction
+Chưa đủ chắc user muốn gì  
+Sai một lần là rất đắt  
+Giữ quyền quyết định cho người dùng
+Ask
+Có tín hiệu đúng, nhưng còn mơ hồ
+Một câu hỏi ngắn giảm rủi ro lớn
+Hợp với việc quan trọng nhưng chưa rõ ý
+Act
+Đủ chắc user muốn gì
+Làm sai vẫn dễ sửa hoặc undo
+Tự động hóa để tiết kiệm thời gian
+Mixed initiative như một bài toán quyết định giữa act, ask, hay not act dựa trên expected 
+value, chứ không chỉ là sở thích thiết kế.
+Eric Horvitz, Principles of Mixed-Initiative User Interfaces (CHI 1999)
+
+--- Page 17 ---
+Thiết kế độ tự chủ (agency) theo chi phí khi sai (cost-of-error)
+
+--- Page 18 ---
+Thiết kế độ tự chủ (agency) theo chi phí khi sai (cost-of-error)
+
+--- Page 19 ---
+Thiết kế độ tự chủ (agency) theo chi phí khi sai (cost-of-error)
+
+--- Page 20 ---
+Làm rõ AI làm được gì Source: Make clear what the system can do
+Nên dùng khi:
+Người dùng chưa quen với loại AI này.
+Tính năng mới hoặc khó tự khám phá.
+Hệ thống có nhiều khả năng nhưng không dễ nhìn ra ngay.
+Muốn hướng người dùng vào những kiểu đầu vào mà AI xử lý tốt hơn.
+Design patterns:
+Use explanations: Dùng phần giải thích để người dùng 
+hiểu hệ thống có thể làm gì
+Expose system controls: Làm lộ các nút, menu, 
+tùy chọn, hoặc cài đặt để người dùng nhìn vào là 
+hiểu hệ thống có những khả năng nào. 
+Demonstrate possible inputs: Cho ví dụ 
+prompt, ví dụ câu hỏi, hoặc gợi ý đầu vào để 
+người dùng thấy được những dạng tương tác  mà 
+h thng hiểu tt
+
+--- Page 21 ---
+Làm rõ hệ thống làm tốt đến đâu
+Hệ thống cần giúp user hình dung đúng về mức độ chính xác, độ ổn định, và những tình huống AI có thể sai.
+
+--- Page 22 ---
+Làm rõ hệ thống làm tốt đến đâu
+Hệ thống cần giúp user hình dung đúng về mức độ chính xác, độ ổn định, và những tình huống AI có thể sai.
+Chỉ dẫn rõ ràng kèm theo ví dụ
+
+--- Page 23 ---
+Làm rõ hệ thống làm tốt đến đâu Source: Make clear how well the system can do what it can do
+Hệ thống cần giúp user hình dung đúng về mức độ chính xác, độ ổn định, và những tình huống AI có thể sai.
+
+--- Page 24 ---
+Khi AI sai/không chắc chắn Source: Scope services when in doubt
+Hỏi lại trước khi làm Cho phép user tuỳ chỉnh
+
+--- Page 25 ---
+Giải thích vì sao hệ 
+thống làm như vậy
+Người dùng cần hiểu tại sao khi 
+kết quả ảnh hưởng đến quyết 
+định, hoặc có vẻ “khó hiểu”
+Source: Make clear why the 
+system did what it did
+Map user behaviors to system outputs: 
+Chỉ ra hành vi trước đây của người dùng đã 
+ảnh hưởng đến đầu ra như thế nào. 
+Giải thích lý do đưa ra quyết định
+Map system input attributes to system 
+outputs: Chỉ ra những yếu tố đầu vào nào 
+ảnh hưởng mạnh đến kết quả.
+What-if explanations: Cho phép người dùng thử 
+thay đổi đầu vào để xem kết quả sẽ đổi ra sao. 
+
+--- Page 26 ---
+Cho phép user duyệt trước khi đi tiếp
+
+--- Page 27 ---
+Precision / Recall tradeoff
+Chọn cách nào phụ thuộc vào việc báo sai hay bỏ sót gây hại hơn.
+
+
+--- Page 28 ---
+Hiển thị kết quả theo mức độ tự tin
+
+--- Page 29 ---
+Thiết kế khi AI sai
+
+--- Page 30 ---
+Cho phép user chỉnh sửa kết quả Undo / Rollback
+
+--- Page 31 ---
+Màn hình lỗi là cơ hội để hướng dẫn cách dùng đúng Lỗi là cơ hội để xin feedback
+
+--- Page 32 ---
+Trả quyền kiểm soát cho người dùng
+Cung cấp lối thoát rõ ràng khi AI không đủ khả năng
+Chuyển sang người thật Gợi ý bước tiếp theo Có chế độ cho user tự chỉnh
+
+--- Page 33 ---
+Thiết kế Feedback
+
+--- Page 34 ---
+Designing Feedback
+
+--- Page 35 ---
+User Feedback
+Giúp  sản  phẩm  học  về  người  dùng
+Explicit user feedback
+User chủ động và có ý thức cung cấp
+Yêu cầu user thực hiện một hành động cụ thể để 
+chia sẻ suy nghĩ, thường bằng cách tương tác với 
+một thành phần UI được thiết kế riêng
+Implicit user feedback
+Phản hồi ngầm từ user được hệ thống thu 
+thập thông qua hành vi và tương tác tự 
+nhiên của người dùng với sản phẩm, không 
+cần người dùng nhập trực tiếp.
+System Feedback
+Giúp  người  dùng  học  về  sản  phẩm
+Explicit system feedback
+Sản phẩm chủ động và 
+trực tiếp hiển thị cho 
+người dùng để giúp họ 
+điều hướng trải 
+nghiệm
+Giúp minh bạch trạng 
+thái, khả năng, và giới 
+hạn của hệ thống.
+Implicit system feedback
+C ác y ếu tố thiết kế, hành vi giao 
+diện, cách hệ thống đáp l ại mà 
+không cần n ó i b ằ ng l ời .
+L oại f eedback nà y  giúp user dần 
+xây  dựng menta l  mode l  về cách AI  
+hoạt đ ộ ng, từ đ ó  tự điều ch ỉ nh 
+cách tương tác của m ì nh.
+
+--- Page 36 ---
+Explicit User Feedback
+Đánh giá nhanh
+Làm rõ & phản hồi sâu
+Lựa chọn & gợi ý hành động 
+
+--- Page 37 ---
+Thu Explicit & Implicit Feedback cùng lúc
+
+--- Page 38 ---
+Nguyên tắc thu thập phản hồi hiệu quả
+Thu thập feedback đúng cách → AI học nhanh hơn, user cảm thấy được lắng nghe
+Make it easy Tạo động lực cho user Giải thích cách sản phẩm sử dụng feedback để tối ưu như thế nào
+Nguyên lý: động lực + benefit cho user > rào cản
+
+--- Page 39 ---
+Nguyên tắc thiết kế system feedback hiệu quả
+System feedback biến AI từ "blackbox" thành hệ thống có thể học cách sử dụng được.
+Thiết lập quan hệ nhân quả rõ ràng Duy trì ngữ cảnh xuyên nhiều phiên
+Cho người dùng thấy hành động của họ tác động trực tiếp tới chất lượng AI
+
+--- Page 40 ---
+Nguyên tắc thiết kế system feedback hiệu quả
+System feedback biến AI từ "blackbox" thành hệ thống có thể học cách sử dụng được.
+Đưa lên công cụ đúng ngữ cảnh
+Progressive disclosure giảm tải nhận thức, chỉ đưa công cụ khi cần
+
+--- Page 41 ---
+Nguyên tắc thiết kế system feedback hiệu quả
+System feedback biến AI từ "blackbox" thành hệ thống có thể học cách sử dụng được.
+Leo thang dần phần hướng dẫn Độ phức tạp dựa theo trình độ user
+Bắt đầu từ tín hiệu nhẹ, chỉ tăng dần khi user cho thấy dấu hiệu gặp khó
+
+--- Page 42 ---
+System feedback
+System feedback biến AI từ "blackbox" thành hệ thống có thể học cách sử dụng được.
+Explicit cho biết "đang ở đâu, còn bao lâu" 
+Implicit cho cảm giác "có thể can thiệp, cộng tác được"
+
+--- Page 43 ---
+T ổng kết: Nguyên tắc thiết kế AI lấy con người làm trung tâm
+Build trust Thiết kế rất kỹ cho lúc sai. Thiết kế feedback
+Thiết kế nhận feedback hiệu 
+quả từ phía user
+Thiết kế feedback từ hệ 
+thống rõ ràng, minh bạch để 
+user hiểu cách dùng sản 
+phẩm
+Trust tốt không phải trust 
+cao, mà là trust đ ú ng 
+m ứ c.
+Đừng để giao diện h ứ a 
+quá khả n ă ng thật của AI.
+Độ tự chủ thiết kế dựa vào chi 
+phí khi sai.
+Khi AI không chắc: hỏi lại, cho 
+duyệt, hoặc fallback.
+Khi AI sai: cho sửa, undo, và thu 
+feedback để hệ thống học.
+Tài liệu tham khảo:
+Google PAIR Guidebook
+Microsoft HAX Toolkit
+Sách: Don’t Make Me Think
+Sách: The Design of Everyday Things

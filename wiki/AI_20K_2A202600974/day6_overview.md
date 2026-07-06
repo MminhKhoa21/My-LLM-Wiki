@@ -9,7 +9,7 @@ sources: ["raw/AI_20K_2A202600974/6/2-day06-lecture-slides-batch02.pdf"]
 
 # Summary: AI Product Mini-Hackathon Day 06
 
-**Nguồn:** [[2-day06-lecture-slides-batch02]]
+**Nguồn:** 2-day06-lecture-slides-batch02
 
 Tài liệu này tóm tắt chi tiết lịch trình, các mốc kiểm tra (checkpoint) và tiêu chí đánh giá cho sự kiện AI Product Mini-Hackathon trong khuôn khổ Day 06 của khoá học. 
 

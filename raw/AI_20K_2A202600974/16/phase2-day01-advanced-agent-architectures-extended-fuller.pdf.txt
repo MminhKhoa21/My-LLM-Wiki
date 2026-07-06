@@ -1,0 +1,531 @@
+VinUniversity
+Advanced Agent
+Architectures
+AICB-P2T3 · Ngày 16 · Chương 4 — Agent Nâng Cao
+Giảng viên
+VinUniversity · Phase2·Track3·Tuần4
+Hook
+Tại sao Reflexion agent giải quyết được bài toán
+mà ReAct không làm được?
+Hômnaytasẽtrảlờicâuhỏinàybằngbenchmark,patternvà
+democode.
+AICB·Ngày16 1
+Agenda
+1 Khinàosingle-agentthấtbại?
+2 Reflexion: thêmself-evaluationvàoloop
+3 LATS,Voyagervàdecisionmatrix
+4 Kỹthuậtnângcaotrướckhivàolab
+5 Demo+lab+auto-grading
+AICB·Ngày16 2
+Khi nào Single Agent thất
+bại?
+ReAct—mạnhnhưngkhôngbiếtsửalỗi
+ReAct — Reasoning + Acting
+Thought Action
+Observation
+suyluận
+gọitool
+kếtquả
+Lặp đến khi có câu trả lời
+• Xenkẽ Reasoning(suynghĩ)+
+Acting(hànhđộng)
+• Agenttựquyếtđịnh: gọitoolnào,
+khinàodừng
+• ĐãhọcởGĐ1—nềntảngcho
+mọiagentpattern
+Nhắc lại
+ReAct = “Think before you act” —
+mỗibướcagentgiảithíchlýdotrước
+khihànhđộng
+AICB·Ngày16 4
+ReAct thất bại khi nào?
+Thought: tìmX Search(X) Kếtquảsai
+Thought: dùngX Lookup(X) Saitiếp
+Thought: kếtluận TrảlờiSAI Không detect lỗi!
+3 failure modes chính:
+1 Lỗi lan tỏa: Saiởbước1→sai
+hếtchuỗi
+2 Infinite loop: Tooltrảnoise→
+agentlặpmãi
+3 Không backtrack: Đisaiđường
+nhưngkhôngquaylại
+Lưu ý
+Rootcause:ReActkhông có cơ chế
+tự đánh giá. Khi đi sai, không có
+signal nào báo “dừng lại, suy nghĩ
+lại”.
+AICB·Ngày16 5
+Bài học production 2025–2026: đừng nâng cấp agent quá sớm
+• Nhiềubàitoánthựctếchỉcần retrieval + tools + structured output
+• Bắtđầubằng single-agenthoặcworkflowđơngiản,sauđómớithêmcomplexity
+• Chỉchuyểnsangmulti-agentkhicó tool overload,promptquánhiềunhánh
+logic,hoặccần specialist ownership
+Thông điệp cho học viên
+Đừnghọcpatterntheokiểu“càngnhiềuagentcàngtốt”. Hãychọnpatterntheomức
+độ cần thiếtcủataskvàchiphívậnhành.
+AICB·Ngày16 6
+Ví dụ thực tiễn: PR review agent bị lỗi lan tỏa thế nào?
+1 Agentđọcsaimoduletrongdiffngaytừbướcđầu
+2 Gọichecker/searchtrênfilekhôngliênquan
+3 Tổnghợpevidencesainhưngvẫntựtinkếtluận
+4 ReActthườngkhôngcósignalrõđểtựdừngvàsửa
+Vì sao Reflexion giúp hơn?
+Evaluatorcóthểchấm: “kếtluậnchưagroundedvàodiffvàtestlogs”. Reflectorbiến
+lỗiđóthànhchiếnlượcmớicholầnchạytiếptheo.
+AICB·Ngày16 7
+Bằng chứng: ReAct struggle với multi-hop reasoning
+35.1%
+ReActEM
+trênHotpotQA
+Cao
+Failrate
+trênmulti-hop
+0
+Sốlần
+agenttựsửalỗi
+Câu hỏi then chốt
+Nếuthêmchoagentkhảnăng tự đánh giá kếtquảvà rút bài học từsailầm
+thìsao? →Đóchínhlàýtưởngcủa Reflexion.
+AICB·Ngày16 8
+Reflexion — Dạy Agent tự
+phản tỉnh
+Thêmself-evaluationvàoreasoningloop
+Ý tưởng cốt lõi
+Reflexion (Shinn et al. 2023)
+Thêm2thànhphầnvàoReAct: Evaluator(đánhgiákếtquả)và Reflector
+(rút bài học). Agent thử, đánh giá, suy ngẫm, rồi thử lại — giống cách con
+ngườihọctừsailầm.
+Analogy: Nhưsinhviênlàmbàithi. Lần1sai→xemđápán,hiểutạisaosai
+→lần2làmđúng. ReActchỉlàm1lầnrồinộp. Reflexionchophép“xemlại
+bài”vàsửa.
+AICB·Ngày16 10
+Kiến trúc Reflexion — 4 bước
+1. Generate
+Actor
+2. Evaluate
+Evaluator
+3. Reflect
+Reflector
+4. Retry
+Actor
+ReflectionMemory“Saiởđâu? thửgìtiếp?”
+Lặp tới khi đúng hoặc hết attempts
+score=1?
+score=0
+3 vai trò LLM
+Actor: sinhhànhđộng
+Evaluator: chấmđúng/sai
+Reflector: rútbàihọc
+Điểm khác biệt vs ReAct
+Dùngtext feedbackthayvìgradient.
+Critique bằng ngôn ngữ tự nhiên nên dễ
+parse,debugvàbenchmark.
+AICB·Ngày16 11
+Reflexion State — Code-Level
+Python schema
+class ReflexionState(TypedDict):
+messages: list[BaseMessage]
+trajectory: list[str]
+reflection_memory: list[str]
+attempt_count: int
+success: bool
+REFLECT = ``failed because: {error}''
+``lesson: {lesson}''
+``next strategy: {strategy}''
+5 thành phần state:
+1 messages: hộithoạihiệntại
+2 trajectory: lịchsửhànhđộng
+3 reflection_memory: bàihọc
+rútra
+4 attempt_count: sốlầnthử
+5 success: đãđúngchưa?
+Lưu ý
+Dùng sliding window : quá
+ngắn thì quên, quá dài thì tốn
+context.
+AICB·Ngày16 12
+Reflexion trong LangGraph
+act success? END
+reflect
+Yes
+No
+append reflection, reset, attempt++
+max attempts? → END
+Node “reflect”
+1. Lấytrajectory(đãlàmgì?)
+2. GọiReflectorLLM(saiởđâu?)
+3. Appendreflectionvàomemory
+4. Resetmessages,tăngattempt
+T ermination
+Dừng khi:success=True
+Hoặc:attempt≥max(default3)
+Tránhinfiniteloop—cáimàReActgặpphải
+AICB·Ngày16 13
+Evaluator prompt nên được thiết kế thế nào?
+class JudgeResult(BaseModel):
+score: int
+reason: str
+missing_evidence: list[str]
+spurious_claims: list[str]
+• Outputnênlà structured
+thayvìfree-form
+• Scorephảiđikèm reasonvà
+evidence gap
+• Nếuevaluatorquávague,
+reflectionsẽkhông
+actionable
+Best practice
+Dùng Pydantic/JSON schema để
+labdễparse,benchmarkvàauto-
+grade.
+AICB·Ngày16 14
+Reflection memory: ghi gì, bỏ gì?
+• Nên ghi: failurereason,lesson,nextstrategy,evidencetitles
+• Không nên ghi: toànbộtracedàidòngnếukhônggiúplầnthửsau
+• Cóthểdùng sliding windowhoặcmemory compression
+T eaching point
+Memorytốtlàmemory ngắn, cụ thể, hành động được. Khôngphảimemorycàng
+dàicàngtốt.
+AICB·Ngày16 15
+Reflexion failure modes trong production
+1 Evaluator bias: tựchấmquádễhoặcquákhắtkhe
+2 Reflection drift: bàihọcchungchung,khônggiúpđượcattemptsau
+3 Context bloat: reflectionmemorychiếmhếtcontextwindow
+4 Cost blow-up: accuracytăngítnhưngchiphítăngmạnh
+Thông điệp
+Reflexion không miễn phí. Cần đánh giáaccuracy gain so với cost/latency in-
+crease.
+AICB·Ngày16 16
+Reflexion cải thiện đáng kể
+91%
+HumanEval
+(codegen)
+80%
+HotpotQA
+(multi-hopQA)
++20–30%
+Cảithiện
+vsReAct
+Tại sao hiệu quả?
+Reflexiondùng episodic memory—agent“nhớ”bàihọctừcáclầnthửtrước
+trong cùng episode. Giống cách bạn nhớ “lần trước đã thử cách này không
+được,lầnnàythửkhác”.
+AICB·Ngày16 17
+Bức tranh rộng hơn
+LATS,Voyagervàkhinàonêndùngagentphứctạp
+LATS — Khi cần tìm đường tối ưu
+S0
+A1 A2 A3
+B1 B2 B3
+UCT chọnnhánh tốt
+•Highvalue •Lowvalue
+LATS
+MCTS + LLM: mỗi node là một trạng thái suy
+luận;LLMđóngvai policy, valuevà simulation.
+• ChínhxáchơnReflexion(92.7%vs91%)
+• Nhưngtốngấp3–5 ×compute
+• Cầnenvironmentchophép undo
+Lưu ý
+Chỉđángdùngkhitaskcógiátrịcaovàcó
+thểrollback,nhưcodegenhoặcgame.
+AICB·Ngày16 19
+Voyager — Agent tích lũy kỹ năng
+Auto CurriculumCode Generator
+Verify & DebugSkillLibrary(DB)
+task
+verifiedskill
+retrieveskills
+• Agenttựđặtmụctiêu,viếtcode,lưu
+skillđãverified
+• Skillmớixâytrênskillcũ
+(compound learning)
+• Sau3h: 63skillsvs7củaAutoGPT
+Ứng dụng thực tế
+Hợp với code generation, DevOps au-
+tomationvàcácdomaincầntíchlũy“thư
+việnkinhnghiệm”quanhiềuepisode.
+AICB·Ngày16 20
+Khi nào dùng pattern nào?
+Pattern Memory Chi phí Accuracy Khi nào dùng?
+ReAct Không $ Baseline Taskđơngiản,1bước
+Reflexion Episodic $$ +20–30% Multi-step,cầnself-correct
+LATS Tree $$$$$ +∼2% High-stakes,chophépundo
+Voyager Persistent $$$ N/A Open-ended,cầntíchlũy
+Lưu ý
+Nhiềubàitoánthựctế không cần agent: retrieval,templatefill,structuredoutput
+đãđủ. Đọc:“ AI Agents That Matter”(2024)—đừngover-engineer.
+AICB·Ngày16 21
+Case study mới: multi-agent research system
+• Mộtplanneragentchiacâuhỏithànhnhiềusub-questions
+• Cácworkeragentstìmthôngtinsongsong
+• Mộtsynthesizeragenthợpnhấtvàviếtcâutrảlờicuốicùng
+• Patternnàyhợpvới open-ended research,khôngphảimọibusinessworkflow
+Lesson
+Multi-agent có ý nghĩa khi bài toánmở, khó dự đoán trước các bước, và có lợi từ
+parallelexploration.
+AICB·Ngày16 22
+Checklist triển khai an toàn cho agent nâng cao
+1 Có max_attempts
+2 Cóstructuredoutputschoevaluator/tools
+3 Cótraceđểdebugtừsớm
+4 Toolcàngdeterministiccàngtốt
+5 Cóhumanreviewchoactionrủiro
+Production mindset
+Promptchỉlà1phần. Cònlạilàstate,toolquality,tracing,evalvàguardrails.
+AICB·Ngày16 23
+Kỹ thuật nâng cao trước khi
+vào lab
+Cácpatternproductiongiúpagentổnđịnh,dễdebugvàdễđánh
+giáhơn
+T emplate kiến trúc agent production-ready
+User task
++ context Plan / Route Act with tools
+Verify / JudgeReflect / Update memoryFinal answer
+or escalate
+Tracing+evaldatasetGuardrails+humanreview
+retry
+• Đừngdừngởprompt+tool
+loop
+• Thêmjudge, memory, trace
+và guardrails
+• Táchrõphần reasoningvới
+phầnexecution
+• Chuẩnhóastateđểbenchmark
+vàauto-gradedễhơn
+Rule of thumb
+Bắtđầutừpipelineđơngiảnnhất.
+Chỉ thêm lớp mới khi đo được lỗi
+hoặcthấybottleneckrõràng.
+AICB·Ngày16 25
+Evaluator tốt quyết định chất lượng Reflexion
+Evaluator nên chấm 4 thứ
+1 Correctness: câutrảlờicóđúng
+không?
+2 Grounding: cóbámevidence/tool
+outputkhông?
+3 Completeness: đãtrảlờiđủcácphần
+chưa?
+4 Actionability: reflectioncóthểsửa
+đượckhông?
+Anti-pattern
+Nếu evaluator chỉ nói``incorrect''thì re-
+flectorrấtkhósinhbàihọchữuích.
+Ví dụ output có cấu trúc
+{
+"is_correct": false,
+"failure_mode": "missed-hop",
+"evidence_used": ["wiki:person_a"],
+"feedback": "Bạn đã đúng hop 1 nhưng
+chưa verify hop 2.",
+"next_action": "search_second_hop"
+}
+Thiết kế tốt
+Structuredoutputgiúplog,filtertheofail-
+ure mode và chuyển thẳng sang auto-
+grading/reporting.
+AICB·Ngày16 26
+Reflection memory: lưu bài học , không lưu nguyên chat history
+Memory entry nên ngắn và thao tác
+được
+lesson: “Luônverifythựcthểởhop2trước
+khitrảlời”
+trigger:“Câuhỏi2-hopcóentitydễnhầm”
+fix: “Search thêm 1 bước và so khớp tên
+riêng”
+• Mỗientrychỉ1lỗi+1cáchsửa
+• Ưutiênmemorycócấutrúchơn
+free-formdài
+• Nêncó compression/evictionkhi
+episodedài
+1. Verifyhop2entitybeforeanswer
+2. Usetoolresult,notpriorbelief
+3. Ifambiguityremains,askorabstain
+Compressedmemory: “Verifyevidencebeforefinalanswer”
+Điểm dạy học quan trọng
+Memorytốtlàm giảm lặp lỗi,nhưngmem-
+ory dài quá lại làm prompt noisy và tăng
+cost.
+AICB·Ngày16 27
+Plan - Act - Verify tách bạch sẽ ổn định hơn loop “nghĩ rồi làm
+luôn”
+Plan subgoals
+Act / call tool
+Verify observation
+Next step or finish
+badevidence
+• Plan: liệtkê2–4subgoalsquansát
+được
+• Act: chỉgọi1toolphùhợpchomỗi
+subgoal
+• Verify: kiểmtraoutputcóthậtsựgiải
+quyếtsubgoalkhông
+• Tránhđểmodel“nhảycóc”từplan
+sangfinalanswer
+Khi nào rất hữu ích?
+Multi-hopQA,code/debug,dataextraction
+nhiềubước,workflowcóexternalstate.
+AICB·Ngày16 28
+Độ tin cậy của tool quan trọng không kém độ mạnh của model
+5 kỹ thuật tăng reliability
+1 Schemachặtchoinput/outputtool
+2 Retrycóđiềukiệncholỗitạmthời
+3 Idempotentactionchothaotácghidữ
+liệu
+4 Timeout+fallbackkhitooltreo
+5 Risktiering: read-onlyvs
+write/high-impact
+Production rule
+Tool nào ghi dữ liệu, gửi email, thanh toán,
+xóabảnghi... nêncóhumancheckpointhoặc
+approvalgate.
+Prompt/tool contract
+Good: “Nếu search không trả evi-
+dence rõ ràng, không được đoán; trả
+về insufficient.
+Bad: “Cốgắngtrảlờibằngmọigiá.”
+Nhìn dưới góc dạy học
+Sinh viên thường tối ưu prompt trước,
+nhưngbugthựctếhaynằmởtoolschema,
+parser,timeout,retryvàsideeffects.
+AICB·Ngày16 29
+Observability + eval flywheel: cách agent tiến bộ sau mỗi lần
+demo
+T race runs Label failures Build eval set
+Run gradersFix prompt/tool/stateRe-test / redeploy
+• Đừngchỉlogfinalanswer
+• Hãylogcảdecision,toolcalls,
+retryvàfailuremodes
+• Từtracemớisinhradataset
+chấmtựđộngcóích
+Liên hệ với lab
+report.json, runs.jsonlvàbreak-
+down failure modes chính là phiên
+bảnminicủaevalflywheelnày.
+AICB·Ngày16 30
+Khi chưa cần multi-agent
+Thử 4 bước này trước
+1 Routerhoặctoolpolicytốthơn
+2 Plan-then-act+verifier
+3 Reflexion+memory+eval
+4 Guardrails+approvalgateschotoolcó
+sideeffects
+Vì sao?
+Nhiềulỗitưởnglàdo“thiếuagentchuyêngia”
+nhưng thực ra đến từ tool schema kém, thiếu
+evaluatorhoặcthiếutrace.
+• Nếuchỉcó1domaintoolchính,hãy
+giữsingle-agent
+• Nếutasklàworkflowcốđịnh,prompt
+chaininghoặcroutingthườngđủ
+• Nếulỗichínhlàhallucination,hãy
+sửagrounding/evaluatortrước
+Heuristic
+Complexitychỉnêntăngsaukhibạnđã
+cóbenchmarkbaselinevàbiếtrõbottle-
+necknằmởđâu.
+AICB·Ngày16 31
+Khi multi-agent bắt đầu đáng tiền
+Dấu hiệu phù hợp
+•Nhiềudomaintoolrấtkhácnhau
+•Cầnparallel explorationcho
+open-endedresearch
+•Cầntáchvaitròplanner / worker /
+judge / synthesizer
+•Cầntáchread/write agentsđểgiảm
+risk
+Ví dụ phù hợp
+Research system, code review + synthe-
+sis,opsassistantcóapprovalworkflow.
+Quy tắc an toàn
+Càngnhiềuagent,càngcầnhandoffcon-
+tract rõ ràng: input schema, output
+schema, stop condition, ownership của
+state.
+Thông điệp cuối phần lý thuyết
+Phứctạphơnkhôngmặcđịnhtốthơn. Chỉlênmulti-agentkhisingle-agent + tools + eval
++ memoryđãchạmtrầnrõràng.
+AICB·Ngày16 32
+Demo & Thực hành
+XemReflexionhoạtđộngthựctế
+Demo: ReAct vs Reflexion — Side-by-side trên HotpotQA
+• Cùngcâuhỏi2-hop,chạycảhaiagentvớiLangSmithtracing
+• ReAct: saientityởhop1,lỗilantỏa,trảlờisai
+• Reflexion: attempt1sai→Evaluatorchoscore=0→Reflectorsinh
+bàihọc→attempt2đúng
+• Sosánh: trace,accuracy,cost/query
+AICB·Ngày16 34
+Lab 16: Implement Reflexion agent từ scratch với LangGraph
+Mục tiêu: Reflexionagentrepo+benchmarkreport(EMcomparison,
+costanalysis,failurecategorization)
+Thời lượng: 2giờ
+AICB·Ngày16 35
+Lab 16 — Các bước thực hành
+1 Build state machine: nodes=[act,evaluate,reflect,terminate],edgescó
+conditionalrouting
+2 Build Evaluator: LLM-as-Judge,promptyêucầuscore0–1+reason,parse
+outputPydantic
+3 Add reflection memory: mỗientry=(attempt_id,failure_reason,lesson,
+strategy_next)
+4 Benchmark: ChạyReflexionvsReActtrên20câuHotpotQA—đoEM,attempts,
+tokencost
+Deliverable
+GitHubrepo+benchmarkreport: bảngsosánhEM,phântíchcost,phânloạifailure
+modes
+AICB·Ngày16 36
+Lab roadmap 120 phút
+1 30 phút: chạyReActbaselinevàhiểutrace
+2 35 phút: thêmEvaluatordạngstructuredoutput
+3 25 phút: thêmReflector+reflectionmemory
+4 30 phút: benchmark,viếtreport,sinhartifactđểauto-grade
+Instructor tip
+Chohọcviênchạymockmodetrướcđểhiểuformatoutput,sauđómớithayprovider
+thật.
+AICB·Ngày16 37
+Bonus tasks để phân hoá học viên
+• adaptivemaxattempts
+• memorycompression
+• evidence-groundedevaluator
+• mini-LATSbranching(2candidates/step)
+• plan-then-executetrướckhireflect
+Cách chấm
+Khôngchỉchấm“cólàmđượckhông”màchấmthêm thí nghiệm, trade-off và giải
+thích.
+AICB·Ngày16 38
+Deliverable schema để dễ chấm tự động
+• report.json: metrictổnghợp
+• report.md: narrativeanalysis
+• react_runs.jsonl, reflexion_runs.jsonl: tracetheotừngcâuhỏi
+• GiữschemaổnđịnhđểTAchấmobjectivenhanh
+Outcome
+Sinhviênvừahọcpatternagent,vừahọctưduy evaluation-driven engineering.
+AICB·Ngày16 39
+Tổng kết
+T akeaway 1
+Reflexion là nâng cấp hợp lý khi ReAct
+thấtbại: costvừaphải,accuracytăngrõ.
+T akeaway 2
+LATS và Voyager đổi compute lấy opti-
+malityhoặcgenerality;chỉdùngkhitask
+thậtsựcần.
+T akeaway 3
+Cẩnthận“degeneration-of-thought”: re-
+flectionkéodàicóthểlàmoutputtệhơn.
+T akeaway 4
+Xuhướngproduction:structuredoutputs,
+tracingvàevalquantrọnghơnfree-form
+reasoning.
+AICB·Ngày16 40
+Ngày 17: Memory Systems for Agents
+Agentđãbiếtreasoning—nhưngtạisaonóquênhếtsaumỗi
+conversation?
+• HoànthànhLab16: Reflexionagent+benchmark
+• Đọc: Anthropic“BuildingEffectiveAgents”
+AICB·Ngày16 41
+Q&A
+Reflexion có phải luôn tốt hơn ReAct? Khi nào
+nên dùng cách nào?
+AICB·Ngày16 42
+Cảm ơn!
+AICB-P2T3·Ngày16·AdvancedAgentArchitectures
+github.com/vinuni-aicb
+Liênhệ: instructor@vinuni.edu.vn

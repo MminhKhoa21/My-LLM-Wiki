@@ -41,7 +41,7 @@ Tracking "Output" (e.g., lines of code, number of features) leads to wasted effo
   - *Quality*: NPS, retention, churn (safeguard).
 
 ## 4. Parasitic Traps: Dependency Mapping
-AI startups often rely on external services (e.g., [[OpenAI]] API, cloud providers, App Stores) making them vulnerable to unexpected changes like rate limits or policy updates.
+AI startups often rely on external services (e.g., OpenAI API, cloud providers, App Stores) making them vulnerable to unexpected changes like rate limits or policy updates.
 - **Dependency Mapping**: Identify external dependencies that could kill the project.
 - **Plan B**: Every Tier 1 dependency requires a fallback plan deployable within 24 hours.
 - **Critical Path**: Identify the longest sequence of tasks that dictates the launch date. Typically, data pipeline and legal compliance form the critical path for AI startups. Delay here delays the entire project.

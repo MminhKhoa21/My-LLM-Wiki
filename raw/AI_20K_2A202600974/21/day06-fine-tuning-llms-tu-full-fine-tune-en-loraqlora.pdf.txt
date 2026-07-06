@@ -1,0 +1,403 @@
+Fine-tuning LLMs — Từ Full
+Fine-tune đến LoRA/QLoRA
+AICB-P2T3 · Ngày 21 · Chương 5 — Fine-tuning & An Toàn
+NguyễnKhánh Linh
+VinUniversity · Phase 2 · Track3 ·Tuần5
+?
+HÃYSUY NGHĨ...
+“Khi nào nên fine-tune — và khi
+nào prompt engineering đủ rồi?”
+Giữcâu hỏi này trong đầu khihọc bài hôm nay
+Nộidung bài học
+1. Khinào cần Fine-tune?
+2. LoRA— Cơ chế hoạt động
+3. QLoRA— Fine-tune trên GPU nhỏ
+4. Dataset& TrainingPipeline
+5. Demo& Thực hành
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 1 / 21
+01
+Khi nào cần Fine-tune?
+Prompt Engineering đã đủ chưa — hay cần huấn luyện thêm?
+Bốicảnh 2025–2026: FrontierModels đủ tốt?
+PromptEng. RAG Fine-tune
+khôngđủ? vẫnthiếu?
+80%+ tasks
+giải quyết được
+Thêm knowledge
+cập nhật liên tục
+Style, format,
+latency, cost
+■ Frontiermodels (GPT-4o,Claude
+3.5,Gemini 2) đủ tốt chohầuhết
+tasks
+■ Fine-tunechỉ khi thực sự cần:
+formatriêng, domain jargon, giảm
+costat scale
+■ Modeloptions: Qwen2.5-7Bhoặc
+Gemma-2-9B
+Lưu ý: Fine-tune KHÔNG fix
+knowledgegaps—dùngRAGcho
+knowledge. Fine-tune fixstyle và
+format.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 2 / 21
+DecisionTree— Prompt vs RAGvs Fine-tune
+Few-shotprompt
+đạt80%+ accuracy?
+Promptđủ rồi Cầnknowledge
+mới/ cập nhật?
+DùngRAG Volume> 50k/day
+hoặclatency-critical?
+Fine-tune
+ROIpositive
+APIfine-tune
+(OpenAI/Anthropic)
+Có
+Không
+Có
+Không
+Không Có
+Prototype bằng prompting, đo gap. Nếugap > 15% và volume > 50k req/day⇒
+fine-tuningcó ROI dương. Luôn thử prompt→RAGtrước khi tới fine-tune.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 3 / 21
+APIFine-tuning vs Self-hosted LoRA/QLoRA
+Tiêuchí APIFT (OpenAI/Anthropic) Self-host LoRA/QLoRA
+Inframanagement Khôngcần — managed Tựsetup GPU + pipeline
+Control Hạnchế (hyperparam) Toànquyền(rank, layers, data)
+Costper token Cao($$$) Thấpkhi volume lớn
+Latency Mạng+ queue Self-hostvLLM, sub-200ms
+Dataprivacy Gửiqua API provider On-premhoàn toàn
+Timeto production Vàigiờ Vàingày
+Prototype nhanh, volume nhỏ–vừa,
+không có team ML ops, dữ liệu non-
+sensitive.
+Volume >50k/day, dữ liệu nhạy cảm,
+cần custom rank/layers, cần multi-
+tenantadapters.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 4 / 21
+02
+LoRA — Cơ chế hoạt động
+Low-Rank Adaptation: thêm ghi chú vào sách, không sửa sách
+gốc
+Ýtưởng cốt lõi
+LoRA(Hu et al. 2021)
+Freeze toàn bộ base weights (hàng tỷ tham số), chỉ inject thêmlow-rank update
+∆W =B ·A—train phần rất nhỏ tham số.
+Analogy: LoRAgiống thêmstickynotesvàosáchgiáokhoa —khôngsửasách
+gốc,chỉthêmghichúnhỏ. Khideploy,“dán”ghichúvàosách ⇒zeroaddedlatency.
+Inference: merge adapter vào base weights:W = W0 +B ·A — không tốn thêm
+thờigian khichạy.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 5 / 21
+Kiếntrúc LoRA — Frozen Weights+ Adapters
+x
+W0
+(frozen)
+A
+d ×r
+B
+r ×k
+h
++
+Hàng tỷ
+tham số
+Rank r
+(≪d)
+Không update
+khi training
+Chỉ train
+A và B
+Toánhọc:
+h =W0x +B ·A| {z }
+∆W
+·x
+Rankr ≪ min(d,k). Thường
+r ∈ {8, 16, 32, 64}.
+lora_alpha/r = 1 hoặc 2.
+Alpha cao ⇒ adapter ảnh hưởng
+mạnhhơn.
+Targetlayers (2025 best practice):
+ALLattention + MLP layers
+q_proj + v_proj alonethiếu capacity
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 6 / 21
+RankrvsAccuracy — Trade-off
+r=8
+0.1% params
+Nhẹ, tiết kiệm
+r=16
+Standard
+Cân bằng tốt
+r=64
+Near full FT
+Tốn VRAM hơn
+Bắt đầur = 16. Nếu accuracy chưa đủ⇒ tăng lên 32, 64. Nếu VRAM hạn chế⇒
+giảmxuống 8. Variantsmới: DoRA,rsLoRA—cải thiện nhẹ, cùng nguyên lý.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 7 / 21
+03
+QLoRA — Fine-tune trên GPU
+nhỏ
+4-bit quantization + LoRA = huấn luyện 7B trên RTX 3090
+QLoRA— 4-bit NF4 + LoRA Adapters
+BaseModel
+4-bitNF4 (frozen)
+LoRA
+bf16adapters
+PagedAdamW
+CPUoffloadkhi OOM
+MergedModel
+deploy-ready
+forward
+VRAM giảm
+∼3×vs fp16
+QLoRA (Dettmers et al.
+2023) — Quantize base model
+xuống 4-bit NF4, thêm bf16 LoRA
+adapters. Chỉ train adapters.
+■ PagedAdamW:offloadoptimizer
+statessang CPU RAM khi GPU
+hếtbộ nhớ
+■ Doublequantization: quantize cả
+quantizationconstants — tiết kiệm
+thêm
+■ Qualitydrop: chỉ ∼2–5%vs LoRA
+16-bit
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 8 / 21
+Sosánh chi phí: Full FT vs LoRA vs QLoRA
+Phươngpháp VRAM (7B) Params train Thời gian GPU tối thiểu
+FullFine-tune ∼60GB 100% $$$$ A10080GB
+LoRA(fp16) ∼28GB ∼1% $$ A10040GB
+QLoRA(4-bit) ∼10GB ∼1% $$ RTX3090 24GB
+Train QLoRA → merge adapter →
+quantizeGGUF/AWQ →deployvLLM
+/llama.cpp
+1 base model + nhiều LoRA adapters
+→ serve nhiều domains cùng lúc trên
+1GPU
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 9 / 21
+04
+Dataset & Training Pipeline
+Từ chuẩn bị dữ liệu đến chạy training với Unsloth + TRL
+DatasetPreparation — Quality over Quantity
+RawData
+Clean& Dedup
+Format(Alpaca/ChatML)
+Train/ ValSplit
+Remove short outputs,
+filter templates, dedup
+Match model template
+(instruction/input/output)
+Quymô cần thiết:
+■ Style/format: 500–2ksampleschất
+lượngcao
+■ Domainadaptation: 10k+samples
+■ Rule: 500perfect > 10k noisy
+Lưu ý: Data contamination: verify
+testsetKHÔNGoverlaptrainingdata.
+Đâylà“silentkiller”củaevalreliability.
+Syntheticdata: GPT-4Evol-Instructcho 10×expansion.
+Cẩnthận modelcollapse nếulạm dụng.
+Distillation: generate training datatừ strong model
+(GPT-4,Claude) →fine-tuneweaker model. Hiệuquả —
+nhưngkiểmtra ToScủaprovider trước.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 10 / 21
+TrainingPipeline — Full Workflow
+1. Dataset
+Prep& Clean
+2. Config
+PEFT+ QLoRA
+3. Train
+Unsloth/TRL
+4. Eval
+Merge& Deploy
+Alpaca/ChatML
+dedup, balance
+r=16, alpha=32
+target_modules
+lr=2e-4, cosine
+packing=True
+Merge adapter
+GGUF→vLLM
+Model + Optimizer + Activations +
+Gradients.
+QLoRAgiảm ∼60%vs full fp16.
+Flash Attention 2: bắt buộc — 2–4×
+speedup.
+RTX3090 (24GB):7B QLoRA
+A100(40GB):13B QLoRA
+H100(80GB):70B QLoRA
+Grad. checkpoint: −60%VRAM, +20%time
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 11/ 21
+TrainingInfrastructure — VRAM Math& Practical Settings
+VRAMbudget breakdown:
+Vtot =Vmodel +Voptim +Vact +Vgrad
+■ FlashAttention 2: bắt buộc —2–4×
+speedup,giảm activations memory
+đángkể
+■ Gradientcheckpointing: recompute
+activationskhi backward → −60%
+VRAM, +20%time
+■ QLoRA +FlashAttn 2 +grad
+checkpoint ⇒ ∼10GB cho7B model
+Phân tích token distribution của
+dataset → set max_seq_length =
+p95. Tránhpadding lãngphí.
+batcheff =batch ×grad_accum
+Khi VRAM hạn chế: batch=1 ,
+grad_accum=4--8
+Mụctiêu: batcheff ∈ [16, 64]
+Lưuý: OOMdebugging: giảm max_seq_lengthtrước,sauđóbậtgradcheckpointing,
+cuốicùng giảm rank. Đừng chỉ giảm batch size —ảnh hưởng convergence.NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 12 / 21
+FlashAttention— IO-AwareExact Attention
+Daoet al. 2022,FA2(2023), FA3(2024)
+Vanillaattentionđọc/ghimatrận N ×NquaHBM(slow) ⇒memory-bound. FlashAt-
+tention dùngtiling + recomputation: tải block nhỏ vào SRAM (on-chip,∼20 MB
+nhưng ∼10×nhanh hơn HBM), tính softmax theo từng block, tránh materialize ma
+trậnattention N ×N.
+Kết quả: exact attention(không xấp xỉ) — nhưng2–4× nhanh hơnvà memory
+O(N)thayvì O(N2).
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 13 / 21
+FlashAttention— Memory Hierarchy & Tiling
+SRAM(on-chip)
+∼20MB ·∼19TB/s
+HBM(GPU memory)
+40–80GB ·∼2TB/s
+DRAM(CPU RAM)
+>100GB ·∼50GB/s
+∼10×nhanh
+chậmhơn
+chậmnhất
+Tiling: Q, K, Vchia khối nhỏ
+Qtile Ktile Vtile Otile
+Vìsao nhanh hơn?
+■ Vanilla: ghi matrậnN ×NvàoHBM
+→memory-bound
+■ FA:streaming tiles qua SRAM→
+compute-bound
+■ Backward: recomputeattentionthay
+vìstore →tiếtkiệm activation
+memory
+FA1(2022): tiling cơ bản
+FA2(2023): betterparallelism, +2×
+speed
+FA3(2024): HopperTMA,FP8,cho
+H100
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 14 / 21
+FlashAttention— Khi nào dùng & Cáchbật
+Hardwarerequirements:
+■ Ampere+: A100, RTX30xx,RTX
+40xx(FA2OK)
+■ Hopper: H100, H200 (FA3mới nhất,
+FP8)
+■ Khônghỗ trợ: V100, T4 (chỉTuring)
+Sequencelength sweet spot:
+■ Short( <512): speedup nhỏ, vẫnnên
+bật
+■ Medium(1k–4k): 2–3×speedup
+■ Long(8k+): 4×+speedup,memory
+tiếtkiệm rất lớn
+Cáchbật trong code:
+from_pretrained(
+...,
+attn_implementation=
+"flash_attention_2"
+)
+TựđộngbậtFA2ngaykhiloadmodel
+4-bit. Không cần config.
+Install: pip install flash-attn --no-build-isolation
+(cầnCUDA toolkit + nvcc, build∼10phút)
+Lưu ý: Common pitfall: nếu thấy ”flash_attn not installed” warning → Hug-
+gingFace fallback về SDPA (chậm hơn 2×). Luôn verify FA đã active bằng
+model.config._attn_implementation.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 15 / 21
+Unsloth+ TRL SFTTrainer— ProductionSetup
+from unsloth import FastLanguageModel
+from trl import SFTTrainer
+model, tok = FastLanguageModel.from_pretrained(
+"unsloth/Qwen2.5-7B-bnb-4bit",
+max_seq_length=2048, load_in_4bit=True)
+model = FastLanguageModel.get_peft_model(
+model, r=16, lora_alpha=32,
+target_modules=[ "q_proj","k_proj",
+"v_proj","o_proj","gate_proj",
+"up_proj","down_proj"])
+trainer = SFTTrainer(
+model=model, train_dataset=dataset,
+dataset_text_field= "text",
+packing=True) # 2x throughput
+trainer.train()
+Keysettings:
+■ Unsloth: custom CUDA kernels
+—2 ×faster,60% less VRAM
+■ packing: gộp samples vào1
+sequence— 2×throughput
+■ LR: 2e-4 → 5e-5,cosine schedule
+■ Warmup: 5–10% totalsteps
+Lưu ý:Overfitting: eval loss tăng
++ train loss giảm⇒ dừng train-
+ing,giảm epochs hoặc tăng data.
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 16 / 21
+05
+Demo & Thực hành
+Xem fine-tuning hoạt động thực tế trên domain Việt Nam
+Fine-tunetrên VietnameseDomain Dataset
+1. Dataset: 1k VietnameseQApairs (Alpaca format). Training: 3 epochs,∼25
+minon A100
+2. Before: base model trảlời generic. After: dùng domain terminology chính xác
+3. LoRAadapter swap: loadkhác adapters cho khác domains — multi-tenant
+serving
+4. GGUFdemo: merge adapter→convert →runllama.cpp — deployment ready
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 17 / 21
+Lab#21
+Mụctiêu: Fine-tuneQwen2.5-7BvớiLoRA/QLoRAtrêncustomVietnamesedataset
+(dùngUnsloth + TRL)
+Deliverable: LoRAadaptercheckpoint+evaluationreport: perplexitydelta,5qual-
+itativebefore/after examples, training cost — sosánh rankr = 8 vsr = 64
+Thờigian: 2giờ
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 18 / 21
+Lab21 — Các bước thực hànhchi tiết
+1. Dataprep (15p): chuẩn bị 100–500examples Alpaca format từ domain. Clean,
+tokenize,verify max_seq_length (p95),split 90/10 train/eval
+2. ConfigurePEFT (10p): r=16 , alpha=32 ,target q_proj+v_proj. Setup QLoRA 4-bit
+vớiUnsloth FastLanguageModel
+3. Trainbaseline (40p): TRLSFTTrainer,3 epochs, packing=True ,cosine LR,
+warmup10%. Monitor losscurve — detect overfitting (eval loss rising)
+4. Rankexperiment (30p): train 2 thêmadapters vớir=8 và r=64 trêncùng dataset.
+Sosánh: training time,VRAM usage, eval perplexity,qualitativeoutput
+5. Evaluate(15p): perplexity trên evalset,generate 20 test prompts, qualitatively
+comparefine-tuned vs base model
+GitHubrepo + evaluation report:
+(1) LoRA adapter checkpoints (3 ranks) (2) Bảng perplexity delta + training cost (3)
+5qualitative before/after examples (4) Kết luận vềrank selection trade-off
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 19 / 21
+Lab21 — Rank Experiment Worksheet
+Cấuhình Traintime PeakVRAM Eval PPL Qualitative
+Base(no FT) — — ? generic
+LoRAr = 8 ? ? ? ?
+LoRAr = 16 ? ? ? ?
+LoRAr = 64 ? ? ? ?
+Rank nào cho ROI tốt nhất trên dataset của bạn? Khi nào tăng rank không còn cải
+thiệnperplexity (diminishingreturns)? Khi nào nênchọnr = 8 thayvì r = 16?
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 20 / 21
+Tổngkết — Key Takeaways
+Nhữngý chính cần nhớtrướckhi sang bài tiếp theo
+1 QLoRAdemocratize fine-tuning — consumer GPU(RTX3090) đủ cho 7B–8B models
+2 Datasetquality là yếu tố quantrọng nhất — 500 perfect >10k noisy
+3 Sequencepacking là free 2×speedup— luôn bậtpacking=True
+4 LoRAadapters are composable — servenhiều adapters cùng lúc trên 1base model
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 20 / 21
+Tiếptheo & Bài tập
+Ngày22: DPO, ORPO& Alignment
+“SFT dạy format — DPO/ORPO dạy
+alignment (helpful + safe). RLHF tốn
+kém— DPO có thể thay thế?”
+■ Hoànthành Lab 21: LoRA
+fine-tune+ benchmark report
+■ Đọc: Rafailov et al. “Direct
+PreferenceOptimization” (2023)
+NguyễnKhánh Linh (VinUni) AICB· Ngày 21 Tuần5 21 / 21
+Hỏi& Đáp
+Khi nào thì fine-tune thực sự cần thiết? Bạn
+có use case cụ thể nào muốn thảo luận?
+Cảmơn!
+AICB-P2T3 · Ngày 21 · Fine-tuning LLMs
+— Từ Full Fine-tune đến LoRA/QLoRA
+github.com/vinuni-aicb
+Liên hệ: instructor@vinuni.edu.vn

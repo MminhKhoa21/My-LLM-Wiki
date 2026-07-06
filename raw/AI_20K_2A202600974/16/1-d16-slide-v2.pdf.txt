@@ -1,0 +1,94 @@
+AI Product Strategy
+AI IN ACTION - Day 16 - Track 1
+Instructor: Mai Anh Nguyen (Blue)
+Instructor
+Mai Anh Nguyen (Blue)
+Generalist Product Builder
+
+2026                FPT Long Châu (PM · Healthcare Product)
+2025                Thongtincuuho.org (Co-founder)
+2025                FPT Software AI Center (PM · AI Agent)
+2021 - 2025    Xantus (PM · On-chain Analytics, AI Agent)
+2016 - 2021    DYNO, Kalapa (PM · OCR, eKYC, Credit Scoring)
+Linkedin  | Facebook
+AI đang thay đổi thị 
+trường thế nào?
+Cạnh tranh thấp
+Rủi ro thấp hơn
+
+Chiến lược:
+Tập trung tạo ra nhu 
+cầu mới thông qua đổi 
+mới
+Tạo ra không gian thị 
+trường mới bằng sản 
+phẩm/dịch vụ khác biệt
+Blue Ocean Red Ocean
+Cạnh tranh cao
+Rủi ro cao hơn
+
+Chiến lược: 
+Cạnh tranh trong ranh 
+giới của các phân khúc 
+thị trường hiện có
+Cạnh tranh bằng cách 
+cải thiện sản phẩm/dịch 
+vụ hiện có, tập trung vào 
+việc đánh bại đối thủ
+Blue Ocean Strategy
+Chegg case study: từ “trả tiền để có lời giải” sang “hỏi AI miễn phí và nhận câu trả lời tức thì”
+Cổ phiếu Figma -7 .58% sau khi Claude Design ra mắt
+Source: Building AI products competitors can't match
+
+
+Switching Costs
+Khách hàng dịch chuyển khi giá trị nhận được x10
+
+Lab Assignment 1 (Cá nhân + Thảo luận nhóm)
+Tìm và phân tích 1 sản ph ẩ m b ị  ảnh h ưở ng n ặ ng  sau khi thị trường thay đổi bởi AI 
+(Sản phẩm/mô hình mới disrupt thị trường/ hoặc Big T ech AI ra mắt tính năng tương tự)
+Vì sao bị ảnh hưởng? Điều gì đã thay đổi vĩnh viễn?
+Thu thập thông tin
+Chọn 01 sản phẩm / công ty bị ảnh hưởng: 
+Case trước AI 
+Sản phẩm là gì, user là ai, họ trả tiền cho cái gì, sản 
+phẩm thắng nhờ gì.
+AI shock: Mốc thời gian AI / Big Tech / sản phẩm 
+mới disrupt xuất hiện.
+Tác động quan sát được: User, doanh thu, cổ phiếu, 
+ARR, adoption, pricing, traffic, community activity.
+Phân tích
+Trước AI, sản phẩm thắng nhờ giả định gì? JTBD của 
+user là gì?
+Sau AI, kỳ vọng user đổi ở đâu? JTBD có đổi thật không, 
+hay chỉ đổi cách hoàn thành job?
+Cục diện mới của thị trường: Ai đang thay thế? Ai phản 
+ứng tốt hơn? Phân khúc bị xóa sổ hay chỉ bị tái cấu trúc?
+Ai đang thắng trong phân khúc đó và thắng nhờ gì?
+JTBD (Job-to-be-done) Framework
+Job Story (JTBD)
+
+
+Lab Assignment 2 (Cá nhân)
+Phân tích chính dự án nhóm đang làm qua lăng kính JTBD
+File làm việc Deliverables
+Điền worksheet: worksheet/02-jtbd-
+project-analysis.md
+Dùng JTBD playbook để tra 
+framework và ví dụ
+Ưu tiên đọc: Chapter 2 & 3
+Project Snapshot 
+Tên dự án, nhóm, thị trường đang nhắm, vấn đề nhóm đang nghĩ mình 
+giải quyết.
+Market Context: Bối cảnh thị trường ngắn: ai đang gặp vấn đề, trong 
+hoàn cảnh nào, vì sao bây giờ đáng giải.
+Job Executor + Core JTBD + Job Stories
+JTBD Lite Map
+Pain Points: Ở bước nào user đang chậm, sai, tốn công, thiếu tin cậy, 
+thiếu ngữ cảnh.
+AI Leverage Point: AI nên giúp ở bước nào, bằng cách nào, và vì sao 
+đúng ở đó chứ không phải chỗ khác.
+Product Hypothesis: Nếu giúp ai làm job nào tốt hơn ở bước đau 
+nhất, thì user sẽ đổi từ giải pháp hiện tại sang gì.
+Assumptions to Validate: Những giả định quan trọng nhất cần kiểm 
+tra bằng interview / prototype / experiment.

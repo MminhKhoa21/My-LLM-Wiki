@@ -1,0 +1,945 @@
+AI IN ACTION - Day 21 - Track 1
+AI Evaluation
+Vai trò của AI Product Manager trong AI Evals
+Instructor: Mai Anh Nguyen (Blue)
+Instructor
+Mai Anh Nguyen (Blue)
+Generalist Product Builder
+•2026 FPT Long Châu (PM · Healthcare Product)
+•2025 Thongtincuuho.org (Co-founder)
+•2025 FPT Software AI Center (PM · AI Agent)
+•2021 - 2025 Xantus (PM · On-chain Analytics, AI Agent)
+•2016 - 2021 DYNO, Kalapa (PM · OCR, eKYC, Credit Scoring)
+Linkedin|Facebook
+AI IN ACTION - Day 21 - Track 1
+Agenda
+•Vai trò của AI Product Manager trong AI Evals
+•Vòng đời AI eval qua từng giai đoạn phát triển sản phẩm
+•Từ đánh giá đến quyết định rollout và học từ production
+AI Evals cho Product Manager
+Định nghĩa, đo lường và cải thiện chất lượng sản phẩm AI
+BỐI CẢNH
+Tính năng AI của bạn vừa được mở rộng cho nhiều
+người dùng hơn
+Bạn đã xây một tính năng AI hoạt động khá tốt trong những buổi demo đầu tiên. Một nhóm nhỏ
+khách hàng phản hồi tích cực, các bên liên quan nội bộ đều đồng thuận, và bạn quyết định mở
+tính năng đó cho một nhóm người dùng rộng hơn.
+Ðây là điều thường xảy ra tiếp theo với hầu hết các team:
+Khi user đông hơn: có người rất thích, nhưng cũng có người phàn nàn hoặc không quay lại nữa.
+Khi thay đổi logic sản phẩm hoặc đổi model: bạn không biết liệu AI có hoạt động tốt và nhất quán với
+logic mới hay không.
+Vai trò của PM đã thay đổi
+From Usage Flows to Quality Distributions
+Traditional Product
+Deterministic user flows
+Visit
+Sign Up
+Activate
+Convert
+Conversion Rate
+→
+AI Product
+Wide outcome distributions
+Poor Good Great
+Output Quality
+Agent Success Rate
+Thế giới deterministic
+Thế giới probabilistic
+2 lớp của AI Evals
+👤
+Product Team
+Focus here
+Application Evals
+Product quality in real user contexts
+Accuracy Helpfulness Tone / Style Safety Latency
+Format Compliance User Intent Match Cost Efficiency
+🏢
+Model
+Provider
+Anthropic ·
+OpenAI · Google
+Model Evals
+Standardized benchmarks for base capabilities
+Reasoning Coding Math Instruction Following Safety
+AI Evals Lifecycle
+AI Evals Lifecycle
+Từ quan sát thủ công đến kiểm soát chất lượng liên tục
+0
+Chuẩn bị
+Product promise
+Unit of evaluation
+Instrument agent
+Scenarios ban đầu
+→
+1
+Vibe Check
+Chạy case nhỏ
+Ðọc output + trace
+tay
+Tìm failure modes
+Ðịnh nghĩa "đủ tốt"
+→
+2
+Offline Evals
+Formalize rubric
+Xây reference
+dataset
+So sánh candidates
+Ship / Limited / Hold
+→
+3
+Production
+Monitoring
+Theo dõi quality +
+cost
+Sample traces →
+review
+Phát hiện drift
+Ðiều tra incidents →
+↺
+Continuous
+Improvement
+Failures → dataset
+Cập nhật rubric
+Regression test
+Lặp lại lifecycle
+↺"Evals không phải một lần kiểm thử trước release — đó là vòng lặp biến quan sát thực tế thành quyết định sản phẩm có thể kiểm chứng."
+Evals Roadmap tại Anthropic
+→ anthropic.com/engineering/demystifying-evals-for-ai-agents
+Ba bộ chấm điểm bổ sung nhau, không thay thế
+Mỗi bộ chấm chỉ đánh giá được một phần của bản ghi hội thoại hoặc kết quả cuối
+Code-based grader
+Kiểm tra điều xác minh được
+CÁCH LÀM
+Khớp chuỗi (chính xác, biểu thức, gần
+đúng)
+Kiểm thử nhị phân
+Phân tích tĩnh
+Xác minh kết quả, lời gọi công cụ và tham
+số
+✓ ÐIỂM MẠNH
+Nhanh, rẻ, khách quan, tái lập được, dễ gỡ
+lỗi
+✕  ÐIỂM YẾU
+Cứng nhắc trước đầu ra hợp lệ nhưng khác
+định dạng; thiếu sắc thái, kém với tác vụ
+cảm tính
++
+Model-based grader
+Ðánh giá chất lượng ngữ nghĩa
+CÁCH LÀM
+Chấm theo thang tiêu chí
+Khẳng định bằng ngôn ngữ tự nhiên
+So sánh từng cặp
+Ðối chiếu mẫu chuẩn
+Ðồng thuận nhiều giám khảo
+✓ ÐIỂM MẠNH
+Linh hoạt, mở rộng được, bắt được sắc thái,
+xử lý câu hỏi mở và đầu ra tự do
+✕  ÐIỂM YẾU
+Không ổn định, đắt hơn code, cần hiệu
+chỉnh với nhãn của con người để chính xác
++
+Human grader
+Ðịnh nghĩa & kiểm chứng ranh giới
+CÁCH LÀM
+Chuyên gia lĩnh vực rà soát
+Phán đoán đám đông
+Kiểm tra mẫu ngẫu nhiên
+Thử nghiệm A/B
+Ðo độ đồng thuận giữa người chấm
+✓ ÐIỂM MẠNH
+Chuẩn vàng, khớp phán đoán của người
+dùng chuyên môn, dùng để hiệu chỉnh bộ
+chấm bằng mô hình
+✕  ÐIỂM YẾU
+Ðắt, chậm, thường cần huy động chuyên gia
+ở quy mô lớn
+Ðừng chọn một bộ chấm cho cả agent. Câu hỏi không phải "bộ chấm nào tốt nhất?" mà là "tiêu chí này cần loại bằng chứng nào?" — chọn bộ chấm
+cho từng tiêu chí.
+Ba giai đoạn
+STAGE 01
+Vibe Check
+Manual review để hình thành intuition trước
+khi đóng cứng spec
+Prototype phase
+STAGE 02
+Offline Eval
+So sánh, phát hiện regression, đặt quality
+gate trước rollout
+Build phase
+STAGE 03
+Online Monitoring
+Theo dõi sau launch, bắt drift và failure
+mode mới
+Production phase
+Bước 1: Vibe Check Làm trước PRD
+Mục tiêu: khám phá behavior, chưa phải chấm điểm
+chính thức
+Pass tốt nhất → thành golden outputs
+Fail lặp lại → đưa vào PRD / quality requirements
+1
+Generate inputs
+10–30 đầu vào kiểm thử bao
+phủ các persona và use case
+khác nhau
+Persona A Persona B
+Edge cases
+phải có cả happy path + edge
+cases
+→
+2
+Run prototype
+Chạy từng đầu vào qua
+prototype — quan sát model
+vận hành thực tế
+input → agent → output
+SEEDS YOUR PRD
+Failure patterns → Quality
+requirements
+Những gì model không làm được định
+hình chính xác những gì PRD cần đặc
+tả
+Demo before Memo
+→
+3
+Label outputs
+Gắn nhãn từng đầu ra, ghi chú
+tại sao pass hoặc fail
+✓ Ship ~ Chỉnh ✕  Fail
+SEEDS GOLDEN OUTPUTS
+Pass outputs → Reference
+dataset
+Những output tốt nhất từ vibe check
+trở thành golden outputs
+For few-shot and evals
+→
+4
+Note patterns
+Model làm được gì, không làm
+được gì, hành vi bất ngờ nào
+xuất hiện?
+What works What fails
+Surprises
+ⓘVibe check diễn ra trước khi viết PRD — đây là những thứ bạn chỉ phát hiện được khi quan sát model vận hành thực tế, không phải từ tài liệu yêu
+cầu.
+Output bước 1: Golden Outputs Reference dataset = câu thật + nhãn đúng kỳ vọng
+Dùng cho few-shot + evals
+Không chỉ lấy case rõ, phải có case mơ hồ
+Case mơ hồ giúp test khả năng hỏi lại
+Dataset này sẽ tiếp tục lớn dần sau production
+Bao gồm edge cases
+Câu mơ hồ · Thiếu thông tin · Nhiều ý trong một câu · Không nhớ mã đơn
+"Áo không giống hình lắm, giờ đổi hay trả được ta" "Mình không còn mã đơn nhưng vẫn muốn đổi" "Mình đặt 2 đơn, 1 đơn muốn trả, 1 đơn muốn đổi size"
+"Cái đơn hôm trước đó, check giúp mình với"
+# Câu người dùng Ý định Cảm xúc Mức độ ưu tiên
+1 Mình nhận áo rồi mà chật quá, đổi size sao vậy? Ðổi hàng Khó chịu Trung bình
+2 Shop giao nhầm màu cho mình rồi Ðổi hàng Bực bội Cao
+3 App báo giao rồi mà mình chưa thấy đơn đâu Tra cứu đơn Tức giận Cao
+4 Mình muốn trả đôi giày hôm trước mà không còn mã đơn nữa Trả hàng Lo lắng Trung bình
+5 Cái đơn hôm bữa ấy, thôi giờ mình không lấy nữa được không Cần làm rõ Trung tính Trung bình
+Không ép model đoán khi chưa rõ
+Bước 2: "Offline Evals" (Chấm datasets trước release)
+01
+Trigger thay đổi
+Prompt mới · model upgrade · tool integration
+▼
+02
+Chạy trên reference dataset
+Tự động · không cần manual review
+▼
+03
+So với baseline
+Version hiện tại là chuẩn so sánh
+▼
+✓
+Deploy
+Quality ok · approve
+↺
+Fix & iterate
+Regression · điều tra rồi chạy lại
+↺Sau khi fix, quay lại bước 01 và chạy lại toàn bộ eval trên reference
+dataset
+BENCHMARK CỐ ÐỊNH · MỌI RELEASE DÙNG CHUNG
+Reference dataset
+50 historical tickets, labels đã verify
+Categorization accuracy eval
+Sentiment precision eval
+Escalation recall eval
+Critical — không được phép regression
+CẬP NHẬT KHI
+Phát hiện failure mode mới từ production
+Scope sản phẩm thay đổi
+Evals quá dễ pass
+"Nếu không thể ship model mới ngay trong ngày ra mắt —
+bottleneck là evaluation, không phải model."
+Ðánh giá trước khi launch
+⇄ So prompt A vs B
+Test 2 phiên bản prompt trên cùng
+dataset — chọn cái tốt hơn bằng số liệu
+Ví dụ: prompt mới có cải thiện accuracy
+trên edge cases không?
+⊞ So model cũ vs mới
+Model provider ra version mới — chạy
+eval trước khi migrate
+Ví dụ: GPT-4o vs GPT-4o-mini trên bộ
+ticket CSKH
+↗Kiểm tra tool integration
+Tool mới được thêm vào — đảm bảo
+agent gọi đúng tool, đúng lúc
+Ví dụ: tool tra cứu đơn hàng có được gọi
+với đúng mã đơn không?
+⚠Phát hiện regression
+Cases từng pass nay fail — bắt được
+trước khi user thấy
+Ví dụ: thay đổi prompt mới làm sarcasm
+detection tệ hơn không?
+◑ Xem improvement theo slice
+Tổng score tốt hơn nhưng một nhóm
+user cụ thể tệ hơn?
+Ví dụ: tiếng Việt tốt hơn nhưng tiếng Anh
+kém đi — cần biết
+🔒 Quality gate trước rollout
+Ðặt ngưỡng tối thiểu — không ship nếu
+chưa qua gate
+Ví dụ: accuracy ≥75% và regression = 0
+mới được phép ship
+Dimension Baseline Candidate (mới) Delta
+Accuracy
+% output đúng rubric 71% 78% ↑ +7%
+Latency
+P50 response time 1.2s 1.8s ↓ +0.6s
+Edge case pass
+rate
+% edge cases handled
+đúng
+44% 61% ↑ +17%
+Regression count
+Cases từng pass, nay
+fail — 3 ⚠ Review
+Quality gate
+Pass threshold ≥75% 71% — fail ✓ 78% — pass Gate
+cleared
+Verdict: Ship
+Accuracy +7%, edge cases +17%, gate
+passed — nhưng cần review 3
+regressions
+Cần đọc thêm
+3 regression traces — hiểu tại sao fail
+trước khi ship
+Bước 3: Online evaluation & monitoring
+Sau launch, user tạo ra case mới mà bạn chưa nghĩ đến
+Signals mới từ production
+Những gì offline test set không thể bao phủ hết
+Intent mới
+User dùng AI theo cách team chưa nghĩ tới khi thiết kế
+Ngôn ngữ và data format lạ
+Tiếng địa phương, ký tự đặc biệt, cấu trúc input không
+chuẩn
+Behavior ngoài use case ban đầu
+User kéo AI về những tình huống không nằm trong PRD
+Tool và data source thay đổi
+API 3rd party update, schema thay đổi, data pipeline drift
+User expectation thay đổi
+Standard "tốt" theo user thay đổi theo thời gian dùng thực
+tế
+Q1
+Product còn đạt quality bar
+ngay lúc này không?
+Agent Success Rate trong production
+có đang dưới ngưỡng không?
+Real-time check
+Q2
+Offline và online score có
+đang diverge không?
+Nếu offline tốt mà online xấu —
+dataset chưa phản ánh thực tế.
+Distribution gap
+Q3
+Failure mode nào mới xuất
+hiện?
+Unknown unknowns — thứ offline eval
+không thấy được cho đến khi có real
+users.
+New blind spots
+Q4
+User feedback có mâu thuẫn
+với eval không?
+Nếu thumbs-down tăng mà eval score
+ổn — rubric đang đo sai thứ.
+Signal conflict
+AI-native PRDs
+Traditional PRD Thêm vào cho AI
+AI-native PRD bổ sung
+Tại sao cần thêm?
+Goals & success metrics
+DAU · Conversion · Retention +
+Evaluation Rubric
+Accuracy %, latency, pass/fail rubric
+AI không có conversion rate — cần rubric riêng để đo
+chất lượng output
+User stories / use cases
+Luồng người dùng · Acceptance criteria +
+Golden Outputs
+Input → expected output cụ thể, test được ngay
+"As a user, I want" không test được — cần output mẫu
+thật sự để eval
+Functional requirements
+Feature list · Business logic +
+Prompt Logic & Tools
+System instructions, API tools, failure rules
+AI cần biết cách xử lý khi gặp edge case — không chỉ
+"tính năng là gì"
+Open questions
+Câu hỏi chưa rõ +
+Dataset Strategy
+Unknowns → datasets cần thu thập để eval
+AI cần data để eval — "chưa rõ" phải thành "cần thu
+thập dataset này"
+(không có tương đương) ⭐
+MỚI HOÀN TOÀN
+Edge Case Handling
+Khi model fail — thất bại thế nào là chấp nhận được?
+AI có thể fail theo nhiều cách — PRD phải định nghĩa
+"fail gracefully" nghĩa là gì
+"PRD định nghĩa quality bar — không chỉ danh sách tính năng."
+Ðịnh nghĩa tiêu chí chất lượng
+Thu hẹp scope đánh giá
+Unit of AI Work: đầu việc AI cụ thể mà ta muốn giao, đo và chịu trách nhiệm cho nó.
+Vì sao phải thu hẹp? Vì "Đánh giá AI hữu ích" là một scope quá lớn, khó đánh giá
+✕Quá rộng — không eval được Không hành động được
+"AI hữu ích"
+Hữu ích theo cách nào? Với ai? Trong context nào?
+"Agent trả lời tốt"
+Tốt theo tiêu chí nào? Không thể so sánh hay đo được.
+"Trải nghiệm thông minh"
+Không có output quan sát được, không có failure rõ ràng.
+"Ðánh giá AI assistant"
+Một assistant có thể làm hàng chục loại task — mỗi cái cần rubric khác
+nhau.
+→
+✓Ðủ hẹp — eval được Có thể viết rubric ngay
+"Trả lời câu hỏi về AI evals từ course corpus, phân biệt rõ nội
+dung bài giảng với research bên ngoài"
+User goal rõ · Input rõ · Output quan sát được · Failure xác định được
+"Phân loại ticket support vào đúng queue và escalation
+level"
+Input: ticket text · Output: queue + level · Failure: wrong queue, missed
+escalation
+"Tạo itinerary khả thi theo ngân sách và thời gian di chuyển
+đã cho"
+Constraints rõ · End state quan sát được · Failure cost xác định
+AI FlywheelVòng lặp cải thiện liên tục sau launch
+01
+User Monitoring &
+Feedback
+Ghi log tín hiệu từ
+production — thumbs,
+download, lập prompt,
+dấu hiệu bực bội
+Live · Production
+→
+02
+Trace Analysis
+Ðọc trace theo từng
+user intent — tìm error
+mode quan trọng nhất
+cần ưu tiên sửa
+Nguồn sự thật
+→
+03
+Reference
+Datasets
+Tạo golden outputs và
+edge cases từ trace thật
+— bộ dữ liệu để đánh
+giá
+Golden outputs
+→
+04
+Offline Evals
+Unit test cho agent —
+thử thay đổi prompt &
+kiến trúc nhanh và an
+toàn trước khi ship
+Offline · Dev
+→
+NSM
+Agent Success Rate
+Composite metric: feedback + hành vi
+user + phân tích ngữ nghĩa hội thoại
+North star
+◄ ↺Feedback loop — Agent Success Rate định hướng vòng monitoring tiếp theo ⮣
+TÍN HIỆU THU THẬP
+● Thumbs up / down từ
+user
+● Download, accept,
+copy action
+● Prompt lặp lại, dấu hiệu
+bực bội
+CÁCH ÐỌC TRACE
+● Phân loại theo user
+intent
+● Gắn mã error mode
+quan trọng
+● Ưu tiên sửa theo Agent
+Success Rate
+NỘI DUNG DATASET
+● Golden outputs mẫu
+chuẩn
+● Edge cases từ trace
+thật
+● Mapping theo từng
+user intent
+KHÔNG CÓ EVALS →
+● Không test được
+prompt thay đổi
+● Không biết kiến trúc có
+regression
+● Ship mà không có
+safety net
+COMPOSITE METRIC
+● Feedback từ user
+● Hành vi sau output
+(accept/reject)
+● Phân tích ngữ nghĩa hội
+thoại
+"Những sản phẩm AI tốt nhất không tự nhiên mà đã tuyệt vời ngay từ đầu — họ xây một hệ thống flywheel để liên tục cải thiện theo thời gian."
+— AI Flywheel Framework · Calibre Labs
+Thiết kế coverage 
+& candidate scenarios
+Vấn đề của việc "hãy tạo 50 test prompts"
+Dataset nhiều rows chưa chắc có coverage tốt
+LLM-generated dataset
+Trông nhiều — thực ra rất đồng nhất
+vs
+Real production dataset
+Ít rows hơn — coverage thật sự
+happy path A
+variant 1 happy path B variant 2
+happy path C
+duplicate
+ near-dup
+ duplicate
+50 rows ≈ 3 real cases
+edge case persona B
+happy path
+ambiguous biz rule
+multi-intent real trace
+20 rows = 20 real cases
+User Input Grid
+Những dimension tạo ra khác biệt có ý nghĩa trong product behavior
+WHO
+Persona / ICP Ai đang dùng? Goal và expertise khác nhau thế nào?
+WHAT
+User intent User đang cố hoàn thành task gì?
+HOW — chất lượng input
+Context richnessÐủ dữ liệu, thiếu hay mâu thuẫn?
+Ambiguity Request rõ hay có nhiều cách hiểu?
+Complexity Một intent hay nhiều? Ðơn bước hay đa bước?
+CONTEXT
+Language/locale Ngôn ngữ, timezone, currency, policy region?
+Data freshness Context mới, cũ hay không rõ timestamp?
+RISK
+Risk Failure cost thấp hay cao?
+Permission state User/system có quyền thực hiện action không?
+OUTPUT
+Expected agencyAct, Ask hay Don't Act?
+Quy trình tạo User Input Grid
+Thiết kế coverage trước khi tạo test prompts — chọn những biến làm agent phải hành xử khác đi
+BƯỚC 1
+Chọn dimensions →
+BƯỚC 2
+Ðịnh nghĩa values →
+BƯỚC 3
+Tạo combinations →
+BƯỚC 4
+Thêm constraints đời thật →
+BƯỚC 5
+Viết thành user inputs
+LLM paraphrase
+Những yếu tố nào làm
+expected behavior thay đổi?
+Với AI Learning Assistant:
+· Loại câu hỏi của user
+· Ðộ phủ tài liệu khóa học
+· Có cần research ngoài không
+· Trạng thái hội thoại
+· Follow-up mong đợi
+· Ngôn ngữ & expertise
+Khi đổi value → câu trả lời đúng
+cũng phải đổi theo
+Course coverage:
+· Có slide trả lời trực tiếp
+· Cần tổng hợp nhiều modules
+· Course chỉ cover một phần
+· Nguồn nội bộ ≠ ngoài
+· Course chưa đề cập
+· Nhiều version cùng tài liệu
+Expected follow-up:
+Clarify · Deepen · Apply · Compare
+· Challenge · View source ·
+Research latest
+Giữ lại combination khi:
+· Có khả năng xuất hiện trong
+thực tế
+· Làm agent phải đổi chiến lược
+· Failure cost cao
+· Team chưa chắc quality
+boundary
+Không test mọi tổ hợp — loại bỏ
+những gì quá xa production
+Làm scenario bớt "sạch",
+giống user thật:
+· "trong bài có nói sâu không?" —
+không rõ bài nào
+· "model nào tốt nhất?" — cần
+research ngoài
+· Slide và transcript dùng thuật
+ngữ khác nhau
+· Source cũ vẫn đứng đầu retrieval
+· "chỉ trả lời theo nội dung đã học"
+· Answer đúng nhưng follow-up
+lặp lại
+LLMchỉ paraphrase
+Cùng scenario → nhiều cách diễn
+đạt:
+ngắn / dài · formal / informal ·
+thiếu context · tiếng Việt/Anh ·
+skeptical · beginner/advanced
+Human kiểm soát coverage.
+✕  Không giao cho LLM tự chọn
+test coverage
+Từ grid tới Candidate Scenario Bank
+Không viết exact golden answer ở giai đoạn này — mục tiêu là tạo input đủ đa dạng để khám phá behavior
+Cấu trúc một scenario
+scenario_id
+SC-042 Challenge
+natural-language input — câu hỏi như user thật viết
+"Trong bài có nói sâu về retrieval không, hay chỉ là giới thiệu?"
+grid combination — tổ hợp dimension values tạo ra scenario này
+intent: clarify · coverage: partial · external-research: no · stage: mid-
+course
+expected behavior — high-level, không cần exact answer
+Hỏi lại để xác định "bài nào", sau đó trả lời trong phạm vi tài liệu — không
+tự suy thêm
+why included — lý do chọn scenario này vào dataset
+Ambiguous reference + partial course coverage → failure cost cao nếu
+agent tự đoán
+Ba loại scenario
+Representative scenarios
+Gần với cách user thường hỏi. Về sau phải phản ánh production
+distribution.
+"Phần nào trong khóa học nói về offline eval?" — intent rõ, có câu trả lời trong
+tài liệu
+Challenge scenarios — cố ý over-sample
+· Ambiguous inputs · Source conflicts
+· Retrieval zero-hit · Multi-intent requests
+· Stale external sources · Follow-up dễ lặp / sai scope
+Pass rate trên challenge set ≠ production success rate
+Critical regression candidates — tuyệt đối không được lặp lại
+· External claim bị nói thành nội dung
+giảng viên đã dạy
+· Citation không support material claim
+· Agent reasoning từ false premise · View source dẫn tới source không liên
+quan
+Coverage đến từ cách chọn dimension và scenario combinations — không đến từ số lượng rows.
+Chạy agent, review traces 
+& formalize quality
+Trace là gì và vì sao PM phải đọc trace?
+Trace = record đầy đủ của một lần agent thực hiện task
+TRANSCRIPT
+Thứ user nhìn thấy — câu hỏi
+và câu trả lời cuối
+vs
+TRACE
+Thứ team cần đọc — toàn bộ
+những gì system làm bên
+trong
+⚠ Nguy cơ
+Final response nhìn ổn nhưng
+trace bên trong sai — chỉ đọc câu
+trả lời cuối là không đủ
+Nhóm thông tin Ví dụ
+User input User hỏi gì, ngữ cảnh ban đầu là gì
+Instruction & config System prompt, model, tool version, prompt version
+Context Slide, transcript, policy, external sources
+Model calls Gọi lúc nào, với input nào
+Tool usage Tool nào, parameter, output, có lỗi không
+Intermediate steps Phân loại intent, chọn nguồn, tổng hợp, validate
+Final response Câu trả lời cuối cùng user nhìn thấy
+Outcome / end state Ticket chuyển queue? Citation đúng? Itinerary khả thi?
+Metadata Latency, token, cost, timestamp
+Feedback User correction, rating, retry, complaint
+Ví dụ: Trace Logs
+
+Workflow trace analysis
+Từ chạy thử agent → hiểu lỗi → tạo rubric đánh giá
+Đừng bắt đầu bằng automation. Hãy đọc trace trước để hiểu agent đang sai và đúng ở đâu.
+VÒNG 1 — KHÁM PHÁ BEHAVIOR
+Ðọc trace để hiểu agent đang succeed/fail như thế nào
+VÒNG 2
+CHUẨN HÓA THÀNH RUBRIC
+STEP 1
+Chạy bộ tình huống
+test
+Tình huống phổ biến, khó,
+rủi ro cao. Cố định prompt,
+model, tool và version
+dataset.
+Output: traces đã log
+→
+STEP 2
+Ðọc trace, ghi nhận
+tự do
+Chưa chấm điểm vội. Ghi
+lại điều bất ngờ, lỗi rõ ràng,
+vấn đề chất lượng,
+behavior tốt, evidence cụ
+thể.
+Output: notes thô có
+evidence
+→
+STEP 3
+Gom nhóm các
+pattern lặp lại
+Lỗi hay mắc, điểm chất
+lượng yếu, behavior tốt
+cần giữ, nhóm scenario bị
+ảnh hưởng.
+Output: failure/success
+patterns
+→
+STEP 4
+Xác định lỗi bắt đầu
+từ đâu
+Bước cuối còn đúng là gì?
+Bước đầu tiên sai là gì?
+Lỗi nào là nguyên nhân
+chính, lỗi nào là hệ quả?
+Output: root-cause map
+→
+STEP 5
+Biến pattern thành
+tiêu chí đánh giá
+Trace codes, định nghĩa
+Pass/Fail, ví dụ đúng/sai,
+rubric, human labels có
+cấu trúc.
+Output: trace codes +
+rubric v1
+Đừng chạy vài prompt ngẫu nhiên rồi gọi đó là eval. Muốn đánh giá có ý nghĩa, phải biết mình đang test những loại tình huống nào.
+Formalize thành trace codes và taxonomy
+Sau vòng discovery — notes tự do cần được chuẩn hóa thành ngôn ngữ chung của team
+Notes tự do sau vòng discovery
+Mỗi người nói một kiểu — khó đo, khó so sánh
+"con bot này xử lý sai ý khách"
+"nó hơi bị lạc hướng"
+"nó không hiểu khách muốn đổi hàng"
+"agent trả lời mà không tra cứu đơn"
+"agent hứa hoàn tiền quá sớm"
+"agent không chuyển human khi phức tạp"
+Khó đo · Khó so sánh · Khó sửa
+→
+formalize
+Trace codes — ngôn ngữ chung của team
+Mọi người gọi cùng 1 vấn đề bằng cùng 1 tên
+wrong_intentAgent hiểu sai nhu cầu chính của user
+missing_lookupKhông tra cứu dữ liệu trước khi trả lời
+premature_commitHứa kết quả khi chưa đủ điều kiện
+missing_escalationKhông chuyển human khi vượt thẩm
+quyền
+no_next_stepÐúng policy nhưng thiếu hành động tiếp theo
+Ðo được · So sánh được · Sửa được
+Taxonomy phải tùy theo use case
+Không có một taxonomy dùng chung cho mọi AI product — xây từ trace analysis của chính mình
+AI Support đơn hàng
+Xoay quanh: intent · order · policy · authority
+wrong_intent
+missing_order_lookup
+policy_misapplied
+premature_refund_commit
+missing_escalation
+unclear_next_step
+AI Learning Assistant
+Xoay quanh: retrieval · grounding · boundary
+wrong_question_intent
+poor_retrieval
+unsupported_claim
+external_boundary_violation
+poor_followup_quality
+AI Travel Planner
+Xoay quanh: feasibility · data · authority
+missing_constraint
+stale_live_data
+infeasible_schedule
+budget_violation
+booking_overreach
+missing_recovery
+PM không nên copy taxonomy từ bài khác. Hãy dùng trace analysis để xem use case của mình thật sự fail ở những tầng nào, rồi mới chốt taxonomy.
+Case Study
+Case study: Notion AI
+90%
+thời gian Notion AI team dành cho evals
+chỉ 10% là viết prompts
+100M+
+users toàn cầu
+Scale khổng lồ — không thể
+test bằng tay hay intuition
+"over 100 million users now"
+60%
+users không nói tiếng Anh
+100% engineers nói tiếng Anh
+— bắt buộc phải dùng evals
+"60% of enterprise users aren't
+speaking English"
+<1 ngày
+để ship model mới
+Nhờ evals tự động — biết ngay
+prompt nào regression khi
+model mới ra
+"usually less than a day we're
+able to give that to all users"
+"Evals is our IP — everything we build, how we decide if those work well, lives inside
+Brain Trust." — Sarah, Lead of Notion AI
+How to build world-class AI products — Sarah Sachs (AI lead @ Notion) & Carlos Esteban
+(Braintrust)
+Evals là User Research mới của PM trong thời đại AI
+"You can think of this as your version of User Research." — Sarah, Lead of Notion AI
+USER RESEARCH TRUYỀN THỐNG
+👥 User interviews
+Hỏi user nghĩ gì — không phải user thật sự làm gì
+📋 Surveys
+Số lượng lớn nhưng context nghèo — khó biết tại sao user
+không hài lòng
+⏱ Chậm & tốn kém
+Vài tuần để có insight — không kịp với tốc độ release AI
+💡 PM không cần viết code hay scoring functions — nhưng phải là người đọc data và escalate findings. Ðây là việc không ai khác làm thay được.
+EVALS AS USER RESEARCH — CÁCH NOTION LÀM
+👎 Thumbs-down data
+Natural language request thật từ user — không phải câu hỏi PM đặt ra trước
+"all of that thumbs-down data from internal dev usage"
+📈 Behavior thật — không phải claimed behavior
+User muốn draft reports — không chỉ research. Tìm ra từ data, không từ
+interview.
+"found that people were trying to draft reports much more"
+⚡ Real-time, liên tục
+PM ngồi trong Brain Trust mỗi ngày — insight cập nhật liên tục theo từng
+release
+"PMs in Brain Trust working very closely"
+→
+Quy trình quản lý Evals của Notion AI
+BƯỚC 👤  PM </> ENGINEER ⊞  DATA SPECIALIST
+"mix of PM, data analyst & annotator"
+1 Decide
+Xác định
+vấn đề cụ
+thể
+Xác định vấn đề từ data
+Ðọc thumbs-down data, usage logs trong Brain
+Trust để tìm điểm cần cải thiện.
+"PMs in Brain Trust working very closely"
+Xác định cải tiến cần làm
+Ví dụ: thêm Jira connector — AI cần hiểu task,
+sprint, workspace ra sao?
+"decide on an improvement... launch a Jira connector"
+—
+2Curate
+Tạo
+targeted
+dataset
+Kiêm Data Specialist
+ở team nhỏ hơn —
+Tạo dataset từ logs thật
+Bắt đầu với 10 samples. Format đúng trước —
+đừng tạo hàng trăm dummy data ngay.
+"make it 10 things first and make sure it's formatted the
+way you want"
+3Score
+Gắn
+scoring
+functions —
+Viết scoring functions
+Sau khi đã nhìn data lâu — không phải ngay từ
+đầu. Mix LLM-as-judge + heuristic.
+"scoring functions should come after you've looked at
+the data for a long time"
+Viết per-sample judge prompt
+Mỗi sample một prompt riêng — "far more
+insightful" dù laborious hơn.
+"for every single element... you have a particular
+prompt"
+4Inspect
+Review
+failures kỹ
+Review trong Brain Trust
+Phát hiện pattern thật: user muốn draft reports —
+không chỉ research.
+"found that by looking through all of that thumbs-down
+data"
+Ðọc failure report
+Failures được pass vào LLM → summarize themes
+→ báo cáo nhanh.
+"pass into another LLM and ask them to summarize what
+the failures are"
+Human label failures
+Annotate edge cases — quality quan trọng hơn
+quantity.
+"quality is much more important than quantity"
+↺Loop → Bước 1 mới
+Escalate findings lên roadmap
+Chỉnh prompt
+Dựa trên failure themes
+Thêm rows dataset
+Tiếp tục từ logs mới
+Notion lấy data và dùng data như thế nào?
+Notion lấy data từ đâu?
+1. Dog-fooding — data tự nhiên
+Notion team dùng Notion hàng ngày → mọi interaction đều là
+potential training data. Không cần giả lập hay tạo synthetic data
+từ đầu.
+2. Thumbs-down — signal từ user
+Chỉ lấy natural language request — không lấy output cũ vì đã lỗi
+thời. Request thật của user là tài sản dài hạn, dùng lại được mãi
+để eval model mới.
+3 nguyên tắc khi dùng data này
+Bắt đầu nhỏ: 10 samples, không phải 1000
+Format đúng trước. Dummy data sai cấu trúc là sai từ gốc.
+Quality quan trọng hơn quantity
+Ðặc biệt khi fine-tuning — ít samples tốt tốt hơn nhiều samples
+kém.
+Data flywheel tích lũy theo thời gian
+Mỗi release thêm logs mới → dataset lớn dần → evals ngày càng
+chính xác hơn.
+The people closest to the data should be the ones creating the dataset — that might be your PM, it should also be your engineer.
+— Sarah, Lead of Notion AI · Brain Trust Workshop
+Kết quả đạt được
+TRƯỚC
+⊞ Google Sheets để label data
+Human labelers overwhelmed — parse prompt bằng Google
+Sheet formula
+"They were looking at this dump in Google Sheets trying to figure out how to
+parse the prompt"
+⏱ Model mới → vài tuần để validate
+Không biết prompt nào bị regression — phải test thủ công từng
+cái
+😕 Ship dựa trên gut feeling
+Worked well in a demo — không biết có hoạt động nhất quán
+với real users không
+"Shipping something that worked well in a demo with your VP"
+→
+SAU — VỚI EVALS SYSTEM
+⚡ Model mới → ship trong 1 ngày
+Chạy toàn bộ evals → biết ngay regression → switch model tự
+tin
+"Usually less than a day we're able to give that to all of our users in production"
+🌐 Build tự tin cho 60% users đa ngôn ngữ
+Multilingual evals đảm bảo chất lượng cho users mà engineers
+không nói được ngôn ngữ của họ
+"We have to use rigorous evaluation metrics that understand that multilingual
+experience"
+🔍 Insight product từ data — không từ gut
+User muốn draft reports — phát hiện từ thumbs-down, không
+từ interview hay survey
+"Found that by looking through all of that thumbs-down data"
+"I don't think that we could exist without Brain Trust or a similar type of software today — it is critical to our iteration flow and it actually is our IP." — Sarah

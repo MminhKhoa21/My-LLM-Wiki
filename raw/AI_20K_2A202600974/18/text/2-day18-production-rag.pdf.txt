@@ -1,0 +1,904 @@
+--- Page 1 ---
+Production RAG
+AICB-P2T3· Ngày 18 · Từ Demo60% Đến Production 85%+
+Trần Quang Thiện
+linkedin.com/in/thientquang
+VinUniversity · Phase 2 · Track3 ·Tuần4 · 2026
+
+--- Page 2 ---
+?
+HÃYSUY NGHĨ...
+“RAG pipeline demo chạy ngon, nhưng
+lên production accuracy chỉ60% — in-
+gestion hay retrieval đang giết bạn?
+Day 07–08 dạy RAG chạy được. Hôm
+nay: làm RAG đáng tin ở production.”
+Giữcâu hỏi này trong đầu khihọc bài hôm nay
+
+--- Page 3 ---
+NộiDung Bài Học
+■ 01· Map & Compass—vì sao basic RAG hỏng, vàbảnđồ đểbiết sửa ở đâu.
+■ 02· Offline — ingest(làm1 lần · đặt trần)—chuẩn bị dữ liệu đểđặttrần chất lượng
+trướckhi index.
+■ 03·Online—retrieval (mỗiquery·theovấnđề) —truyvấntừngquery: sửatheovấnđề
+đểchunk đúng lên top.
+■ 04· Close the Loop—đo bằng RAGAS, tra ngược ErrorTree,và biếtgiớihạn.
+Hômnay= chấtlượngingestion+retrieval . GraphRAG(Day19),Multi-Agent(Day
+20/23), RAGAS sâu & guardrails (Day 24), caching & reliability (Day 25), HITL (Day
+27)học riêng.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 1/ 39
+
+--- Page 4 ---
+MụcTiêuNgày 18
+■ Chẩnđoán pipelinehỏng — Error Tree,khôngđoán mò
+■ OFFLINE:hierarchical/late chunk, contextual, enrichment
+■ ONLINEretrieval: vượt hybrid+RRF —late interaction, learned sparse, fusion
+■ ONLINErerank: chọn theo chấtlượng / chi phí / ngônngữ
+■ ONLINEcontrolflow: HyDE, Multi-Query,CRAG theo vấn đề
+■ RAGAS+diagnostic tree →sửađúng tầng
+■ Giớihạn embedding— phần nào để dành ngàysau
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 2/ 39
+
+--- Page 5 ---
+DeliverableCuối Ngày
+src/(5module hoàn chỉnh) +analysis/(RAGASreport + failure analysis)
+■ m1_chunking.py—hierarchical chunking (parent 2048 /child256)
+■ m2_search.py—hybrid search (BM25 + Dense +RRF)
+■ m3_rerank.py—reranking top-20 →top-3
+■ m4_eval.py—RAGAS end-to-end (4 metrics)
+■ m5_enrichment.py—enrichment pipeline (summarize, HyQA, contextual prepend,
+metadata)
+■ analysis/—bottom-5 failure analysis map vàoError Tree
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 3/ 39
+
+--- Page 6 ---
+01
+PHẦN01
+Map & Compass
+Trước khi sửa: bản đồ pipeline (OFFLINE + ONLINE), la bàn
+Error Tree, và ca chạy TaiLieuBot xuyên suốt cả ngày
+
+--- Page 7 ---
+RAG= OFFLINE + ONLINE, Mỗi BướcĐều Có Thể Hỏng
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+chunk lệch
+cấu trúc vocab gap, drift
+miss syn-
+onym / exact
+hallucinate,
+prompt
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 4/ 39
+
+--- Page 8 ---
+ĐọcLại Bản Đồ: Mỗi Bạn Gọi Tên 1 Bước(1 phút/bạn)
+Lầnlượtmỗisinhviênchọn 1bước trongpipelinevànóitrong 1phút: bướcđó làmgì vàcó
+thểhỏng thế nào. Mục tiêu —cả lớp cùng nắm bản đồtrước khi đi sâu Phần 02–03.
+OFFLINE(1 lần): Parse →Chunk →Enrich →Embed →Index
+ONLINE(mỗi query): PreRAG →Retrieve →Rerank →Augment →Generate →PostRAG
+Khôngbước nào “an toàn” — mỗibước đều có thể là nơipipeline hỏng.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 5/ 39
+
+--- Page 9 ---
+ĐánhDấu: Mỗi LỗiThuộc Bước Nào? (5phút)
+MộtAIassistantnộibộtrảlờicâuhỏichínhsách. Bạnnhậnđược4caselỗitừlogproduction.
+Nhiệmvụ (5 phút):Vớimỗi caseđánhdấu bướcchịutrách nhiệm (Retrieval/ Rerank /
+Augment/ Generate)và đề xuất 1 fix:
+1. Userhỏi “nghỉ phép” nhưng tài liệuchỉ ghi “annual leave”→khôngtìm thấy gì.
+2. Top-10cóchunk đúng ở vị trí #8,nhưng LLM chỉ đọc top-3→trảlời thiếu.
+3. Retrieveđúng chunk, nhưng câu trả lờithêm thông tinkhôngcó trongchunk.
+4. Haichunk mâu thuẫn (policy v2 vsv3), LLM chọn bản cũ.
+Mỗicase 1 dòng —Case # : bước→fix.
+Vídụ Case 1 : Retrieval→queryrewrite / thêm synonym.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 6/ 39
+
+--- Page 10 ---
+02
+PHẦN02
+OFFLINE — Ingestion
+Nửa trái bản đồ: chunk→ enrich → embed → index. Làmmột
+lần lúc index, nhưngquyết định trần chất lượngcho mọi query
+về sau — retrieval không thể tốt hơn cái đã index
+
+--- Page 11 ---
+BƯỚCHIỆN TẠI
+Chunking
+Cắttài liệu sao cho giữngữ cảnh
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+
+--- Page 12 ---
+Chunking: Giữ Ngữ CảnhKhi Cắt Nhỏ
+Chiếnlược Thamsố mặc định Khinào dùng
+Fixed-size Day7 512tokens, overlap 64 Baseline, text đồngnhất
+Semantic Day7 cosinethreshold 0.85 Đoạn đổi chủđề, chat log
+Hierarchical parent2048 / child 256 Defaultdoc có cấu trúc
+Structure-aware theo heading/table Markdown,HTML, PDF
+Latechunking embed doc trước, cắt
+sau
+Tàiliệu dài, tham chiếu ngược
+RAPTOR câytóm tắt đệ quy Hỏitổng hợp xuyên đoạn
+Hierarchical(default),Latechunking,RAPTOR(tổnghợp)dạyriêngở3slidekế. Cònlại: thamkhảo.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 7/ 39
+
+--- Page 13 ---
+Hierarchical: Tìm Bằng ChildNhỏ, TrảLời Bằng ParentLớn
+MâuthuẫnDay08: chunknhỏ=retrieve
+chính xác nhưngthiếu ngữ cảnh; chunk
+lớn = đủ ngữ cảnh nhưngnhiễu, khó
+match.
+Cách làm:index 2 tầng— child 256 (để
+tìm) trỏ về parent 2048 (để đọc). Match
+trênchild, nhưnginjectparent vàoLLM.
+Parent2048
+cảmục “Chế độ nghỉ phép”
+child child256 child
+querymatch child
+injectparent
+Lưu ý:Default tốtcho doc có cấu trúc (policy, manual).Cách dùng:LlamaIndex
+AutoMergingRetriever / LangChain ParentDocumentRetriever — khai báo par-
+ent+childsize, retriever tự gộp.Chiphí: lưucả 2 tầng.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 8/ 39
+
+--- Page 14 ---
+LateChunking: Embed CảDocument Trước,Cắt Sau
+Cáchthôngthường: cắtchunk trướcrồi
+embedtừngcáirời →mỗichunk mùphần
+còn lại của doc (“điều này”, “công ty” —
+ai?).
+Late chunking: chạy token-embedding
+cho cả document trước (long-context
+encoder), rồi mới pool theo ranh giới
+chunk. Mỗi chunk vector đã thấmngữ
+cảnhtoàn cục.
+Thường: cắt rời→embedriêng
+× × × vectormùngữcảnh
+Late: embed cả doc→pool
+✓ ✓ ✓ vectorthấmngữcảnh
+Lưu ý:Khi nào:tài liệu dài, nhiều tham chiếu ngược (“như đã nói ở trên”).Cách
+dùng: cần encoder long-context (Jina-v3, nomic) + thư viện hỗ trợ late chunking.
+Kháccontextual: khônggọi LLM/chunk — rẻ hơn, nhưngcần model hợp.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 9/ 39
+
+--- Page 15 ---
+RAPTOR:Retrieval Có “Độ Cao” (CâyTóm Tắt)
+Cách thông thường:mọi chunkcùng
+một mức chi tiết. Câu hỏi tổng hợp
+(“toànbộchínhsáchphépđổigì?”) phải
+gom hàng chục lá→ dễ miss, dễ tràn
+context.
+New approach:gom chunk→cụm →
+LLM tóm tắt,lặp lên thành cây. Re-
+trieveở đúngđộcao : chitiết →lá;tổng
+hợp →nútcao.
+tómtắt gốc
+tómtắt A tómtắt B
+lá lá lá lá lá lá
+câutổng hợp
+câuchi tiết
+Lưu ý:câu hỏi “theme / tổng hợp xuyên nhiều đoạn” mà chunk phẳng luôn trả thiếu.
+Chi phí:build cây = nhiều LLM tóm tắt lúc index, index phình to. (Sarthi et al., ICLR
+2024)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 10/ 39
+
+--- Page 16 ---
+BƯỚCHIỆN TẠI
+Enrich
+Làmchunk giàu thông tin hơntrước khi embed
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+
+--- Page 17 ---
+ContextualEmbeddings (Anthropic, 2024)
+Chunkthô
++LLM thêm
+1câu ngữ cảnh
+Contextualchunk
+“Đoạnnày thuộc chính sách nghỉ phép2026...” ghép vàotrước
+chunk.
+Vấnđề: chunkrời mất ngữ cảnh (“điều
+này”— điều gì?).
+Hiệuquả (Anthropic)— lỗiretrieval
+giảmso baseline:
+Cấuhình Lỗiretrieval
+Contextual(embed + BM25) ↓ 49%
++reranking ↓ 67%
+Sốliệu Anthropic (2024), tùy corpus. Chi phí: +1
+LLMcall/chunk lúc index (one-time, model rẻ).
+Nhồicả document mỗi call→tốntoken; dùng
+promptcaching đểgiảm. Bổsung,không thay
+reranking.
+Lưu ý: Với corpus văn bản dài / nhiều tham chiếu mơ hồ, đây thường là kỹ thuật
+OFFLINE ROI cao— trả tiền 1 lần lúc index. Đánh đổi: +1 LLM call/chunk lúc index
+(phải chạy lại mỗi lần re-index — đổi chunking, đổi model); corpus ngắn hoặc đã rõ
+ngữcảnh thì lợi ít.Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 11/ 39
+
+--- Page 18 ---
+EnrichmentPipeline: Làm ChunkDễ Tìm Hơn TrướcKhiEmbed
+Rawchunk
+Summarization
+HypotheticalQ&A
+Prependcontext
+Metadataextract
+Enrichedchunk
+→embed
+■ Summarization—embed bản tóm tắt cạnh chunkgốc: lọc nhiễu,bám ý chính.
+■ HypotheticalQ&A —LLM sinh câu hỏi mà chunktrả lời được: nối vocab user↔tàiliệu.
+■ Metadataextract —LLM rút entity,topic,ngày,nguồn →bậtmetadata filtering.
+Tấtcả là chi phí one-timelúc index. Dùng modelrẻ (GPT-4o-mini,Haiku). Cân nhắctheo giá trị/query.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 12/ 39
+
+--- Page 19 ---
+HypotheticalQ&A: Nối VocabUser ↔TàiLiệu
+Vấn đề: user hỏi bằngcâu hỏi, tài liệu
+viếtbằng câukhẳngđịnh . Embeddingcủa
+câuhỏi và đoạn văn thườnglệchnhau.
+Cách làm:lúc index, LLM sinhcác câu
+hỏi mà chunk này trả lời được, embed
+chúng cạnh chunk. Query của user giờ
+matchthẳng vào câu hỏi giả định.
+Chunk: “...12 ngày phép/năm...”
+LLMsinh Q
+“Nhânviên mới được nghỉ bao nhiêungày?”
+embed& index cạnh chunk gốc
+Lưu ý:Khi nào:FAQ, hỏi-đáp chính sách — nơi user dùng từ khác tài liệu.Cách
+dùng: 1 LLM call/chunk lúc index (model rẻ), lưu Q-embeddings trỏ về chunk.Họ
+hàngHyDE(Phần ONLINE) — nhưng làmoffline,không tốn call mỗi query.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 13/ 39
+
+--- Page 20 ---
+Matryoshka(MRL): Số Chiều Là Cái NúmVặn
+Cách thông thường: embedding =
+1 vector cố định (vd 1536-d). Muốn
+nhanh/rẻ hơn → phải đổi model & re-
+embedcả corpus.
+New approach:train sao cho 1 vector
+chứanhiềuvectorlồngnhau . Cắtngắn
+prefix = nhanh hơn, mất ít chất lượng.
+Embed1 lần, dùng nhiều ngân sách.
+64 128 256 512...1536
+coarse
+nhanh
+full
+chínhxác
+Dùng128-d lọc thô (nhanh)→full-drerank. OpenAI text-embedding-3
+hỗtrợ cắt chiều.
+Lưu ý:đổi cost/latencykhông cần re-embed— một index phục vụ nhiều SLA.Chi
+phí: cần model train kiểu MRL; cắt càng sâu chất lượng giảm dần. (Kusupati et al.,
+NeurIPS2022)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 14/ 39
+
+--- Page 21 ---
+ChọnChunking Theo Loại Dữ Liệu —Không Có “One-Size”
+Chiếnlược Tốtcho (data) Tránhkhi Toolchính Tínhiệu RAGAS
+Fixed-size FAQ,docngắnđồngnhất Doc cấu trúc chặt: cắt
+giữaý (legal)
+TokenTextSplitter ContextRecall thấp
+SentenceWindow KB article, HR policy Bảng / code: ranh giới
+câuvô nghĩa
+SentenceWindow Node-
+Parser
+Faithfulnesscao
+Hierarchical Spec,hợp đồng, ADR Text phẳng: không có
+câyđể khai thác
+HierarchicalNodeParser ContextPrecision cao
+Semantic Corpus hỗn hợp, re-
+search
+Corpus lớn: em-
+bed từng câu, ingest
+chậm/đắt
+SemanticSplitter Node-
+Parser
+Cânbằng mọi metric
+Layout-aware
+(PDF)
+PDF scan, report nhiều
+bảng
+Doc text thuần: thừa,
+khôngcó layout
+PyMuPDF,pdfplumber Várecall ở bảng
+Multimodal
+(slide/ảnh)
+Deck,doc nhiều diagram Corpus chỉ text: thừa
+chiphí vision
+LlamaParse,GPT-4V ContextRecall (ảnh)
+Bắt đầu từloại dữ liệucủa bạn → chọn cột “Tốt cho”. Nếu RAGAS báo metric ở cột cuối tụt→ đang dùng sai chiến lược cho data đó.
+Defaultan toàn: Hierarchicalcho doc có cấu trúc.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 15/ 39
+
+--- Page 22 ---
+03
+PHẦN03
+ONLINE — Retrieval
+Nửa phải bản đồ: retrieve→ rerank → control flow. Chạy lại
+mỗi query; mỗi vấn đề trong Error Tree có một fix riêng ở đây
+— không bật hết, bật đúng cái cần
+
+--- Page 23 ---
+BƯỚCHIỆN TẠI
+Retrieve
+Tìmđúng chunk cho mỗi query
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+
+--- Page 24 ---
+Hybrid+ RRF: BM25 Bắt Exact, DenseBắt Synonym (Nhắc Day 08)
+Query
+BM25 Dense
+RRFFusion
+score(d) =
+∑
+i
+1
+k +ranki(d)
+k=60 (tinhchỉnh 10–100)
+BM25 Dense Hybrid
+Exactkeyword □✓ □ □✓
+Synonym □ □✓ □✓
+Latency <5ms ∼20ms ∼25ms
+TiếngViệt: BM25cầnwordsegmentation(underthesea,
+VnCoreNLP)trước khi index.
+Không cần training, gộp rank từ nhiều nguồn khác thang điểm. Đây là baseline —
+phầnsau là khi RRFchưađủ.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 16/ 39
+
+--- Page 25 ---
+VấnĐề: Hybrid +RRF Vẫn Miss Chunk Đúng
+Đoán — Câutrảlờinằmở1tokenhiếm(mã“X7-204”). RRFgộprankmức document. Tại
+sao vẫn miss?Nghĩ 30s trước khi xem bảng — gợi ý: cần so khớpsâu hơn document
+(mứctoken).
+Kỹthuật Ýtưởng Precision Latency
+RRF(baseline) Gộprank,khôngcầntrain — ∼25ms
+Late interaction (Col-
+BERT)
+So khớp token-by-token
+(MaxSim); tốn storage
+multi-vector
++8–12% ∼50ms
+Learned sparse
+(SPLADE)
+Sparse vector học được
+trên inverted index; stor-
+agegần BM25
++6–10% ∼40ms
+Tensor / weighted fu-
+sion
+Outer product feature;
+cầnlabel data
++10–15% ∼80ms
+Consố tham khảo, tùy
+dataset/baseline;đổi precision lấy latency +storage — chọn theo SLA, khôngtheo “mới nhất”.3 slide sau: từng kỹ thuật
+phágiả định gì của RRF.Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 17/ 39
+
+--- Page 26 ---
+ColBERT:Thoát“Nút Cổ Chai 1 Vector”(Token-Level)
+Cáchthôngthường: bi-encoderép cả
+đoạn vào 1 vector→ chi tiết token (tên
+riêng, số, thuật ngữ hiếm) bị nén mất.
+Socosine 2 vector.
+New approach:giữ 1 vector / token.
+Mỗi token query tìm token doc khớp
+nhất (MaxSim), cộng lại. Chi tiết được
+giữ; doc tính trước nên vẫn nhanh hơn
+cross-encoder.
+nghỉ
+phép
+năm
+annual
+leave
+12
+days
+policy
+querytokens
+doctokens
+MaxSim: token→token
+Lưuý: truyvấncần chitiếtexact màdensebỏlỡ—khôngphảitrảgiácross-encoder.
+Cáchdùng: RAGatouille/ Vespa/ Qdrantmulti-vector; cần index riêng(PLAID).Chi
+phí: nhiềuvector/doc (storage lớn). (Khattab& Zaharia, SIGIR 2020)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 18/ 39
+
+--- Page 27 ---
+SPLADE:BM25 “Học Được” — Sparse NhưngBiết Mở Rộng
+Cách thông thường: BM25 chỉ match
+đúng từ xuất hiện. “nghỉ phép” không
+khớp“annualleave”—vocabgap. Dense
+bắtsynonym nhưng mờ token hiếm.
+Newapproach: modelhọctrọngsốtừ và
+tựthêmtừliênquan (termexpansion)vào
+1 sparse vector. Vẫn chạy trêninverted
+index(nhanh,rẻnhưBM25)nhưngthông
+minhhơn.
+Chunk “annualleave 12 days”
+BM25 {annual, leave,12, days}
+SPLADE {annual,leave, vacation,holiday,pto ,12, days}
+Termexpansion(in xanh) đóng vocab gaplúc index —query “pto”
+vẫntìm thấy.
+Lưuý: vocabgap+cầntốcđộinvertedindex(khônglưumulti-vectornhưColBERT).
+Cáchdùng: naver/spladeencoder →Qdrant/Elasticsearchsparsevector. Chiphí:
+cầnGPU lúc index để sinh sparsevector. (Formalet al., SIGIR 2021)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 19/ 39
+
+--- Page 28 ---
+Tensor/ WeightedFusion: RRF Nhưng Có HọcTrọngSố
+RRF:cân bằng cứng 0.5 / 0.5
+BM25
+Dense
+⊕
+0.5
+0.5
+Fusion: học 0.3 / 0.7
+BM25
+Dense
+⊕
+0.3
+0.7
+tinDense hơn
+“Label” là gì? — Cặp (query → doc
+nàođúng). Nguồn: ngườigánnhãnrele-
+vance(vàng,đắt) hoặcclick/feedbacklog
+(weak label, rẻ). Có label→ train fusion;
+khônglabel →RRF.
+Lưuý: Cáchdùng: thuclick-logtrước,trainfusionsau—đừngbắtđầutừđây. Mặc
+địnhvẫn RRFtớikhi đủ label. Đổi lấy 10–15% precision.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 20/ 39
+
+--- Page 29 ---
+ColPali: Đừng Parse TàiLiệu — Hãy Nhìn Nó
+Cách thông thường: PDF →
+OCR/parse → text → chunk →
+embed. Parsing giòn: bảng, layout,
+scan,biểu đồ mất sạch. “Garbage in”.
+New approach: vision-LLM embed
+thẳng ảnh trang(patch embeddings) +
+late interaction với query.Bỏ qua cả
+pipelineparse —bảng/biểu/layoutgiữ
+nguyên.
+ảnhtrang (patches)
+querytext
+lateinteraction
+Lưu ý:tài liệu nặng layout/bảng/scan (tài chính, form, hợp đồng) — nơi parseluôn
+hỏng. Cáchdùng: ColPali/ColQwen+Vespa/Qdrantmulti-vector. Chiphí: lưupatch
+embeddings(lớn), cần vision model, tooling cònnon. (Faysse et al.,2024)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 21/ 39
+
+--- Page 30 ---
+ChọnVectorDB: Quyết Định TheoNhu Cầu, Không Theo Hype
+Hỏibạncần gì,theo thứ tự — dừng ởdòng đầu tiên khớp:
+Đãcó Postgres, dữ liệu vừaphải?
+Muốnmanaged, zero-ops?
+Cầnhybrid + metadata filter (đasố ca)?
+Cầnquan hệ giữa nhiều entity?
+pgvector
+Pinecone
+Qdrant (default)
+Neo4j (GraphRAG, Day 19)
+Khác: Weaviate(thíchGraphQL) · Milvus
+(quymô lớn, GPU) · Chroma/FAISS(prototype). Tất cảđều làm vector search — khácnhau ở hybrid, filter,scale,ops.
+Lưu ý:Lab 18 dùngQdrant (Docker local): hybrid + metadata built-in, đủ cho pipeline pro-
+ductionend-to-end.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 22/ 39
+
+--- Page 31 ---
+ChọnRetriever Theo Nhu Cầu — VượtHybrid Khi Nào?
+Kỹthuật Tốtcho (data) Chiphí / Tránhkhi Toolchính Tínhiệu RAGAS
+Hybrid+ RRF Đa số ca: exact + syn-
+onym
+Khônghọc trọng số Qdranthybrid Baseline( ∼25ms)
+ColBERTlateinteraction Cầnprecision token-level Storage +8–12% RAGatouille,Vespa ContextPrecision cao
+SPLADE learnedsparse Vocab mismatch, domain
+hẹp
+Cầntrain/encode SPLADE+invertedidx Context Recall ↑
+WeightedFusion tensor Cólabeled data để tune Cần label để học trọng
+số
+Vesparank profile Precisionổn định ↑
+ColPali visual PDF/slide không parse
+được
+GPU đắt; thừa nếu cor-
+pustext
+ColPali,byaldi ContextRecall (ảnh)
+Mặc định Hybrid + RRF, chỉ leo lên khi RAGAS chỉ rõ điểm đau: precision tụt→ ColBERT; recall do vocab→ SPLADE; có label→
+Fusion;ảnh/PDF →ColPali. Đừngbật hết—mỗi cái thêm latency/storage.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 23/ 39
+
+--- Page 32 ---
+BƯỚCHIỆN TẠI
+Rerank
+Sắpxếp lại để chunk đúnglên top
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+
+--- Page 33 ---
+Two-StageRetrieval: RecallRộng →PrecisionHẹp
+Retrieve
+top-20
+(nhanh,recall)
+Cross-encoder
+rerank
+(∼30–50ms)
+Top-3
+→LLM
+(precision)
+Retriever (bi-encoder) embed query
+& doc riêng → nhanh nhưng thô.
+Reranker (cross-encoder) đọc cặp
+query+doc cùng lúc → chính xác
+nhưngđắt. Lấy rộngrồi lọc tinh.
+Lưu ý:ROI: tốn∼30–50ms/query, đổi
+lấy+15–25%precision (sốthamkhảo,
+tùy data). Khi latency cho phép, đây
+thường là một trong những tối ưu lời
+nhất.
+TaiLieuBot: top-20 lẫn cả “nghỉphép / nghỉ ốm / nghỉthai sản”→rerankerđẩy đúng mục “nghỉ phép”lên top-3.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 24/ 39
+
+--- Page 34 ---
+RerankerLandscape: Chọn TheoChất Lượng / Chi Phí /Ngôn Ngữ
+Model Chiphí Khinào dùng
+Qwen3-Reranker Open-weight TopMTEB-rerank,đangônngữ,
+0.6B–8Btùy budget
+CohereRerank v3.5 API ($) Lựachọnmanagedphổbiến,đa
+ngônngữ
+bge-reranker-v2-m3 Open-weight Tiếng Việt tốt, 8K context, self-
+host
+JinaReranker v2 Open-weight Đa ngôn ngữ, 8Kcontext
+ms-marco-MiniLM-L-
+12
+Open-weight Nhẹ, nhanh, thiên English
+Flashrank Open-weight Siêu nhẹ, <5ms,edge
+LLM-as-Reranker $$$ GPT-4/Claude, chất lượng cao
+—chậm & đắt
+Open-weight= không phí
+license,nhưng vẫn tốn compute để self-host— không đáng kể nếu modelnhỏ.
+Chọn đi— TaiLieuBot:tiếng Việt, self-host, latency cho phép. Reranker nào? Chọn 1
+trướckhi xem gợi ý.
+Tiếng Việt + self-host→ bge-reranker-v2-m3. Managed nhanh gọn→ Cohere. Đừng dùng
+LLM-as-rerankertrừ khi latency cho phép.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 25/ 39
+
+--- Page 35 ---
+BƯỚCHIỆN TẠI
+ControlFlow
+Địnhhình query & làm sạch contexttheo vấn đề
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+
+--- Page 36 ---
+MỗiVấn Đề Một Pattern — ĐừngBật Hết
+Vấnđề Tầng Pattern
+Query lệch vocab so với cor-
+pus
+PreRAG HyDE
+Câu hỏi nhiều phần / multi-
+hop
+PreRAG Multi-Query
+Retrievechấtlượngthấp,cần
+fallback
+PreRAG CorrectiveRAG
+Contextdư thừa / mâu thuẫn Augment NLIfilter,compression
+Cầnkiểm chứng nguồn Augment Citationinjection
+Lưu ý:Mỗi pattern sửamột vấn đề— các slide sau là chi tiết PreRAG / Augment (cache,
+reliabilityđể dành Day 25).
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 26/ 39
+
+--- Page 37 ---
+SửaQuery TrướcKhi Search —Theo Vấn Đề, Không MặcĐịnh
+HyDE nhắcDay 8
+LLMsinh câutrảlờigiảđịnh →embed
+câuđó để tìm.
+Nốivocabgap(“nghỉphép” ↔“annualleave”). Họ
+hàng Hypothetical Q&A (OFFLINE) — nhưng làm
+mỗiquery.
+Multi-Query nhắcDay 8
+Tách query phức → nhiều sub-query,
+retrieverồi gộp.
+“Phép khác ốm thế nào?”→ 2 sub-query rồi hợp
+kếtquả.
+Lưu ý:Đều tốn +1 LLM call mỗi query→ bật theo vấn đề (HyDE: vocab gap; Multi-Query:
+nhiềuphần), không mặc định. Corrective RAG (fallback khi retrievekém)→slidekế.
+KhácOFFLINE (trả 1 lần cho cảcorpus): mỗi patternở đây = +1 LLM callmỗi query. TaiLieuBot: “nghỉphép” bật HyDE;
+“phépkhác ốm?” bậtMulti-Query.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 27/ 39
+
+--- Page 38 ---
+CorrectiveRAG(CRAG):TựChấmĐiểmRồiSửaTrướcKhiGenerate
+Cách thông thường:retrieve được gì
+thì nhồi thẳng vào LLM — kể cả khi
+chunklạcđề. Rác vào→bịara.
+CRAG: 1 evaluatorchấm điểmchunk
+retrieve được. Theo điểm→ rẽ nhánh:
+dùngluôn/viếtlạiquery/ fallbackweb
+search.
+Retrieve
+Chấmđiểm
+Correct
+→dùng
+Ambiguous
+→rewrite
+Wrong
+→web
+Lưuý: Khinào: corpuscólỗhổng,câuhỏingoàiphạmvi—thàfallbackcònhơnbịa.
+Cáchdùng: LangGraphnode“grade →route”;evaluator=LLMrẻhoặcclassifier. Chi
+phí: +1bước chấm điểm/query. Họ hàng Self-RAG (→Day23). (Yanet al., 2024)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 28/ 39
+
+--- Page 39 ---
+Augmentation: Làm Sạch ContextTheo Vấn Đề
+Tầng giữa Retrieve và Generate— Top-k chunks hiếm khi sạch: dư thừa, mâu thuẫn,
+thiếunguồn. Augmentchènbước làmsạch trướckhiđưavàoLLM—bật đúngbước theo
+vấnđề (giống PreRAG), không bật cả4.
+Bước Vấnđề Cáchlàm Tool
+NLIverification Chunk lạc đề / mâu
+thuẫncâu hỏi
+Kiểmentailmentquery ↔chunk,
+bỏchunk “contradiction”
+nli-deberta-v3
+Compression Prompt quá dài, nhiều
+nhiễu
+Nén / bỏ câu ít liên quan, giữ ý
+chính
+LLMLingua
+Citationinjection Cầnkiểm chứng nguồn Gắn[1][2]mỗicâu,tracengược
+vềchunk gốc
+prompt+ map
+Conflictresolution 2 chunk mâu thuẫn (v2
+vsv3)
+newest-wins (theo metadata) /
+LLMlàm trọng tài
+metadata+LLM
+Lưuý: Nhồitop-kthẳngvàoprompt(nhưdemo) bỏlỡtầngnày . TaiLieuBotcase#4: policyv2vsv3mâuthuẫn →
+conflictresolution chọn v3 (newest-wins).
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 29/ 39
+
+--- Page 40 ---
+04
+PHẦN04
+Close the Loop & Limits
+Đo bằng RAGAS→ tra ngược về Error Tree (Phần I) để sửa
+đúng tầng — vòng lặp khép kín; rồi nhìn thẳng giới hạn embed-
+ding và ranh giới với các ngày khác
+
+--- Page 41 ---
+BƯỚCHIỆN TẠI
+Closethe Loop
+Đobằng RAGAS, tra Error Tree,sửa đúng tầng
+OFFLINE
+1lần
+Parse Chunk Enrich Embed Index
+ONLINE
+mỗiquery
+PreRAG Retrieve Rerank Augment Generate PostRAG
+
+--- Page 42 ---
+Đo: RAGAS 4 Metric— 2 Trục,2 Tầng
+RETRIEVAL— lấy đúng chưa?
+ContextRecall ≥ 0.75
+Đãlấy đủthôngtin cần thiết?
+ContextPrecision ≥ 0.75
+Chunkliên quan có xếphạngcao top-k?
+Thấp →sửatầng Retrieve/Rerank.
+GENERATION— trả lời đúngchưa?
+Faithfulness ≥ 0.85
+Câutrả lời cóbámcontext(chống bịa)?
+AnswerRelevancy ≥ 0.80
+Trảlời đúngtrọngtâm câuhỏi?
+Thấp →sửatầng Generate (prompt).
+Một điểm tổngchechỗ hỏng. Tách retrieval vs generation→biết ngaytầng nàomất điểm để tra Error
+Tree. (RAGASsâu, LLM-as-Judge, guardrails→Day24.)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 30/ 39
+
+--- Page 43 ---
+MetricThấp →SửaGì (Error TreeTheoMetric)
+Cùngbảnđồpipelineở Phần01 —giờvàotừcột metricthayvìvấnđề. RAGASchỉratầng
+yếu →travề cùng la bàn→sửa →đolại.
+Metricthấp Hànhđộng (tầng nào trong bảnđồ)
+ContextRecall Hybrid (+BM25), HyDE, Multi-Query, metadata filter
+(Retrieval)
+ContextPrecision Reranking,tăng threshold, metadata filter(Rerank)
+Faithfulness Promptchặt, hạ temperature, citation(Generate)
+AnswerRelevancy Cải thiện prompt,mở rộng context (Generate)
+(1)RAGASbaseline →(2)bottom-5fail →(3)đọcmetricthấp →trabảng=bảnđồPhầnI →
+(4) sửa→ (5) so delta.Thứ tự rẻ→đắt: recall (hybrid)→ precision (rerank)→ faithfulness
+(prompt).
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 31/ 39
+
+--- Page 44 ---
+GiớiHạn Nền Tảng: 4 Điểm Mù Của Embedding
+Negationinsensitivity
+“đượcnghỉ”vs“ khôngđượcnghỉ” →co-
+sinecao nhưng nghĩa ngược.
+Entity-swap
+“phép nhân viên” vs “phépquản lý” →
+vectorgần nhau, dễ nhầm.
+Temporalblindness
+Vector không mã hóa thời gian→ chính
+sách2024vs 2026cùngscore.
+Numericalblindness
+“nghỉ 12 ngày” vs “nghỉ20 ngày” → co-
+sinecao, nhưng con số mới làđáp án.
+Lưu ý:4 ca này đềucosine cao nhưng nghĩa khác— embedding một mình không phân
+biệt được phủ định / thời gian / thực thể / con số. Không phải “kém”, màchưa đủ. Cách bù
+đắp →slidekế.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 32/ 39
+
+--- Page 45 ---
+GiảiPháp Cho Lỗi Embedding Không FixĐược Bằng Data
+■ Metadatafiltering (temporal,số, source) — sửa temporal &numerical blindness: lọctheo
+ngày/ con số trước khi search.
+■ NLIverification post-retrieval— bắt negation/entity-swap: kiểm entailment query↔chunk.
+■ Failure-awarerouting —phát hiện loại lỗi trướcgenerate, đổi chiến lược (rewrite /
+decompose/ từ chối).
+■ GraphRAG—câu hỏi quan hệ giữa nhiềuentity: graph thayvì flat vector (→Day19).
+■ Human-in-the-loop—high-stakes: người duyệttrước khi trả (→Day27).
+Không phải cứ thêm data hay đổi embedding model là fix được.Chẩn đoán loại lỗi trước,
+rồichọn đúng công cụ.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 33/ 39
+
+--- Page 46 ---
+RanhGiới: Hôm NayDạy Gì, Phần Còn Lại ỞNgày Nào
+Chất lượngingestion (OFFLINE)+ retrieval (ONLINE): chunking, contextual, enrichment,
+hybrid/rerank,query transform, augmentation — thường làphần “ăn điểm” lớn của RAG.
+Chủđề liên quan Họcsâu ở đâu
+GraphRAG& Knowledge Graphs Day19
+Multi-Agent/ Agentic RAG patterns Day 20 (Multi-Agent), Day 23 (Lang-
+Graph)
+RAGAS sâu, LLM-as-Judge,
+Guardrails
+Day24
+Caching,circuit breakers, reliability Day25
+Human-in-the-loopUX Day27
+Hômnay chỉ dùng
+cácchủ đề này ở mức“đủ để pipeline chạy & đođược”; chi tiết để dành đúngngày.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 34/ 39
+
+--- Page 47 ---
+01
+Hands-on 18
+Đủ lý thuyết — giờ tự tay dựng pipeline trên dữ liệu thật, đo
+bằng RAGAS, và phân tích thất bại như TaiLieuBot
+
+--- Page 48 ---
+Lab18: 5 Module→FullPipeline
+Cánhân — 2h implement + 30phút reflection
+Implementtấtcả 5 module(TODOmarkers trong code):
+1. m1_chunking.py—semantic, hierarchical, structure-aware
+2. m2_search.py—BM25 Vietnamese+ Dense +RRF
+3. m3_rerank.py—CrossEncoder rerank top-20→top-3
+4. m4_eval.py—RAGAS 4 metrics + failureanalysis
+5. m5_enrichment.py—contextual / summary / hypo-Q&A
+Verify: pytest tests/test_m*.py ·Pipeline: python src/pipeline.py
+Reflection(30phút): maplectureconcept →codevừaviết·khókhăn&cáchgiải·action
+plancho project cá nhân
+git clone .../lab18 → docker compose up -d (Qdrant) → pip install -r
+requirements.txt → python naive_baseline.py (lấyđiểm gốc để so).
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 35/ 39
+
+--- Page 49 ---
+SoSánh: Naive vsProduction vs +Nâng Cao
+Pipeline Cấuhình Kỳ vọng RAGAS
+(minhhoạ)
+A— Naive paragraph chunk 512 + dense-
+only
+Faithfulness ∼0.70,
+Recall ∼0.55
+B— Production hierarchical + hybrid + bge-
+reranker
+Faithfulness ≥0.85,
+Recall ≥0.75
+C— Tự chọn B + 1 hoặc nhiềukỹ thuật nâng
+cao(tự chọn)
+đodelta vs B
+Thêm vào Bmột hoặc nhiềukỹ thuật rồi đo cải thiện. Gợi ý: contextual embeddings ·
+summary/hypothetical-Q&A enrich · metadata filter · HyDE · Multi-Query · semantic chunk
+·threshold rerank. Khônggiới hạn ở contextual.
+Lưuý: Cùngdữliệu,cùngjudgemodel—chênhlệchđiểmđến phầnlớn từkỹthuậtpipeline.
+Consố minh hoạ; số thật đotrong lab.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 36/ 39
+
+--- Page 50 ---
+MỗiTầng Có Núm Vặn Riêng —Vặn Đúng Tầng, Đừng Đổi Model
+OFFLINE Chunk Enrich
+hierarchical · seman-
+tic · structure-
+aware · late
+contextual · sum-
+mary · hypo
+Q&A · metadata
+ONLINE PreRAG Retrieve Rerank Augment
+HyDE · Multi-Query
+· CRAG · routing
+hybrid+RRF · Col-
+BERT · SPLADE
+· vector DB
+cross-encoder ·
+point/list/pair · NDCG
+NLI · compression
+· citation · conflict
+RAG yếu trong production→ (1) đo RAGAS biếtretrieval hay generation hỏng →
+(2)ErrorTreemapvấnđềra tầng →(3)bảnđồnàychọn númvặn. Đừngđổimodel,
+vặnđúng tầng. (Đo→Day24· embedding mù→GraphRAGDay19 / HITL Day27.)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 37/ 39
+
+--- Page 51 ---
+02
+Key Takeaways
+Production RAG là kỹ thuật chẩn đoán + sửa đúng tầng, không
+phải thêm model mạnh hơn
+
+--- Page 52 ---
+Tổngkết — Key Takeaways
+1 Chẩn đoán trước, sửa sau.RAG = OFFLINE + ONLINE; dùng Error Tree để biết tầng nào
+mấtđiểm.
+2 OFFLINE đặt trần chất lượng.Hierarchical chunk + contextual + enrichment: làm 1 lần lúc
+index,lợi mọi query — retrievalkhông thể tốt hơn cái đãindex.
+3
+Reranking ROI cao khi recall đã đủ.+15–25% precision với∼30–50ms khi latency cho
+phép;vô dụng nếu chunk đúng chưađược retrieve. Chọntheo ngôn ngữ & chi phí.
+4 Đo để sửa đúng chỗ.RAGAS 4 metric→ diagnostic tree→ sửa tầng yếu (eval sâu: Day
+24).
+5 Biếtgiới hạn. Embeddingmù negation/temporal — chẩn đoánloại lỗi trước khi thêm data.
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 37/ 39
+
+--- Page 53 ---
+TàiLiệu Tham Khảo
+1. Anthropic. IntroducingContextual Retrieval (2024).
+https://www.anthropic.com/news/contextual-retrieval
+2. Weaviate. AdvancedRAG Techniquesebook.
+3. ESKhattab & Zaharia.ColBERT:Late Interaction. SIGIR 2020.
+4. Sarthiet al. RAPTOR:Recursive Abstractive Tree. ICLR 2024.
+5. Kusupatiet al. MatryoshkaRepresentation Learning. NeurIPS 2022.
+6. Faysseet al. ColPali: Vision-LanguageRetrieval. arXiv:2407.01449 (2024).
+7. Gaoet al. PreciseZero-Shot Dense Retrieval (HyDE).arXiv:2212.10496
+8. Asaiet al. Self-RAG.arXiv:2310.11511 (đọcthêm →Day23)
+9. Yanet al.CorrectiveRAG (CRAG).arXiv:2401.15884
+10. Eset al. RAGAS.arXiv:2309.15217
+11. Ehteshamet al. AgenticRAG Survey. arXiv:2501.09136(đọcthêm →Day20/23)
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 38/ 39
+
+--- Page 54 ---
+Tiếptheo & Bài tập
+Day 19 — GraphRAG & Knowledge
+Graphs
+“Khiuserhỏivềquanhệgiữa5entity,
+flat RAG trả lời sai — GraphRAG trả
+lờiđúng.”
+■ Hoànthiện Lab 18: pipeline +
+RAGASreport đạt ≥0.75
+■ Thử1 cải tiến M5 khác, đodelta
+vsbaseline
+■ ĐọcMicrosoft GraphRAG paper
+(2024)trước Day 19
+Giảngviên (VinUni) AICB· Ngày 18 Track3 · Tuần4 39/ 39
+
+--- Page 55 ---
+Hỏi& Đáp
+Production RAG: bạn sẽ sửa tầng nào
+đầu tiên trong hệ thống của mình?
+
+--- Page 56 ---
+Cảmơn!
+Trần Quang Thiện · AICB Phase 2 · Track 3
+Production RAG — Ngày 18

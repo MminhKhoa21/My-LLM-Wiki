@@ -30,7 +30,7 @@ The core architectural layers common to these systems are:
 - **Architecture:** Transitioning from modular to planning-oriented End-to-End (E2E) approaches.
 - **Key Concepts:**
   - **UniAD & VAD:** Incorporating perception, tracking, prediction, and planning in a single pipeline.
-  - **DriveLM:** Utilizing [[VLM]] (Vision-Language Models) for reasoning and graph VQA for decision making.
+  - **DriveLM:** Utilizing VLM (Vision-Language Models) for reasoning and graph VQA for decision making.
   - **GAIA-1 / GAIA-2:** Using World Models for rare scenario simulation.
 - **Lessons Learned:** ODD must be defined before the model. An E2E policy still needs an independent safety shell.
 

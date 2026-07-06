@@ -34,7 +34,7 @@ def parse_frontmatter(content):
     return metadata
 
 def run_lint():
-    wiki_dir = Path("D:/Obsidian/My Wiki/wiki")
+    wiki_dir = Path("D:/Wiki/wiki")
     if not wiki_dir.exists():
         print(f"Error: wiki directory does not exist at {wiki_dir}")
         return False

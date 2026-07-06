@@ -129,4 +129,5 @@ Welcome to your LLM-maintained Knowledge Base index. This page is automatically 
 
 - [[concept_agent]] - **AI Agents & Orchestration**: Tổng hợp kiến thức về AI Agent, Multi-Agent và Agentic Orchestration qua các ngày. *(Tags: ai, 20k, concept, agent, orchestration)*
 - [[concept_evaluation]] - **AI Evaluation & Benchmarking**: Tổng hợp các kỹ thuật, framework và mindset để đánh giá chất lượng sản phẩm AI. *(Tags: ai, 20k, concept, evaluation, benchmarking)*
+- [[midterm_prep_track3]] - **Midterm Exam Preparation - Track 3 (App Build)**: Bộ tài liệu và câu hỏi ôn tập thi giữa kỳ Chương trình Phát triển Năng lực AI Thực Chiến dành cho Track 3 (App Build) *(Tags: ai, 20k, exam, prep, track3)*
 - [[concept_rag]] - **Retrieval-Augmented Generation (RAG)**: Tổng hợp kiến thức về RAG qua các ngày trong khóa học AI 20K. *(Tags: ai, 20k, concept, rag)*

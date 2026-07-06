@@ -14,10 +14,8 @@ from datetime import datetime
 SERVER_ROOT = Path(__file__).parent.parent
 DASHBOARD_DIR = SERVER_ROOT / "dashboard"
 
-# Content resides in the user's Obsidian Vault (fallback to SERVER_ROOT if deployed)
-ROOT_DIR = Path(os.environ.get("WIKI_ROOT", "D:/Obsidian/My Wiki"))
-if not ROOT_DIR.exists():
-    ROOT_DIR = SERVER_ROOT
+# Content resides in the user's workspace
+ROOT_DIR = SERVER_ROOT
 WIKI_DIR = ROOT_DIR / "wiki"
 RAW_DIR = ROOT_DIR / "raw"
 DRAFTS_DIR = ROOT_DIR / "drafts"
@@ -147,6 +145,9 @@ class handler(http.server.SimpleHTTPRequestHandler):
     def send_json(self, data, status=200):
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
         response_bytes = json.dumps(data).encode("utf-8")
         self.send_header("Content-Length", str(len(response_bytes)))
         self.end_headers()
