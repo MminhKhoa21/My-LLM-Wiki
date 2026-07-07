@@ -6,11 +6,13 @@ tags: [ai, 20k, day25]
 timestamp: 2026-07-05
 sources: []
 ---
-
-# Day 25 – AI Product · GPU FinOps · Cost Optimization
+```markdown
+# Day 25 – AI Product · GPU FinOps · Cost Optimization  
+*# Ngày 25 – Sản phẩm AI · GPU FinOps · Tối ưu chi phí*
 
 | Track | Chủ đề |
 |-------|--------|
-| [[day25_track1]] | AI Product & Con người trong dự án AI |
-| [[day25_track2]] | GPU FinOps & Cost Optimization |
-| [[day25_track3]] | Hiện tại chưa có tài liệu cho Track này |
+| [[day25_track1]] | AI Product & Humans in AI Projects<br>*AI Product & Con người trong dự án AI* |
+| [[day25_track2]] | GPU FinOps & Cost Optimization<br>*GPU FinOps & Tối ưu chi phí* |
+| [[day25_track3]] | Currently no documentation for this track<br>*Hiện tại chưa có tài liệu cho Track này* |
+```

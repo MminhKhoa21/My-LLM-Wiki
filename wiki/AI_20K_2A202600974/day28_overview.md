@@ -6,11 +6,11 @@ tags: [ai, 20k, day28]
 timestamp: 2026-07-06
 sources: []
 ---
+# Day 28 – AI System Architectures & Platform Engineering  
+*# Ngày 28 – Kiến trúc hệ thống AI & Kỹ thuật Platform*
 
-# Day 28 – AI System Architectures & Platform Engineering
-
-| Track | Chủ đề |
-|-------|--------|
-| [[day28_track1]] | Track 1: Real-World AI System Architectures |
-| [[day28_track2]] | Track 2: Platform Engineering & Documentation |
-| [[day28_track3]] | Track 3: General Deck & System Operations |
+| Track | Chủ đề / Topic |
+|-------|----------------|
+| [[day28_track1]] | Track 1: Real-World AI System Architectures<br/>*(Kiến trúc hệ thống AI thực tế)* |
+| [[day28_track2]] | Track 2: Platform Engineering & Documentation<br/>*(Kỹ thuật Platform & Tài liệu)* |
+| [[day28_track3]] | Track 3: General Deck & System Operations<br/>*(Tổng quan & Vận hành hệ thống)* |

@@ -8,66 +8,128 @@ sources: ["raw/AI_20K_2A202600974/28/1-ai_system_architectures_duong_trung_tin_p
 ---
 
 # Real-World AI System Architectures
+# Kiến trúc Hệ thống AI Thực tế
 **Instructor:** Dương Trung Tín (AI Research Engineer · Obello)
+**Giảng viên:** Dương Trung Tín (Kỹ sư Nghiên cứu AI · Obello)
 
 ## Overview
+## Tổng quan
 This document provides an overview of how real-world AI systems transition from a "working model" to a "production system." It covers five main AI systems:
+
+Tài liệu này cung cấp một cái nhìn tổng quan về cách các hệ thống AI thực tế chuyển từ một "mô hình hoạt động được" sang một "hệ thống production". Nó bao gồm năm hệ thống AI chính:
+
 - **ADAS / Autonomous Driving**
+- **ADAS / Lái xe tự động (Autonomous Driving)**
 - **Autonomous Delivery Robot**
+- **Robot Giao hàng Tự động (Autonomous Delivery Robot)**
 - **AI System for CCTV**
+- **Hệ thống AI cho Camera Giám sát (CCTV)**
 - **Humanoid Robot**
+- **Robot Hình người (Humanoid Robot)**
 - **Satellite Image Application**
+- **Ứng dụng Ảnh Vệ tinh (Satellite Image Application)**
 
 The core architectural layers common to these systems are:
+
+Các tầng kiến trúc cốt lõi chung của những hệ thống này bao gồm:
+
 1. **Data / Sensor:** Cameras, radars, lidars, logs, satellite imagery.
+1. **Dữ liệu / Cảm biến (Data / Sensor):** Camera, radar, lidar, nhật ký (log), hình ảnh vệ tinh.
 2. **Perception:** Detection, segmentation, tracking, embeddings.
+2. **Nhận thức (Perception):** Phát hiện, phân vùng, theo dõi, nhúng (embeddings).
 3. **World State:** BEV (Bird's Eye View), maps, scene graphs.
+3. **Trạng thái Thế giới (World State):** BEV (Góc nhìn từ trên cao), bản đồ, đồ thị cảnh vật.
 4. **Decision / Policy:** Planner, VLA (Vision-Language-Action), anomaly scorers.
+4. **Quyết định / Chính sách (Decision / Policy):** Bộ lập kế hoạch, VLA (Tầm nhìn-Ngôn ngữ-Hành động), bộ chấm điểm bất thường.
 5. **Action / Product:** Control, delivery, alerts, dashboards.
+5. **Hành động / Sản phẩm (Action / Product):** Điều khiển, giao hàng, cảnh báo, bảng điều khiển.
 6. **Ops / Safety:** ODD (Operational Design Domain), HITL (Human-in-the-loop), telemetry, audit, and retraining.
+6. **Vận hành / An toàn (Ops / Safety):** ODD (Phạm vi Thiết kế Vận hành), HITL (Human-in-the-loop), đo từ xa, kiểm toán và huấn luyện lại.
 
 ## 1. ADAS / Autonomous Driving
+## 1. ADAS / Lái xe Tự động
+
 - **Architecture:** Transitioning from modular to planning-oriented End-to-End (E2E) approaches.
+- **Kiến trúc:** Chuyển đổi từ hướng tiếp cận theo mô-đun sang các hướng tiếp cận End-to-End (E2E) định hướng lập kế hoạch.
 - **Key Concepts:**
+- **Khái niệm chính:**
   - **UniAD & VAD:** Incorporating perception, tracking, prediction, and planning in a single pipeline.
+  - **UniAD & VAD:** Kết hợp nhận thức, theo dõi, dự đoán và lập kế hoạch vào một luồng (pipeline) duy nhất.
   - **DriveLM:** Utilizing VLM (Vision-Language Models) for reasoning and graph VQA for decision making.
+  - **DriveLM:** Sử dụng VLM (Mô hình Tầm nhìn-Ngôn ngữ) để suy luận và VQA đồ thị (Visual Question Answering) để ra quyết định.
   - **GAIA-1 / GAIA-2:** Using World Models for rare scenario simulation.
+  - **GAIA-1 / GAIA-2:** Sử dụng World Models để mô phỏng các kịch bản hiếm gặp.
 - **Lessons Learned:** ODD must be defined before the model. An E2E policy still needs an independent safety shell.
+- **Bài học kinh nghiệm:** Cần phải xác định ODD trước mô hình. Một chính sách E2E vẫn cần một lớp vỏ an toàn độc lập.
 
 ## 2. Autonomous Delivery Robot
+## 2. Robot Giao hàng Tự động
+
 - **Architecture:** Sidewalk autonomy involves low-speed navigation, social awareness, fleet economics, and remote assistance.
+- **Kiến trúc:** Tự hành trên vỉa hè bao gồm điều hướng tốc độ thấp, nhận thức xã hội, tính kinh tế của đội xe và hỗ trợ từ xa.
 - **Key Concepts:**
+- **Khái niệm chính:**
   - **Hybrid Autonomy:** Autonomy combined with remote human assistance.
+  - **Tự hành lai (Hybrid Autonomy):** Sự tự hành kết hợp với sự hỗ trợ của con người từ xa.
   - **Social Navigation:** Anticipating pedestrian behaviors.
+  - **Điều hướng xã hội (Social Navigation):** Dự đoán hành vi của người đi bộ.
 - **Lessons Learned:** Fleet operations (docking, maintenance) are the main moat. Remote assistants need high observability to handle stuck cases effectively.
+- **Bài học kinh nghiệm:** Vận hành đội xe (đỗ xe, bảo trì) là lợi thế cạnh tranh chính (moat). Trợ lý từ xa cần có khả năng quan sát cao để xử lý hiệu quả các trường hợp bị kẹt.
 
 ## 3. AI System for CCTV
+## 3. Hệ thống AI cho Camera Giám sát (CCTV)
+
 - **Architecture:** Transitioning from fixed-class real-time detection to open-vocabulary and semantic search.
+- **Kiến trúc:** Chuyển đổi từ phát hiện theo lớp cố định theo thời gian thực sang các từ vựng mở (open-vocabulary) và tìm kiếm ngữ nghĩa.
 - **Key Concepts:**
+- **Khái niệm chính:**
   - **Edge Inference:** Utilizing YOLOv8/v10 for lightweight edge detection.
+  - **Suy luận tại biên (Edge Inference):** Sử dụng YOLOv8/v10 để phát hiện nhẹ nhàng tại thiết bị biên.
   - **Open-Vocabulary:** Using SAM / Grounded SAM for text-conditioned detection.
+  - **Từ vựng mở (Open-Vocabulary):** Sử dụng SAM / Grounded SAM để phát hiện dựa trên điều kiện văn bản.
   - **VLM Anomaly:** Using VLMs to detect and explain anomalies in long videos.
+  - **Bất thường VLM (VLM Anomaly):** Sử dụng VLM để phát hiện và giải thích các điểm bất thường trong các video dài.
 - **Lessons Learned:** The goal is to reduce the number of clips for human review, not just applying large models to every frame. Edge computation is crucial for privacy and bandwidth optimization.
+- **Bài học kinh nghiệm:** Mục tiêu là giảm số lượng clip để con người xem lại, chứ không chỉ áp dụng mô hình lớn cho mọi khung hình. Tính toán tại biên là rất quan trọng để tối ưu hóa băng thông và quyền riêng tư.
 
 ## 4. Humanoid Robot
+## 4. Robot Hình người
+
 - **Architecture:** Contact-rich manipulation combining System 1 (fast control loop) and System 2 (VLA reasoning).
+- **Kiến trúc:** Thao tác giàu tiếp xúc kết hợp giữa Hệ thống 1 (vòng lặp điều khiển nhanh) và Hệ thống 2 (suy luận VLA).
 - **Key Concepts:**
+- **Khái niệm chính:**
   - **VLA Models:** RT-2, GR00T.
+  - **Mô hình VLA:** RT-2, GR00T.
   - **Imitation & RL:** Teleoperation data (Mobile ALOHA) and Sim-to-Real reinforcement learning.
+  - **Bắt chước & Học tăng cường (Imitation & RL):** Dữ liệu điều khiển từ xa (Mobile ALOHA) và học tăng cường từ mô phỏng sang thực tế (Sim-to-Real).
 - **Lessons Learned:** Robot data is more expensive than web data. Sim-to-real gap necessitates domain randomization. Safety guards (e-stops, torque limits) must be independent of the policy.
+- **Bài học kinh nghiệm:** Dữ liệu robot đắt đỏ hơn dữ liệu web. Khoảng cách từ mô phỏng sang thực tế (Sim-to-real) đòi hỏi phải ngẫu nhiên hóa miền (domain randomization). Các thiết bị bảo vệ an toàn (dừng khẩn cấp, giới hạn mô-men xoắn) phải độc lập với chính sách.
 
 ## 5. Satellite Image Application
+## 5. Ứng dụng Ảnh Vệ tinh
+
 - **Architecture:** GeoAI involves massive data engineering, optical/SAR processing, and temporal fusion.
+- **Kiến trúc:** GeoAI bao gồm việc xử lý dữ liệu khổng lồ, xử lý quang học/SAR và kết hợp theo thời gian (temporal fusion).
 - **Key Concepts:**
+- **Khái niệm chính:**
   - **Geospatial Foundation Models:** Prithvi, Clay.
+  - **Các mô hình Nền tảng Không gian Địa lý:** Prithvi, Clay.
   - **Multi-temporal & Multi-modal:** Combining different temporal baselines and sensors (Optical + SAR + text).
+  - **Đa thời gian & Đa phương thức:** Kết hợp các đường cơ sở thời gian và cảm biến khác nhau (Quang học + SAR + văn bản).
 - **Lessons Learned:** Change detection requires temporal baselines. Uncertainty mapping and Human Analyst Loops are vital for production.
+- **Bài học kinh nghiệm:** Phát hiện thay đổi đòi hỏi các đường cơ sở theo thời gian. Lập bản đồ độ không chắc chắn (Uncertainty mapping) và Vòng lặp Phân tích viên Con người là rất quan trọng cho môi trường production.
 
 ## Key Takeaways
-1. **Architecture Beats Benchmark:** A good model requires the correct data path, latency constraints, safety shell, and ops loop.
-2. **End-to-End Doesn't Mean No System:** E2E policies still need ODD and monitoring.
-3. **Data Flywheel:** Systems scale effectively by capturing edge cases and feeding them back into training loops.
+## Những điểm chính
 
+1. **Architecture Beats Benchmark:** A good model requires the correct data path, latency constraints, safety shell, and ops loop.
+1. **Kiến trúc quan trọng hơn Điểm chuẩn (Architecture Beats Benchmark):** Một mô hình tốt yêu cầu luồng dữ liệu chính xác, các ràng buộc về độ trễ, lớp vỏ an toàn và vòng lặp vận hành (ops loop).
+2. **End-to-End Doesn't Mean No System:** E2E policies still need ODD and monitoring.
+2. **End-to-End Không có nghĩa là Không cần Hệ thống:** Các chính sách E2E vẫn cần xác định ODD và giám sát.
+3. **Data Flywheel:** Systems scale effectively by capturing edge cases and feeding them back into training loops.
+3. **Bánh đà Dữ liệu (Data Flywheel):** Các hệ thống mở rộng hiệu quả bằng cách nắm bắt các trường hợp đặc biệt (edge cases) và đưa chúng trở lại vòng lặp huấn luyện.
 
 ## Liên kết
+## Liên kết (Links)
 - [[day28_overview]]
