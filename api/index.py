@@ -172,7 +172,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
 
     def handle_api_get(self, path, query):
         if path == "/api/notes":
-            self.api_get_notes()
+            self.api_get_notes(query)
         elif path == "/api/config":
             self.api_get_config()
         elif path == "/api/note":
@@ -200,8 +200,9 @@ class handler(http.server.SimpleHTTPRequestHandler):
         else:
             self.send_json({"error": "Endpoint not found"}, 404)
 
-    def api_get_notes(self):
-        notes = []
+    def api_get_notes(self, query):
+        lang = query.get("lang", ["vi"])[0]
+        notes_dict = {}
         if not WIKI_DIR.exists():
             self.send_json([])
             return
@@ -209,20 +210,31 @@ class handler(http.server.SimpleHTTPRequestHandler):
         for file_path in WIKI_DIR.rglob("*.md"):
             if file_path.name in ["index.md", "log.md"]:
                 continue
+            
+            # Determine base name
+            base_name = file_path.stem
+            if file_path.name.endswith(".en.md"):
+                base_name = file_path.name[:-6]
+            elif file_path.name.endswith(".vi.md"):
+                base_name = file_path.name[:-6]
+                
+            if base_name in notes_dict:
+                continue
+                
             try:
                 content = file_path.read_text(encoding="utf-8")
                 meta = parse_frontmatter(content) or {}
-                notes.append({
-                    "name": file_path.stem,
-                    "title": meta.get("title", file_path.stem),
+                notes_dict[base_name] = {
+                    "name": base_name,
+                    "title": meta.get("title", base_name),
                     "description": meta.get("description", ""),
                     "type": meta.get("type", "unknown"),
                     "tags": meta.get("tags", []),
                     "timestamp": meta.get("timestamp", "")
-                })
+                }
             except Exception as e:
                 pass
-        self.send_json(notes)
+        self.send_json(list(notes_dict.values()))
 
     def api_get_config(self):
         read_only = os.environ.get("READ_ONLY", "false").lower() == "true"
@@ -230,13 +242,28 @@ class handler(http.server.SimpleHTTPRequestHandler):
 
     def api_get_note_detail(self, query):
         note_name = query.get("name", [None])[0]
+        lang = query.get("lang", ["vi"])[0]
         if not note_name:
             self.send_json({"error": "Missing parameter 'name'"}, 400)
             return
 
-        found = list(WIKI_DIR.rglob(f"{note_name}.md"))
-        file_path = found[0] if found else WIKI_DIR / f"{note_name}.md"
-        if not file_path.exists() or not file_path.is_file():
+        lang_file_path = WIKI_DIR / f"{note_name}.{lang}.md"
+        base_file_path = WIKI_DIR / f"{note_name}.md"
+        
+        file_path = None
+        if lang_file_path.exists():
+            file_path = lang_file_path
+        elif base_file_path.exists():
+            file_path = base_file_path
+        else:
+            found_lang = list(WIKI_DIR.rglob(f"{note_name}.{lang}.md"))
+            found_base = list(WIKI_DIR.rglob(f"{note_name}.md"))
+            if found_lang:
+                file_path = found_lang[0]
+            elif found_base:
+                file_path = found_base[0]
+
+        if not file_path or not file_path.is_file():
             self.send_json({"error": f"Note '{note_name}' not found"}, 404)
             return
 

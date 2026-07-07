@@ -136,6 +136,7 @@ const translations = {
 };
 
 let currentLang = "vi";
+let currentNoteName = null;
 
 // DOM Elements
 const noteListEl = document.getElementById("note-list");
@@ -322,7 +323,7 @@ function switchTab(tabId, callback = null) {
 // 2. Fetch and render note list
 async function loadNotes() {
     try {
-        const res = await fetch(`${API_BASE}/notes`);
+        const res = await fetch(`${API_BASE}/notes?lang=${currentLang}`);
         if (!res.ok) throw new Error("Failed to load notes");
         notesData = await res.json();
         
@@ -390,7 +391,8 @@ async function loadNoteDetail(noteName) {
         noteContentArea.innerHTML = `<div class="note-viewer-empty"><i class="fa-solid fa-spinner fa-spin empty-icon"></i><p>Reading note contents...</p></div>`;
         noteViewerHeader.style.display = "none";
         
-        const res = await fetch(`${API_BASE}/note?name=${encodeURIComponent(noteName)}`);
+        currentNoteName = noteName;
+        const res = await fetch(`${API_BASE}/note?name=${encodeURIComponent(noteName)}&lang=${currentLang}`);
         if (!res.ok) throw new Error(`Failed to load note: ${noteName}`);
         const data = await res.json();
         
@@ -688,6 +690,9 @@ function toggleLanguage() {
     if (document.getElementById("manage-tab").classList.contains("active")) {
         loadManagementData();
     }
+    if (currentNoteName && document.getElementById("note-tab").classList.contains("active")) {
+        loadNoteDetail(currentNoteName);
+    }
 }
 
 function updateLanguageUI() {
@@ -725,7 +730,7 @@ async function loadManagementData() {
         manageRawListEl.innerHTML = `<div style="padding: 15px; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>`;
         
         // Fetch Wiki pages
-        const wikiRes = await fetch(`${API_BASE}/notes`);
+        const wikiRes = await fetch(`${API_BASE}/notes?lang=${currentLang}`);
         const wikis = wikiRes.ok ? await wikiRes.json() : [];
         
         // Fetch Raw files

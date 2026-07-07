@@ -157,4 +157,5 @@ This is an append-only chronological log of all ingestion, query, and linting ac
 - Created summary page `wiki/AI_20K_2A202600974/summary_day28-platform-engineering-documentation.md`.
 # #   [ 2 0 2 6 - 0 7 - 0 6 ]   i n g e s t   |   G e n e r a t e   R e v i e w   Q u e s t i o n s   f o r   a l l   t r a c k s  
  # #   [ 2 0 2 6 - 0 7 - 0 7 ]   u p d a t e   |   C o n v e r t e d   7 4   m i s s i n g   f i l e s   t o   b i l i n g u a l   ( E n g l i s h / V i e t n a m e s e )  
+ # #   [ 2 0 2 6 - 0 7 - 0 7 ]   s y s t e m   |   r e f a c t o r :   S p l i t   1 2 5   M a r k d o w n   f i l e s   i n t o   d i s t i n c t   . e n . m d   a n d   . v i . m d   f i l e s   t o   s u p p o r t   D a s h b o a r d   l a n g u a g e   t o g g l e ,   u p d a t e d   a p i / i n d e x . p y   a n d   d a s h b o a r d / a p p . j s   t o   f e t c h   ? l a n g   p a r a m e t e r   d y n a m i c a l l y .  
  
