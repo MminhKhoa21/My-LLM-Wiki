@@ -528,6 +528,7 @@ a:hover {
     padding: 12px 16px;
     border: 1px solid var(--panel-border);
     text-align: left;
+    white-space: nowrap;
 }
 
 .markdown-body th {
