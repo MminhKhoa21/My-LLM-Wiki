@@ -539,10 +539,18 @@ function renderGraph(data) {
         system: { background: "#1e293b", border: "#475569", highlight: { background: "#64748b", border: "#475569" } }
     };
     
+    // Map connected node IDs to filter out orphan nodes
+    const connectedNodeIds = new Set();
+    data.edges.forEach(edge => {
+        connectedNodeIds.add(edge.from);
+        connectedNodeIds.add(edge.to);
+    });
+
     // Process nodes
     const filteredNodes = data.nodes.filter(node => {
         const group = node.group || "concept";
-        return activeGraphFilters[group] !== false;
+        if (activeGraphFilters[group] === false) return false;
+        return connectedNodeIds.has(node.id);
     });
     
     const nodes = filteredNodes.map(node => {
