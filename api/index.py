@@ -188,7 +188,7 @@ class handler(http.server.SimpleHTTPRequestHandler):
         elif path == "/api/note":
             self.api_get_note_detail(query)
         elif path == "/api/graph":
-            self.api_get_graph()
+            self.api_get_graph(query)
         elif path == "/api/lint":
             self.api_get_lint()
         elif path == "/api/search":
@@ -294,10 +294,12 @@ class handler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             self.send_json({"error": str(e)}, 500)
 
-    def api_get_graph(self):
+    def api_get_graph(self, query):
+        lang = query.get("lang", ["vi"])[0]
         nodes = []
         edges = []
         all_stems = set()
+        file_to_normalized_stem = {}
 
         if not WIKI_DIR.exists():
             self.send_json({"nodes": [], "edges": []})
@@ -306,11 +308,32 @@ class handler(http.server.SimpleHTTPRequestHandler):
         # Phase 1: Collect nodes
         for file_path in WIKI_DIR.rglob("*.md"):
             stem = file_path.stem
-            all_stems.add(stem)
+            
+            # Determine if this file belongs to the requested language
+            is_lang_file = stem.endswith(f".{lang}")
+            is_system_file = stem in ["index", "log", "overview"]
+            
+            # If it's a language file for another language, skip it
+            is_other_lang = False
+            for other_lang in ["en", "vi"]:
+                if other_lang != lang and stem.endswith(f".{other_lang}"):
+                    is_other_lang = True
+                    break
+            
+            if not is_lang_file and not (is_system_file and not is_other_lang):
+                continue
+                
+            # Normalize stem (remove .en or .vi)
+            normalized_stem = stem
+            if is_lang_file:
+                normalized_stem = stem[:-len(f".{lang}")]
+                
+            all_stems.add(normalized_stem)
+            file_to_normalized_stem[file_path] = normalized_stem
             
             # Treat index, log, overview as standard group types
             group_type = "system"
-            if stem not in ["index", "log"]:
+            if normalized_stem not in ["index", "log"]:
                 try:
                     content = file_path.read_text(encoding="utf-8")
                     meta = parse_frontmatter(content) or {}
@@ -321,14 +344,13 @@ class handler(http.server.SimpleHTTPRequestHandler):
                 group_type = "system"
 
             nodes.append({
-                "id": stem,
-                "label": stem.replace("_", " ").title() if stem not in ["index", "log"] else stem.upper(),
+                "id": normalized_stem,
+                "label": normalized_stem.replace("_", " ").title() if normalized_stem not in ["index", "log"] else normalized_stem.upper(),
                 "group": group_type
             })
 
         # Phase 2: Collect edges
-        for file_path in WIKI_DIR.rglob("*.md"):
-            source_stem = file_path.stem
+        for file_path, source_stem in file_to_normalized_stem.items():
             try:
                 content = file_path.read_text(encoding="utf-8")
                 # Remove code blocks
@@ -345,6 +367,11 @@ class handler(http.server.SimpleHTTPRequestHandler):
 
                 for t in targets:
                     t_clean = t.strip()
+                    # If target is written as e.g. day1_overview.vi, normalize it
+                    for other_lang in ["en", "vi"]:
+                        if t_clean.endswith(f".{other_lang}"):
+                            t_clean = t_clean[:-len(f".{other_lang}")]
+                            
                     t_alt = t_clean.replace(" ", "_")
                     
                     if t_clean in all_stems:

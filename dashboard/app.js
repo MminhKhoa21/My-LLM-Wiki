@@ -516,7 +516,7 @@ ${contentLines}
 // 4. Force-directed Graph Rendering using Vis.js
 async function loadGraph() {
     try {
-        const res = await fetch(`${API_BASE}/graph`);
+        const res = await fetch(`${API_BASE}/graph?lang=${currentLang}`);
         if (!res.ok) throw new Error("Failed to load graph data");
         const data = await res.json();
         
@@ -731,6 +731,7 @@ function toggleLanguage() {
     updateLanguageUI();
     // Reload dynamically rendered elements
     loadNotes();
+    loadGraph();
     if (document.getElementById("manage-tab").classList.contains("active")) {
         loadManagementData();
     }
