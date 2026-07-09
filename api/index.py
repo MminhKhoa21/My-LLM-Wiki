@@ -111,6 +111,16 @@ class handler(http.server.SimpleHTTPRequestHandler):
                     content_type = "application/javascript"
                 elif file_path.suffix == ".json":
                     content_type = "application/json"
+                elif file_path.suffix == ".png":
+                    content_type = "image/png"
+                elif file_path.suffix in [".jpg", ".jpeg"]:
+                    content_type = "image/jpeg"
+                elif file_path.suffix == ".svg":
+                    content_type = "image/svg+xml"
+                elif file_path.suffix == ".gif":
+                    content_type = "image/gif"
+                elif file_path.suffix == ".webp":
+                    content_type = "image/webp"
 
                 self.send_response(200)
                 self.send_header("Content-Type", content_type)
