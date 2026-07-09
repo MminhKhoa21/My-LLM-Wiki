@@ -32,3 +32,43 @@ sources: ["raw/AI_20K_2A202600974/23/day23-monitoring-observability-stack-lectur
 - [[day13_overview]] – Monitoring & Logging 
 - [[day27_track2]] – Data Observability & Lineage
 - [[day23_overview]]
+
+---
+
+### Day 23 Review Questions
+
+1. **According to the lecture, besides the traditional golden signals, what additional signals do LLMs need to ensure observability?**  
+   - A. Latency, traffic, errors, saturation  
+     *A. Latency, traffic, errors, saturation*  
+   - B. Token throughput, hallucination rate, output length distribution, tool-call failure rate  
+     *B. Token throughput, hallucination rate, output length distribution, tool-call failure rate*  
+   - C. CPU usage, memory usage, disk I/O  
+     *C. CPU usage, memory usage, disk I/O*  
+   - D. Number of users, number of requests, status codes  
+     *D. Number of users, number of requests, status codes*  
+   **Answer:** B  
+
+2. **Cardinality is the “silent bill killer” because:**  
+   - A. It increases system latency  
+   - B. It increases the number of unique label combinations, leading to high storage and processing costs  
+   - C. It reduces the number of collectable metrics  
+   - D. It causes errors when using Prometheus  
+   **Answer:** B  
+
+3. **The evolution from DevOps to AgentOps described in “The Ops Trinity” includes:**  
+   - A. DevOps → MLOps → LLMOps → AgentOps  
+     *A. DevOps → MLOps → LLMOps → AgentOps*  
+   - B. DevOps → LLMOps → MLOps → AgentOps  
+     *B. DevOps → LLMOps → MLOps → AgentOps*  
+   - C. DevOps → AgentOps → MLOps → LLMOps  
+     *C. DevOps → AgentOps → MLOps → LLMOps*  
+   - D. MLOps → DevOps → LLMOps → AgentOps  
+     *D. MLOps → DevOps → LLMOps → AgentOps*  
+   **Answer:** A  
+
+4. **According to the lecture, telemetry from previous days is integrated into Day 23, for example:**  
+   - A. Day 16: Spark UI metrics  
+   - B. Day 19: GPU util (DCGM)  
+   - C. Day 22: Eval-pass-rate as a Prometheus gauge  
+   - D. Day 17: llama.cpp tokens/sec  
+   **Answer:** C

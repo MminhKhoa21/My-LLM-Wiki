@@ -47,4 +47,36 @@ sources: ["raw/AI_20K_2A202600974/19/1-Day 19 - Track 2 - Vector store and Featu
 
 
 - **GraphRAG:** Mentioned as an alternative/supplement when understanding relationships (Relational QA) is needed, where pure Vector RAG struggles (Details in Track 3).  
-- **Preparation for Day 20:** Understand the trade-off between Model Accuracy and Latency (e.g., 95% accuracy but 3s latency is a poor user experience). Prepare for knowledge of Model Serving & Inference Optimization (vLLM, PagedAttention).  
+- **Preparation for Day 20:** Understand the trade-off between Model Accuracy and Latency (e.g., 95% accuracy but 3s latency is a poor user experience). Prepare for knowledge of Model Serving & Inference Optimization (vLLM, PagedAttention).
+
+---
+
+### Day 19 Review Questions
+
+1. **What happens if you change the embedding model after indexing data in a vector database?**  
+   - A. The vector database automatically updates embeddings for all old data.  
+   - B. No impact because the vector database stores vectors independently of the model.  
+   - C. A full re-index is required because vectors from the old and new models are incompatible.  
+   - D. Only the query model needs to be changed; the index remains the same.  
+   **Answer:** C  
+
+2. **When vectors are unit-normalized, which of the following statements is true?**  
+   - A. Cosine Similarity and Dot Product give different rankings.  
+   - B. The ranking order of Cosine, Dot Product, and Euclidean Distance is the same.  
+   - C. Only Cosine Similarity gives accurate results.  
+   - D. Euclidean Distance cannot be used with normalized vectors.  
+   **Answer:** B  
+
+3. **Which factor is considered to account for up to 80% of the quality in a RAG system?**  
+   - A. The choice of vector database (Qdrant, Weaviate).  
+   - B. The ANN technique (HNSW, IVF).  
+   - C. The chunking strategy (size and overlap).  
+   - D. Using hybrid search combined with BM25.  
+   **Answer:** C  
+
+4. **How is the "Training-Serving Skew" problem resolved in a Feature Store?**  
+   - A. Using Point-in-time Join to stitch data in real-time.  
+   - B. Ensuring both training and inference use the same feature computation processor.  
+   - C. Storing all features in the Online Store instead of the Offline Store.  
+   - D. Increasing the dataset size to reduce skew.  
+   **Answer:** B

@@ -56,3 +56,30 @@ sources: ["raw/AI_20K_2A202600974/18/2-Day 18 - Track 2 - Data Lakehouse Archite
 - **Hợp đồng dữ liệu:** Áp dụng schemas và các ràng buộc để duy trì chất lượng dữ liệu.
 
 - **Bảo mật:** Xử lý PII bằng mã hóa, tokenization, RBAC/ABAC và tuân thủ luật Right-to-Forget (PDPL, GDPR).
+
+---
+
+### *Câu hỏi ôn tập Ngày 18*
+
+   Công nghệ nào nổi bật với tính năng **Hidden Partitioning** giúp tự động trừu tượng hóa logic phân vùng khỏi người dùng?
+   ***Đáp án:** B*
+
+   Anti-pattern nào sau đây thường dẫn đến **vấn đề file nhỏ** trong Data Lakehouse?
+     A. Phân vùng theo cột có nhiều giá trị (cardinality cao)
+     B. Bỏ qua lệnh `OPTIMIZE`
+     C. Đặt `VACUUM 0 HOURS`
+     D. Sử dụng Spark cho các truy vấn nhỏ
+   ***Đáp án:** B*
+
+   Trong kiến trúc Medallion, lớp nào chứa dữ liệu **bất biến (immutable) và chỉ nối thêm (append-only)**?
+   ***Đáp án:** A*
+
+   Để đảm bảo tính tái lập mô hình (model reproducibility), nên tích hợp **phiên bản Delta** với yếu tố nào?
+     A. Mã nguồn Git
+     B. ID chạy MLflow (run ID)
+     C. Dấu thời gian hệ thống
+     D. Tên file Parquet
+   ***Đáp án:** B*
+
+   Định dạng lưu trữ nào được khuyến nghị cho hiệu suất đọc cột và nén tốt trong Lakehouse?
+   ***Đáp án:** C*

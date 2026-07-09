@@ -88,3 +88,35 @@ Evaluating alignment is complex because open-ended tasks have no single ground t
 - [[day21_track3]] – LoRA/QLoRA (pre-alignment fine-tuning step)  
 - [[day22_overview]]  
   *[[day22_overview]]*
+
+---
+
+### Day 22 Review Questions
+
+1. In DPO, when increasing the hyperparameter β (KL penalty), what happens to the trained model?
+   - A. The model becomes more free, loosely adhering to the SFT base.
+   - B. The model becomes more conservative, staying closer to the reference model.
+   - C. No effect on model behavior.
+   - D. The model learns faster but easily overfits.
+
+2. How does ORPO mainly differ from DPO?
+   - A. ORPO requires a separate reward model, DPO does not.
+   - B. ORPO is single-stage alignment, requiring no SFT stage.
+   - C. ORPO uses preference pairs, DPO uses thumbs up/down labels.
+   - D. ORPO is only used for math, DPO is for chatbots.
+
+3. What improvement does GRPO (Group Relative Policy Optimization) bring over traditional PPO?
+   - A. Completely eliminates the value model network by calculating the average reward of output groups.
+   - B. Replaces the reward model with a smaller neural network.
+   - C. Requires more VRAM but increases accuracy.
+   - D. Only used for coding tasks, not for reasoning.
+
+4. Which of the following benchmarks uses LLM-as-Judge to evaluate response quality in alignment?
+   - A. MMLU
+   - *A. MMLU*
+   - B. GSM8K
+   - *B. GSM8K*
+   - C. MT-Bench
+   - *C. MT-Bench*
+   - D. HumanEval
+   - *D. HumanEval*

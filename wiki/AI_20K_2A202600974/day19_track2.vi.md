@@ -48,3 +48,35 @@ sources: ["raw/AI_20K_2A202600974/19/1-Day 19 - Track 2 - Vector store and Featu
 
    **GraphRAG:** Được nhắc đến như giải pháp thay thế/bổ sung khi cần hiểu mối quan hệ (Relational QA) mà Vector RAG đơn thuần gặp khó khăn (Chi tiết ở Track 3).
    **Chuẩn bị cho Day 20:** Hiểu được sự đánh đổi giữa Model Accuracy và Latency (Ví dụ: Accuracy 95% nhưng độ trễ 3s là trải nghiệm người dùng tệ). Chuẩn bị cho kiến thức Model Serving & Inference Optimization (vLLM, PagedAttention).
+
+---
+
+### *Câu hỏi ôn tập Ngày 19*
+
+   Điều gì xảy ra nếu bạn thay đổi model embedding sau khi đã index dữ liệu trong vector database?
+     A. Vector database tự động cập nhật embedding cho tất cả dữ liệu cũ.
+     B. Không ảnh hưởng gì vì vector database lưu trữ vector độc lập với model.
+     C. Bắt buộc phải re-index toàn bộ dữ liệu vì vector từ model cũ và mới không tương thích.
+     D. Chỉ cần thay đổi model ở khâu query, index vẫn giữ nguyên.
+   ***Đáp án:** C*
+
+   Khi các vector đã được chuẩn hóa (unit-norm), mệnh đề nào sau đây là đúng?
+     A. Cosine Similarity và Dot Product cho thứ tự xếp hạng khác nhau.
+     B. Thứ tự xếp hạng của Cosine, Dot Product và Euclidean Distance là giống nhau.
+     C. Chỉ có Cosine Similarity mới cho kết quả chính xác.
+     D. Euclidean Distance không thể sử dụng với vector đã chuẩn hóa.
+   ***Đáp án:** B*
+
+   Yếu tố nào được cho là chiếm tới 80% chất lượng của hệ thống RAG?
+     A. Lựa chọn vector database (Qdrant, Weaviate).
+     B. Kỹ thuật ANN (HNSW, IVF).
+     C. Chiến lược chunking (kích thước và độ chồng lấp).
+     D. Sử dụng hybrid search kết hợp BM25.
+   ***Đáp án:** C*
+
+   Vấn đề "Training-Serving Skew" trong Feature Store được giải quyết bằng cách nào?
+     A. Sử dụng Point-in-time Join để ghép dữ liệu theo thời gian thực.
+     B. Đảm bảo cả huấn luyện và inference dùng cùng một bộ xử lý tính toán feature.
+     C. Lưu trữ tất cả features trong Online Store thay vì Offline Store.
+     D. Tăng kích thước dataset để giảm sai lệch.
+   ***Đáp án:** B*

@@ -84,3 +84,35 @@ Bài tập thực hành nhấn mạnh việc thiết kế một phân đoạn li
    Sau hành động: Xem xét kết quả, chỉnh sửa và xác nhận.
 
    Sai sót & Khắc phục: Tạo vòng phản hồi để sửa lỗi và tiếp tục quy trình làm việc một cách liền mạch.
+
+---
+
+### *Câu hỏi ôn tập Ngày 18*
+
+   Công thức **Trust Calibration** bao gồm Expectation, Explainability và Control. Yếu tố nào giúp người dùng hiểu tại sao AI đưa ra một kết quả cụ thể?
+     A. Kỳ vọng
+     B. Khả năng giải thích
+     C. Kiểm soát
+     D. Tự động hóa
+   **Answer / Đáp án:** B
+
+   Trong quyết định **Augmentation vs Automation**, khi nào AI nên tự động thực hiện hành động (Act)?
+     A. Độ chắc chắn thấp, chi phí sai lầm cao
+     B. Độ chắc chắn cao, chi phí sai lầm thấp
+     C. Độ chắc chắn trung bình, tác động đáng kể
+     D. Luôn luôn tự động để tiết kiệm thời gian
+   **Answer / Đáp án:** B
+
+   Khi AI gặp lỗi hoặc không chắc chắn, cách xử lý nào sau đây được khuyến khích?
+     A. Ẩn kết quả để tránh gây nhầm lẫn
+     B. Hiển thị kết quả với mức độ tin cậy và cung cấp lối thoát
+     C. Bắt buộc người dùng chấp nhận kết quả
+     D. Không thu thập phản hồi từ lỗi
+   **Answer / Đáp án:** B
+
+   "Người dùng nhấn nút **thích/không thích** hoặc đánh giá sản phẩm" thuộc loại phản hồi nào?
+     A. Phản hồi người dùng (Implicit)
+     B. Phản hồi người dùng (Explicit)
+     C. Phản hồi hệ thống (Explicit)
+     D. Phản hồi hệ thống (Implicit)
+   **Answer / Đáp án:** B

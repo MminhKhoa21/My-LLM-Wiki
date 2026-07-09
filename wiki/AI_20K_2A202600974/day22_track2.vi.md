@@ -44,3 +44,30 @@ Dưới đây là nội dung file `day22_track2.md` đã được chuyển đổ
 
 ## *4. Liên Kết*
 
+---
+
+### *Câu hỏi ôn tập Ngày 22*
+
+   Điểm khác biệt cốt lõi giữa LLMOps và MLOps truyền thống là gì?
+     A. LLMOps tập trung vào quản lý dữ liệu hơn là code
+     B. LLMOps coi việc quản lý phiên bản Prompt quan trọng như quản lý code và data
+     C. MLOps không cần đến evaluation
+     D. LLMOps chỉ dùng cho các mô hình ngôn ngữ nhỏ
+   ***Đáp án:** B*
+
+   Công cụ nào được mô tả như "GitHub dành riêng cho prompt" trong bài giảng?
+   ***Đáp án:** C*
+
+   Theo bài giảng, RAGAS được sử dụng để đánh giá những khía cạnh nào của LLM?
+     A. Chỉ độ chính xác (accuracy)
+     B. Tốc độ inference và chi phí
+     C. Faithfulness, relevance và hallucination
+     D. Khả năng phát hiện Prompt Injection
+   ***Đáp án:** C*
+
+   Một trong những mục tiêu của Guardrails & Safety Monitoring là gì?
+     A. Tăng tốc độ sinh token
+     B. Chặn lộ thông tin cá nhân (PII) và phát hiện Prompt Injection
+     C. Tự động tạo prompt mới từ dữ liệu
+     D. Tối ưu hóa chi phí API
+   ***Đáp án:** B*

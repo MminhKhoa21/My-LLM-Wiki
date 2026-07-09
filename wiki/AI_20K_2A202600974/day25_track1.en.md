@@ -56,4 +56,40 @@ Combine the outputs of Day 16-20 into a single package for Seed Round fundraisin
 2. Financial Model + Unit Economics  
 3. Investor Pitch Deck  
 4. Roadmap Now/Next/Later + OKRs  
-5. Dependency Map + Critical Path  
+5. Dependency Map + Critical Path
+
+---
+
+### Day 25 Review Questions  
+
+1. Which element in the RICE Framework is evaluated on a scale from 0.25 (very small) to 3 (very large)?  
+   - A. Reach  
+     *A. Reach*  
+   - B. Impact  
+     *B. Impact*  
+   - C. Confidence  
+     *C. Confidence*  
+   - D. Effort  
+     *D. Effort*  
+
+2. According to the Now/Next/Later method, how is the level of detail for the "NEXT" section (3-6 months) described?  
+   - A. High detail, low risk  
+   - B. Medium detail, medium risk  
+   - C. Low detail, high risk  
+   - D. No specific description  
+
+3. In OKRs, which type of Key Result is "predictive user behavior"?  
+   - A. Lagging  
+     *A. Lagging*  
+   - B. Leading  
+     *B. Leading*  
+   - C. Quality  
+     *C. Quality*  
+   - D. Output  
+     *D. Output*  
+
+4. For an AI startup, what is typically the "critical path" that determines the launch date?  
+   - A. User interface development  
+   - B. AI model optimization  
+   - C. Data pipeline and legal compliance  
+   - D. Marketing campaign

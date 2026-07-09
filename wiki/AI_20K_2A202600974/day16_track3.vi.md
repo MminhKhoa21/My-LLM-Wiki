@@ -45,3 +45,35 @@ Khi chưa cần đến Multi-agent, hãy tối ưu Single-agent với các kỹ 
   3. Xây dựng traces để debug từ sớm (Observability).
   4. Phân cấp rủi ro (Risk tiering): Read-only vs Write (cần human review/approval gate cho thao tác nhạy cảm).
 - Đừng vội chuyển sang hệ thống **Multi-agent** trừ khi bài toán mở, thực sự cần workflow phân quyền (Planner / Worker / Judge) hoặc xử lý nhiều domain tool song song.
+
+---
+
+Câu hỏi ôn tập Ngày 16
+
+   Điểm yếu chính nào của Single Agent (ReAct) mà Reflexion khắc phục?
+   - A. Không thể sử dụng nhiều tool cùng lúc.
+   - B. Thiếu khả năng tự đánh giá và backtrack khi gặp lỗi.
+   - C. Chi phí tính toán quá cao cho mỗi bước.
+   - D. Không hỗ trợ đầu ra có cấu trúc.
+   **Đáp án / Answer:** B
+
+   Trong kiến trúc Reflexion, thành phần nào chịu trách nhiệm rút ra bài học từ sai lầm và lưu vào bộ nhớ?
+   - A. Tác nhân
+   - B. Bộ đánh giá
+   - C. Bộ phản chiếu
+   - D. Thử lại
+   **Đáp án / Answer:** C
+
+   Đặc điểm nổi bật của LATS (Language Agent Tree Search) so với Reflexion là gì?
+   - A. Sử dụng Reflection Memory để lưu lỗi.
+   - B. Kết hợp MCTS để thử nhiều nhánh giải pháp và có khả năng undo.
+   - C. Tự động ghi nhận kỹ năng mới vào thư viện.
+   - D. Chỉ phù hợp với các tác vụ đọc dữ liệu.
+   **Đáp án / Answer:** B
+
+   Biện pháp an toàn nào được khuyến nghị khi triển khai Single-agent trong production?
+   - A. Luôn sử dụng Multi-agent ngay từ đầu.
+   - B. Không cần cấu hình max_attempts vì agent tự biết dừng.
+   - C. Phân cấp rủi ro, đặt human approval gate cho thao tác nhạy cảm.
+   - D. Chỉ dùng unstructured output để linh hoạt.
+   **Đáp án / Answer:** C

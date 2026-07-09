@@ -118,3 +118,31 @@ Liên kết
 --- 
 
 File đã được hoàn thiện song ngữ. Mọi thay đổi chỉ bổ sung những phần còn thiếu (heading và in nghiêng cho "Reference Dataset" và "Metrics") mà không làm thay đổi cấu trúc gốc.
+
+---
+
+### *Câu hỏi ôn tập Ngày 22*
+
+   Tại sao cần Automated Evals thay vì Manual Review?
+     A. Manual review luôn chính xác hơn
+     B. Automated evals không thể scale
+     C. Manual review không thể mở rộng khi lượng sản phẩm (traces) lên tới 100k+
+     D. Automated evals không cần calibration
+   **Answer / Đáp án:** C
+
+   Lớp đánh giá nào được ưu tiên số 1 và luôn bật trong hệ thống eval?
+   **Answer / Đáp án:** B
+
+   Khi nào nên sử dụng LLM-as-Judge thay vì Code-based Evals?
+     A. Khi tiêu chí xác minh được bằng rule, regex, hoặc schema
+     B. Khi cần đánh giá deterministic và nhanh
+     C. Khi tiêu chí phụ thuộc vào ngữ cảnh, sắc thái ngôn ngữ
+     D. Khi cần sample có chủ đích các trường hợp nghi ngờ
+   **Answer / Đáp án:** C
+
+   Trong Eval Lifecycle (quy trình đưa AI ra production), bước nào đóng vai trò Release Gate để chặn lỗi trước khi deploy?
+   **Answer / Đáp án:** B
+
+   Metric nào là North Star Metric (chỉ số tổng hợp chính) cho Agent?
+     C. Agent Success Rate (tổng hợp từ task correctness, schema pass rate, v.v.)
+   **Answer / Đáp án:** C

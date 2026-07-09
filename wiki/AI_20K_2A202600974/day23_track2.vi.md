@@ -41,3 +41,27 @@ Sự tiến hóa từ DevOps lên AgentOps:
 Day 23 là ngày tích hợp mọi artifact từ các bài trước:
 
 ## 5. Liên Kết
+
+---
+
+### *Câu hỏi ôn tập Ngày 23*
+
+   Theo bài giảng, ngoài các golden signals truyền thống, LLM cần thêm những tín hiệu nào để đảm bảo observability?
+   ***Đáp án:** B*
+
+   Cardinality là “kẻ giết hóa đơn thầm lặng” vì:
+     A. Nó làm tăng độ trễ của hệ thống
+     B. Nó làm tăng số lượng unique label combinations, dẫn đến chi phí lưu trữ và xử lý cao
+     C. Nó làm giảm số lượng metrics có thể thu thập
+     D. Nó gây lỗi khi sử dụng Prometheus
+   ***Đáp án:** B*
+
+   Sự tiến hóa từ DevOps lên AgentOps được mô tả trong “The Ops Trinity” bao gồm:
+   ***Đáp án:** A*
+
+   Theo bài giảng, telemetry từ các ngày trước được tích hợp vào Day 23, ví dụ:
+     A. Ngày 16: Spark UI metrics
+     B. Ngày 19: GPU util (DCGM)
+     C. Ngày 22: Eval-pass-rate dưới dạng Prometheus gauge
+     D. Ngày 17: llama.cpp tokens/sec
+   ***Đáp án:** C*

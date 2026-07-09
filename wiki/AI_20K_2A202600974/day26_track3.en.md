@@ -114,3 +114,36 @@ Các MCP server cấp production đòi hỏi bảo mật mạnh mẽ:
 - **Nâng cấp Thư viện -> Di chuyển:** Docs MCP + Playwright MCP. Tác tử đọc tài liệu framework mới, cấu trúc lại mã và xác minh luồng UI.
 ```
 
+---
+
+### Day 26 Review Questions
+
+1. How is the N×M problem in LLM tool integration solved by MCP?
+   - A. By requiring each LLM provider to write their own adapter.
+   - B. By introducing a standard protocol, reducing the complexity from N×M to N+M.
+   - C. By completely eliminating the need for external tools.
+   - D. By only supporting a single LLM provider.
+
+2. In the MCP architecture, which component is responsible for providing callable functions for the LLM to decide to use?
+   - A. Resources
+   - B. Prompts
+   - C. Tools
+   - D. Roots
+
+3. When building an MCP Server using FastMCP, which factor is emphasized as the most important for the LLM to decide to call the correct tool?
+   - A. Function name and input data type.
+   - B. Clear tool description (docstring).
+   - C. Number of function parameters.
+   - D. Processing speed of the server.
+
+4. To secure a remote MCP Server, which protocol is mandatory to use?
+   - A. Unencrypted HTTP.
+   - B. SSH with private key.
+   - C. OAuth 2.0 and TLS.
+   - D. Only API key authentication is needed.
+
+5. According to Claude Code best practices, which flow should be prioritized for design before performing mutations?
+   - A. Write flow for quick impact.
+   - B. Read/search flow to get accurate context.
+   - C. Delete flow to clean up data.
+   - D. Update flow for immediate synchronization.

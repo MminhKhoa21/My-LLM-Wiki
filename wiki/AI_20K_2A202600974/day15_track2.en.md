@@ -55,3 +55,40 @@ This track is suitable if you:
 
 - **Target roles (CP2):** AI Data Engineer, Platform Engineer, MLOps Engineer.
 - **Market demand:** **Very high.** Especially as enterprises want to own models, optimize costs, and bring AI into production instead of just using APIs.
+
+---
+
+### Day 15 Review Questions
+
+1. **What skills does Track 2 (AI Infrastructure & Data) in Phase 2 focus on training?**  
+   - A. Developing new AI models and optimizing architecture  
+   - B. Self-hosting and operating the backend of AI systems at the production level  
+   - C. Designing UI/UX for AI applications  
+   - D. Building business strategies for AI products  
+   **Answer:** B  
+
+2. **What is the hard requirement mentioned to be able to practice the serving and FinOps labs in Track 2?**  
+   - A. Having a GitHub Enterprise account  
+   - B. Needing a GPU or a Cloud free-tier  
+   - C. Having a Kubernetes certification  
+   - D. Needing a computer with RAM > 32GB  
+   **Answer:** B  
+
+3. **Which of the following target roles (CP2) mentioned in the lecture is suitable for Track 2?**  
+   - A. AI Researcher, Data Scientist  
+     *A. AI Researcher, Data Scientist*  
+   - B. Full-stack Developer, UX Designer  
+     *B. Full-stack Developer, UX Designer*  
+   - C. AI Data Engineer, Platform Engineer, MLOps Engineer  
+     *C. AI Data Engineer, Platform Engineer, MLOps Engineer*  
+   - D. Product Manager, AI Ethics Officer  
+     *D. Product Manager, AI Ethics Officer*  
+   **Answer:** C  
+
+4. **According to the lecture, Track 2 is suitable for people who have a mindset about which of the following concepts?**  
+   - A. UI/UX, user experience, A/B testing  
+   - B. SLA, SLO, P95, Cost  
+   - C. Graphic design, animation, storytelling  
+   - D. Marketing, sales, customer acquisition  
+     *D. Marketing, sales, customer acquisition*  
+   **Answer:** B

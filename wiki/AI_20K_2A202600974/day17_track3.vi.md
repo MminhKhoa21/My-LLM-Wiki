@@ -59,3 +59,35 @@ Track này giải quyết một thách thức lớn khi triển khai các tác n
 
 
 5.  ***Cơ sở Kiến thức Biên dịch (Wiki LLM):** Thay vì RAG thô trên các tài liệu, LLM liên tục quản lý và chỉnh sửa một "wiki" về các khái niệm, thực thể và dòng thời gian, giải quyết vấn đề các truy vấn RAG lặp đi lặp lại trên cùng một kho ngữ liệu.*
+
+---
+
+Câu hỏi ôn tập Ngày 17
+
+   Loại bộ nhớ nào trong agent được quản lý trong context window của LLM, có tốc độ truy cập nhanh nhưng bị giới hạn bởi token budget?
+   - A. Bộ nhớ dài hạn (Khai báo)
+   - B. Bộ nhớ tình huống
+   - C. Bộ nhớ ngắn hạn (Làm việc)
+   - D. Bộ nhớ ngữ nghĩa
+   **Đáp án / Answer:** C
+
+   Trong quy trình quản lý bộ nhớ (Memory Management Flow), bước nào diễn ra ngay sau khi lưu trữ dữ liệu trong bộ đệm (Buffer)?
+   - A. Lưu trữ vĩnh viễn (Kho ngoài)
+   - B. Trích xuất sự kiện chính
+   - C. Tóm tắt (Gọi LLM)
+   - D. Truy xuất từ Vector DB
+   **Đáp án / Answer:** C
+
+   Tính năng "Privacy-by-Design" trong bộ nhớ agent bao gồm yếu tố nào sau đây?
+   - A. Lưu trữ vô thời hạn tất cả dữ liệu người dùng
+   - B. Chỉ cho phép truy cập bộ nhớ từ một user duy nhất
+   - C. Cơ chế "Quyền được lãng quên" và giới hạn thời gian tồn tại (TTL)
+   - D. Mã hóa tất cả dữ liệu bằng vector embeddings
+   **Đáp án / Answer:** C
+
+   Xu hướng "Compaction" trong agent memory (2025-2026) đề cập đến việc:
+   - A. Mở rộng không giới hạn dung lượng context window
+   - B. Nén các phiên họp thành tóm tắt, quyết định và ghi chú bền vững
+   - C. Tạo nhiều bản sao dữ liệu để tăng độ tin cậy
+   - D. Sử dụng file cấu hình AGENTS.md để kiểm soát truy cập
+   **Đáp án / Answer:** B

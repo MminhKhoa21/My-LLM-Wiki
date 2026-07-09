@@ -62,3 +62,49 @@ A platform must meet these criteria before deployment:
 
 ## Links
 - [[day28_overview]]
+
+---
+
+### Day 28 Review Questions
+
+1. **According to the lecture, what is an **anti-pattern** in integrating AI Platform components?**  
+   - A. Using event-driven integration with Kafka  
+   - B. Maintaining configuration in Git (GitOps)  
+   - C. Tightly coupling between components  
+   - D. Applying the Bulkhead pattern to separate inference and training  
+   **Answer:** C  
+
+2. **In the end-to-end request flow, what is the target time for each component?**  
+   - A. Vector Search < 5ms, Feature Store < 50ms, LLM Inference < 500ms  
+     *A. Vector Search < 5ms, Feature Store < 50ms, LLM Inference < 500ms*  
+   - B. Feature Store < 5ms, Vector Search < 50ms, LLM Inference < 500ms  
+     *B. Feature Store < 5ms, Vector Search < 50ms, LLM Inference < 500ms*  
+   - C. Feature Store < 50ms, Vector Search < 500ms, LLM Inference < 5ms  
+     *C. Feature Store < 50ms, Vector Search < 500ms, LLM Inference < 5ms*  
+   - D. All need to be under 100ms  
+   **Answer:** B  
+
+3. **Which tool is recommended for **detailed latency breakdown analysis** across the entire flow?**  
+   - A. Py-spy  
+     *A. Py-spy*  
+   - B. Tracemalloc  
+     *B. Tracemalloc*  
+   - C. Jaeger  
+     *C. Jaeger*  
+   - D. cProfile  
+     *D. cProfile*  
+   **Answer:** C  
+
+4. **What is the prerequisite for deploying the Platform to production according to the 5 Pillars?**  
+   - A. Manual checking of the Production Readiness checklist by an engineer  
+   - B. Automating the checklist in the CI pipeline  
+   - C. Ensuring all code runs in the local environment  
+   - D. Using a single framework for the entire stack  
+   **Answer:** B  
+
+5. **Which of the following models is the correct **integration pattern** to avoid shared mutable state?**  
+   - A. Using a shared database with concurrent writes  
+   - B. Immutable events and event sourcing via append-only log (Kafka)  
+   - C. Storing state in a global variable  
+   - D. Using a static JSON configuration file  
+   **Answer:** B

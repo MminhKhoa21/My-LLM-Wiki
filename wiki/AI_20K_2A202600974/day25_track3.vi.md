@@ -103,3 +103,42 @@ Phòng thí nghiệm liên quan đến việc xây dựng một cổng độ tin
   Giới hạn chi phí gần như đạt đến.
 
 Bằng chứng dự kiến bao gồm các số liệu cho thấy bộ ngắt mạch chuyển đổi (ĐÓNG -> MỞ), cổng chuyển hướng đến dự phòng mà không có bão thử lại, và thời gian phục hồi được ghi lại.
+
+---
+
+Câu hỏi ôn tập Ngày 25
+
+   Khi hệ thống LLM agent gặp lỗi 429 (Rate Limit) hoặc 500 (Internal Server Error) từ provider, đó thuộc failure mode nào?
+   - A. Lỗi công cụ/bộ nhớ đệm
+   - B. Hành động kinh doanh sai
+   - C. Lỗi tạm thời từ nhà cung cấp
+   - D. Vòng lặp điều phối
+   **Đáp án / Answer:** C
+
+   Circuit Breaker ở trạng thái nào cho phép thực hiện một probe call để kiểm tra recovery?
+   - A. ĐÓNG
+   - B. MỞ
+   - C. MỞ MỘT NỬA
+   - D. HỎNG
+   **Đáp án / Answer:** C
+
+   Trong fallback ladder, bước nào thường được thực hiện trước khi dùng cached response?
+   - A. Mô hình tốt nhất
+   - B. Nhà cung cấp dự phòng
+   - C. Mô hình rẻ hơn/nhỏ hơn
+   - D. Thông báo dự phòng tĩnh
+   **Đáp án / Answer:** C
+
+   Khi semantic cache có similarity > threshold, hành động đúng là gì?
+   - A. Gọi LLM và lưu kết quả mới
+   - B. Trả về kết quả cached
+   - C. Đặt lại ngưỡng
+   - D. Ghi log lỗi
+   **Đáp án / Answer:** B
+
+   SLI (Service Level Indicator) được định nghĩa trong bài giảng là gì?
+   - A. Cam kết bên ngoài với khách hàng
+   - B. Chỉ tiêu nội bộ về chất lượng
+   - C. Metric đo lường thực tế (ví dụ: P95 latency)
+   - D. Ngân sách lỗi cho phép
+   **Đáp án / Answer:** C

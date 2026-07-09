@@ -76,4 +76,32 @@ Sales teams must be armed with documentation, evaluation metrics, and security g
 - [[day28_overview]]
 - *[[day28_overview]]*  
 
----  
+---
+
+---
+
+### Day 28 Review Questions
+
+1. According to the lecture, the principle of choosing a value metric for AI pricing is based on which two factors?
+   - A. API costs and personnel costs
+   - B. Attribution (ability to measure results) and Autonomy (automation)
+   - C. Number of users and average revenue
+   - D. Model type and inference costs
+
+2. When determining the floor price for an AI product, the minimum cost for a job includes all of the following factors, **except**:
+   - A. API costs
+   - B. Infra costs
+   - C. Marketing costs
+   - D. HITL (Human-In-The-Loop) costs
+
+3. What is the core rule of Go-To-Market (GTM) for AI?
+   - A. Create a completely new interface to impress
+   - B. Don't force users to open a new tab or learn a new workflow
+   - C. Prioritize the Sales-Led channel for all products
+   - D. Focus on impressive demos before having evidence
+
+4. According to the lecture, the "ARPU-CAC Dead Zone" is which ARPU range that causes difficulties because it fits neither self-serve nor sales teams?
+   - A. Under $50
+   - B. Over $1000
+   - C. From $50 to $1000
+   - D. From $1000 to $5000

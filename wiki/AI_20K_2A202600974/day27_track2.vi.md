@@ -60,3 +60,31 @@ Khả năng quan sát chỉ có giá trị nếu nhóm biết cách phản ứng
 - ***Runbooks:** Các hướng dẫn quy trình được tiêu chuẩn hóa để xử lý các sự cố.*
 - ***Mức độ Nghiêm trọng:** Phân loại các sự cố (P0 đến P3) để xác định thời gian phản hồi.*
 - ***Rút kinh nghiệm Không đổ lỗi (Blameless Postmortems) & Kỹ thuật Hỗn loạn (Chaos Engineering):** Thúc đẩy việc học hỏi mà không đổ lỗi. Sử dụng "5 Câu hỏi Tại sao" (5 Whys) để tìm ra nguyên nhân gốc rễ mang tính hệ thống.*
+
+---
+
+### *Câu hỏi ôn tập Ngày 27*
+
+   Điểm khác biệt cốt lõi giữa **Pipeline Monitoring** và **Data Observability** là gì?
+     A. Pipeline Monitoring chỉ kiểm tra thời gian chạy, còn Data Observability kiểm tra tính đúng đắn của dữ liệu.
+     B. Pipeline Monitoring dùng cho batch, Data Observability dùng cho streaming.
+     C. Pipeline Monitoring tập trung vào logs, Data Observability tập trung vào schema.
+     D. Không có sự khác biệt, cả hai đều giống nhau.
+   ***Đáp án:** A*
+
+   Trong 5 trụ cột của Data Observability, trụ cột nào phát hiện sự thay đổi về tên cột hoặc kiểu dữ liệu?
+   ***Đáp án:** C*
+
+   Trong Great Expectations, **Checkpoint** có vai trò gì?
+     A. Lưu trữ các rule kiểm tra dữ liệu (Expectation Suite).
+     B. Tích hợp Expectation Suite vào pipeline sản xuất và kích hoạt hành động (alert, block) khi thất bại.
+     C. Tự động sinh dữ liệu mẫu để kiểm tra.
+     D. Thay thế hoàn toàn cho dbt tests.
+   ***Đáp án:** B*
+
+   Trong SLO Engineering, **Error Budget** được sử dụng để làm gì?
+     A. Đo lường mức độ tươi mới của dữ liệu.
+     B. Cân bằng giữa tính ổn định và tính năng mới: nếu ngân sách lỗi cạn kiệt, ưu tiên sửa lỗi thay vì phát hành tính năng.
+     C. Xác định ngưỡng cảnh báo cho anomaly detection.
+     D. Phân loại mức độ nghiêm trọng của sự cố (P0-P3).
+   ***Đáp án:** B*

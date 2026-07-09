@@ -45,5 +45,28 @@ sources: ["raw/AI_20K_2A202600974/21/Day 21 - Track 2 - CICD AI SYSTEMS.pptx"]
 
   ***GitHub Actions Workflow:** Pipeline vượt qua các cổng kiểm tra (test -> train -> eval gate -> deploy) trên repository.*  
 
-## 4. Liên Kết  
+## 4. Liên Kết
 
+---
+
+### *Câu hỏi ôn tập Ngày 21*
+
+   Điểm khác biệt cốt lõi nhất khi áp dụng CI/CD cho hệ thống AI so với phần mềm thông thường là gì?
+     A. Cần tự động hóa việc kiểm thử giao diện người dùng.
+     B. Phải quản lý phiên bản dữ liệu và theo dõi thí nghiệm để ngăn model regression.
+     C. Không cần kiểm thử vì model luôn hoạt động tốt.
+     D. Chỉ sử dụng một công cụ duy nhất cho toàn bộ pipeline.
+   ***Đáp án:** B*
+
+   Trong MLflow, chức năng Model Registry được sử dụng chủ yếu để làm gì?
+     A. Lưu trữ dữ liệu huấn luyện dưới dạng artifact.
+     B. So sánh các runs trên giao diện UI.
+     C. Quản lý vòng đời mô hình, bao gồm staging, production và versioning.
+     D. Tự động deploy model lên production không cần kiểm tra.
+   ***Đáp án:** C*
+
+   Khi sử dụng DVC, lệnh nào được dùng để chạy lại toàn bộ pipeline một cách tái lập (reproducible)?
+   ***Đáp án:** C*
+
+   Chiến lược triển khai nào cho phép chạy model mới song song với model cũ mà không ảnh hưởng đến người dùng, chỉ để thu thập log và so sánh?
+   ***Đáp án:** C*

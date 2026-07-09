@@ -43,3 +43,31 @@ Một Agent tốt được xây dựng trên 4 trụ cột:
 
 ## Tổng Kết
 Việc debug một AI App cần xác định lỗi ở lớp nào: do Prompt không rõ ràng, Context thiếu/nhiễu, Tool mô tả sai lệch, hay thiếu Control flow an toàn.
+
+---
+
+### *Câu hỏi ôn tập Ngày 4*
+
+   Theo bài giảng, một Agent đáng tin cậy được xây dựng dựa trên bốn trụ cột nào?
+   ***Đáp án:** A*
+
+   Hiện tượng "Lost in the Middle" trong Context Engineering được khắc phục bằng cách nào?
+     A. Nhồi nhét tất cả thông tin vào giữa context
+     B. Sắp xếp thông tin quan trọng ở đầu và cuối context
+     C. Lọc bỏ toàn bộ thông tin lịch sử hội thoại
+     D. Sử dụng nhiều ví dụ hơn trong prompt
+   ***Đáp án:** B*
+
+   Trong Tool Calling, yếu tố nào đóng vai trò như instruction để LLM quyết định chọn tool?
+     A. Kết quả trả về từ tool
+     B. Tên tool và mô tả chi tiết
+     C. Định dạng JSON của tool
+     D. Số lượng tool được khai báo
+   ***Đáp án:** B*
+
+   Cơ chế "Human-in-the-Loop" (HITL) được áp dụng khi nào?
+     A. Khi tool thực hiện thao tác đọc dữ liệu
+     B. Khi tool thực hiện thao tác thay đổi trạng thái (ví dụ: thanh toán, xóa DB)
+     C. Khi LLM trả về kết quả không đúng format
+     D. Khi context bị nhiễu (Context Rot)
+   ***Đáp án:** B*

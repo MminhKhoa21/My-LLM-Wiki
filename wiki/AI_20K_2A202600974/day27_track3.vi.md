@@ -72,3 +72,34 @@ Các công ty công nghệ lớn đang hội tụ về hướng tự chủ có g
 
 
 Tránh các lời nhắc Yes/No đơn giản cho các hành động phức tạp. Hỏi thông tin sớm nếu thiếu dữ liệu, hỏi muộn đối với các hành động không thể đảo ngược. Giảm tải nhận thức bằng các danh sách thả xuống (dropdown) và các phê duyệt có phạm vi giới hạn (ví dụ: "phê duyệt cho phiên này"). Việc ngắt quãng nên mang lại cảm giác như các tương tác nhỏ, có cấu trúc chứ không phải là rào cản.
+
+---
+
+Câu hỏi ôn tập Ngày 27
+
+   Theo bài giảng, khái niệm "Bounded Autonomy" trong HITL có nghĩa là gì?
+   - A. Agent hoàn toàn tự động, không cần sự can thiệp của con người
+   - B. Agent có thể tự động thực hiện mọi hành động nhưng phải ghi log lại
+   - C. Agent tự động trong các ranh giới an toàn (đọc/tìm kiếm) và phải xin phép khi vượt ranh giới rủi ro
+   - D. Agent chỉ được thực hiện các hành động đã được phê duyệt trước
+   **Đáp án / Answer:** C
+
+   Khi nào agent nên ngắt quãng (interrupt) để hỏi ý kiến con người, theo nguyên tắc Confidence Routing?
+   - A. Khi confidence score của agent dưới 50%
+   - B. Khi hành động có thể đảo ngược (reversible) và gây ảnh hưởng bên ngoài
+   - C. Khi hành động có thể đảo ngược, ưu tiên tự động; nếu có tác động bên ngoài hoặc thiếu thông tin thì cần review/phê duyệt
+   - D. Chỉ ngắt khi agent không chắc chắn về kết quả
+   **Đáp án / Answer:** C
+
+   Trong 6 mẫu tương tác HITL, pattern nào được sử dụng khi agent cần con người kiểm tra bản nháp đầu ra (ví dụ: code PR, email nháp)?
+   - A. Phê duyệt
+   - B. Làm rõ
+   - C. Điểm kiểm tra đánh giá
+   **Đáp án / Answer:** C
+
+   Theo best practices của HITL UX, khi nào nên hỏi con người để giảm tải nhận thức?
+   - A. Luôn hỏi sớm cho mọi hành động
+   - B. Hỏi sớm cho dữ liệu thiếu, hỏi muộn cho hành động không thể đảo ngược
+   - C. Chỉ hỏi khi hành động có rủi ro cao
+   - D. Hỏi muộn cho mọi hành động để tránh làm phiền
+   **Đáp án / Answer:** B

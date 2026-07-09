@@ -47,3 +47,38 @@ Tăng trưởng bề mặt (Acquisition thông qua PR, ads) có thể che đậy
 - **Measurement Ladder & North Star:** Thiết lập bậc thang đo lường từ Input metrics đến North Star Metric và kết quả kinh doanh dài hạn.
 - **Hook Review:** Thiết kế vòng lặp thói quen với Trigger, Action, Reward, Investment, đảm bảo phù hợp với *Nature* của sản phẩm.
 - **Metric Tracking Requirement:** Lên danh sách các sự kiện cần tracking, điều kiện ghi nhận để đo lường chính xác các metrics đã chọn.
+
+---
+
+### *Câu hỏi ôn tập Ngày 19*
+
+   **Tại sao Retention lại được coi là quan trọng hơn Acquisition trong chiến lược tăng trưởng?**  
+     A. Vì chi phí thu hút người dùng mới (CAC) luôn thấp hơn chi phí giữ chân.
+     B. Vì Retention giúp đánh giá liệu sản phẩm có thực sự mang lại giá trị cốt lõi hay không.
+     C. Vì các hoạt động PR và quảng cáo không thể làm tăng số lượng người dùng.
+     D. Vì Retention là mét duy nhất ảnh hưởng đến doanh thu dài hạn.
+   **Answer / Đáp án:** B
+
+   **Khái niệm "Natural Frequency" trong bối cảnh Retention chỉ điều gì?**  
+     A. Tần suất sản phẩm gửi thông báo nhắc nhở cho người dùng.
+     B. Tần suất người dùng tự nhiên gặp vấn đề mà sản phẩm giải quyết (hàng ngày, tuần, tháng...).
+     C. Tần suất đội ngũ sản phẩm thực hiện các thử nghiệm A/B.
+     D. Tần suất người dùng chia sẻ sản phẩm lên mạng xã hội.
+   **Answer / Đáp án:** B
+
+   **Theo mô hình Hook (Habit Loop), yếu tố nào đóng vai trò tạo ra động lực nội tại cho người dùng quay lại lần tiếp theo?**  
+     A. Kích hoạt bên ngoài, như thông báo.
+     B. Phần thưởng biến đổi, tạo cảm giác tò mò và hứng thú.
+     C. Hành động, đơn giản và dễ thực hiện.
+     D. Đầu tư – người dùng bỏ công sức vào sản phẩm.
+   **Answer / Đáp án:** B
+
+   **Chỉ số nào thường được dùng để đo lường mức độ gắn bó (Stickiness) của người dùng?**  
+   **Answer / Đáp án:** A
+
+   **Khi D1 Retention của sản phẩm chỉ đạt khoảng 10%, nguyên nhân chủ yếu thường nằm ở đâu?**  
+     A. Giao diện người dùng chưa đẹp, cần thay đổi màu sắc nút bấm.
+     B. Core Value (giá trị cốt lõi) chưa giải quyết đúng nhu cầu của người dùng.
+     C. Chiến dịch truyền thông chưa đủ mạnh để thu hút đúng đối tượng.
+     D. Tần suất gửi thông báo (notification) chưa đủ dày.
+   **Answer / Đáp án:** B

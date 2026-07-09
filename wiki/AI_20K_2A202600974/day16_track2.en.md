@@ -55,3 +55,50 @@ sources: ["raw/AI_20K_2A202600974/16/1-Day 16_ Track 2_ Cloud infrastructure for
     *vLLM: PagedAttention, wide ecosystem, easy to deploy.*  
     *SGLang: RadixAttention (reuses KV cache), optimized for Agent/Multi-turn chat (20% performance boost).*  
     *LMDeploy: TurboMind engine (C++ zero overhead), 1.8x throughput of vLLM, ideal for latency-sensitive apps.*
+
+---
+
+### Day 16 Review Questions
+
+1. **According to the Hybrid Cloud strategy for AI, which of the following combinations is recommended to optimize both cost and scalability?**  
+   - A. Using PaaS for both Training and Serving  
+   - B. Using IaaS for Training and PaaS for Serving  
+   - C. Using AI-aaS for Training and IaaS for Serving  
+   - D. Using PaaS for Training and IaaS for Serving  
+   **Answer:** B  
+
+2. **Which GPU is described as a "sleeper pick" for Inference tasks at $0.40-$0.86/hour?**  
+   - A. A100  
+     *A. A100*  
+   - B. H100  
+     *B. H100*  
+   - C. L40S  
+     *C. L40S*  
+   - D. T4  
+     *D. T4*  
+   **Answer:** C  
+
+3. **Which solution helps reduce AI model training costs on the cloud by 60-70%?**  
+   - A. Using Reserved Instances  
+   - B. Using Spot/Preemptible Instances  
+   - C. Using On-Demand Instances  
+   - D. Using Dedicated Hosts  
+   **Answer:** B  
+
+4. **In Kubernetes, to manage GPU resources for AI workloads, which of the following configurations is correct?**  
+   - A. Setting requests smaller than limits for GPUs  
+   - B. Using `nvidia.com/gpu` with requests = limits  
+   - C. No need to specify resource requests for GPUs  
+   - D. Using `cpu` and `memory` instead of GPU resources  
+   **Answer:** B  
+
+5. **Which serving engine uses RadixAttention to reuse KV cache, optimizing for Agents and Multi-turn chat?**  
+   - A. vLLM  
+     *A. vLLM*  
+   - B. SGLang  
+     *B. SGLang*  
+   - C. LMDeploy  
+     *C. LMDeploy*  
+   - D. TensorRT-LLM  
+     *D. TensorRT-LLM*  
+   **Answer:** B

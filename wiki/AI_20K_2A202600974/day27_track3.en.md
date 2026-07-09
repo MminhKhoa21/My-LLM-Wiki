@@ -72,3 +72,31 @@ To safely scale autonomy, robust tracking is required:
 
 Avoid simple Yes/No prompts for complex actions. Ask early for missing data, ask late for irreversible actions. Reduce cognitive load with dropdowns and scoped approvals (e.g., "approve for this session"). Interruptions should feel like small, structured interactions, not roadblocks.
 
+---
+
+### Day 27 Review Questions
+
+1. According to the lecture, what does the concept of "Bounded Autonomy" in HITL mean?
+   - A. The agent is fully autonomous, requiring no human intervention
+   - B. The agent can automatically perform any action but must log it
+   - C. The agent is autonomous within safe boundaries (read/search) and must ask for permission when crossing risky boundaries
+   - D. The agent is only allowed to perform pre-approved actions
+
+2. When should an agent interrupt to ask for a human's opinion, according to the Confidence Routing principle?
+   - A. When the agent's confidence score is below 50%
+   - B. When the action is reversible and causes external impact
+   - C. When the action is reversible, prioritize automation; if it has an external impact or lacks information, it needs review/approval
+   - D. Only interrupt when the agent is unsure about the result
+
+3. Among the 6 HITL interaction patterns, which one is used when the agent needs a human to review draft output (e.g., code PR, draft email)?
+   - A. Approval
+   - B. Clarification
+   - C. Review Checkpoint
+   - D. Escalation
+   - *D. Leo thang*
+
+4. According to HITL UX best practices, when should a human be asked in order to reduce cognitive load?
+   - A. Always ask early for every action
+   - B. Ask early for missing data, ask late for irreversible actions
+   - C. Only ask when the action has a high risk
+   - D. Ask late for all actions to avoid bothering

@@ -55,3 +55,23 @@ Việc triển khai Kiểm soát Truy cập Dựa trên Vai trò (RBAC) đảm b
 ## *Phòng thí nghiệm 24: Quản trị Dữ liệu & Pipeline PII*
 
 Học viên triển khai một nền tảng dữ liệu hỗ trợ RBAC trong FastAPI, xây dựng pipeline phát hiện và ẩn danh PII bằng Presidio với các bộ nhận dạng tiếng Việt tùy chỉnh (nhắm đến tỷ lệ phát hiện >95%), và thực hiện kiểm toán bảo mật bằng git-secrets và truffleHog.
+
+---
+
+### *Câu hỏi ôn tập Ngày 24*
+
+   Theo nguyên tắc Least Privilege, role nào sau đây có quyền xóa dữ liệu production?
+   ***Đáp án:** C*
+
+   Trong mô hình envelope encryption, Data Encryption Key (DEK) được bảo vệ như thế nào?
+     A. Lưu trữ dưới dạng plaintext trong code
+     B. Được mã hóa bởi Key Encryption Key (KEK)
+     C. Xoay vòng hàng năm thay vì hàng tháng
+     D. Được nhúng trực tiếp vào mô hình
+   ***Đáp án:** B*
+
+   Kỹ thuật xử lý PII nào có thể đảo ngược và thường được dùng cho phân tích nội bộ?
+   ***Đáp án:** D*
+
+   Trong Security Testing Pyramid, công cụ nào được sử dụng để phát hiện secret bị lộ trong kho lưu trữ mã nguồn?
+   ***Đáp án:** C*

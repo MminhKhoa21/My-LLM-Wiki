@@ -85,4 +85,32 @@ Combines 4‑bit quantization (NF4) of the base model with bf16 LoRA adapters.
 - [[day21_track1]] – AI Evaluation  
 - [[day21_track2]] – CI/CD AI Systems  
 - [[day22_track3]] – DPO/ORPO Alignment  
-- [[day21_overview]] – Overview  
+- [[day21_overview]] – Overview
+
+---
+
+### Day 21 Review Questions
+
+1. According to the lecture, in standard procedures, when should one switch to Fine-tuning instead of continuing with Prompt Engineering and RAG?
+   - A. When new knowledge needs to be added to the model.
+   - B. When Prompt Engineering and RAG have maxed out but the model still lacks specialized formatting or needs reduced latency/cost at scale.
+   - C. When the number of requests is under 50k per day.
+   - D. When the dataset has over 10k samples.
+
+2. How does LoRA differ from Full Fine-tuning?
+   - A. LoRA updates all parameters of the original model.
+   - B. LoRA freezes the original weights and only trains two small matrices A and B (low-rank).
+   - C. LoRA increases inference latency due to computing additional matrices.
+   - D. LoRA requires more VRAM than Full Fine-tuning.
+
+3. What technique combination allows QLoRA to fine-tune a 7B model on a 24GB GPU?
+   - A. Only using Gradient Checkpointing and FlashAttention.
+   - B. Quantizing the original model down to 4-bit (NF4) and using bf16 LoRA adapters, combined with PagedAdamW.
+   - C. Reducing LoRA rank to r=1.
+   - D. Compressing the entire model down to 2-bit.
+
+4. According to the lecture, which of the following is true regarding Datasets when fine-tuning?
+   - A. Sample quantity is more important than quality; 10k noisy samples are better than 500 clean ones.
+   - B. Ensure the test set is not in the training set to avoid "Data contamination".
+   - C. Just 100 samples are enough for any task.
+   - D. The original model's test set can be reused without checking for duplicates.

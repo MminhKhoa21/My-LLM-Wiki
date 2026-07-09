@@ -89,3 +89,40 @@ Start with the simplest pattern and escalate only when measurably needed.
 
 The lab focuses on building a 3-agent research system (Researcher, Analyst, Writer) using LangGraph. Students benchmark the single-agent baseline against the multi-agent system measuring accuracy, latency, and cost.
 
+---
+
+### Day 20 Review Questions
+
+1. When should you consider transitioning from a single agent to a multi-agent system?
+   - A. When the task requires interaction with multiple external APIs.
+   - B. When a single agent cannot achieve >80% accuracy.
+   - C. When wanting to reduce the total operating cost of the system.
+   - D. When a larger language model needs to be deployed.
+
+2. Which of Anthropic's 5 workflow patterns operates by classifying the input and routing it to the most specialized handler?
+   - A. Prompt Chaining
+   - B. Routing
+   - C. Orchestrator-Workers
+   - D. Evaluator-Optimizer
+
+3. Which architecture is typically used to implement the Supervisor Pattern in a multi-agent system?
+   - A. Star Architecture
+   - B. Mesh Architecture
+   - C. Hub-Spoke Architecture
+   - D. Tree Architecture
+
+4. What is the main benefit of using Debate Agents?
+   - A. Doubles the processing speed.
+   - B. Reduces hallucination by 15% to 25%.
+   - C. Reduces API costs by half.
+   - D. Completely eliminates the need for a Judge agent.
+
+5. Which of the following frameworks is described as “state machine driven” and suitable for production environments requiring strict control?
+   - A. CrewAI
+   - *A. CrewAI*
+   - B. AutoGen
+   - *B. AutoGen*
+   - C. LangGraph
+   - *C. LangGraph*
+   - D. LangChain
+   - *D. LangChain*

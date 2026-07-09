@@ -49,3 +49,39 @@ sources: ["raw/AI_20K_2A202600974/22/Day 22 - Track 2 - LLMOPS-prompt-versioning
 
 - [[day22_overview]]  
 - *[[day22_overview]]*
+
+---
+
+### Day 22 Review Questions
+
+1. **What is the core difference between LLMOps and traditional MLOps?**  
+   - A. LLMOps focuses more on data management than code.  
+   - B. LLMOps treats Prompt version management as critically as code and data management.  
+   - C. MLOps does not require evaluation.  
+   - D. LLMOps is only used for small language models.  
+   **Answer:** B  
+
+2. **Which tool is described as "GitHub specifically for prompts" in the lecture?**  
+   - A. LangSmith  
+     *A. LangSmith*  
+   - B. W&B Weave  
+     *B. W&B Weave*  
+   - C. Prompt Hub  
+     *C. Prompt Hub*  
+   - D. RAGAS  
+     *D. RAGAS*  
+   **Answer:** C  
+
+3. **According to the lecture, what aspects of LLMs is RAGAS used to evaluate?**  
+   - A. Only accuracy  
+   - B. Inference speed and cost  
+   - C. Faithfulness, relevance, and hallucination  
+   - D. The ability to detect Prompt Injection  
+   **Answer:** C  
+
+4. **What is one of the goals of Guardrails & Safety Monitoring?**  
+   - A. Increasing token generation speed  
+   - B. Blocking PII leakage and detecting Prompt Injection  
+   - C. Automatically generating new prompts from data  
+   - D. Optimizing API costs  
+   **Answer:** B

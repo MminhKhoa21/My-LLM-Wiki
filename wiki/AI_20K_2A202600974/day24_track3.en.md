@@ -63,4 +63,35 @@ The lab has four phases:
 - **Phase A (RAGAS):** Generate synthetic test sets, run the 4 RAGAS metrics, analyze failure clusters, and set up a CI/CD GitHub Action gate.  
 - **Phase B (LLM-as-Judge):** Build pairwise and absolute scoring pipelines, measure Cohen's Kappa against human labels, and analyze judge bias.  
 - **Phase C (Guardrails):** Implement a full stack guardrail system with Presidio, topic validators, adversarial testing, and Llama Guard 3, benchmarked for P50/P95 latency.  
-- **Phase D (Blueprint):** Document the system architecture, Service Level Objectives (SLOs), alert playbooks, and cost analysis.  
+- **Phase D (Blueprint):** Document the system architecture, Service Level Objectives (SLOs), alert playbooks, and cost analysis.
+
+---
+
+### Day 24 Review Questions
+
+1. Which metric does RAGAS use to measure the extent to which the context supports the answer (intrinsic hallucination)?
+   - A. Context Recall
+   - B. Answer Relevancy
+   - C. Faithfulness
+   - D. Context Precision
+
+2. When using LLM-as-Judge, which bias is mitigated using the "swap-and-average" method?
+   - A. Length Bias
+   - B. Position Bias
+   - C. Self-Enhancement Bias
+   - D. Style Bias
+
+3. In the Guardrails architecture, which layer is responsible for detecting prompt injections and checking topic scope with under 30ms latency?
+   - A. L1 Input Layer
+   - B. L2 LLM Layer
+   - C. L3 Output Layer
+   - D. L4 Audit Layer
+
+4. Which of the following techniques detects hallucinations by sampling multiple answers with temperature > 0 and measuring consistency?
+   - A. NLI (DeBERTa)
+   - *A. NLI (DeBERTa)*
+   - B. Semantic Entropy
+   - C. SelfCheckGPT
+   - *C. SelfCheckGPT*
+   - D. Cohen's Kappa
+   - *D. Cohen's Kappa*

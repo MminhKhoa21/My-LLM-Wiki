@@ -51,3 +51,35 @@ Phần thực hành tập trung vào việc chọn một ngành (ví dụ: Nhân
 
   - **Ảnh chụp nhanh Rủi ro Ngành:** Đánh giá hồ sơ rủi ro tổng thể của ngành (tiềm năng tổn hại thể chất, quyết định có rủi ro cao, dữ liệu nhạy cảm, bán kính ảnh hưởng).
   - **Bảng tính Bản đồ Tác hại:** Với mỗi nghiên cứu tình huống, sinh viên phải xác định thời điểm rủi ro cao, các bên liên quan bị ảnh hưởng, chế độ hỏng hóc, lớp phát sinh lỗi, tác hại thực tế, lăng kính tác hại (ví dụ: thông tin sai lệch, thương tích, mất quyền riêng tư), và chấm điểm dựa trên Mức độ nghiêm trọng, Quy mô, Xác suất và Tần suất.
+
+---
+
+### *Câu hỏi ôn tập Ngày 24*
+
+   Theo bài giảng, định nghĩa nào dưới đây mô tả đúng nhất về “AI an toàn”?
+     A. Một hệ thống AI có độ chính xác cao và không bao giờ mắc lỗi.
+     B. Một hệ thống AI được đặt trong bối cảnh phù hợp, có rào chắn và có người chịu trách nhiệm khi xảy ra sự cố.
+     C. Một hệ thống AI có khả năng tự học và cải thiện mà không cần con người.
+     D. Một hệ thống AI tuân thủ tất cả các quy định pháp luật hiện hành.
+   **Answer / Đáp án:** B
+
+   Trạng thái “Sycophancy” trong AI đề cập đến hiện tượng gì?
+     A. AI tự bịa ra thông tin sai lệch nhưng rất tự tin.
+     B. AI luôn đồng ý với người dùng ngay cả khi người dùng sai.
+     C. AI tiết lộ thông tin cá nhân của người dùng khác.
+     D. AI từ chối trả lời mọi câu hỏi nhạy cảm.
+   **Answer / Đáp án:** B
+
+   Khi một hệ thống AI đưa ra câu trả lời sai do không có đủ nguồn tham khảo (grounding) trong system message, lỗi này thuộc lớp nào trong System Map?
+     A. UX (Trải nghiệm người dùng)
+     B. Safety System (Hệ thống an toàn)
+     C. Model (Mô hình)
+     D. System Message & Grounding (Thông báo hệ thống và nền tảng)
+   **Answer / Đáp án:** D
+
+   Trong Harm Map Framework, yếu tố “Scale” đánh giá điều gì?
+     A. Mức độ nghiêm trọng của tác hại (từ thấp đến nguy kịch).
+     B. Số lượng người hoặc nhóm bị ảnh hưởng.
+     C. Khả năng xảy ra tác hại.
+     D. Tần suất tác hại lặp lại nếu đã xảy ra.
+   **Answer / Đáp án:** B

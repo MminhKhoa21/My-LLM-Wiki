@@ -114,5 +114,49 @@ sources: ["raw/AI_20K_2A202600974/22/1-d22-slide.pdf", "raw/AI_20K_2A202600974/2
 - [[day24_track3]] – RAGAS & Guardrails (specific RAG evaluation)
 - [[day22_overview]]
 
---- 
+---
 
+---
+
+### Day 22 Review Questions  
+
+1. Why are Automated Evals needed instead of Manual Review?  
+   - A. Manual review is always more accurate  
+   - B. Automated evals cannot scale  
+   - C. Manual review cannot scale when the volume of traces reaches 100k+  
+   - D. Automated evals do not need calibration  
+
+2. Which evaluation layer is priority number 1 and always enabled in the eval system?  
+   - A. LLM-as-Judge  
+     *A. LLM-as-Judge*  
+   - B. Code-based Evals  
+     *B. Code-based Evals*  
+   - C. Human Review  
+     *C. Human Review*  
+   - D. Online Monitoring  
+     *D. Online Monitoring*  
+
+3. When should LLM-as-Judge be used instead of Code-based Evals?  
+   - A. When criteria can be verified by rules, regex, or schema  
+   - B. When deterministic and fast evaluation is needed  
+   - C. When criteria depend on context and language nuances  
+   - D. When purposefully sampling suspicious cases is needed  
+
+4. In the Eval Lifecycle (bringing AI to production), which step acts as a Release Gate to block errors before deployment?  
+   - A. Vibe Check (10-30 cases)  
+     *A. Vibe Check (10-30 cases)*  
+   - B. Offline Evals (100-1000 cases)  
+     *B. Offline Evals (100-1000 cases)*  
+   - C. Online Monitoring (production)  
+     *C. Online Monitoring (production)*  
+   - D. Human Review (fallback)  
+     *D. Human Review (fallback)*  
+
+5. Which metric is the North Star Metric for Agents?  
+   - A. P95 latency  
+     *A. P95 latency*  
+   - B. Cost per request  
+     *B. Cost per request*  
+   - C. Agent Success Rate (aggregated from task correctness, schema pass rate, etc.)  
+   - D. User feedback count  
+     *D. User feedback count*

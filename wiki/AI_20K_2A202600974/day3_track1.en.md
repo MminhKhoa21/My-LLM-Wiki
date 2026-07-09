@@ -66,3 +66,31 @@ ReAct helps the Agent reason step-by-step:
 - Identify factors that increase/decrease the Agent's ability to use tools correctly (quality of tool description, number of tools).  
 - **Lab Practice**: Build a Chatbot baseline and upgrade to a ReAct Agent for e-commerce (check_stock, get_discount, calc_shipping).  
 - **Evaluation**: Evaluate based on Trace (Token, Latency, Loop Count, Reasoning Quality) instead of just the Final Answer.
+
+---
+
+### Day 3 Review Questions  
+
+1. What is the main difference between an Agent and an LLM Chatbot?  
+   - A. Agents only operate based on rigid if/else rules.  
+   - B. Agents are proactively goal-oriented and can use tools.  
+   - C. Chatbots have more complex multi-step reasoning capabilities than Agents.  
+   - D. Agents do not have long-term memory capabilities.  
+
+2. In the Agentic Fit Framework, which criterion indicates that the problem requires interaction with the external environment?  
+   - A. Multi-step Reasoning  
+   - B. Tool Interaction  
+   - C. Dynamic Decision  
+   - D. Long Horizon  
+
+3. Which component in the Agent architecture is responsible for deciding to call a tool and processing its output?  
+   - A. Perception  
+   - B. Reasoning  
+   - C. Action  
+   - D. Memory  
+
+4. What is the biggest benefit of the ReAct pattern compared to other methods?  
+   - A. Reduces operational costs.  
+   - B. Increases response speed.  
+   - C. Ability to debug and intervene in the reasoning process.  
+   - D. Completely eliminates parse errors.

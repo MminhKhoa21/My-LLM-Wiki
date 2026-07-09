@@ -46,3 +46,46 @@ This track emphasizes that data pipelines are a critical dependency of AI models
 - **Data Flywheel:** Using agent traces (prompts, tool calls, responses, user feedback) as a raw data source (Bronze layer) to build evaluation and fine-tuning datasets.
 - **Deduplication:** Extremely important for AI training to prevent verbatim regurgitation. Techniques include lexical dedup (MinHash+LSH) and semantic dedup (SemDeDup).
 - **Feature Store:** Centralized system to define features once and serve them identically for offline training and online inference, solving training-serving skew.
+
+---
+
+### Day 17 Review Questions
+
+1. **In the Medallion Architecture, which layer contains data that has been cleaned, deduplicated, and schema-applied?**  
+   - A. Bronze  
+     *A. Bronze*  
+   - B. Silver  
+     *B. Silver*  
+   - C. Gold  
+     *C. Gold*  
+   - D. Raw  
+     *D. Raw*  
+   **Answer:** B  
+
+2. **Which technique is used to detect erroneous records in a pipeline without breaking the entire processing flow?**  
+   - A. Logging errors to a temporary file  
+   - B. Moving erroneous records to a Dead-Letter Queue (DLQ)  
+   - C. Stopping the pipeline immediately  
+   - D. Overwriting erroneous data with null values  
+   **Answer:** B  
+
+3. **Which method helps minimize training-serving skew by generating features in real-time?**  
+   - A. Daily batch processing  
+   - B. Streaming with Kafka and Flink  
+   - C. Using a File Store instead of a Feature Store  
+   - D. Using CDC from the database only  
+   **Answer:** B  
+
+4. **In the ingestion process for LLMs, which step occurs after parsing unstructured data?**  
+   - A. Embedding into a Vector Store  
+   - B. Chunking (e.g., 512 tokens)  
+   - C. Storing in raw format  
+   - D. Schema checking  
+   **Answer:** B  
+
+5. **What kind of data does the "Data Flywheel" in an AI pipeline use as the source for the Bronze layer?**  
+   - A. Financial transaction data  
+   - B. Agent traces (prompts, tool calls, user feedback)  
+   - C. IoT sensor data  
+   - D. Pure system logs  
+   **Answer:** B

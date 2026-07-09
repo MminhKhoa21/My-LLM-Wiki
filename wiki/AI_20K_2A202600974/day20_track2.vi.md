@@ -85,3 +85,25 @@ Các công cụ chính cho phục vụ sản xuất:
     Đa phương thức (VLM): TTFT trở thành một hàm của kích thước hình ảnh/video. Mã hóa token thị giác được tách rời khỏi các giai đoạn prefill/decode.
 
     Bộ đệm ngữ nghĩa: Lưu bộ đệm các phản hồi dựa trên độ tương đồng embedding để bỏ qua suy luận đầy đủ.
+
+---
+
+### *Câu hỏi ôn tập Ngày 20*
+
+   Chỉ số nào dưới đây được coi là thước đo quan trọng nhất trong sản xuất (production) vì nó phản ánh khả năng đáp ứng các mục tiêu về chất lượng dịch vụ (SLO)?
+     C. Throughput (tổng số token/giây)
+     D. Goodput@SLO (tốc độ yêu cầu thỏa mãn SLO của TTFT và TPOT)
+   ***Đáp án:** D*
+
+   Kỹ thuật lượng tử hóa nào được khuyên dùng cho môi trường CPU/Edge inference và sử dụng định dạng Q4_K_M?
+   ***Đáp án:** C*
+
+   Phát biểu nào sau đây đúng về PagedAttention?
+     A. Chỉ hoạt động trên kiến trúc GPT, không hỗ trợ các mô hình khác.
+     B. Loại bỏ phân mảnh bộ nhớ KV cache và cho phép continuous batching, tăng throughput lên đến 24x.
+     C. Là phương pháp nén KV cache bằng cách chiếu xuống không gian tiềm ẩn (latent space).
+     D. Yêu cầu phần cứng chuyên dụng (NVIDIA Hopper) và không thể chạy trên GPU thế hệ cũ.
+   ***Đáp án:** B*
+
+   Trong các chiến lược song song hóa, kỹ thuật nào tách biệt pha prefill và decode thành các cụm (pool) riêng để tránh tắc nghẽn do các prompt dài?
+   ***Đáp án:** D*

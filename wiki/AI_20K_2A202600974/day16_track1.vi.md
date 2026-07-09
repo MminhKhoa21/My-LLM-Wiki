@@ -36,3 +36,42 @@ JTBD tập trung vào việc tìm hiểu **lý do thực sự** mà khách hàng
 - **Sau AI**: Kỳ vọng của người dùng thay đổi ở đâu? JTBD thực sự có thay đổi không, hay chỉ thay đổi cách thức hoàn thành công việc?
 - **Product Hypothesis**: Nếu giúp đối tượng (Job Executor) làm một công việc tốt hơn ở bước "đau đớn" nhất, người dùng sẽ sẵn sàng từ bỏ giải pháp hiện tại để chuyển sang sản phẩm AI.
 - **Assumptions to Validate**: Những giả định này cần được kiểm chứng liên tục thông qua phỏng vấn (interview), tạo mẫu (prototype), hoặc thử nghiệm (experiment).
+
+---
+
+### *Câu hỏi ôn tập Ngày 16*
+
+   Theo nội dung bài giảng, yếu tố nào quyết định khách hàng sẽ chuyển từ sản phẩm cũ sang sản phẩm AI mới?
+     A. Sản phẩm AI miễn phí hoàn toàn
+     B. Giá trị nhận được từ sản phẩm mới lớn hơn gấp 10 lần so với sản phẩm cũ
+     C. Sản phẩm AI có giao diện đẹp hơn
+     D. Sản phẩm AI được quảng cáo nhiều
+   **Answer / Đáp án:** B
+
+   Trong Job-to-be-Done (JTBD) Framework, “Job Story” được viết theo cấu trúc nào?
+     A. Với vai trò [persona], tôi muốn [tính năng] để đạt [mục tiêu]
+     B. Khi [bối cảnh], tôi muốn [động lực/công việc], để tôi có thể [kết quả mong đợi]
+     C. Nếu [điều kiện], thì [hành động] sẽ dẫn đến [kết quả]
+     D. Từ [trạng thái hiện tại] đến [trạng thái mong muốn] nhờ [giải pháp]
+   **Answer / Đáp án:** B
+
+   Khi sử dụng Job Map (JTBD Lite Map), mục đích chính của việc xác định “Pain Points” là gì?
+     A. Liệt kê tất cả lỗi kỹ thuật của sản phẩm hiện tại
+     B. Tìm ra bước nào người dùng thực hiện chậm, sai sót, tốn công sức, hoặc thiếu tin cậy
+     C. Đo lường mức độ hài lòng của khách hàng
+     D. Xác định đối thủ cạnh tranh trực tiếp
+   **Answer / Đáp án:** B
+
+   Theo bài giảng, sự khác biệt chính khi xây dựng Product Hypothesis trong thời đại AI là gì?
+     A. Cần tập trung vào tính năng công nghệ hơn là nhu cầu người dùng
+     B. Cần kiểm chứng giả định về sự thay đổi kỳ vọng của người dùng và cách thức hoàn thành công việc
+     C. Chỉ cần dựa trên dữ liệu lịch sử sử dụng sản phẩm cũ
+     D. Bỏ qua các bước kiểm chứng vì AI luôn mang lại giá trị vượt trội
+   **Answer / Đáp án:** B
+
+   Trường hợp nào dưới đây là ví dụ về “AI Shock” được đề cập trong bài giảng?
+     A. Một công ty tăng doanh thu nhờ thêm tính năng chatbot vào sản phẩm
+     B. Chegg bị gián đoạn khi người dùng chuyển từ trả tiền lời giải sang hỏi AI miễn phí và nhận câu trả lời tức thì
+     C. Một startup AI thành công nhờ giữ nguyên mô hình kinh doanh cũ
+     D. Người dùng trung thành với sản phẩm cũ dù AI cung cấp giá trị tương tự
+   **Answer / Đáp án:** B

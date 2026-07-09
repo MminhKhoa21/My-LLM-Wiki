@@ -123,3 +123,41 @@ This lab exercise trains the PM’s skill in designing test input sets.
 - [[day21_track2]] – CI/CD AI Systems
 - [[day21_track3]] – Fine-tuning LLMs
 - [[day21_overview]]
+
+---
+
+### Day 21 Review Questions  
+
+1. In an AI product, how does the role of the Product Manager (PM) change compared to a traditional product?  
+   - A. PM still focuses on Usage Flow and Conversion Rate as before.  
+   - B. PM shifts to managing Agent Success Rate and Quality Distributions.  
+   - C. PM is only responsible for the technical side of the model.  
+   - D. PM hands over all evaluation tasks to the Data Science team.  
+
+2. Which grading system is considered the "gold standard" to calibrate other grading systems?  
+   - A. Code-based grader  
+     *A. Code-based grader*  
+   - B. Model-based grader (LLM as Judge)  
+     *B. Model-based grader (LLM as Judge)*  
+   - C. Human grader  
+     *C. Human grader*  
+   - D. Automatic metric grader  
+     *D. Automatic metric grader*  
+
+3. According to the AI Evals lifecycle, when should the "Vibe Check" phase be performed?  
+   - A. After releasing the product to the market.  
+   - B. During the build phase, before deploy.  
+   - C. Before writing the PRD, at the prototype stage.  
+   - D. Only when there's a critical error from users.  
+
+4. What content does an AI-native PRD need to add that traditional PRDs usually lack?  
+   - A. Detailed UI description.  
+   - B. Evaluation Rubric and Golden Outputs.  
+   - C. Gantt chart for the development roadmap.  
+   - D. Marketing plan for the product.  
+
+5. When designing a Scenario Dataset, which tool should a PM use to ensure realistic coverage?  
+   - A. Have LLMs generate 50 random prompts.  
+   - B. User Input Grid with dimensions WHO, WHAT, HOW, CONTEXT, RISK.  
+   - C. Only use cases from real users.  
+   - D. Take all data from the model's training set.

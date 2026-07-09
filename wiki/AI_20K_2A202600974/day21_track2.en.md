@@ -48,3 +48,43 @@ sources: ["raw/AI_20K_2A202600974/21/Day 21 - Track 2 - CICD AI SYSTEMS.pptx"]
 ## 4. Links  
 
 [[day21_overview]]
+
+---
+
+### Day 21 Review Questions
+
+1. **What is the core difference when applying CI/CD to AI systems compared to traditional software?**  
+   - A. UI testing needs to be automated.  
+   - B. Data versions must be managed and experiments tracked to prevent model regression.  
+   - C. Testing is unnecessary because the model always works well.  
+   - D. Only one single tool is used for the entire pipeline.  
+   **Answer:** B  
+
+2. **In MLflow, what is the Model Registry primarily used for?**  
+   - A. Storing training data as artifacts.  
+   - B. Comparing runs on the UI.  
+   - C. Managing the model lifecycle, including staging, production, and versioning.  
+   - D. Automatically deploying the model to production without testing.  
+   **Answer:** C  
+
+3. **When using DVC, which command is used to rerun the entire pipeline reproducibly?**  
+   - A. `dvc run`  
+     *A. `dvc run`*  
+   - B. `dvc push`  
+     *B. `dvc push`*  
+   - C. `dvc repro`  
+     *C. `dvc repro`*  
+   - D. `dvc commit`  
+     *D. `dvc commit`*  
+   **Answer:** C  
+
+4. **Which deployment strategy allows running a new model in parallel with the old one without affecting users, strictly for logging and comparison?**  
+   - A. Canary deployment  
+     *A. Canary deployment*  
+   - B. Blue/Green deployment  
+     *B. Blue/Green deployment*  
+   - C. Shadow deployment  
+     *C. Shadow deployment*  
+   - D. Rolling deployment  
+     *D. Rolling deployment*  
+   **Answer:** C

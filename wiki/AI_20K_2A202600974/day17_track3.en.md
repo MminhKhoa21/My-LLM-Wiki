@@ -59,3 +59,30 @@ This track addresses a major challenge in deploying AI agents: agents are statel
 
 5. **Compiled Knowledge Base (LLM Wiki):** Instead of raw RAG on documents, the LLM continuously curates and edits a "wiki" of concepts, entities, and timelines, solving the problem of repetitive RAG queries on the same corpus.
 
+---
+
+### Day 17 Review Questions
+
+1. Which type of memory in an agent is managed within the LLM's context window, has fast access speed but is limited by the token budget?
+   - A. Long-term (Declarative) Memory
+   - B. Episodic Memory
+   - C. Short-term (Working) Memory
+   - D. Semantic Memory
+
+2. In the Memory Management Flow, which step occurs immediately after storing data in the Buffer?
+   - A. Persist (External Store)
+   - B. Extract Key Facts
+   - C. Summarize (LLM call)
+   - D. Retrieve from Vector DB
+
+3. The "Privacy-by-Design" feature in agent memory includes which of the following elements?
+   - A. Store all user data indefinitely
+   - B. Only allow memory access from a single user
+   - C. "Right to be Forgotten" mechanism and Time-to-Live (TTL) limit
+   - D. Encrypt all data using vector embeddings
+
+4. The "Compaction" trend in agent memory (2025-2026) refers to:
+   - A. Expanding the context window capacity indefinitely
+   - B. Compressing sessions into summaries, decisions, and persistent notes
+   - C. Creating multiple data replicas to increase reliability
+   - D. Using the AGENTS.md configuration file for access control

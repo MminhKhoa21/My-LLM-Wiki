@@ -84,3 +84,35 @@ Kết hợp quantization 4-bit (NF4) của base model và bộ điều chỉnh b
   [[day21_track2]] – Hệ thống CI/CD AI  
   [[day22_track3]] – Căn chỉnh DPO/ORPO  
   [[day21_overview]] – Tổng quan
+
+---
+
+Câu hỏi ôn tập Ngày 21
+
+   Theo bài giảng, trong quy trình chuẩn, khi nào nên chuyển sang Fine-tune thay vì tiếp tục dùng Prompt Engineering và RAG?
+   - A. Khi cần thêm kiến thức mới vào mô hình.
+   - B. Khi Prompt Engineering và RAG đã hết sức nhưng mô hình vẫn thiếu format chuyên ngành hoặc cần giảm latency/cost ở quy mô lớn.
+   - C. Khi số lượng request (req) mỗi ngày dưới 50k.
+   - D. Khi tập dữ liệu có trên 10k mẫu.
+   **Đáp án / Answer:** B
+
+   LoRA khác với Full Fine-tune ở điểm nào?
+   - A. LoRA cập nhật tất cả các tham số của mô hình gốc.
+   - B. LoRA đóng băng trọng số gốc và chỉ huấn luyện hai ma trận nhỏ A và B (low-rank).
+   - C. LoRA làm tăng độ trễ suy luận (inference latency) do phải tính thêm ma trận.
+   - D. LoRA yêu cầu nhiều VRAM hơn Full Fine-tune.
+   **Đáp án / Answer:** B
+
+   QLoRA cho phép fine-tune mô hình 7B trên GPU 24GB nhờ kết hợp kỹ thuật nào?
+   - A. Chỉ dùng Gradient Checkpointing và FlashAttention.
+   - B. Lượng tử hóa (quantization) mô hình gốc xuống 4-bit (NF4) và dùng bộ điều chỉnh bf16 LoRA, kết hợp PagedAdamW.
+   - C. Giảm rank của LoRA xuống r=1.
+   - D. Nén toàn bộ mô hình xuống còn 2-bit.
+   **Đáp án / Answer:** B
+
+   Theo bài giảng, điều nào sau đây là đúng về Dataset khi fine-tune?
+   - A. Số lượng mẫu quan trọng hơn chất lượng; 10k mẫu nhiễu vẫn tốt hơn 500 mẫu sạch.
+   - B. Cần đảm bảo tập test không nằm trong tập huấn luyện để tránh “Data contamination”.
+   - C. Chỉ cần 100 mẫu là đủ cho mọi tác vụ.
+   - D. Có thể dùng lại tập test của mô hình gốc mà không cần kiểm tra trùng lặp.
+   **Đáp án / Answer:** B

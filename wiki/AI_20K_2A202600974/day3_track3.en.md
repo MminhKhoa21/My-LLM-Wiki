@@ -70,4 +70,38 @@ Evaluating an Agent's quality cannot just look at the final result. It requires 
 
 - **Lab 3**: Build a Chatbot baseline and upgrade to a ReAct Agent for e-commerce (check_stock, get_discount, calc_shipping).  
 - **Failure Analysis**: Students are required to read JSON logs to find errors (parse error, hallucinated tool) and improve Tool Descriptions.  
-- Evaluate the Agent's capability through group discussions (Discord activity) on optimal use cases.  
+- Evaluate the Agent's capability through group discussions (Discord activity) on optimal use cases.
+
+---
+
+### Day 3 Review Questions
+
+1. According to the lecture content, which of the following is **not** one of the 4 criteria of the Agentic Fit Framework?
+   - A. Multi-step Reasoning
+   - B. Tool Interaction
+   - C. Single-turn Response
+   - D. Long Horizon
+
+2. In the ReAct pattern, which component represents the "observing the result of the action" step?
+   - A. Thought
+   - B. Action
+   - C. Observation
+   - D. Memory
+
+3. What is the main advantage of Native Tool Calling compared to Text-ReAct?
+   - A. Consumes fewer tokens
+   - B. Forces the model to generate formatted text itself
+   - C. Increases stability thanks to standard JSON schema from the API provider
+   - D. Allows the agent to create new tools itself
+
+4. What type of error occurs when an agent continuously calls a tool endlessly, unable to escape the loop?
+   - A. Hallucinated Tool
+   - B. Empty Observation
+   - C. Timeout/Loop
+   - D. Parse Error
+
+5. To evaluate Agent quality, which method is recommended instead of just looking at the final result?
+   - A. Eval-by-Trace (measuring tokens, latency, loop count)
+   - B. Blind-test with users
+   - C. Comparing with rule-based bots
+   - D. Only checking the tool's accuracy

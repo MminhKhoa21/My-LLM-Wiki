@@ -45,4 +45,35 @@ Nội dung tập trung vào kiến trúc hạ tầng đám mây (Cloud) để tr
 - **8 Layers của Production AI Agent**: Compute (GPU/CPU/Serverless) -> Orchestration -> Message Queue -> Cache -> Storage -> Networking -> Observability -> Secrets & Config.  
   - **vLLM**: PagedAttention, hệ sinh thái rộng, dễ deploy.  
   - **SGLang**: RadixAttention (tái sử dụng KV cache), tối ưu cho Agent/Multi-turn chat (tăng 20% hiệu năng).  
-  - **LMDeploy**: TurboMind engine (C++ zero overhead), throughput gấp 1.8x vLLM, lý tưởng cho latency-sensitive apps.  
+  - **LMDeploy**: TurboMind engine (C++ zero overhead), throughput gấp 1.8x vLLM, lý tưởng cho latency-sensitive apps.
+
+---
+
+### *Câu hỏi ôn tập Ngày 16*
+
+   Theo chiến lược Hybrid Cloud cho AI, cách kết hợp nào sau đây được khuyến nghị để tối ưu cả chi phí và khả năng mở rộng?
+     A. Training và Serving đều dùng PaaS
+     B. Training dùng IaaS, Serving dùng PaaS
+     C. Training dùng AI-aaS, Serving dùng IaaS
+     D. Training dùng PaaS, Serving dùng IaaS
+   ***Đáp án:** B*
+
+   GPU nào được mô tả là "sleeper pick" cho tác vụ Inference với mức giá $0.40-$0.86/giờ?
+   ***Đáp án:** C*
+
+   Giải pháp nào giúp giảm 60-70% chi phí khi training model AI trên cloud?
+     A. Sử dụng Reserved Instances
+     B. Sử dụng Spot/Preemptible Instances
+     C. Sử dụng On-Demand Instances
+     D. Sử dụng Dedicated Hosts
+   ***Đáp án:** B*
+
+   Trong Kubernetes, để quản lý tài nguyên GPU cho AI workload, cấu hình nào sau đây là đúng?
+     A. Đặt requests nhỏ hơn limits cho GPU
+     B. Dùng `nvidia.com/gpu` với requests = limits
+     C. Không cần chỉ định resource requests cho GPU
+     D. Dùng `cpu` và `memory` thay vì GPU resource
+   ***Đáp án:** B*
+
+   Serving engine nào sử dụng RadixAttention để tái sử dụng KV cache, tối ưu cho Agent và Multi-turn chat?
+   ***Đáp án:** B*

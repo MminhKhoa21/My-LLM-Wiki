@@ -85,4 +85,32 @@ The lab exercise emphasizes designing a continuous slice of the AI experience ac
 
 3. **After Action:** Reviewing results, editing, and confirming.  
 
-4. **Failure & Recovery:** Creating feedback loops to correct errors and continue the workflow seamlessly.  
+4. **Failure & Recovery:** Creating feedback loops to correct errors and continue the workflow seamlessly.
+
+---
+
+### Day 18 Review Questions  
+
+1. The **Trust Calibration** formula includes Expectation, Explainability, and Control. Which element helps users understand why the AI produced a specific result?  
+   - A. Expectation  
+   - B. Explainability  
+   - C. Control  
+   - D. Automation  
+
+2. In the **Augmentation vs Automation** decision, when should AI act automatically?  
+   - A. Low certainty, high cost of mistakes  
+   - B. High certainty, low cost of mistakes  
+   - C. Medium certainty, significant impact  
+   - D. Always automate to save time  
+
+3. When the AI encounters an error or is uncertain, which of the following handling methods is recommended?  
+   - A. Hide results to avoid confusion  
+   - B. Display results with confidence levels and provide an escape hatch  
+   - C. Force users to accept the results  
+   - D. Do not collect feedback from errors  
+
+4. "Users clicking the **like/dislike** button or rating the product" belongs to which type of feedback?  
+   - A. User Feedback (Implicit)  
+   - B. User Feedback (Explicit)  
+   - C. System Feedback (Explicit)  
+   - D. System Feedback (Implicit)

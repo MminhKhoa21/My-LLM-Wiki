@@ -116,3 +116,42 @@ Các MCP server cấp production đòi hỏi bảo mật mạnh mẽ:
 ```
 
 Nếu bạn cần thêm bất kỳ điều chỉnh nào về phong cách (ví dụ: in nghiêng hoàn toàn cho phần tiếng Việt), tôi sẵn sàng hỗ trợ.
+
+---
+
+Câu hỏi ôn tập Ngày 26
+
+   Vấn đề N×M trong tích hợp công cụ LLM được giải quyết như thế nào bởi MCP?
+   - A. Bằng cách yêu cầu mỗi nhà cung cấp LLM viết adapter riêng.
+   - B. Bằng cách giới thiệu một giao thức chuẩn, giảm độ phức tạp từ N×M xuống N+M.
+   - C. Bằng cách loại bỏ hoàn toàn nhu cầu sử dụng công cụ bên ngoài.
+   - D. Bằng cách chỉ hỗ trợ một nhà cung cấp LLM duy nhất.
+   **Đáp án / Answer:** B
+
+   Trong kiến trúc MCP, thành phần nào chịu trách nhiệm cung cấp các hàm có thể gọi được (callable functions) cho LLM quyết định sử dụng?
+   - A. Tài nguyên
+   - B. Lời nhắc
+   - C. Công cụ
+   - D. Gốc
+   **Đáp án / Answer:** C
+
+   Khi xây dựng MCP Server bằng FastMCP, yếu tố nào được nhấn mạnh là quan trọng nhất để LLM quyết định gọi tool chính xác?
+   - A. Tên hàm và kiểu dữ liệu đầu vào.
+   - B. Mô tả tool (docstring) rõ ràng.
+   - C. Số lượng tham số của hàm.
+   - D. Tốc độ xử lý của server.
+   **Đáp án / Answer:** B
+
+   Để bảo mật MCP Server từ xa (remote), giao thức nào bắt buộc phải được sử dụng?
+   - A. HTTP không mã hóa.
+   - B. SSH với private key.
+   - C. OAuth 2.0 và TLS.
+   - D. Chỉ cần xác thực qua API key.
+   **Đáp án / Answer:** C
+
+   Theo best practices của Claude Code, nên ưu tiên thiết kế luồng nào trước khi thực hiện các thay đổi (mutations)?
+   - A. Luồng ghi (write) để tác động nhanh.
+   - B. Luồng đọc/tìm kiếm (search/read) để lấy ngữ cảnh chính xác.
+   - C. Luồng xóa (delete) để dọn dẹp dữ liệu.
+   - D. Luồng cập nhật (update) để đồng bộ ngay lập tức.
+   **Đáp án / Answer:** B

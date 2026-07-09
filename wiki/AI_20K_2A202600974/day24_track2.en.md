@@ -55,3 +55,47 @@ Implementing Role-Based Access Control (RBAC) ensures users and services only ha
 ## Lab 24: Data Governance & PII Pipeline
 
 Students implement an RBAC-enabled data platform in FastAPI, build a PII detection and anonymization pipeline using Presidio with custom Vietnamese recognizers (aiming for >95% detection rate), and perform a security audit using git-secrets and truffleHog.
+
+---
+
+### Day 24 Review Questions
+
+1. **According to the Least Privilege principle, which of the following roles has permission to delete production data?**  
+   - A. ML Engineer  
+     *A. ML Engineer*  
+   - B. Data Analyst  
+     *B. Data Analyst*  
+   - C. Admin  
+     *C. Admin*  
+   - D. Service Account  
+     *D. Service Account*  
+   **Answer:** C  
+
+2. **In the envelope encryption model, how is the Data Encryption Key (DEK) protected?**  
+   - A. Stored as plaintext in code  
+   - B. Encrypted by a Key Encryption Key (KEK)  
+   - C. Rotated annually instead of monthly  
+   - D. Embedded directly into the model  
+   **Answer:** B  
+
+3. **Which PII processing technique is reversible and commonly used for internal analysis?**  
+   - A. Anonymization  
+     *A. Anonymization*  
+   - B. Masking  
+     *B. Masking*  
+   - C. Hashing  
+     *C. Hashing*  
+   - D. De-identification  
+     *D. De-identification*  
+   **Answer:** D  
+
+4. **In the Security Testing Pyramid, which tool is used to detect exposed secrets in a source code repository?**  
+   - A. Bandit (SAST)  
+     *A. Bandit (SAST)*  
+   - B. pip-audit (Dependency Scanning)  
+     *B. pip-audit (Dependency Scanning)*  
+   - C. truffleHog (Secret Scanning)  
+     *C. truffleHog (Secret Scanning)*  
+   - D. Garak (Prompt Injection Testing)  
+     *D. Garak (Prompt Injection Testing)*  
+   **Answer:** C

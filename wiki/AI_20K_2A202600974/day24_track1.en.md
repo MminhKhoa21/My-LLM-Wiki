@@ -51,3 +51,31 @@ The lab focuses on selecting an industry (e.g., HR, Education, Healthcare, Mobil
 
 - **Industry Risk Snapshot:** Evaluate the industry's overall risk profile (physical harm potential, high-stakes decisions, sensitive data, blast radius).
 - **Harm Map Worksheet:** For each case study, students must identify the high-risk moment, affected stakeholders, failure mode, the layer where the error originated, the actual harm, the harm lens (e.g., misinformation, injury, privacy loss), and score it based on Severity, Scale, Probability, and Frequency.
+
+---
+
+### Day 24 Review Questions  
+
+1. According to the lecture, which of the following definitions best describes "Safe AI"?  
+   - A. An AI system with high accuracy that never makes mistakes.  
+   - B. An AI system placed in an appropriate context, with guardrails and human accountability when incidents occur.  
+   - C. An AI system capable of self-learning and improvement without humans.  
+   - D. An AI system that complies with all current legal regulations.  
+
+2. What phenomenon does the state of “Sycophancy” in AI refer to?  
+   - A. AI makes up false information but is very confident.  
+   - B. AI always agrees with the user even when the user is wrong.  
+   - C. AI discloses other users' personal information.  
+   - D. AI refuses to answer all sensitive questions.  
+
+3. When an AI system gives a wrong answer due to insufficient grounding in the system message, which layer in the System Map does this error belong to?  
+   - A. UX (User Experience)  
+   - B. Safety System  
+   - C. Model  
+   - D. System Message & Grounding  
+
+4. In the Harm Map Framework, what does the “Scale” factor assess?  
+   - A. The severity of the harm (from low to critical).  
+   - B. The number of people or groups affected.  
+   - C. The probability of harm occurring.  
+   - D. The frequency of the harm repeating once it has occurred.

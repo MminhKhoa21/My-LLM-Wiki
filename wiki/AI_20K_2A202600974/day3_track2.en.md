@@ -76,4 +76,44 @@ Use the Agentic Fit Framework to evaluate with 4 criteria:
 
 - Upgrade the baseline Chatbot to a ReAct agent with at least 1-2 tools for the use case.  
 
-- Run 5 comparison test cases and draw a flowchart illustrating the Agent's advantages in complex contexts.  
+- Run 5 comparison test cases and draw a flowchart illustrating the Agent's advantages in complex contexts.
+
+---
+
+### Day 3 Review Questions
+
+1. **According to the lecture, what is the main difference between an Agent and an LLM Chatbot?**  
+   - A. An Agent does not use a large language model (LLM).  
+   - B. An Agent has a long-horizon goal loop and uses tools to observe step-by-step.  
+   - C. An LLM Chatbot is capable of making more consecutive decisions than an Agent.  
+   - D. An Agent only operates based on fixed rules (rule-based).  
+   **Answer:** B  
+
+2. **Which of the following criteria does NOT belong to the four criteria of the Agentic Fit Framework?**  
+   - A. Multi-step Reasoning  
+     *A. Multi-step Reasoning*  
+   - B. Tool Interaction  
+     *B. Tool Interaction*  
+   - C. High Latency Requirement  
+     *C. High Latency Requirement*  
+   - D. Long Horizon  
+     *D. Long Horizon*  
+   **Answer:** C  
+
+3. **In the ReAct Pattern, what is the correct order of a basic loop?**  
+   - A. Action → Observation → Thought  
+     *A. Action → Observation → Thought*  
+   - B. Observation → Thought → Action  
+     *B. Observation → Thought → Action*  
+   - C. Thought → Action → Observation  
+     *C. Thought → Action → Observation*  
+   - D. Thought → Observation → Action  
+     *D. Thought → Observation → Action*  
+   **Answer:** C  
+
+4. **When debugging an Agent loop, what is the first step to check?**  
+   - A. Check if the tool description is detailed enough.  
+   - B. Review if the Agent's "Thought" aligns with the goal.  
+   - C. Set up a fallback retry immediately.  
+   - D. Increase the maximum number of tools.  
+   **Answer:** B

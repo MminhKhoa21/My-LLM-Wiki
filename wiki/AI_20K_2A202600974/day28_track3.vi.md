@@ -79,3 +79,35 @@ Các bản demo tạo ra những tràng pháo tay, nhưng bằng chứng mới l
 
 ---  
 Hoàn tất chuyển đổi song ngữ.
+
+---
+
+Câu hỏi ôn tập Ngày 28
+
+   Theo bài giảng, nguyên tắc chọn value metric cho AI pricing dựa trên hai yếu tố nào?
+   - A. Chi phí API và chi phí nhân sự
+   - B. Attribution (khả năng đo lường kết quả) và Autonomy (tự động hóa)
+   - C. Số lượng người dùng và doanh thu trung bình
+   - D. Loại mô hình và chi phí suy luận
+   **Đáp án / Answer:** B
+
+   Khi xác định giá bán (floor price) cho sản phẩm AI, chi phí tối thiểu cho một job bao gồm tất cả các yếu tố sau, **ngoại trừ**:
+   - A. Chi phí API
+   - B. Chi phí hạ tầng
+   - C. Chi phí marketing
+   - D. Chi phí HITL (Human-In-The-Loop)
+   **Đáp án / Answer:** C
+
+   Quy tắc cốt lõi của Go-To-Market (GTM) cho AI là gì?
+   - A. Tạo giao diện hoàn toàn mới để gây ấn tượng
+   - B. Không bắt người dùng mở tab mới hoặc học workflow mới
+   - C. Ưu tiên kênh Sales-Led cho mọi sản phẩm
+   - D. Tập trung vào demo ấn tượng trước khi có bằng chứng
+   **Đáp án / Answer:** B
+
+   Theo bài giảng, "ARPU-CAC Dead Zone" là khoảng ARPU nào gây khó khăn vì không phù hợp với cả self-serve lẫn sales team?
+   - A. Dưới $50
+   - B. Trên $1000
+   - C. Từ $50 đến $1000
+   - D. Từ $1000 đến $5000
+   **Đáp án / Answer:** C

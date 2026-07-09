@@ -46,3 +46,28 @@ Bài tập tập trung vào kiểm tra giả thuyết và phát triển nguyên 
    Ba phương án kiểm tra rẻ hơn: Động não ít nhất 3 cách khác biệt và rẻ hơn để kiểm tra cùng một giả thuyết. Đây không phải là 3 tính năng khác nhau, mà là 3 dạng hiện vật khác nhau (ví dụ: Phác thảo, Storyboard, Nguyên mẫu giấy, Màn hình cửa giả, Thiết lập Wizard of Oz).
    Tạo hiện vật: Tạo hiện vật cho cả 3 phương pháp kiểm tra và so sánh sự đánh đổi giữa chúng (tốc độ, chi phí, mức độ gần với hành vi thực tế, hạn chế).
    Trình bày: Trình bày kết quả, tập trung vào giả thuyết, phương pháp hiện tại đắt đỏ, ba bài kiểm tra rẻ hơn và các hiện vật của chúng.
+
+---
+
+### *Câu hỏi ôn tập Ngày 17*
+
+   Theo bài giảng, "Leap of Faith Assumptions" bao gồm bốn loại rủi ro chính. Loại rủi ro nào liên quan đến câu hỏi "Người dùng có thể tìm ra cách sử dụng sản phẩm không?"
+     A. Rủi ro giá trị
+     B. Rủi ro khả dụng
+     C. Rủi ro khả thi
+     D. Rủi ro khả năng kinh doanh
+   **Answer / Đáp án:** B
+
+   Loại prototype nào phù hợp nhất để kiểm tra tính chính xác của quy trình làm việc và xem người dùng có nhận ra các tính năng chính hay không?
+   **Answer / Đáp án:** C
+
+   Trong ví dụ về Wizard of Oz MVP, hai người sáng lập đã thủ công ghi chép cuộc họp dưới danh nghĩa "Fred" để kiểm tra giả thuyết gì?
+     A. Người dùng sẽ tin tưởng AI tạo kế hoạch bài giảng
+     B. Mọi người sẵn sàng trả tiền cho dịch vụ ghi chú AI
+     C. Có thể xây dựng một ứng dụng ghi chú tự động
+     D. Giao diện web tĩnh có đủ để thu hút khách hàng
+   **Answer / Đáp án:** B
+
+   Trong Lab Assignment, bước "Three Cheaper Test Alternatives" yêu cầu brainstorm các cách kiểm tra khác nhau. Điều nào sau đây KHÔNG phải là một dạng artifact hợp lệ cho bước này?
+     C. Một tính năng phần mềm hoàn chỉnh
+   **Answer / Đáp án:** C

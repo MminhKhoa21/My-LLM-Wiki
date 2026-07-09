@@ -74,3 +74,41 @@ Bước 3: Bản ghi nhớ định vị thị trường
     Kinh tế đơn vị: Doanh thu trên mỗi khách hàng trừ chi phí phục vụ khách hàng đó.
     Nhu cầu tiền mặt: Đường băng cần thiết để đạt cột mốc tiếp theo.
     KPI: Các chỉ số cần có trước khi huy động vòng tiếp theo.
+
+---
+
+### *Câu hỏi ôn tập Ngày 26*
+
+   Theo bài giảng, xu hướng đầu tư mới của các VC hiện nay tập trung vào lĩnh vực nào?
+     A. Thương mại điện tử tổng quát
+     C. Edtech truyền thống
+     D. Startup không sử dụng AI
+   **Answer / Đáp án:** B
+
+   Yếu tố nào sau đây là một trong những chìa khóa để gọi vốn thành công?
+     A. Chỉ tập trung vào công nghệ ("tech-first") mà không quan tâm khách hàng
+     B. Đội ngũ sáng lập đáng tin cậy và cam kết
+     C. Sản phẩm có gắn nhãn "AI" dù chưa giải quyết vấn đề cốt lõi
+     D. Kế hoạch tài chính không rõ ràng
+   **Answer / Đáp án:** B
+
+   Phương pháp hiệu quả nhất để tìm nhà đầu tư phù hợp là gì?
+     A. Gửi email lạnh hàng loạt
+     B. Giới thiệu từ người quen (referrals)
+     C. Đăng bài tuyển dụng trên LinkedIn
+     D. Mua danh sách email từ Crunchbase
+   **Answer / Đáp án:** B
+
+   Trong bài lab, bước "Market Positioning Memo" yêu cầu ước tính những thông số nào để giải quyết vấn đề "Unclear financials"?
+     A. Số nhân viên và văn phòng
+     B. Unit Economics, Cash Needs và KPIs
+     C. Số lượng đối thủ cạnh tranh
+     D. Chi phí marketing và PR
+   **Answer / Đáp án:** B
+
+   Trước buổi gặp nhà đầu tư, điều nào cần tìm hiểu trước tiên?
+     A. Sở thích cá nhân của từng partner
+     B. Ticket size điển hình và danh mục đầu tư hiện tại của quỹ
+     C. Màu sắc logo của quỹ
+     D. Ngày sinh của CEO quỹ
+   **Answer / Đáp án:** B

@@ -56,3 +56,54 @@ sources: ["raw/AI_20K_2A202600974/18/2-Day 18 - Track 2 - Data Lakehouse Archite
 - **Data Contracts:** Enforcing schemas and constraints to maintain data quality.
 
 - **Security:** Handling PII with tokenization, encryption, RBAC/ABAC, and respecting Right-to-Forget laws (PDPL, GDPR).
+
+---
+
+### Day 18 Review Questions
+
+1. **Which technology is highlighted for its **Hidden Partitioning** feature that automatically abstracts partitioning logic away from the user?**  
+   - A. Delta Lake  
+     *A. Delta Lake*  
+   - B. Apache Iceberg  
+     *B. Apache Iceberg*  
+   - C. Apache Hudi  
+     *C. Apache Hudi*  
+   - D. Apache Parquet  
+     *D. Apache Parquet*  
+   **Answer:** B  
+
+2. **Which of the following anti-patterns typically leads to the **small files problem** in a Data Lakehouse?**  
+   - A. Partitioning by a high-cardinality column  
+   - B. Skipping the `OPTIMIZE` command  
+   - C. Setting `VACUUM 0 HOURS`  
+   - D. Using Spark for small queries  
+   **Answer:** B  
+
+3. **In the Medallion Architecture, which layer contains **immutable and append-only** data?**  
+   - A. Bronze  
+     *A. Bronze*  
+   - B. Silver  
+     *B. Silver*  
+   - C. Gold  
+     *C. Gold*  
+   - D. Platinum  
+     *D. Platinum*  
+   **Answer:** A  
+
+4. **To ensure model reproducibility, **Delta versions** should be integrated with which of the following?**  
+   - A. Git source code  
+   - B. MLflow run ID  
+   - C. System timestamp  
+   - D. Parquet file name  
+   **Answer:** B  
+
+5. **Which storage format is recommended for good columnar read performance and compression in a Lakehouse?**  
+   - A. JSON  
+     *A. JSON*  
+   - B. CSV  
+     *B. CSV*  
+   - C. Parquet  
+     *C. Parquet*  
+   - D. Avro  
+     *D. Avro*  
+   **Answer:** C

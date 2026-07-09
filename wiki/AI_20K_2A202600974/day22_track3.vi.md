@@ -86,3 +86,31 @@ Năm 2025 (DeepSeek R1 series), RL quay lại nhưng với phiên bản tối ư
 ## *Liên kết*
 
   [[day21_track3]] – LoRA/QLoRA (bước trước fine-tuning alignment)
+
+---
+
+Câu hỏi ôn tập Ngày 22
+
+   Trong DPO, khi tăng hyperparameter β (KL penalty), điều gì xảy ra với mô hình sau huấn luyện?
+   - A. Mô hình trở nên tự do hơn, ít bám sát SFT base.
+   - B. Mô hình bảo thủ hơn, giữ gần với reference model.
+   - C. Không ảnh hưởng đến hành vi mô hình.
+   - D. Mô hình học nhanh hơn nhưng dễ overfit.
+   **Đáp án / Answer:** B
+
+   ORPO khác biệt chính so với DPO ở điểm nào?
+   - A. ORPO yêu cầu reward model riêng, DPO thì không.
+   - B. ORPO là single-stage alignment, không cần SFT stage.
+   - C. ORPO dùng cặp preference, DPO dùng nhãn thumbs up/down.
+   - D. ORPO chỉ dùng cho toán học, DPO dùng cho chatbot.
+   **Đáp án / Answer:** B
+
+   GRPO (Group Relative Policy Optimization) cải tiến gì so với PPO truyền thống?
+   - A. Loại bỏ hoàn toàn mạng value model bằng cách tính reward trung bình của nhóm outputs.
+   - B. Thay thế reward model bằng một mạng neural nhỏ hơn.
+   - C. Yêu cầu nhiều VRAM hơn nhưng tăng độ chính xác.
+   - D. Chỉ dùng cho tác vụ code, không dùng cho reasoning.
+   **Đáp án / Answer:** A
+
+   Benchmark nào sau đây dùng LLM-as-Judge để đánh giá chất lượng phản hồi (response quality) trong alignment?
+   **Đáp án / Answer:** C

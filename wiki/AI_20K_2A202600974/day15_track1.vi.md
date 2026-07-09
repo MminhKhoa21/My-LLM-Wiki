@@ -35,3 +35,35 @@ Track này phù hợp nếu bạn:
 ## Career Path & Cơ hội
 - **Vai trò mục tiêu (CP1):** AI Product Manager (AI PM), AI Business Analyst (AI BA), AI Strategist.
 - **Nhu cầu thị trường:** **Cao, khan hiếm.** Cần những người hiểu sâu bài toán doanh nghiệp để triển khai AI mang lại giá trị thực tế.
+
+---
+
+### *Câu hỏi ôn tập Ngày 15*
+
+   Mục tiêu chính của Track 1 (Phase 2) là gì?
+     A. Học cách code và triển khai mô hình AI từ đầu
+     B. Chuyển từ việc "build AI" sang ra quyết định sản phẩm AI (chiến lược, ROI, governance)
+     C. Tập trung vào cải thiện độ chính xác của thuật toán deep learning
+     D. Xây dựng kỹ năng quản lý đội ngũ kỹ thuật AI
+   **Answer / Đáp án:** B
+
+   Ai là người phù hợp nhất với Track này?
+     A. Kỹ sư chỉ thích code và không quan tâm đến business case
+     B. Người thích viết Problem Statement, phân biệt Need vs Feature, và thoải mái với sự mơ hồ
+     C. Chuyên gia luật am hiểu AI Act nhưng không làm sản phẩm
+     D. Data scientist chuyên tối ưu mô hình mà không cần quan tâm đến UX
+   **Answer / Đáp án:** B
+
+   Năng lực nào KHÔNG được xây dựng trong Track này?
+     A. Problem framing và định nghĩa success metric
+     B. Thiết kế trust/UX cho sản phẩm AI
+     C. Lập trình model deployment và fine-tuning
+     D. ROI & business case, pilot plan & đo lường adoption
+   **Answer / Đáp án:** C
+
+   Thách thức lớn nhất khi theo Track này là gì?
+     A. Thiếu dữ liệu để huấn luyện mô hình AI
+     B. Phải sống với sự mơ hồ, ra quyết định khi dữ liệu chưa đủ, và thuyết phục stakeholder
+     C. Không có cơ hội việc làm vì thị trường không cần AI PM
+     D. Kết quả đo bằng kỹ thuật (accuracy, F1) nên dễ thấy ngay
+   **Answer / Đáp án:** B

@@ -85,3 +85,45 @@ Key engines for production serving:
 * **Multimodal (VLM):** TTFT becomes a function of image/video size. Encoding vision tokens is decoupled from the prefill/decode phases.
 
 * **Semantic Caching:** Caching responses based on embedding similarity to bypass full inference.
+
+---
+
+### Day 20 Review Questions
+
+1. **Which of the following metrics is considered the most important in production because it reflects the ability to meet Service Level Objectives (SLO)?**  
+   - A. TTFT (Time To First Token)  
+     *A. TTFT (Time To First Token)*  
+   - B. TPOT (Time Per Output Token)  
+     *B. TPOT (Time Per Output Token)*  
+   - C. Throughput (total tokens/second)  
+   - D. Goodput@SLO (the rate of requests meeting the TTFT and TPOT SLOs)  
+   **Answer:** D  
+
+2. **Which quantization technique is recommended for CPU/Edge inference environments and uses the Q4_K_M format?**  
+   - A. FP8  
+     *A. FP8*  
+   - B. AWQ (4-bit)  
+     *B. AWQ (4-bit)*  
+   - C. GGUF  
+     *C. GGUF*  
+   - D. NVFP4  
+     *D. NVFP4*  
+   **Answer:** C  
+
+3. **Which of the following statements about PagedAttention is true?**  
+   - A. It only works on GPT architectures and doesn't support other models.  
+   - B. It eliminates KV cache memory fragmentation and enables continuous batching, increasing throughput by up to 24x.  
+   - C. It is a KV cache compression method by projecting into the latent space.  
+   - D. It requires specialized hardware (NVIDIA Hopper) and cannot run on older generation GPUs.  
+   **Answer:** B  
+
+4. **Among parallelization strategies, which technique separates the prefill and decode phases into separate pools to avoid bottlenecks caused by long prompts?**  
+   - A. Tensor Parallelism (TP)  
+     *A. Tensor Parallelism (TP)*  
+   - B. Pipeline Parallelism (PP)  
+     *B. Pipeline Parallelism (PP)*  
+   - C. Expert Parallelism (EP)  
+     *C. Expert Parallelism (EP)*  
+   - D. Disaggregated Serving  
+     *D. Disaggregated Serving*  
+   **Answer:** D

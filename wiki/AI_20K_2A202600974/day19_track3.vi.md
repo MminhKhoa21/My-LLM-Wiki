@@ -64,3 +64,34 @@ Hành trình từ câu hỏi đến câu trả lời:
    Xử lý bộ **Tech Company Corpus**.
    Pipeline cần xây dựng: Trích xuất Triple bằng LLM -> Đưa vào NetworkX / Neo4j / **NodeRAG** framework -> Thực hiện Graph Traversal -> LLM Generation.
    Đánh giá trên tập câu hỏi Multi-hop và so sánh benchmark với Flat RAG (về accuracy, latency, chi phí token).
+
+---
+
+Câu hỏi ôn tập Ngày 19
+
+   Flat RAG (Vector RAG) thường thất bại với loại câu hỏi nào dưới đây?
+   - A. Câu hỏi factoid đơn giản nằm trong một tài liệu.
+   - B. Câu hỏi yêu cầu suy luận qua nhiều thực thể (multi-hop).
+   - C. Câu hỏi về định nghĩa khái niệm cơ bản.
+   - D. Câu hỏi trích xuất thông tin từ một đoạn văn ngắn.
+   **Đáp án / Answer:** B
+
+   Đơn vị nguyên tử (atomic unit) của Knowledge Graph là gì?
+   - A. Nút và Cạnh riêng lẻ.
+   - B. Bộ ba (Triple) gồm Chủ thể – Vị ngữ – Tân ngữ.
+   - C. Một đồ thị con (Subgraph) bất kỳ.
+   - D. Câu văn hoàn chỉnh trong văn bản gốc.
+   **Đáp án / Answer:** B
+
+   Trong pipeline GraphRAG tiêu chuẩn, bước nào chuyển đổi subgraph thành dạng văn bản để đưa vào LLM?
+   - A. Khớp nút gốc.
+   - B. Duyệt đồ thị.
+   - C. Văn bản hóa.
+   **Đáp án / Answer:** C
+
+   LightRAG cải thiện tốc độ và chi phí so với Microsoft GraphRAG nhờ kiến trúc nào?
+   - A. Sử dụng Phát hiện cộng đồng và Tóm tắt phân cấp.
+   - B. Truy xuất hai cấp độ với embedding cho cả Node và Edge.
+   - C. Duyệt đồ thị với độ sâu tối đa là 3.
+   - D. Kết hợp Vector DB và Graph DB qua cơ chế Hybrid Search.
+   **Đáp án / Answer:** B

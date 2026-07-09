@@ -62,3 +62,39 @@ Observability is only valuable if the team knows how to react.
 - **Runbooks:** Standardized procedural guides for handling incidents.
 - **Severity Levels:** Classify incidents (P0 to P3) to determine response times.
 - **Blameless Postmortems & Chaos Engineering:** Cultivate learning without pointing fingers. Use "5 Whys" to find systemic root causes.
+
+---
+
+### Day 27 Review Questions
+
+1. **What is the core difference between **Pipeline Monitoring** and **Data Observability**?**  
+   - A. Pipeline Monitoring only checks runtime, while Data Observability checks data correctness.  
+   - B. Pipeline Monitoring is used for batch, Data Observability is used for streaming.  
+   - C. Pipeline Monitoring focuses on logs, Data Observability focuses on schema.  
+   - D. There is no difference, both are the same.  
+   **Answer:** A  
+
+2. **Among the 5 pillars of Data Observability, which pillar detects changes in column names or data types?**  
+   - A. Freshness  
+     *A. Freshness*  
+   - B. Volume  
+     *B. Volume*  
+   - C. Schema  
+     *C. Schema*  
+   - D. Lineage  
+     *D. Lineage*  
+   **Answer:** C  
+
+3. **In Great Expectations, what is the role of a **Checkpoint**?**  
+   - A. Storing data validation rules (Expectation Suite).  
+   - B. Integrating the Expectation Suite into the production pipeline and triggering actions (alert, block) upon failure.  
+   - C. Automatically generating sample data for testing.  
+   - D. Completely replacing dbt tests.  
+   **Answer:** B  
+
+4. **In SLO Engineering, what is the **Error Budget** used for?**  
+   - A. Measuring data freshness.  
+   - B. Balancing stability and new features: if the error budget is depleted, prioritize bug fixes over feature releases.  
+   - C. Determining the alert threshold for anomaly detection.  
+   - D. Classifying incident severity (P0-P3).  
+   **Answer:** B

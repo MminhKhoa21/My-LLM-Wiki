@@ -90,3 +90,41 @@ Embedding vốn dĩ gặp khó khăn với:
 - **Mù số**
 
 *Giải pháp:* Sử dụng lọc metadata, xác minh NLI sau truy xuất, và làm giàu chunk chính xác.
+
+---
+
+Câu hỏi ôn tập Ngày 18
+
+   Kỹ thuật enrichment nào trong giai đoạn OFFLINE sử dụng LLM để tạo ra các câu hỏi mà một chunk có thể trả lời, sau đó nhúng các câu hỏi đó cùng với chunk?
+   - A. Nhúng ngữ cảnh
+   - B. Hỏi-Đáp giả định
+   - C. Học biểu diễn Matryoshka
+   - D. Chunk muộn
+   **Đáp án / Answer:** B
+
+   Trong giai đoạn ONLINE, thành phần nào sử dụng Cross-Encoders để sắp xếp lại các chunk đã truy xuất, giúp cải thiện độ chính xác với chi phí độ trễ nhỏ?
+   - A. Tiền RAG
+   - B. Truy xuất
+   - C. Sắp xếp lại
+   - D. Tăng cường
+   **Đáp án / Answer:** C
+
+   Theo RAGAS, metric nào đo lường mức độ trung thực của câu trả lời (có bám sát nội dung được cung cấp hay không)?
+   - A. Độ thu hồi ngữ cảnh
+   - B. Độ chính xác ngữ cảnh
+   - C. Độ trung thực
+   - D. Mức độ liên quan của câu trả lời
+   **Đáp án / Answer:** C
+
+   Hạn chế nào của embedding được nhắc đến trong bài giảng, ví dụ như không phân biệt được "allowed" và "not allowed"?
+   - A. Hoán đổi thực thể
+   - B. Mù thời gian
+   - C. Không nhạy cảm với phủ định
+   - D. Mù số học
+   **Đáp án / Answer:** C
+
+   Kỹ thuật chunking nào xây dựng một cây tóm tắt đệ quy để trả lời các câu hỏi tổng hợp ở mức cao?
+   - A. Chunk ngữ nghĩa
+   - B. Chunk phân cấp
+   - D. Chunk muộn
+   **Đáp án / Answer:** C

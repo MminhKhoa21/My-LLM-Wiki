@@ -45,4 +45,39 @@ The lab focuses on hypothesis testing and cheaper prototyping:
 3. **Current Approach Evaluation:** Document what the project is currently doing or planning to do, and why it is expensive or slow.  
 4. **Three Cheaper Test Alternatives:** Brainstorm at least 3 distinct and cheaper ways to test the exact same hypothesis. These are not 3 different features, but 3 different forms of artifacts (e.g., Sketch, Storyboard, Paper prototype, Fake-door screen, Wizard of Oz setup).  
 5. **Artifact Creation:** Create artifacts for all 3 testing approaches and compare their trade-offs (speed, cost, proximity to real behavior, limitations).  
-6. **Presentation:** Present the findings, focusing on the hypothesis, the current expensive approach, the three cheaper tests, and their artifacts.  
+6. **Presentation:** Present the findings, focusing on the hypothesis, the current expensive approach, the three cheaper tests, and their artifacts.
+
+---
+
+### Day 17 Review Questions  
+
+1. According to the lecture, "Leap of Faith Assumptions" include four main types of risks. Which risk relates to the question "Can users figure out how to use the product?"  
+   - A. Value risk  
+   - B. Usability risk  
+   - C. Feasibility risk  
+   - D. Business viability risk  
+
+2. Which type of prototype is most suitable to test the accuracy of workflows and see if users recognize the main features?  
+   - A. High-fidelity prototype  
+     *A. High-fidelity prototype*  
+   - B. Clickable prototype  
+     *B. Clickable prototype*  
+   - C. Low-fidelity prototype  
+     *C. Low-fidelity prototype*  
+   - D. Mockup  
+     *D. Mockup*  
+
+3. In the Wizard of Oz MVP example, the two founders manually transcribed meetings under the name "Fred" to test what hypothesis?  
+   - A. Users will trust AI to create lesson plans  
+   - B. People are willing to pay for an AI transcription service  
+   - C. It's possible to build an automated transcription app  
+   - D. A static web interface is enough to attract customers  
+
+4. In the Lab Assignment, the "Three Cheaper Test Alternatives" step requires brainstorming different ways to test. Which of the following is NOT a valid artifact for this step?  
+   - A. Sketch  
+     *A. Sketch*  
+   - B. Storyboard  
+     *B. Storyboard*  
+   - C. A completely developed software feature  
+   - D. Wizard of Oz setup  
+     *D. Wizard of Oz setup*

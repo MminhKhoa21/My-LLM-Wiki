@@ -60,3 +60,32 @@ Phòng thí nghiệm có bốn giai đoạn:
    **Giai đoạn B (LLM-as-Judge):** Xây dựng các pipeline chấm điểm theo cặp và tuyệt đối, đo lường Cohen's Kappa so với nhãn của con người và phân tích thiên kiến người đánh giá.
    **Giai đoạn C (Guardrails):** Triển khai hệ thống guardrail đầy đủ với Presidio, trình xác thực chủ đề, kiểm thử đối kháng và Llama Guard 3, được đo điểm chuẩn cho độ trễ P50/P95.
    **Giai đoạn D (Bản thiết kế):** Tài liệu hóa kiến trúc hệ thống, Mục tiêu cấp độ dịch vụ (SLO), sổ tay cảnh báo và phân tích chi phí.
+
+---
+
+Câu hỏi ôn tập Ngày 24
+
+   RAGAS sử dụng chỉ số nào để đo lường mức độ hỗ trợ của ngữ cảnh cho câu trả lời (hallucination nội tại)?
+   - A. Độ thu hồi ngữ cảnh
+   - B. Mức độ liên quan của câu trả lời
+   - C. Độ trung thực
+   - D. Độ chính xác ngữ cảnh
+   **Đáp án / Answer:** C
+
+   Khi sử dụng LLM-as-Judge, bias nào được khắc phục bằng phương pháp "swap-and-average"?
+   - A. Thiên lệch độ dài
+   - B. Thiên lệch vị trí
+   - C. Thiên lệch tự khuếch đại
+   - D. Thiên lệch phong cách
+   **Đáp án / Answer:** B
+
+   Trong kiến trúc Guardrails, lớp nào chịu trách nhiệm phát hiện prompt injection và kiểm tra chủ đề (topic scope) với độ trễ dưới 30ms?
+   - A. Lớp đầu vào L1
+   - B. Lớp LLM L2
+   - C. Lớp đầu ra L3
+   - D. Lớp kiểm toán L4
+   **Đáp án / Answer:** A
+
+   Kỹ thuật nào sau đây phát hiện hallucination bằng cách lấy mẫu nhiều câu trả lời với temperature > 0 và đo độ nhất quán?
+   - B. Entropy ngữ nghĩa
+   **Đáp án / Answer:** C

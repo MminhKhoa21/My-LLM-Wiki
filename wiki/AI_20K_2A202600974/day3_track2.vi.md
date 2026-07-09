@@ -70,3 +70,27 @@ Dùng Agentic Fit Framework để đánh giá với 4 tiêu chí:
   - Nâng cấp Chatbot baseline thành ReAct agent với tối thiểu 1-2 tools cho use case.
 
   - Chạy 5 test cases so sánh và vẽ flowchart thể hiện ưu thế của Agent trong những ngữ cảnh phức tạp.
+
+---
+
+### *Câu hỏi ôn tập Ngày 3*
+
+   Theo bài giảng, điểm khác biệt chính giữa Agent và LLM Chatbot là gì?
+     A. Agent không sử dụng mô hình ngôn ngữ lớn (LLM).
+     B. Agent có vòng lặp tư duy dài hạn (long-horizon goal) và sử dụng tools để quan sát từng bước.
+     C. LLM Chatbot có khả năng thực hiện nhiều quyết định liên tiếp hơn Agent.
+     D. Agent chỉ hoạt động dựa trên quy tắc cố định (rule-based).
+   ***Đáp án:** B*
+
+   Tiêu chí nào sau đây KHÔNG thuộc bộ bốn tiêu chí của Agentic Fit Framework?
+   ***Đáp án:** C*
+
+   Trong ReAct Pattern, thứ tự đúng của một vòng lặp cơ bản là:
+   ***Đáp án:** C*
+
+   Khi gỡ lỗi (debug) Agent loop, bước đầu tiên nên kiểm tra là gì?
+     A. Kiểm tra tool description có đủ chi tiết không.
+     B. Xem xét "Thought" của Agent có đúng mục tiêu không.
+     C. Cài đặt fallback retry ngay lập tức.
+     D. Tăng số lượng tools tối đa.
+   ***Đáp án:** B*

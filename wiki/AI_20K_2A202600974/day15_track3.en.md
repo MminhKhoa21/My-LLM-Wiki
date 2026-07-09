@@ -50,3 +50,31 @@ This track is suitable if you:
 
 - **Target roles (CP3):** AI Engineer, LLM Engineer, Agent Developer.
 - **Market demand:** **Highest.** These are positions that directly create new intelligent AI products and solutions on the market. A strong portfolio in this role opens opportunities to participate in major real-world projects (e.g., at Vingroup).
+
+---
+
+### Day 15 Review Questions
+
+1. Which of the following techniques is **NOT** mentioned in the main content of Track 3?
+   - A. GraphRAG & knowledge graphs
+   - B. Fine-tuning with LoRA, QLoRA, DPO
+   - C. Basic prompt engineering (few-shot, chain-of-thought)
+   - D. Production evaluation systems
+
+2. According to the lecture, Track 3 is suitable for learners with which characteristics?
+   - A. Likes working with structured data and pure SQL
+   - B. Interested in ReAct design, tool calling, supervisor-worker architecture
+   - C. Wants to focus on image and video processing with CNN
+   - D. Prioritizes no-code solutions
+
+3. What challenge is explicitly stated when pursuing Track 3?
+   - A. Light content volume, easy to absorb
+   - B. The field already has clear best practices, no need to experiment
+   - C. Benchmark and evaluation require a lot of effort
+   - D. Does not require reading original documents (research papers)
+
+4. What is the target role (CP3) that Track 3 aims for?
+   - A. Data Analyst, Business Intelligence Developer
+   - B. AI Engineer, LLM Engineer, Agent Developer
+   - C. Frontend Developer, UI/UX Designer
+   - D. DevOps Engineer, Cloud Architect

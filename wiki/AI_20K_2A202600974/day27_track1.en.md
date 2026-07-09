@@ -71,4 +71,32 @@ AI agents now participate in the entire Software Development Life Cycle (SDLC):
 
 ### Psychological Safety  
 
-The most important factor for an AI team is psychological safety (Project Aristotle). Teams must feel safe to experiment, fail, and speak up, as AI models are inherently uncertain.  
+The most important factor for an AI team is psychological safety (Project Aristotle). Teams must feel safe to experiment, fail, and speak up, as AI models are inherently uncertain.
+
+---
+
+### Day 27 Review Questions  
+
+1. In the 4-quadrant stakeholder management model, which group has the **Strategy: Persuade, mitigate risks early, address concerns before they ask**?  
+   - A. Champions  
+   - B. Blockers  
+   - C. Supporters  
+   - D. Bystanders  
+
+2. In the RACI matrix, which member must be **only one person per task** and holds the ultimate decision-making responsibility?  
+   - A. Responsible  
+   - B. Accountable  
+   - C. Consulted  
+   - D. Informed  
+
+3. What does the **"Conclusion first"** principle require when communicating with stakeholders?  
+   - A. Provide all data first, then conclude  
+   - B. Start with the conclusion, then provide reasons and data  
+   - C. Only present the conclusion when asked  
+   - D. Focus on technical details first  
+
+4. What factor did Project Aristotle identify as the **most important** for an effective AI team?  
+   - A. Hybrid team structure (Hub-and-Spoke)  
+   - B. L3 Capability (AI Builder)  
+   - C. Psychological Safety  
+   - D. Applying Agentic SDLC

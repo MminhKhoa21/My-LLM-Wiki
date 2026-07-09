@@ -52,4 +52,36 @@ ReAct giúp Agent suy luận theo từng bước:
 - Tham gia hoạt động nhóm: Chấm điểm use case theo Agentic Fit.  
 - Xác định các yếu tố tăng/giảm khả năng dùng tool đúng của Agent (chất lượng tool description, số lượng tool).  
 - **Thực hành Lab**: Xây dựng Chatbot baseline và nâng cấp lên ReAct Agent cho e-commerce (check_stock, get_discount, calc_shipping).  
-- **Evaluation**: Đánh giá dựa trên Trace (Token, Latency, Loop Count, Reasoning Quality) thay vì chỉ đánh giá Final Answer.  
+- **Evaluation**: Đánh giá dựa trên Trace (Token, Latency, Loop Count, Reasoning Quality) thay vì chỉ đánh giá Final Answer.
+
+---
+
+### *Câu hỏi ôn tập Ngày 3*
+
+   Điểm khác biệt chính giữa Agent và LLM Chatbot là gì?
+     A. Agent chỉ hoạt động dựa trên luật if/else cứng.
+     B. Agent chủ động định hướng theo mục tiêu và có thể sử dụng tools.
+     C. Chatbot có khả năng suy luận nhiều bước phức tạp hơn Agent.
+     D. Agent không có khả năng ghi nhớ dài hạn.
+   **Answer / Đáp án:** B
+
+   Trong Agentic Fit Framework, tiêu chí nào cho thấy bài toán cần sự tương tác với môi trường bên ngoài?
+     A. Suy luận nhiều bước
+     B. Tương tác công cụ
+     C. Quyết định động
+     D. Tầm nhìn dài
+   **Answer / Đáp án:** B
+
+   Thành phần nào trong kiến trúc Agent chịu trách nhiệm quyết định gọi tool và xử lý đầu ra?
+     A. Tri giác
+     B. Suy luận
+     C. Hành động
+     D. Bộ nhớ
+   **Answer / Đáp án:** C
+
+   Lợi ích lớn nhất của ReAct pattern so với các phương pháp khác là gì?
+     A. Giảm chi phí vận hành.
+     B. Tăng tốc độ phản hồi.
+     C. Khả năng debug và can thiệp vào quá trình suy luận.
+     D. Loại bỏ hoàn toàn lỗi parse.
+   **Answer / Đáp án:** C

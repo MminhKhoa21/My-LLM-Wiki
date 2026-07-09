@@ -72,4 +72,39 @@ The practical component requires mapping a real-world AI deal using standard fun
 - **Key Deliverables:** Address the common "Unclear financials" issue by estimating:  
   - **Unit Economics:** Revenue per customer minus cost to serve that customer.  
   - **Cash Needs:** Runway required to hit the next milestone.  
-  - **KPIs:** The metrics needed before raising the next round.  
+  - **KPIs:** The metrics needed before raising the next round.
+
+---
+
+### Day 26 Review Questions  
+
+1. According to the lecture, what field are current VC investment trends focusing on?  
+   - A. General E-commerce  
+   - B. AI-Native Service Companies, AI + Hardware, AI + Deeptech, Software for Agents  
+     *B. AI-Native Service Companies, AI + Hardware, AI + Deeptech, Software for Agents*  
+   - C. Traditional Edtech  
+   - D. Non-AI startups  
+
+2. Which of the following is one of the keys to successful fundraising?  
+   - A. Focusing only on tech ("tech-first") without caring about customers  
+   - B. A reliable and committed founding team  
+   - C. Products labeled "AI" even if they don't solve the core problem  
+   - D. Unclear financial plans  
+
+3. What is the most effective method for finding suitable investors?  
+   - A. Mass cold emailing  
+   - B. Introductions through connections (referrals)  
+   - C. Posting job openings on LinkedIn  
+   - D. Buying email lists from Crunchbase  
+
+4. In the lab, the "Market Positioning Memo" step requires estimating what parameters to solve the "Unclear financials" issue?  
+   - A. Number of employees and offices  
+   - B. Unit Economics, Cash Needs, and KPIs  
+   - C. Number of competitors  
+   - D. Marketing and PR costs  
+
+5. Before meeting with investors, what should be researched first?  
+   - A. Personal hobbies of each partner  
+   - B. Typical ticket size and the fund's current investment portfolio  
+   - C. The fund's logo colors  
+   - D. The fund CEO's birth date

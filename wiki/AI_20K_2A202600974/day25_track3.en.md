@@ -103,3 +103,37 @@ The lab involves building a reliability gateway that implements:
 - Cost cap almost reached.
 
 Expected evidence includes metrics showing the circuit breaker transitioning (CLOSED -> OPEN), gateway routing to fallback without a retry storm, and logged recovery time.
+
+---
+
+### Day 25 Review Questions
+
+1. When an LLM agent system encounters a 429 (Rate Limit) or 500 (Internal Server Error) from the provider, which failure mode does this belong to?
+   - A. Tool/cache failure
+   - B. Incorrect business action
+   - C. Provider transient
+   - D. Orchestration loop
+
+2. In which state does a Circuit Breaker allow performing a probe call to check for recovery?
+   - A. CLOSED
+   - B. OPEN
+   - C. HALF-OPEN
+   - D. FAILED
+
+3. In the fallback ladder, which step is typically performed before using a cached response?
+   - A. Best model
+   - B. Backup provider
+   - C. Cheaper/smaller model
+   - D. Static fallback message
+
+4. When semantic cache similarity > threshold, what is the correct action?
+   - A. Call LLM and store new result
+   - B. Return cached result
+   - C. Reset threshold
+   - D. Log the error
+
+5. How is SLI (Service Level Indicator) defined in the lecture?
+   - A. External commitment to customers
+   - B. Internal quality targets
+   - C. Actual measured metric (e.g., P95 latency)
+   - D. Allowed error budget

@@ -77,3 +77,31 @@ The core architectural layers common to these systems are:
 3. **Data Flywheel:** Systems scale effectively by capturing edge cases and feeding them back into training loops.
 
 - [[day28_overview]]
+
+---
+
+### Day 28 Review Questions  
+
+1. Which architectural layer in a real-world AI system is responsible for defining the ODD (Operational Design Domain) and safety monitoring?  
+   - A. Data / Sensor  
+   - B. Perception  
+   - C. Decision / Policy  
+   - D. Ops / Safety  
+
+2. According to lessons from ADAS/Autonomous Driving systems, which of the following is true about End-to-End models?  
+   - A. E2E models can completely replace other architectural layers  
+   - B. E2E models still need an independent safety shell and a pre-defined ODD  
+   - C. E2E models do not need training data from rare situations  
+   - D. E2E models only apply to autonomous vehicles, not used for robots  
+
+3. What is the main goal when deploying AI for CCTV systems?  
+   - A. Applying large models to every frame to increase accuracy  
+   - B. Reducing the number of clips that humans need to review  
+   - C. Completely eliminating processing on edge devices  
+   - D. Completely replacing humans in monitoring  
+
+4. In Humanoid Robot architecture, which of the following is an important lesson learned?  
+   - A. Robot data is cheaper than web data  
+   - B. Sim-to-real gap can be ignored thanks to perfect simulation  
+   - C. Robot data is more expensive than web data and needs domain randomization to reduce the sim-to-real gap  
+   - D. Safety guards (e-stop, torque limits) must depend on the policy to ensure consistency

@@ -46,3 +46,38 @@ Track này nhấn mạnh rằng các pipeline dữ liệu là một phụ thuộ
   * **Bánh đà dữ liệu:** Sử dụng dấu vết tác nhân (prompt, lời gọi công cụ, phản hồi, phản hồi người dùng) như một nguồn dữ liệu thô (lớp Bronze) để xây dựng tập dữ liệu đánh giá và tinh chỉnh.
   * **Loại bỏ trùng lặp:** Cực kỳ quan trọng cho việc huấn luyện AI để ngăn chặn sự lặp lại nguyên văn. Các kỹ thuật bao gồm loại bỏ trùng lặp từ vựng (MinHash+LSH) và loại bỏ trùng lặp ngữ nghĩa (SemDeDup).
   * **Feature Store:** Hệ thống tập trung để định nghĩa các đặc trưng một lần và phục vụ chúng giống hệt nhau cho huấn luyện ngoại tuyến và suy luận trực tuyến, giải quyết độ lệch giữa huấn luyện và phục vụ.
+
+---
+
+### *Câu hỏi ôn tập Ngày 17*
+
+   Trong Medallion Architecture, lớp nào chứa dữ liệu đã được làm sạch, khử trùng lặp và áp dụng schema?
+   ***Đáp án:** B*
+
+   Kỹ thuật nào được sử dụng để phát hiện các bản ghi lỗi trong pipeline mà không làm hỏng toàn bộ luồng xử lý?
+     A. Ghi log lỗi vào file tạm
+     B. Chuyển bản ghi lỗi vào Dead-Letter Queue (DLQ)
+     C. Dừng pipeline ngay lập tức
+     D. Ghi đè dữ liệu lỗi bằng giá trị null
+   ***Đáp án:** B*
+
+   Phương pháp nào giúp giảm thiểu training-serving skew bằng cách tạo features theo thời gian thực?
+     A. Batch processing hàng ngày
+     B. Streaming với Kafka và Flink
+     C. Sử dụng File Store thay vì Feature Store
+     D. Chỉ dùng CDC từ database
+   ***Đáp án:** B*
+
+   Trong quy trình ingestion cho LLM, bước nào diễn ra sau khi parsing dữ liệu phi cấu trúc?
+     A. Embedding vào Vector Store
+     B. Chunking (ví dụ: 512 token)
+     C. Lưu trữ dạng raw
+     D. Kiểm tra schema
+   ***Đáp án:** B*
+
+   "Data Flywheel" trong AI pipeline sử dụng loại dữ liệu nào làm nguồn cho lớp Bronze?
+     A. Dữ liệu giao dịch tài chính
+     B. Agent traces (prompt, tool calls, phản hồi người dùng)
+     C. Dữ liệu cảm biến IoT
+     D. Log hệ thống thuần túy
+   ***Đáp án:** B*

@@ -47,3 +47,22 @@ Bảo vệ khỏi các cuộc tấn công như **Prompt Injection** (DAN) hay **
 ## 6. Liên Kết
 - [[concept_rag]] – Các thành phần RAG cơ bản
 - [[concept_evaluation]] – Tổng quan đánh giá Agent
+
+---
+
+### *Câu hỏi ôn tập Ngày 23*
+
+   Trong RAGAS framework, metric nào đo mức độ "ảo giác" (hallucination) bằng cách kiểm tra câu trả lời có được hỗ trợ bởi ngữ cảnh (context) hay không?
+   **Answer / Đáp án:** C
+
+   Khi sử dụng LLM làm người đánh giá (LLM-as-Judge), bias nào xảy ra khi LLM có xu hướng chọn phương án đầu tiên hoặc cuối cùng trong danh sách?
+   **Answer / Đáp án:** D
+
+   Trong kiến trúc Guardrails 4 lớp, lớp nào chịu trách nhiệm chặn dữ liệu PII (thông tin nhận dạng cá nhân) bằng cách sử dụng Regex hoặc Presidio?
+   **Answer / Đáp án:** C
+
+   Phương pháp nào dùng mô hình Natural Language Inference (NLI) để phát hiện mâu thuẫn giữa câu trả lời và ngữ cảnh, từ đó nhận diện hallucination?
+   **Answer / Đáp án:** C
+
+   Metric nào trong RAGAS là reference-free (không cần ground truth) và có thể sử dụng trực tiếp trong môi trường production?
+   **Answer / Đáp án:** C

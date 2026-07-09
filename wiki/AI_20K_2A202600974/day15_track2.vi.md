@@ -45,3 +45,30 @@ Track này phù hợp nếu bạn:
 
 - ***Vai trò mục tiêu (CP2):** AI Data Engineer, Platform Engineer, MLOps Engineer.*
 - ***Nhu cầu thị trường:** **Rất cao.** Đặc biệt khi các doanh nghiệp muốn tự chủ mô hình, tối ưu chi phí và đưa AI vào production thay vì chỉ dùng API.*
+
+---
+
+### *Câu hỏi ôn tập Ngày 15*
+
+   Track 2 (AI Infrastructure & Data) trong Phase 2 tập trung đào tạo kỹ năng gì?
+     A. Phát triển mô hình AI mới và tối ưu hóa kiến trúc
+     B. Tự dựng và vận hành backend của hệ thống AI ở mức production
+     C. Thiết kế UI/UX cho ứng dụng AI
+     D. Xây dựng chiến lược kinh doanh sản phẩm AI
+   ***Đáp án:** B*
+
+   Điều kiện cứng nào được đề cập để có thể thực hành các lab về serving và FinOps trong Track 2?
+     A. Có tài khoản GitHub Enterprise
+     B. Cần có GPU hoặc Cloud free-tier
+     C. Phải có chứng chỉ Kubernetes
+     D. Cần có máy tính có RAM > 32GB
+   ***Đáp án:** B*
+
+   Vai trò mục tiêu (CP2) nào sau đây được đề cập trong bài giảng là phù hợp với Track 2?
+   ***Đáp án:** C*
+
+   Theo bài giảng, Track 2 phù hợp với những người có tư duy về các khái niệm nào dưới đây?
+     A. UI/UX, trải nghiệm người dùng, A/B testing
+     B. SLA, SLO, P95, Chi phí
+     C. Thiết kế đồ họa, animation, storytelling
+   ***Đáp án:** B*

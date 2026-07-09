@@ -55,3 +55,42 @@ Trong quá trình code và debug, học viên sẽ thường xuyên gặp 5 lỗ
   - **Lab 3**: Xây dựng Chatbot baseline và nâng cấp lên ReAct Agent cho e-commerce (check_stock, get_discount, calc_shipping).
   - **Failure Analysis**: Học viên được yêu cầu đọc log JSON để tìm lỗi (parse error, hallucinated tool) và cải thiện Tool Description.
   - Đánh giá khả năng của Agent thông qua việc thảo luận nhóm (Discord activity) về các trường hợp sử dụng tối ưu.
+
+---
+
+Câu hỏi ôn tập Ngày 3
+
+   Theo nội dung bài giảng, yếu tố nào sau đây **không** thuộc 4 tiêu chí của Agentic Fit Framework?
+   - A. Lập luận nhiều bước
+   - B. Tương tác công cụ
+   - C. Phản hồi một lượt
+   - D. Tầm nhìn dài
+   **Đáp án / Answer:** C
+
+   Trong ReAct pattern, thành phần nào đại diện cho bước "quan sát kết quả của hành động"?
+   - A. Suy nghĩ
+   - B. Hành động
+   - C. Quan sát
+   - D. Bộ nhớ
+   **Đáp án / Answer:** C
+
+   Ưu điểm chính của Native Tool Calling so với Text-ReAct là gì?
+   - A. Tiêu tốn ít token hơn
+   - B. Bắt buộc model tự sinh văn bản định dạng
+   - C. Tăng tính ổn định nhờ JSON schema chuẩn từ API provider
+   - D. Cho phép agent tự tạo tool mới
+   **Đáp án / Answer:** C
+
+   Loại lỗi nào xảy ra khi agent liên tục gọi một tool không hồi kết, không thoát được vòng lặp?
+   - A. Công cụ tạo ảo giác
+   - B. Quan sát trống
+   - C. Hết thời gian/Vòng lặp
+   - D. Lỗi phân tích
+   **Đáp án / Answer:** C
+
+   Để đánh giá chất lượng Agent, phương pháp nào được đề xuất thay vì chỉ nhìn kết quả cuối?
+   - A. Đánh giá theo vết (đo tokens, độ trễ, số vòng lặp)
+   - B. Kiểm tra mù với người dùng
+   - C. So sánh với bot dựa trên quy tắc
+   - D. Chỉ kiểm tra độ chính xác của tool
+   **Đáp án / Answer:** A

@@ -45,3 +45,31 @@ Cần báo cáo và theo dõi:
 
 ## 6. Liên Kết
 - [[day27_track1]] – Human-in-the-Loop UX (nâng cao)
+
+---
+
+Câu hỏi ôn tập Ngày 23
+
+   Khi nào một pipeline tuyến tính (LCEL) không còn đủ cho agent?
+   - A. Khi chỉ cần một luồng xử lý đơn giản, không có rẽ nhánh.
+   - B. Khi agent cần loop retry, human-in-the-loop, dynamic routing và crash recovery.
+   - C. Khi số lượng tool nhỏ hơn 5.
+   - D. Khi không cần checkpointing.
+   **Đáp án / Answer:** B
+
+   Trong LangGraph, reducer được dùng để làm gì?
+   - A. Xác định node nào chạy tiếp theo.
+   - B. Merge state khi cập nhật, ví dụ append cho message history.
+   - C. Tạo checkpoint sau mỗi bước.
+   - D. Gọi tool bên ngoài.
+   **Đáp án / Answer:** B
+
+   Tính năng "Time Travel" trong LangGraph cho phép làm gì?
+   - A. Chạy song song nhiều graph cùng lúc.
+   - B. Replay lại từ một checkpoint bất kỳ để debug hoặc thử hướng đi khác.
+   - C. Tự động retry node bị lỗi.
+   - D. Gửi thông báo cho người dùng khi hoàn thành.
+   **Đáp án / Answer:** B
+
+   Để tạm dừng graph chờ con người phê duyệt, ta sử dụng hàm nào?
+   **Đáp án / Answer:** A

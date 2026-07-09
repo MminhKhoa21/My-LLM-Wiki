@@ -104,3 +104,58 @@ A "Defense in Depth" principle is required for production agentic systems:
 The lab focuses on implementing a 4-agent system (1 Orchestrator + 3 Specialists) utilizing A2A, MCP, and strict governance audits without relying on Kubernetes (using a local Conda/ADK setup).
 *Bài lab tập trung vào việc triển khai một hệ thống 4 tác tử (1 Điều phối viên + 3 Chuyên gia) tận dụng A2A, MCP, và các đợt kiểm toán quản trị nghiêm ngặt mà không phụ thuộc vào Kubernetes (sử dụng thiết lập Conda/ADK cục bộ).*
 ```
+
+---
+
+### Day 26 Review Questions
+
+1. **What primitives does the MCP (Model Context Protocol) provide for LLMs to interact with tools and data?**  
+   - A. Tools, Resources, Prompts  
+     *A. Tools, Resources, Prompts*  
+   - B. Agents, Tasks, Messages  
+     *B. Agents, Tasks, Messages*  
+   - C. Orchestrator, Specialist, Router  
+     *C. Orchestrator, Specialist, Router*  
+   - D. Redis, PostgreSQL, FastAPI  
+     *D. Redis, PostgreSQL, FastAPI*  
+   **Answer:** A  
+
+2. **In the A2A protocol, what state can a task transition to in order to request more information from the caller instead of failing immediately?**  
+   - A. Submitted  
+     *A. Submitted*  
+   - B. Working  
+     *B. Working*  
+   - C. Input Required  
+     *C. Input Required*  
+   - D. Canceled  
+     *D. Canceled*  
+   **Answer:** C  
+
+3. **Which routing strategy is described as the most flexible but slow and expensive?**  
+   - A. Keyword-based  
+     *A. Keyword-based*  
+   - B. Embedding-based (Semantic Routing)  
+     *B. Embedding-based (Semantic Routing)*  
+   - C. LLM-based  
+     *C. LLM-based*  
+   - D. Fallback chains  
+     *D. Fallback chains*  
+   **Answer:** C  
+
+4. **According to the lecture, which state management method is initially recommended because it scales horizontally easily?**  
+   - A. Stateful with sticky sessions  
+   - B. Stateless with context stored in Redis or PostgreSQL  
+   - C. Stateful with local storage  
+   - D. Stateless not storing context  
+   **Answer:** B  
+
+5. **Which security principle requires human approval for high-risk actions like writing to a database?**  
+   - A. Rate Limiting  
+     *A. Rate Limiting*  
+   - B. Sandbox Execution  
+     *B. Sandbox Execution*  
+   - C. Human-in-the-Loop (HITL)  
+     *C. Human-in-the-Loop (HITL)*  
+   - D. Minimal Capability  
+     *D. Minimal Capability*  
+   **Answer:** C

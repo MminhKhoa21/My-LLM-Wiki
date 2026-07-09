@@ -46,3 +46,35 @@ Track này phù hợp nếu bạn:
 
   Vai trò mục tiêu (CP3): AI Engineer, LLM Engineer, Agent Developer.
   Nhu cầu thị trường: **Cao nhất.** Đây là vị trí trực tiếp tạo ra các sản phẩm và giải pháp AI thông minh mới trên thị trường. Portfolio mạnh ở vai trò này sẽ mở ra cơ hội tham gia các dự án thực tế lớn (như tại Vingroup).
+
+---
+
+Câu hỏi ôn tập Ngày 15
+
+   Kỹ thuật nào sau đây **KHÔNG** được đề cập trong nội dung chính của Track 3?
+   - A. GraphRAG và đồ thị tri thức
+   - B. Tinh chỉnh với LoRA, QLoRA, DPO
+   - C. Kỹ thuật prompt cơ bản (few-shot, chuỗi suy luận)
+   - D. Hệ thống đánh giá sản xuất
+   **Đáp án / Answer:** C
+
+   Theo bài giảng, Track 3 phù hợp với người học có đặc điểm nào?
+   - A. Thích làm việc với dữ liệu có cấu trúc và SQL thuần túy
+   - B. Hứng thú với thiết kế ReAct, gọi công cụ, kiến trúc giám sát-công nhân
+   - C. Muốn tập trung vào xử lý ảnh và video với CNN
+   - D. Ưu tiên các giải pháp không cần code
+   **Đáp án / Answer:** B
+
+   Thách thức nào được nêu rõ khi theo đuổi Track 3?
+   - A. Khối lượng nội dung nhẹ, dễ tiếp thu
+   - B. Lĩnh vực đã có best practice rõ ràng, không cần thử nghiệm
+   - C. Benchmark và evaluation tốn nhiều công sức
+   - D. Không yêu cầu đọc tài liệu gốc (bài báo nghiên cứu)
+   **Đáp án / Answer:** C
+
+   Vai trò mục tiêu (CP3) mà Track 3 hướng đến là gì?
+   - A. Nhà phân tích dữ liệu, Nhà phát triển thông minh kinh doanh
+   - B. Kỹ sư AI, Kỹ sư LLM, Nhà phát triển Agent
+   - C. Nhà phát triển giao diện, Nhà thiết kế UI/UX
+   - D. Kỹ sư DevOps, Kiến trúc sư đám mây
+   **Đáp án / Answer:** B

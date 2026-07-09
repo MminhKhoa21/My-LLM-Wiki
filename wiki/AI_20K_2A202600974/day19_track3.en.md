@@ -66,4 +66,33 @@ The journey from question to answer:
 
 - Process the **Tech Company Corpus**.  
 - Pipeline to build: Triple Extraction using LLM → Load into NetworkX / Neo4j / **NodeRAG** framework → Perform Graph Traversal → LLM Generation.  
-- Evaluate on a set of Multi-hop questions and benchmark against Flat RAG (accuracy, latency, token cost).  
+- Evaluate on a set of Multi-hop questions and benchmark against Flat RAG (accuracy, latency, token cost).
+
+---
+
+### Day 19 Review Questions
+
+1. Flat RAG (Vector RAG) typically fails with which of the following types of questions?
+   - A. Simple factoid questions located within a single document.
+   - B. Questions requiring reasoning across multiple entities (multi-hop).
+   - C. Questions about basic concept definitions.
+   - D. Questions extracting information from a short paragraph.
+
+2. What is the atomic unit of a Knowledge Graph?
+   - A. Individual Nodes and Edges.
+   - B. A Triple consisting of Subject - Predicate - Object.
+   - C. Any Subgraph.
+   - D. A complete sentence in the original text.
+
+3. In the standard GraphRAG pipeline, which step converts the subgraph into text format to be fed into the LLM?
+   - A. Seed Node Matching.
+   - B. Graph Traversal.
+   - C. Textualization.
+   - D. Generation.
+   - *D. Sinh.*
+
+4. Through what architecture does LightRAG improve speed and cost compared to Microsoft GraphRAG?
+   - A. Using Community Detection and Hierarchical Summarization.
+   - B. Dual-level retrieval with embeddings for both Nodes and Edges.
+   - C. Graph traversal with a maximum depth of 3.
+   - D. Combining Vector DB and Graph DB via Hybrid Search mechanism.

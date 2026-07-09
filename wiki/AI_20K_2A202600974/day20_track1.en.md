@@ -77,4 +77,32 @@ Define exactly how metrics will be tracked in the product:
 
 * Ensure data hygiene (e.g., avoiding duplicate events on refresh).  
 
-* Tie every tracked event directly back to a specific metric from the Measurement Ladder.  
+* Tie every tracked event directly back to a specific metric from the Measurement Ladder.
+
+---
+
+### Day 20 Review Questions  
+
+1. According to the lecture, what is the exact definition of "Core Action"?  
+   - A. The action of logging into the application.  
+   - B. A specific action proving the user has received value (e.g., completing a lesson).  
+   - C. Homepage visits.  
+   - D. Number of times the application is opened.  
+
+2. When determining the Retention metric, what is the most important thing?  
+   - A. Choosing a fixed 7-day cycle.  
+   - B. It must match the natural frequency of the user's problem.  
+   - C. Always using DAU.  
+   - D. Only measuring after 30 days.  
+
+3. In the Hook Model (Nir Eyal), the "Variable Reward" step is divided into three types. Which one is NOT one of those three?  
+   - A. Tribe (social)  
+   - B. Hunt (resources)  
+   - C. Self (mastery)  
+   - D. Profit  
+
+4. What is the "North Star Metric" in the Measurement Ladder?  
+   - A. Monthly revenue measurement metric.  
+   - B. The leading indicator reflecting the creation of core value.  
+   - C. Total registered users.  
+   - D. Average time spent on the app.

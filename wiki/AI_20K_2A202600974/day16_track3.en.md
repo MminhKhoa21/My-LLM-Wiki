@@ -45,3 +45,31 @@ When Multi-agent is not yet needed, optimize Single-agent with these techniques:
   3. Build traces for early debugging (Observability).
   4. Risk tiering: Read-only vs Write (require human review/approval gate for sensitive operations).
 - Do not rush to move to a **Multi-agent** system unless the problem is open-ended, truly needs a delegation workflow (Planner / Worker / Judge), or handles multiple domain tools in parallel.
+
+---
+
+### Day 16 Review Questions
+
+1. What main weakness of Single Agent (ReAct) does Reflexion address?
+   - A. Cannot use multiple tools simultaneously.
+   - B. Lacks the ability to self-evaluate and backtrack when encountering errors.
+   - C. Computation cost is too high for each step.
+   - D. Does not support structured output.
+
+2. In the Reflexion architecture, which component is responsible for drawing lessons from mistakes and saving them to memory?
+   - A. Actor
+   - B. Evaluator
+   - C. Reflector
+   - D. Retry
+
+3. What is the prominent feature of LATS (Language Agent Tree Search) compared to Reflexion?
+   - A. Uses Reflection Memory to store errors.
+   - B. Combines MCTS to try multiple solution branches and has the ability to undo.
+   - C. Automatically records new skills into the library.
+   - D. Only suitable for data reading tasks.
+
+4. Which safety measure is recommended when deploying Single-agent in production?
+   - A. Always use Multi-agent from the beginning.
+   - B. No need to configure max_attempts because the agent knows when to stop.
+   - C. Risk tiering, setting up human approval gates for sensitive operations.
+   - D. Only use unstructured output for flexibility.

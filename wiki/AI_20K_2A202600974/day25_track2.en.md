@@ -57,5 +57,55 @@ Establish clear tagging strategies (`team`, `project`, `env`) enforced by SCP/OP
 
 ## 6. Sustainable AI: Carbon & Energy  
 
-Optimization also reduces carbon footprint. Pick green cloud regions (e.g., hydro-powered data centers) and use distilled, smaller models when feasible. Track carbon emissions alongside performance metrics (e.g., `CodeCarbon`).  
+Optimization also reduces carbon footprint. Pick green cloud regions (e.g., hydro-powered data centers) and use distilled, smaller models when feasible. Track carbon emissions alongside performance metrics (e.g., `CodeCarbon`).
 
+---
+
+### Day 25 Review Questions
+
+1. **According to the lecture, which sign indicates that immediate GPU right-sizing is needed?**  
+   - A. GPU utilization < 50%  
+     *A. GPU utilization < 50%*  
+   - B. GPU utilization < 30%  
+     *B. GPU utilization < 30%*  
+   - C. MFU < 50%  
+     *C. MFU < 50%*  
+   - D. MBU < 30%  
+     *D. MBU < 30%*  
+   **Answer:** B  
+
+2. **Which strategy helps leverage spot instances for a 60-70% cost reduction while still ensuring reliability?**  
+   - A. Using 100% spot instances only  
+   - B. Mixed Fleet Strategy: 20% on-demand + 80% spot, combined with frequent checkpointing  
+   - C. Using on-demand for training and spot for inference  
+   - D. Using reserved instances instead of spot  
+   **Answer:** B  
+
+3. **To monitor GPU performance, which metric is particularly important for compute-bound tasks (e.g., training, prefill)?**  
+   - A. GPU Utilization  
+     *A. GPU Utilization*  
+   - B. MBU (Memory Bandwidth Utilization)  
+     *B. MBU (Memory Bandwidth Utilization)*  
+   - C. MFU (Model FLOPs Utilization)  
+     *C. MFU (Model FLOPs Utilization)*  
+   - D. Cache hit rate  
+     *D. Cache hit rate*  
+   **Answer:** C  
+
+4. **Which inference optimization technique helps reduce per-token cost by using smaller models for most simple queries?**  
+   - A. Request Batching  
+     *A. Request Batching*  
+   - B. Caching  
+     *B. Caching*  
+   - C. Model Cascading  
+     *C. Model Cascading*  
+   - D. Disaggregated Serving  
+     *D. Disaggregated Serving*  
+   **Answer:** C  
+
+5. **To allocate GPU costs to teams (chargeback), which strategy does the lecture recommend?**  
+   - A. Calculating an average cost for all teams  
+   - B. Setting up tagging (team, project, env) and using Kubecost for analysis  
+   - C. Using a single undivided cloud account  
+   - D. Only tracking total monthly costs  
+   **Answer:** B

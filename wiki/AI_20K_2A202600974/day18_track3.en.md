@@ -91,4 +91,39 @@ Embeddings inherently struggle with:
 
 - **Numerical Blindness**  
 
-*Solutions:* Use metadata filtering, post-retrieval NLI verification, and precise chunk enrichment.  
+*Solutions:* Use metadata filtering, post-retrieval NLI verification, and precise chunk enrichment.
+
+---
+
+### Day 18 Review Questions
+
+1. Which enrichment technique in the OFFLINE stage uses an LLM to generate questions that a chunk can answer, and then embeds those questions along with the chunk?
+   - A. Contextual Embeddings
+   - B. Hypothetical Q&A
+   - C. Matryoshka Representation Learning
+   - D. Late Chunking
+
+2. In the ONLINE stage, which component uses Cross-Encoders to re-rank the retrieved chunks, helping to improve accuracy with a small latency cost?
+   - A. PreRAG
+   - B. Retrieval
+   - C. Reranking
+   - D. Augmentation
+
+3. According to RAGAS, which metric measures the faithfulness of the answer (whether it closely follows the provided content)?
+   - A. Context Recall
+   - B. Context Precision
+   - C. Faithfulness
+   - D. Answer Relevancy
+
+4. Which limitation of embeddings is mentioned in the lecture, such as being unable to distinguish between "allowed" and "not allowed"?
+   - A. Entity Swapping
+   - B. Temporal Blindness
+   - C. Negation Insensitivity
+   - D. Numerical Blindness
+
+5. Which chunking technique builds a recursive summary tree to answer high-level comprehensive questions?
+   - A. Semantic Chunking
+   - B. Hierarchical Chunking
+   - C. RAPTOR
+   - *C. RAPTOR*
+   - D. Late Chunking

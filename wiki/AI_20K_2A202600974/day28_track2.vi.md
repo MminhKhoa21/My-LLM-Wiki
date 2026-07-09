@@ -61,3 +61,35 @@ sources: ["raw/AI_20K_2A202600974/28/day28-platform-engineering-documentation.pd
 3. <i>**Tư duy Nền tảng:** Một nền tảng có nghĩa là các nhóm khác sẽ tiêu thụ nó. Các hợp đồng API rõ ràng, SLAs và tài liệu quan trọng hơn chất lượng mã nguồn nội bộ bị cô lập.</i>
 
 <i>Liên kết</i>
+
+---
+
+### *Câu hỏi ôn tập Ngày 28*
+
+   Theo bài giảng, đâu là **anti-pattern** trong tích hợp các thành phần AI Platform?
+     A. Sử dụng event-driven integration với Kafka
+     B. Duy trì cấu hình trong Git (GitOps)
+     C. Gắn kết chặt chẽ (tightly coupled) giữa các thành phần
+     D. Áp dụng Bulkhead pattern để tách biệt inference và training
+   ***Đáp án:** C*
+
+   Trong luồng request end-to-end, thời gian mục tiêu cho mỗi thành phần là bao nhiêu?
+     D. Tất cả đều cần dưới 100ms
+   ***Đáp án:** B*
+
+   Công cụ nào được khuyến nghị để **phân tích chi tiết độ trễ (latency breakdown)** trong toàn bộ luồng?
+   ***Đáp án:** C*
+
+   Điều kiện tiên quyết để triển khai Platform ra production theo 5 Pillars là gì?
+     A. Kiểm tra checklist Production Readiness bằng tay bởi kỹ sư
+     B. Tự động hóa checklist trong CI pipeline
+     C. Đảm bảo tất cả code đều chạy trên môi trường local
+     D. Sử dụng duy nhất một framework cho toàn bộ stack
+   ***Đáp án:** B*
+
+   Mô hình nào sau đây là **integration pattern** đúng để tránh shared mutable state?
+     A. Dùng cơ sở dữ liệu chung có thể ghi đồng thời
+     B. Immutable events và event sourcing qua append-only log (Kafka)
+     C. Lưu trạng thái trong biến toàn cục (global variable)
+     D. Sử dụng file cấu hình JSON tĩnh
+   ***Đáp án:** B*

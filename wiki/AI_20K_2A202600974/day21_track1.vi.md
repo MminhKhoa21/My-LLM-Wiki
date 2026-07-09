@@ -110,3 +110,37 @@ Bài Lab thực hành kỹ năng của PM trong việc thiết kế tập input 
 
 ## Liên kết
 
+---
+
+### *Câu hỏi ôn tập Ngày 21*
+
+   Trong sản phẩm AI, vai trò của Product Manager (PM) thay đổi như thế nào so với sản phẩm truyền thống?
+     A. PM vẫn tập trung vào Usage Flow và Conversion Rate như trước.
+     B. PM chuyển sang quản lý Agent Success Rate và Quality Distributions.
+     C. PM chỉ chịu trách nhiệm về mặt kỹ thuật của mô hình.
+     D. PM giao toàn bộ việc đánh giá cho đội ngũ Data Science.
+   **Answer / Đáp án:** B
+
+   Bộ chấm điểm nào được coi là "chuẩn vàng" để hiệu chỉnh các bộ chấm khác?
+   **Answer / Đáp án:** C
+
+   Theo vòng đời AI Evals, giai đoạn "Vibe Check" nên được thực hiện vào thời điểm nào?
+     A. Sau khi phát hành sản phẩm ra thị trường.
+     B. Trong giai đoạn build, trước khi deploy.
+     C. Trước khi viết PRD, ở giai đoạn prototype.
+     D. Chỉ khi có lỗi nghiêm trọng từ người dùng.
+   **Answer / Đáp án:** C
+
+   Một AI-native PRD cần bổ sung nội dung nào sau đây mà PRD truyền thống thường không có?
+     A. Mô tả chi tiết giao diện người dùng.
+     B. Evaluation Rubric và Golden Outputs.
+     C. Biểu đồ Gantt cho lộ trình phát triển.
+     D. Kế hoạch marketing cho sản phẩm.
+   **Answer / Đáp án:** B
+
+   Khi thiết kế Scenario Dataset, PM nên sử dụng công cụ nào để đảm bảo coverage thực tế?
+     A. Nhờ LLM sinh ra 50 prompts ngẫu nhiên.
+     B. User Input Grid với các dimension WHO, WHAT, HOW, CONTEXT, RISK.
+     C. Chỉ dùng các case từ người dùng thực tế.
+     D. Lấy toàn bộ dữ liệu từ train set của mô hình.
+   **Answer / Đáp án:** B
