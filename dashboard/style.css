@@ -124,6 +124,7 @@ a:hover {
 .note-list-container {
     flex-grow: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-bottom: 24px;
     min-height: 0;
 }
@@ -1198,6 +1199,7 @@ a:hover {
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         flex-shrink: 0;
+        overflow-x: hidden;
     }
     .sidebar.open {
         transform: translateX(0);

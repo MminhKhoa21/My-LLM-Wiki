@@ -341,10 +341,22 @@ function renderNoteList(notes) {
         return;
     }
     
-    // Sort notes: Overviews first, then alphabetically
+    // Helper to extract day and track for natural sorting
+    function parseLessonKey(name) {
+        const dayMatch = name.match(/day(\d+)/i);
+        const day = dayMatch ? parseInt(dayMatch[1], 10) : 999;
+        const trackMatch = name.match(/track(\d+)/i);
+        // Overviews have no track, assign them track 0
+        const track = trackMatch ? parseInt(trackMatch[1], 10) : 0;
+        return { day, track };
+    }
+
+    // Sort notes: Group by Track (0 = Overview, 1 = Track 1, etc.), then by Day
     sortedNotes = [...notes].sort((a, b) => {
-        if (a.type === "overview" && b.type !== "overview") return -1;
-        if (a.type !== "overview" && b.type === "overview") return 1;
+        const keyA = parseLessonKey(a.name);
+        const keyB = parseLessonKey(b.name);
+        if (keyA.track !== keyB.track) return keyA.track - keyB.track;
+        if (keyA.day !== keyB.day) return keyA.day - keyB.day;
         return a.title.localeCompare(b.title);
     });
     
