@@ -7,7 +7,7 @@ timestamp: 2026-07-05
 sources: ["raw/AI_20K_2A202600974/14/day14-ai-evaluation-benchmarking_E403.pdf"]
 ---
 
-*# Ngày 14: Đánh giá & Kiểm chuẩn AI*
+# Ngày 14: Đánh giá & Kiểm chuẩn AI
 
 ## Nội dung chính
 

@@ -6,7 +6,7 @@ tags: [ai, 20k, day22]
 timestamp: 2026-07-05
 sources: []
 ---
-*Ngày 22 – Đánh giá AI · LLMOps · Căn chỉnh DPO/ORPO*
+Ngày 22 – Đánh giá AI · LLMOps · Căn chỉnh DPO/ORPO
 
 | Track | Chủ đề |
 |-------|--------|

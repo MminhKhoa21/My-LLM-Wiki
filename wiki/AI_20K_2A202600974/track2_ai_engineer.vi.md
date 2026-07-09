@@ -7,7 +7,7 @@ timestamp: 2026-07-05
 sources: []
 ---
 
-*Track 2: Kỹ sư AI (Dữ liệu / Hạ tầng / LLMOps)*
+Track 2: Kỹ sư AI (Dữ liệu / Hạ tầng / LLMOps)
 
 Track 2 tập trung vào **Khía cạnh Dữ liệu, Nền tảng và Vận hành (Engineering & Operations)** của một hệ thống AI. Người học ở Track này đóng vai trò là AI Engineer, Data Engineer, hoặc MLOps Engineer - người chịu trách nhiệm xây dựng đường ống dữ liệu, tối ưu hóa vector database, triển khai model và giám sát hệ thống ở môi trường Production.
 

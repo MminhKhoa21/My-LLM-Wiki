@@ -60,4 +60,4 @@ sources: ["raw/AI_20K_2A202600974/15/ITviec_Salary_Report_2025_2026_VN.pdf"]
 - Dẫn đến tâm lý lo lắng và băn khoăn kéo dài khi tiếp cận thị trường lao động.
 
 ---
-*Báo cáo cung cấp góc nhìn sâu sắc về một thị trường IT đang trưởng thành, đòi hỏi nguồn nhân lực đa nhiệm, bền bỉ và biết tận dụng công cụ (đặc biệt là AI) để tạo ra giá trị thực tiễn thay vì chỉ viết code thuần túy.*
+Báo cáo cung cấp góc nhìn sâu sắc về một thị trường IT đang trưởng thành, đòi hỏi nguồn nhân lực đa nhiệm, bền bỉ và biết tận dụng công cụ (đặc biệt là AI) để tạo ra giá trị thực tiễn thay vì chỉ viết code thuần túy.

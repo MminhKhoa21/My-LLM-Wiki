@@ -14,7 +14,7 @@ Dưới đây là nội dung file `summary_1-day02-lecture-slides-blue.md` đã 
 
 ## Tổng quan  
 
-*Tài liệu này tóm tắt các slide bài giảng từ Ngày 02 của chương trình VinUni AI 20K, do giảng viên Mai Anh Nguyen (Blue) hướng dẫn. Trọng tâm cốt lõi là chuyển đổi các yêu cầu kinh doanh mơ hồ thành các Tuyên bố Vấn đề AI (AI Problem Statements) rõ ràng, có thể hành động, đánh giá xem AI có thực sự cần thiết hay không, và lựa chọn cấp độ giải pháp phù hợp (Quy tắc, Quy trình làm việc, hoặc Tác nhân).*
+Tài liệu này tóm tắt các slide bài giảng từ Ngày 02 của chương trình VinUni AI 20K, do giảng viên Mai Anh Nguyen (Blue) hướng dẫn. Trọng tâm cốt lõi là chuyển đổi các yêu cầu kinh doanh mơ hồ thành các Tuyên bố Vấn đề AI (AI Problem Statements) rõ ràng, có thể hành động, đánh giá xem AI có thực sự cần thiết hay không, và lựa chọn cấp độ giải pháp phù hợp (Quy tắc, Quy trình làm việc, hoặc Tác nhân).
 
 ## Các khái niệm chính  
 
@@ -30,7 +30,7 @@ Dưới đây là nội dung file `summary_1-day02-lecture-slides-blue.md` đã 
 
 ### Định nghĩa Tuyên bố Vấn đề (Problem Statement)  
 
-*Một **Tuyên bố Vấn đề** rõ ràng là điều cần thiết trước khi xem xét giải pháp AI. Nó bao gồm:*  
+Một **Tuyên bố Vấn đề** rõ ràng là điều cần thiết trước khi xem xét giải pháp AI. Nó bao gồm:
 
 1. **Đối tượng (Actor)**: Ai là người bị ảnh hưởng?  
 
@@ -52,7 +52,7 @@ Dưới đây là nội dung file `summary_1-day02-lecture-slides-blue.md` đã 
 
 ### Cấp độ Giải pháp AI: Quy tắc vs. Quy trình làm việc vs. Tác nhân  
 
-*Luôn ưu tiên giải pháp đơn giản nhất mà vẫn mang lại hiệu quả:*  
+Luôn ưu tiên giải pháp đơn giản nhất mà vẫn mang lại hiệu quả:
 
 - **Cấp độ 1 - Quy tắc (Rule)**: Sử dụng khi logic mang tính tất định (If/Else) và yêu cầu sự chính xác. Không cần đến AI.  
 
@@ -62,7 +62,7 @@ Dưới đây là nội dung file `summary_1-day02-lecture-slides-blue.md` đã 
 
 ### Các mẫu Quy trình làm việc  
 
-*Dựa trên hướng dẫn của Anthropic:*  
+Dựa trên hướng dẫn của Anthropic:
 
 - **Mẫu Cơ bản**: Chuỗi lệnh (Prompt Chaining), Điều hướng (Routing), Song song hóa (Parallelization).  
 
@@ -70,7 +70,7 @@ Dưới đây là nội dung file `summary_1-day02-lecture-slides-blue.md` đã 
 
 ### Ra Quyết định  
 
-*Bước cuối cùng trong việc thiết lập vấn đề là đưa ra một quyết định có ý thức:*  
+Bước cuối cùng trong việc thiết lập vấn đề là đưa ra một quyết định có ý thức:
 
 - **Tiến hành (Go)**: Vấn đề rõ ràng, các chỉ số có thể đo lường và AI mang lại lợi thế vượt trội.  
 

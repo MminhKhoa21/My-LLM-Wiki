@@ -25,20 +25,20 @@ sources: ["raw/AI_20K_2A202600974/15/day15-slide.pdf", "raw/AI_20K_2A202600974/1
 
 
 
-*Big idea: 15 ngày của Phase 1 hợp thành **một hệ thống AI hoàn chỉnh**, không phải 15 chủ đề rời.*
+Big idea: 15 ngày của Phase 1 hợp thành **một hệ thống AI hoàn chỉnh**, không phải 15 chủ đề rời.
 
 
-*Hành trình 14 ngày nhìn lại:*
+Hành trình 14 ngày nhìn lại:
 
-  *Nền tảng: LLM hoạt động thế nào, bài toán, Agent, Tool Call*
-  *Xây dựng hệ thống: RAG Pipeline, Multi-Agent, MCP/A2A*
-  *Đưa vào production: Deploy, Monitoring, Guardrails, AI Evals*
+  Nền tảng: LLM hoạt động thế nào, bài toán, Agent, Tool Call
+  Xây dựng hệ thống: RAG Pipeline, Multi-Agent, MCP/A2A
+  Đưa vào production: Deploy, Monitoring, Guardrails, AI Evals
 
 ---
 
 
 
-*Thách thức khi đưa AI vào doanh nghiệp:*
+Thách thức khi đưa AI vào doanh nghiệp:
 
 | Challenge<br>*Thách thức* | Solution<br>*Giải pháp* |
 |-----------|----------|
@@ -48,15 +48,15 @@ sources: ["raw/AI_20K_2A202600974/15/day15-slide.pdf", "raw/AI_20K_2A202600974/1
 | Scaling<br>*Mở rộng* | Stateless agent, request queue, SLA/Uptime<br>*Agent không trạng thái, hàng đợi yêu cầu, SLA/Uptime* |
 
 
-  *Nhanh, dễ, nhưng dữ liệu ở nhà cung cấp đám mây*
-  *Kiểm soát hoàn toàn, nhưng tốn hạ tầng*
-  *Dữ liệu nhạy cảm on-prem, khối lượng công việc chung trên cloud*
+  Nhanh, dễ, nhưng dữ liệu ở nhà cung cấp đám mây
+  Kiểm soát hoàn toàn, nhưng tốn hạ tầng
+  Dữ liệu nhạy cảm on-prem, khối lượng công việc chung trên cloud
 
 ---
 
 
 
-*Học viên đọc bản đồ các hướng đi trong AI, đối chiếu với hành trình học của mình, và chọn Track Phase 2.*
+Học viên đọc bản đồ các hướng đi trong AI, đối chiếu với hành trình học của mình, và chọn Track Phase 2.
 
 
 | Track | Name<br>*Tên* | Suitable for<br>*Phù hợp với* |
@@ -68,10 +68,10 @@ sources: ["raw/AI_20K_2A202600974/15/day15-slide.pdf", "raw/AI_20K_2A202600974/1
 ---
 
 
-  *Báo cáo xu hướng công việc Microsoft 2026 – tham khảo thị trường*
-  *Báo cáo lương IT Việt Nam – định hướng career path*
+  Báo cáo xu hướng công việc Microsoft 2026 – tham khảo thị trường
+  Báo cáo lương IT Việt Nam – định hướng career path
 
 ---
 
-  *Ngược lại: [[day14_overview]] – AI Evaluation & Benchmarking (ngày cuối nội dung kỹ thuật Phase 1)*
-  *Tiếp theo: [[day16_overview]] – Ngày đầu Phase 2 (3 tracks chính thức tách biệt)*
+  Ngược lại: [[day14_overview]] – AI Evaluation & Benchmarking (ngày cuối nội dung kỹ thuật Phase 1)
+  Tiếp theo: [[day16_overview]] – Ngày đầu Phase 2 (3 tracks chính thức tách biệt)

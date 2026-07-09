@@ -8,12 +8,12 @@ sources: ["../raw/AI_20K_2A202600974/27/Day25_track1_aithucchien_cohort2.pdf"]
 ---
 # Ngày 27 Track 1 - Quản lý các Bên liên quan & Hiệu suất Nhóm AI  
 
-*Tài liệu này tóm tắt bài giảng Ngày 27 Track 1 về các yếu tố con người trong các dự án AI, bao gồm quản lý các bên liên quan, giao tiếp hiệu quả, cấu trúc nhóm và các hoạt động hiệu suất.*  
+Tài liệu này tóm tắt bài giảng Ngày 27 Track 1 về các yếu tố con người trong các dự án AI, bao gồm quản lý các bên liên quan, giao tiếp hiệu quả, cấu trúc nhóm và các hoạt động hiệu suất.
 
 ## 1. Quản lý các Bên liên quan  
 
 A good AI product can fail if the human element is not managed properly (e.g., IBM Watson Health at MD Anderson failed due to overpromising sales and neglecting doctors, the core blockers). Stakeholders must be mapped early using a 4-quadrant diagram based on **Influence** (Ảnh hưởng) and **Interest** (Quan tâm):  
-*Một sản phẩm AI tốt có thể thất bại nếu yếu tố con người không được quản lý hợp lý (ví dụ: IBM Watson Health tại MD Anderson thất bại do bán hàng hứa hẹn quá mức và bỏ qua các bác sĩ, những người cản trở cốt lõi). Các bên liên quan phải được lập bản đồ sớm bằng cách sử dụng sơ đồ 4 góc phần tư dựa trên **Influence** (Ảnh hưởng) và **Interest** (Quan tâm):*  
+Một sản phẩm AI tốt có thể thất bại nếu yếu tố con người không được quản lý hợp lý (ví dụ: IBM Watson Health tại MD Anderson thất bại do bán hàng hứa hẹn quá mức và bỏ qua các bác sĩ, những người cản trở cốt lõi). Các bên liên quan phải được lập bản đồ sớm bằng cách sử dụng sơ đồ 4 góc phần tư dựa trên **Influence** (Ảnh hưởng) và **Interest** (Quan tâm):
 
 - ***Blockers (Kẻ cản trở - Ảnh hưởng cao, Quan tâm thấp):** ví dụ: Nhà đầu tư, đối tác lớn. Chiến lược: Thuyết phục, giảm thiểu rủi ro sớm, giải quyết các mối quan tâm trước khi họ hỏi.*  
 - ***Champions (Nhà vô địch - Ảnh hưởng cao, Quan tâm cao):** ví dụ: Giảng viên, nhà đầu tư cam kết. Chiến lược: Duy trì sự gắn kết, tận dụng các nguồn lực và mạng lưới của họ.*  
@@ -24,7 +24,7 @@ A good AI product can fail if the human element is not managed properly (e.g., I
 
 ### Nguyên tắc "Kết luận trước"  
 
-*Các bên liên quan khác nhau lắng nghe những điều khác nhau (Nhà đầu tư: Tỷ suất hoàn vốn; Giảng viên: tính khả thi/rủi ro; Khách hàng: lợi ích). Luôn bắt đầu bằng kết luận, sau đó là lý do và dữ liệu. **Nghiên cứu điển hình:** Klarna đã hứa hẹn quá mức về khả năng của AI, dẫn đến sự không hài lòng của khách hàng khi chất lượng giảm sút.*  
+Các bên liên quan khác nhau lắng nghe những điều khác nhau (Nhà đầu tư: Tỷ suất hoàn vốn; Giảng viên: tính khả thi/rủi ro; Khách hàng: lợi ích). Luôn bắt đầu bằng kết luận, sau đó là lý do và dữ liệu. **Nghiên cứu điển hình:** Klarna đã hứa hẹn quá mức về khả năng của AI, dẫn đến sự không hài lòng của khách hàng khi chất lượng giảm sút.
 
 ### Xử lý Phản đối  
 
@@ -35,7 +35,7 @@ A good AI product can fail if the human element is not managed properly (e.g., I
 
 ### Ma trận RACI  
 
-*Một công cụ quan trọng để phân công công việc trong dự án AI:*  
+Một công cụ quan trọng để phân công công việc trong dự án AI:
 
 - ***R (Responsible - Trách nhiệm):** Người thực hiện công việc.*  
 - ***A (Accountable - Giải trình):** Người ra quyết định cuối cùng (Chỉ được phép có ĐÚNG MỘT người cho mỗi nhiệm vụ).*  
@@ -46,7 +46,7 @@ A good AI product can fail if the human element is not managed properly (e.g., I
 
 ### Các Vai trò đang Tiến hóa  
 
-*Vai trò của **Kỹ sư Triển khai Tiền tuyến (Forward Deployed Engineer - FDE)** là rất quan trọng—những kỹ sư gắn kết với khách hàng để tích hợp AI vào các quy trình làm việc hiện có (ví dụ: Anthropic, Palantir). Một **Giám đốc Sản phẩm AI (AI Product Manager)** khác với PM truyền thống ở chỗ họ quản lý sự không chắc chắn, đánh giá mô hình (độ chính xác/độ phủ, ảo giác) và các quy trình làm việc có sự tham gia của con người.*  
+Vai trò của **Kỹ sư Triển khai Tiền tuyến (Forward Deployed Engineer - FDE)** là rất quan trọng—những kỹ sư gắn kết với khách hàng để tích hợp AI vào các quy trình làm việc hiện có (ví dụ: Anthropic, Palantir). Một **Giám đốc Sản phẩm AI (AI Product Manager)** khác với PM truyền thống ở chỗ họ quản lý sự không chắc chắn, đánh giá mô hình (độ chính xác/độ phủ, ảo giác) và các quy trình làm việc có sự tham gia của con người.
 
 ### Kiến trúc Nhóm  
 
@@ -59,7 +59,7 @@ A good AI product can fail if the human element is not managed properly (e.g., I
 
 ### Vòng đời Phát triển Phần mềm (SDLC) Tác tử  
 
-*Các tác tử AI hiện tham gia vào toàn bộ Vòng đời Phát triển Phần mềm (SDLC):*  
+Các tác tử AI hiện tham gia vào toàn bộ Vòng đời Phát triển Phần mềm (SDLC):
 
 - ***Lập kế hoạch (Planning):** Con người thiết lập ý định; tác tử lập kế hoạch. Lập kế hoạch đúng lúc (Just-in-time) thay thế cho lộ trình 6 tháng.*  
 - ***Lập trình & Kiểm thử (Coding & Testing):** Tác tử viết mã và tự kiểm thử; con người đóng vai trò là người đánh giá.*  
@@ -73,4 +73,4 @@ A good AI product can fail if the human element is not managed properly (e.g., I
 
 ### An toàn Tâm lý  
 
-*Yếu tố quan trọng nhất đối với một nhóm AI là an toàn tâm lý (Dự án Aristotle). Các nhóm phải cảm thấy an toàn để thử nghiệm, thất bại và lên tiếng, vì các mô hình AI vốn dĩ có tính không chắc chắn.*
+Yếu tố quan trọng nhất đối với một nhóm AI là an toàn tâm lý (Dự án Aristotle). Các nhóm phải cảm thấy an toàn để thử nghiệm, thất bại và lên tiếng, vì các mô hình AI vốn dĩ có tính không chắc chắn.

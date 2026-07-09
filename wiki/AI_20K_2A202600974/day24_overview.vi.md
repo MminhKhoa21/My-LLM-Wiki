@@ -6,7 +6,7 @@ tags: [ai, 20k, day24]
 timestamp: 2026-07-05
 sources: []
 ---
-*Ngày 24 – Đạo đức AI · Quản trị dữ liệu · RAGAS & Bảo vệ*
+Ngày 24 – Đạo đức AI · Quản trị dữ liệu · RAGAS & Bảo vệ
 
 | Track | Chủ đề |
 |-------|--------|

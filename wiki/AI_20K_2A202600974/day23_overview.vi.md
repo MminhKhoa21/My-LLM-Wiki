@@ -6,7 +6,7 @@ tags: [ai, 20k, day23]
 timestamp: 2026-07-05
 sources: []
 ---
-*Ngày 23 – Quan sát & Điều phối LangGraph*
+Ngày 23 – Quan sát & Điều phối LangGraph
 
 | Track | Chủ đề |
 |-------|--------|

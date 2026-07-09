@@ -25,7 +25,7 @@ Có 4 pattern phổ biến:
 - **Debate**: Phản biện giữa nhiều agent, hợp với tác vụ cần nhiều góc nhìn.
 - **Hierarchical**: Phân cấp quản lý tầng tầng lớp lớp, cho hệ thống quy mô doanh nghiệp.
 
-*Khóa học ưu tiên mẫu **Supervisor-Worker** vì dễ hiểu, rõ ràng định tuyến và dễ cắm thêm worker/tool.*
+Khóa học ưu tiên mẫu **Supervisor-Worker** vì dễ hiểu, rõ ràng định tuyến và dễ cắm thêm worker/tool.
 
 ## 4. Kiến trúc Supervisor-Worker
 - **Supervisor**: Phân tích yêu cầu, chọn worker phù hợp, theo dõi, retry khi lỗi và tổng hợp đầu ra.

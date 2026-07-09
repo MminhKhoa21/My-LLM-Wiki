@@ -6,7 +6,7 @@ tags: [ai, 20k, day21]
 timestamp: 2026-07-05
 sources: []
 ---
-*Ngày 21 – Đánh giá AI & Tinh chỉnh LLMs*
+Ngày 21 – Đánh giá AI & Tinh chỉnh LLMs
 
 | Track | Chủ đề |
 |-------|--------|

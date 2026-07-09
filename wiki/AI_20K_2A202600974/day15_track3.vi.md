@@ -9,40 +9,40 @@ sources: ["../raw/AI_20K_2A202600974/15/day15-activity-guide.pdf", "../raw/AI_20
 
 ## Tổng quan
 
-*Track 3 dành cho việc chuyên sâu kỹ thuật: tập trung vào việc xây dựng các Agent và hệ thống LLM ở mức production-grade. Đây là hướng đi của những "builder" thực thụ trong thời đại AI.*
+Track 3 dành cho việc chuyên sâu kỹ thuật: tập trung vào việc xây dựng các Agent và hệ thống LLM ở mức production-grade. Đây là hướng đi của những "builder" thực thụ trong thời đại AI.
 
-*Nội dung chính bao gồm:*
+Nội dung chính bao gồm:
 
-  *Mẫu Agent nâng cao.*
-  *Quản lý bộ nhớ và ngữ cảnh dài hạn.*
-  *GraphRAG & đồ thị tri thức.*
-  *Fine-tuning & tùy chỉnh mô hình (LoRA, QLoRA, DPO).*
-  *Hệ thống đánh giá ở mức sản xuất.*
+  Mẫu Agent nâng cao.
+  Quản lý bộ nhớ và ngữ cảnh dài hạn.
+  GraphRAG & đồ thị tri thức.
+  Fine-tuning & tùy chỉnh mô hình (LoRA, QLoRA, DPO).
+  Hệ thống đánh giá ở mức sản xuất.
 
 ## Tín hiệu phù hợp
 
-*Track này phù hợp nếu bạn:*
+Track này phù hợp nếu bạn:
 
-  *Ở Phase 1 (Day 3-4, Day 8-9), bạn thấy hứng thú tột độ khi thiết kế ReAct, tool calling, RAG và supervisor-worker architecture.*
-  *Chịu được khối lượng kỹ thuật nặng.*
-  *Thích đọc tài liệu gốc (research paper).*
-  *Có khả năng kiên nhẫn debug khi scaffold xảy ra xfail/skip.*
+  Ở Phase 1 (Day 3-4, Day 8-9), bạn thấy hứng thú tột độ khi thiết kế ReAct, tool calling, RAG và supervisor-worker architecture.
+  Chịu được khối lượng kỹ thuật nặng.
+  Thích đọc tài liệu gốc (research paper).
+  Có khả năng kiên nhẫn debug khi scaffold xảy ra xfail/skip.
 
 ## Năng lực sẽ xây dựng
 
-  *Kiến trúc Agent nâng cao (Advanced / Multi-agent architectures).*
-  *Kỹ năng Fine-tuning và Alignment mô hình.*
-  *Độ tin cậy (reliability), evaluation & guardrails.*
-  *Tích hợp các giao thức hiện đại (ví dụ: MCP).*
+  Kiến trúc Agent nâng cao (Advanced / Multi-agent architectures).
+  Kỹ năng Fine-tuning và Alignment mô hình.
+  Độ tin cậy (reliability), evaluation & guardrails.
+  Tích hợp các giao thức hiện đại (ví dụ: MCP).
 
 ## Khó khăn / Thách thức
 
-  *Khối lượng nội dung nặng và thay đổi rất nhanh, đòi hỏi phải cập nhật và đọc tài liệu liên tục.*
-  *Nhiều lĩnh vực chưa có "best practice" rõ ràng, phải tự xây dựng và thử nghiệm.*
-  *Dễ sa đà vào kỹ thuật mà quên đi nhu cầu thực tế của người dùng.*
-  *Việc thực hiện benchmark và evaluation tốn rất nhiều công sức.*
+  Khối lượng nội dung nặng và thay đổi rất nhanh, đòi hỏi phải cập nhật và đọc tài liệu liên tục.
+  Nhiều lĩnh vực chưa có "best practice" rõ ràng, phải tự xây dựng và thử nghiệm.
+  Dễ sa đà vào kỹ thuật mà quên đi nhu cầu thực tế của người dùng.
+  Việc thực hiện benchmark và evaluation tốn rất nhiều công sức.
 
 ## Career Path & Cơ hội
 
-  *Vai trò mục tiêu (CP3): AI Engineer, LLM Engineer, Agent Developer.*
-  *Nhu cầu thị trường: **Cao nhất.** Đây là vị trí trực tiếp tạo ra các sản phẩm và giải pháp AI thông minh mới trên thị trường. Portfolio mạnh ở vai trò này sẽ mở ra cơ hội tham gia các dự án thực tế lớn (như tại Vingroup).*
+  Vai trò mục tiêu (CP3): AI Engineer, LLM Engineer, Agent Developer.
+  Nhu cầu thị trường: **Cao nhất.** Đây là vị trí trực tiếp tạo ra các sản phẩm và giải pháp AI thông minh mới trên thị trường. Portfolio mạnh ở vai trò này sẽ mở ra cơ hội tham gia các dự án thực tế lớn (như tại Vingroup).

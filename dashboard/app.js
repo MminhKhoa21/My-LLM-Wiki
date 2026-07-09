@@ -137,6 +137,7 @@ const translations = {
 
 let currentLang = "vi";
 let currentNoteName = null;
+let sortedNotes = [];
 
 // DOM Elements
 const noteListEl = document.getElementById("note-list");
@@ -341,13 +342,13 @@ function renderNoteList(notes) {
     }
     
     // Sort notes: Overviews first, then alphabetically
-    const sorted = [...notes].sort((a, b) => {
+    sortedNotes = [...notes].sort((a, b) => {
         if (a.type === "overview" && b.type !== "overview") return -1;
         if (a.type !== "overview" && b.type === "overview") return 1;
         return a.title.localeCompare(b.title);
     });
     
-    noteListEl.innerHTML = sorted.map(note => {
+    noteListEl.innerHTML = sortedNotes.map(note => {
         const date = note.timestamp ? note.timestamp : "";
         return `
             <li class="note-item" data-name="${note.name}">
@@ -402,7 +403,38 @@ async function loadNoteDetail(noteName) {
         noteViewerHeader.style.display = "flex";
         
         renderNoteMarkdown(data);
+        
+        // Navigation Buttons logic
+        const currentIndex = sortedNotes.findIndex(n => n.name === noteName);
+        const navContainer = document.getElementById("note-navigation");
+        const prevBtn = document.getElementById("btn-prev-note");
+        const nextBtn = document.getElementById("btn-next-note");
+        
+        if (currentIndex !== -1 && sortedNotes.length > 1) {
+            navContainer.style.display = "flex";
+            
+            if (currentIndex > 0) {
+                const prevNote = sortedNotes[currentIndex - 1];
+                prevBtn.style.display = "inline-block";
+                prevBtn.onclick = () => loadNoteDetail(prevNote.name);
+                prevBtn.title = prevNote.title;
+            } else {
+                prevBtn.style.display = "none";
+            }
+            
+            if (currentIndex < sortedNotes.length - 1) {
+                const nextNote = sortedNotes[currentIndex + 1];
+                nextBtn.style.display = "inline-block";
+                nextBtn.onclick = () => loadNoteDetail(nextNote.name);
+                nextBtn.title = nextNote.title;
+            } else {
+                nextBtn.style.display = "none";
+            }
+        } else {
+            navContainer.style.display = "none";
+        }
     } catch (err) {
+        document.getElementById("note-navigation").style.display = "none";
         noteViewerHeader.style.display = "none";
         noteContentArea.classList.add("note-viewer-empty");
         noteContentArea.innerHTML = `<div class="note-viewer-empty"><i class="fa-solid fa-triangle-exclamation empty-icon" style="color: #ef4444;"></i><p>${err.message}</p></div>`;

@@ -13,7 +13,7 @@ Dưới đây là nội dung file `day22_track1.md` đã được hoàn thiện 
 > **Lộ trình:** [[track1_ba|Track 1: AI Product / BA]]
 
 
-*Ngày 22 – Track 1: Đánh giá AI & Bộ đánh giá tự động*
+Ngày 22 – Track 1: Đánh giá AI & Bộ đánh giá tự động
 
 Đánh giá ứng dụng AI (Application Evaluation) không chỉ dừng lại ở đo usage hay funnel completion, mà là đảm bảo chất lượng, tính an toàn và khả năng suy luận của hệ thống ở quy mô lớn. 
 
@@ -23,7 +23,7 @@ Dưới đây là nội dung file `day22_track1.md` đã được hoàn thiện 
 ## 1. Tư duy nền tảng: Tại sao cần Automated Evals?
 
 
-*1. Tư duy nền tảng: Tại sao cần Automated Evals?*
+1. Tư duy nền tảng: Tại sao cần Automated Evals?
 
 - **Vấn đề Scale:** Manual review không thể mở rộng. Khi lượng production traces lên tới 100k+, review thủ công sẽ chậm release và bỏ sót lỗi âm thầm (false confidence).
 - **Application Eval vs Model Eval:** Model Eval (do provider thực hiện qua MMLU, HumanEval) đo năng lực nền. Application Eval đo lường *riêng cho product context* (Ví dụ: Support Triage có đúng intent và policy của doanh nghiệp không?).
@@ -35,14 +35,14 @@ Dưới đây là nội dung file `day22_track1.md` đã được hoàn thiện 
 ## 2. Các tầng Đánh giá: Codebase, Human & LLM
 
 
-*2. Các tầng Đánh giá: Codebase, Human & LLM*
+2. Các tầng Đánh giá: Codebase, Human & LLM
 
 Một hệ thống eval vững chắc (Eval Suite) cần phối hợp ba nguồn đánh giá, sắp xếp theo cây quyết định ưu tiên:
 
 
 ### Lớp 1: Code-based Evals (Luôn bật, Ưu tiên số 1)
 
-*Lớp 1: Code-based Evals (Luôn bật, Ưu tiên số 1)*
+Lớp 1: Code-based Evals (Luôn bật, Ưu tiên số 1)
 
 - **Khi nào dùng:** Khi câu hỏi xác minh được bằng rule, DB, schema, API, regex, tính toán.
 - **Ưu điểm:** Nhanh, rẻ, deterministic, dễ đưa vào CI/CD (critical path).
@@ -53,7 +53,7 @@ Một hệ thống eval vững chắc (Eval Suite) cần phối hợp ba nguồn
 
 ### Lớp 2: LLM-as-Judge (Cần Calibration)
 
-*Lớp 2: LLM-as-Judge (Cần Calibration)*
+Lớp 2: LLM-as-Judge (Cần Calibration)
 
 - **Khi nào dùng:** Khi tiêu chí phụ thuộc ngữ cảnh, sắc thái ngôn ngữ (ví dụ: giải thích hợp lý không, agent có đồng cảm với khách hàng không, intent classification).
 - **Calibration (Hiệu chỉnh) là cốt lõi:** LLM judge có rủi ro dễ dãi hoặc thiên vị (bias). Cần calibrate:
@@ -65,7 +65,7 @@ Một hệ thống eval vững chắc (Eval Suite) cần phối hợp ba nguồn
 
 ### Lớp 3: Human Review (Fallback & Định nghĩa "Good")
 
-*Lớp 3: Human Review (Fallback & Định nghĩa "Good")*
+Lớp 3: Human Review (Fallback & Định nghĩa "Good")
 
 - **Khi nào dùng:** Giai đoạn prototype chưa rõ rubric, high-stakes domain (y tế, tài chính), policy nuance phức tạp, hoặc làm nhãn calibration.
 - **Cách review hiệu quả:** Không random hoàn toàn, phải *sample có chủ đích* (ví dụ: output được LLM judge tự tin cao nhất/thấp nhất, case disagreement).
@@ -76,10 +76,10 @@ Một hệ thống eval vững chắc (Eval Suite) cần phối hợp ba nguồn
 ## 3. Kiến trúc Dataset và Metrics
 
 
-*3. Kiến trúc Dataset và Metrics*
+3. Kiến trúc Dataset và Metrics
 
 ### Bộ dữ liệu tham chiếu
-*Bộ dữ liệu tham chiếu*
+Bộ dữ liệu tham chiếu
 
 Không chỉ là tập prompt, một Eval Case tốt phải bao gồm:
 - **Input:** Câu hỏi/Context user.
@@ -89,7 +89,7 @@ Không chỉ là tập prompt, một Eval Case tốt phải bao gồm:
 
 
 ### Chỉ số đánh giá
-*Chỉ số đánh giá*
+Chỉ số đánh giá
 
 - **Agent Success Rate:** North Star Metric. Là một composite metric tổng hợp từ: Task correctness, Schema pass rate, Escalation recall, Human/LLM judge score.
 - Cần phân mảng (segment) metrics theo *Intent, Persona, Prompt version, Model version* để phát hiện regression ẩn.
@@ -99,7 +99,7 @@ Không chỉ là tập prompt, một Eval Case tốt phải bao gồm:
 
 ## 4. Eval Lifecycle (Quy trình đưa AI ra Production)
 
-*4. Eval Lifecycle (Quy trình đưa AI ra Production)*
+4. Eval Lifecycle (Quy trình đưa AI ra Production)
 
 1. **Vibe Check (Prototype):** 10-30 cases đa dạng. Định nghĩa "good", tìm failure modes.
 2. **Offline Evals (Build/Iterate):** 100-1000 cases chạy tự động trước release. Đóng vai trò là Release Gate chặn lỗi.
@@ -110,7 +110,7 @@ Không chỉ là tập prompt, một Eval Case tốt phải bao gồm:
 
 ## Liên kết
 
-*Liên kết*
+Liên kết
 
 - [[day24_track3]] – RAGAS & Guardrails (đánh giá RAG cụ thể)
 

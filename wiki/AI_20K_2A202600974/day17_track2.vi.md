@@ -6,16 +6,16 @@ tags: [AI_20K_2A202600974, Day17, Data_Pipeline, ETL, Kafka]
 timestamp: 2026-07-05
 sources: ["../raw/AI_20K_2A202600974/17/Day 17 - Track 2 - Data Pipeline.pdf"]
 ---
-*# Kỹ thuật Pipeline Dữ liệu (Ngày 17 - Track 2)*
+# Kỹ thuật Pipeline Dữ liệu (Ngày 17 - Track 2)
 
-*Track này nhấn mạnh rằng các pipeline dữ liệu là một phụ thuộc quan trọng của các mô hình AI. Một pipeline bị lỗi có thể âm thầm phá hủy độ chính xác của mô hình trong môi trường sản xuất ("Rác vào, rác ra").*
+Track này nhấn mạnh rằng các pipeline dữ liệu là một phụ thuộc quan trọng của các mô hình AI. Một pipeline bị lỗi có thể âm thầm phá hủy độ chính xác của mô hình trong môi trường sản xuất ("Rác vào, rác ra").
 
 ## Các khái niệm chính
 
 ### ETL so với ELT & Kiến trúc Medallion
 
   * **ELT (Trích xuất, Tải, Biến đổi)** là mặc định cho các pipeline AI gốc đám mây nhờ chi phí tính toán rẻ trong lakehouse.
-  * **Kiến trúc Medallion:**
+   **Kiến trúc Medallion:*
     * **Bronze:** Dữ liệu thô, chỉ nối thêm, được giữ vĩnh viễn.
     * **Silver:** Đã được làm sạch, chuẩn hóa, loại bỏ trùng lặp và áp đặt lược đồ.
     * **Gold:** Sẵn sàng cho kinh doanh, tổng hợp, đặc trưng ML.

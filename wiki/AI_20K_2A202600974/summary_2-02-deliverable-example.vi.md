@@ -15,17 +15,17 @@ Dưới đây là nội dung file đã được chuyển đổi sang song ngữ 
 ## *Tổng quan*
 
 
-*Tài liệu này cung cấp một ví dụ hoàn chỉnh về bài tập thực hành Ngày 02. Nó đi qua hành trình của một Giám đốc Sản phẩm Tập sự (Junior Product Manager) tên là Minh khi anh thực hiện rà soát vấn đề, thiết kế quy trình làm việc hiện tại và tương lai, phác thảo Tuyên bố Vấn đề (Problem Statement) và cuối cùng quyết định triển khai giải pháp Quy trình AI (AI Workflow) để tự động hóa các báo cáo hàng tuần.*
+Tài liệu này cung cấp một ví dụ hoàn chỉnh về bài tập thực hành Ngày 02. Nó đi qua hành trình của một Giám đốc Sản phẩm Tập sự (Junior Product Manager) tên là Minh khi anh thực hiện rà soát vấn đề, thiết kế quy trình làm việc hiện tại và tương lai, phác thảo Tuyên bố Vấn đề (Problem Statement) và cuối cùng quyết định triển khai giải pháp Quy trình AI (AI Workflow) để tự động hóa các báo cáo hàng tuần.
 
 ## *Các Giai đoạn Chính*
 
 ### *Giai đoạn 1: Rà soát Vấn đề Cá nhân*
 
   
-  *Minh liệt kê các điểm nghẽn (pain points) hàng ngày khác nhau bằng cách sử dụng nhiều góc nhìn khác nhau (các tác vụ lặp đi lặp lại, các tác vụ tốn thời gian, các lĩnh vực mà AI có thể xuất sắc và những khó khăn mà người khác gặp phải).*
+  Minh liệt kê các điểm nghẽn (pain points) hàng ngày khác nhau bằng cách sử dụng nhiều góc nhìn khác nhau (các tác vụ lặp đi lặp lại, các tác vụ tốn thời gian, các lĩnh vực mà AI có thể xuất sắc và những khó khăn mà người khác gặp phải).
   
   
-  *Các ví dụ bao gồm tóm tắt Jira/Slack cho báo cáo hàng tuần, xem xét PRD, tìm kiếm trên Slack các quyết định trong quá khứ và viết biên bản cuộc họp.*
+  Các ví dụ bao gồm tóm tắt Jira/Slack cho báo cáo hàng tuần, xem xét PRD, tìm kiếm trên Slack các quyết định trong quá khứ và viết biên bản cuộc họp.
   
   
   ***Các Ứng viên Hàng đầu Được Chọn:** Báo cáo Hàng tuần, Đánh giá PRD và Tìm kiếm trên Slack.*
@@ -33,7 +33,7 @@ Dưới đây là nội dung file đã được chuyển đổi sang song ngữ 
 ### *Giai đoạn 2: Tuyên bố Vấn đề Nhóm (Sự hội tụ)*
 
   
-  *Nhóm tổng hợp các ý tưởng cá nhân và chấm điểm chúng dựa trên tính rõ ràng của chủ thể (actor), quy trình làm việc, bằng chứng về điểm nghẽn, tác động có thể đo lường, tính khả thi trong thực hành và hiểu biết về lĩnh vực.*
+  Nhóm tổng hợp các ý tưởng cá nhân và chấm điểm chúng dựa trên tính rõ ràng của chủ thể (actor), quy trình làm việc, bằng chứng về điểm nghẽn, tác động có thể đo lường, tính khả thi trong thực hành và hiểu biết về lĩnh vực.
   
   
   ***Vấn đề Được Chọn:** "Báo cáo Hàng tuần" được chọn vì nó có quy trình làm việc có cấu trúc cao, một số liệu cơ sở rõ ràng (90 phút) và tác động dễ dàng đo lường.*
@@ -41,10 +41,10 @@ Dưới đây là nội dung file đã được chuyển đổi sang song ngữ 
 ### *Giai đoạn 3: Xác thực và Nghiên cứu*
 
   
-  *Nhóm xác thực ngắn gọn vấn đề với các PM khác. Họ nhận ra rằng khó khăn thực sự không chỉ là "rút trích các con số" mà là viết *bài tường thuật* (narrative) từ dữ liệu thô.*
+  Nhóm xác thực ngắn gọn vấn đề với các PM khác. Họ nhận ra rằng khó khăn thực sự không chỉ là "rút trích các con số" mà là viết *bài tường thuật* (narrative) từ dữ liệu thô.
   
   
-  *Họ nghiên cứu các công cụ hiện có (ví dụ: Báo cáo Jira, Slack AI, Gemini trong Drive) để hiểu các mô hình hiện tại. Bài học rút ra là AI nên hỗ trợ soạn thảo tường thuật trong khi con người vẫn giữ quyền kiểm soát việc đánh giá.*
+  Họ nghiên cứu các công cụ hiện có (ví dụ: Báo cáo Jira, Slack AI, Gemini trong Drive) để hiểu các mô hình hiện tại. Bài học rút ra là AI nên hỗ trợ soạn thảo tường thuật trong khi con người vẫn giữ quyền kiểm soát việc đánh giá.
 
 ### *Giai đoạn 4: Lập bản đồ Quy trình làm việc*
 
@@ -80,7 +80,7 @@ Dưới đây là nội dung file đã được chuyển đổi sang song ngữ 
 ### *Giai đoạn 6: Suy ngẫm Cá nhân*
 
   
-  *Phản ánh về việc sử dụng AI trong quá trình thực hành (ví dụ: tạo sơ đồ mermaid, lên ý tưởng) và sửa lỗi cho AI khi nó đề xuất các giải pháp Tác nhân (Agent) quá phức tạp một cách vội vàng.*
+  Phản ánh về việc sử dụng AI trong quá trình thực hành (ví dụ: tạo sơ đồ mermaid, lên ý tưởng) và sửa lỗi cho AI khi nó đề xuất các giải pháp Tác nhân (Agent) quá phức tạp một cách vội vàng.
   
   
-  *Nhấn mạnh rằng những vấn đề tốt nhất có quy trình làm việc và các chỉ số đo lường rõ ràng, và các tác nhân không phải là câu trả lời mặc định.*
+  Nhấn mạnh rằng những vấn đề tốt nhất có quy trình làm việc và các chỉ số đo lường rõ ràng, và các tác nhân không phải là câu trả lời mặc định.

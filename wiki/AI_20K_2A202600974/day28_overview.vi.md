@@ -6,7 +6,7 @@ tags: [ai, 20k, day28]
 timestamp: 2026-07-06
 sources: []
 ---
-*# Ngày 28 – Kiến trúc hệ thống AI & Kỹ thuật Platform*
+# Ngày 28 – Kiến trúc hệ thống AI & Kỹ thuật Platform
 
 | Track | Chủ đề / Topic |
 |-------|----------------|

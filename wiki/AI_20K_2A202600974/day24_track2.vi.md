@@ -6,9 +6,9 @@ tags: [data-governance, security, rbac, encryption, pii, compliance, track2]
 timestamp: 2026-07-05
 sources: ["AI_20K_2A202600974/24/day24-Track02-data-governance-security.pdf"]
 ---
-*# Ngày 24 Track 2: Quản trị & Bảo mật Dữ liệu*
+# Ngày 24 Track 2: Quản trị & Bảo mật Dữ liệu
 
-*Trang này tóm tắt bài giảng và phòng thí nghiệm về Quản trị & Bảo mật Dữ liệu cho các nền tảng AI trong Track 2.*
+Trang này tóm tắt bài giảng và phòng thí nghiệm về Quản trị & Bảo mật Dữ liệu cho các nền tảng AI trong Track 2.
 
 ## *Các Khái niệm Chính*
 
@@ -21,7 +21,7 @@ sources: ["AI_20K_2A202600974/24/day24-Track02-data-governance-security.pdf"]
 
 ### *Nguyên tắc Đặc quyền Tối thiểu & RBAC*
 
-*Việc triển khai Kiểm soát Truy cập Dựa trên Vai trò (RBAC) đảm bảo người dùng và dịch vụ chỉ có quyền truy cập tối thiểu cần thiết.*
+Việc triển khai Kiểm soát Truy cập Dựa trên Vai trò (RBAC) đảm bảo người dùng và dịch vụ chỉ có quyền truy cập tối thiểu cần thiết.
 
   - **Quản trị viên:** Toàn quyền truy cập.
   - **Kỹ sư ML:** Truy cập dữ liệu huấn luyện và các tạo tác mô hình, nhưng không thể xóa dữ liệu sản xuất.
@@ -54,4 +54,4 @@ sources: ["AI_20K_2A202600974/24/day24-Track02-data-governance-security.pdf"]
 
 ## *Phòng thí nghiệm 24: Quản trị Dữ liệu & Pipeline PII*
 
-*Học viên triển khai một nền tảng dữ liệu hỗ trợ RBAC trong FastAPI, xây dựng pipeline phát hiện và ẩn danh PII bằng Presidio với các bộ nhận dạng tiếng Việt tùy chỉnh (nhắm đến tỷ lệ phát hiện >95%), và thực hiện kiểm toán bảo mật bằng git-secrets và truffleHog.*
+Học viên triển khai một nền tảng dữ liệu hỗ trợ RBAC trong FastAPI, xây dựng pipeline phát hiện và ẩn danh PII bằng Presidio với các bộ nhận dạng tiếng Việt tùy chỉnh (nhắm đến tỷ lệ phát hiện >95%), và thực hiện kiểm toán bảo mật bằng git-secrets và truffleHog.

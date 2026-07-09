@@ -7,13 +7,13 @@ timestamp: 2026-07-05
 sources: ["../raw/AI_20K_2A202600974/17/Day17 - Track 3 - Memory-systems-for-agents.pdf"]
 ---
 
-*# Hệ thống Bộ nhớ cho Tác nhân (Ngày 17 - Track 3)*
+# Hệ thống Bộ nhớ cho Tác nhân (Ngày 17 - Track 3)
 
 
-*Track này giải quyết một thách thức lớn khi triển khai các tác nhân AI: các tác nhân mặc định là không trạng thái và "quên" thông tin giữa các phiên. Một hệ thống bộ nhớ mạnh mẽ kết hợp khả năng truy cập nhanh của cửa sổ ngữ cảnh với lưu trữ bền vững của các cơ sở dữ liệu bên ngoài.*
+Track này giải quyết một thách thức lớn khi triển khai các tác nhân AI: các tác nhân mặc định là không trạng thái và "quên" thông tin giữa các phiên. Một hệ thống bộ nhớ mạnh mẽ kết hợp khả năng truy cập nhanh của cửa sổ ngữ cảnh với lưu trữ bền vững của các cơ sở dữ liệu bên ngoài.
 
 
-*## 4 Loại Bộ nhớ Nhận thức cho Tác nhân*
+## 4 Loại Bộ nhớ Nhận thức cho Tác nhân
 
 
 1.  ***Bộ nhớ Ngắn hạn (Làm việc):** Được quản lý trong cửa sổ ngữ cảnh của LLM. Nhanh, tạm thời và bị giới hạn bởi ngân sách token. Quản lý tốt nhất thông qua chiến lược cửa sổ trượt (lời nhắc hệ thống + tóm tắt + K lượt gần nhất) để tránh chạm giới hạn token.*
@@ -28,7 +28,7 @@ sources: ["../raw/AI_20K_2A202600974/17/Day17 - Track 3 - Memory-systems-for-age
 4.  ***Bộ nhớ Ngữ nghĩa:** Kiến thức miền được mã hóa thành các embedding và lưu trữ trong Cơ sở dữ liệu Vector. Các tác nhân truy xuất các sự kiện liên quan thông qua tìm kiếm tương tự cosine.*
 
 
-*## Triển khai & Khung công tác*
+## Triển khai & Khung công tác
 
 
 - ***Luồng Quản lý Bộ nhớ:** Bộ đệm (Cửa sổ Ngữ cảnh) -> Tóm tắt (gọi LLM) -> Trích xuất Sự kiện Chính -> Lưu trữ Bền vững (Kho lưu trữ Bên ngoài như Redis hoặc Chroma).*
@@ -43,7 +43,7 @@ sources: ["../raw/AI_20K_2A202600974/17/Day17 - Track 3 - Memory-systems-for-age
 - ***Quyền riêng tư theo Thiết kế:** Rất quan trọng cho bộ nhớ tác nhân. Bao gồm tối thiểu hóa dữ liệu, giới hạn lưu trữ TTL và các cơ chế cho "Quyền được Lãng quên".*
 
 
-*## Xu hướng về Bộ nhớ Tác nhân (2025-2026)*
+## Xu hướng về Bộ nhớ Tác nhân (2025-2026)
 
 
 1.  ***Bộ nhớ xuyên phiên:** Chuyển từ lịch sử phạm vi luồng sang hồ sơ phạm vi người dùng và kho lưu trữ tình tiết.*

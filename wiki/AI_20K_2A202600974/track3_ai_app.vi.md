@@ -7,7 +7,7 @@ timestamp: 2026-07-05
 sources: []
 ---
 
-*Track 3: Ứng dụng AI (Nhà phát triển Agent)*
+Track 3: Ứng dụng AI (Nhà phát triển Agent)
 
 Track 3 tập trung vào **Khía cạnh Ứng dụng và Lập trình (Application & Development)** của một hệ thống AI. Người học ở Track này đóng vai trò là AI Developer / Agent Developer - người trực tiếp viết code, xây dựng logic cho AI Agent, tích hợp các công cụ (Tools), và đóng gói thành ứng dụng hoàn chỉnh.
 

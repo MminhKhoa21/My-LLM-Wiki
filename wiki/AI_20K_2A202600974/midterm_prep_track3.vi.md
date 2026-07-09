@@ -28,7 +28,7 @@ Phần này bắt buộc cho tất cả học viên, tập trung vào các nền
 * **System Prompting:** Đóng vai (Persona), chỉ thị nghiêm ngặt (System constraints), định dạng đầu ra (JSON schema), và chống tiêm nhiễm câu lệnh (Jailbreak protection).
 
 * **LLM-Native Observability:** Giám sát thông qua Traces, Spans của các cuộc gọi API LLM (sử dụng LangSmith, Phoenix). Đo lường chi phí (Token usage), độ trễ (Latency), và tỷ lệ lỗi.
-* **Bảo mật & Guardrails:**
+ **Bảo mật & Guardrails:*
   * Phòng chống **Prompt Injection** và **Jailbreak**.
   * Sử dụng **Guardrails đa lớp** (Input Guardrails chặn nội dung độc hại trước khi gửi tới LLM; Output Guardrails kiểm tra tính hợp lệ và rò rỉ dữ liệu nhạy cảm PII trước khi trả về User).
 

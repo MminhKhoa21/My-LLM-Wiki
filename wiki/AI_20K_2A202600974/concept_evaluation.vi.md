@@ -7,10 +7,10 @@ timestamp: 2026-07-05
 sources: []
 ---
 
-*Đánh giá AI & Thiết lập điểm chuẩn*
+Đánh giá AI & Thiết lập điểm chuẩn
 
 
-*Trang này tổng hợp các kiến thức về AI Evaluation, bao gồm cả góc nhìn Product, Engineering và Data từ nhiều ngày khác nhau.*
+Trang này tổng hợp các kiến thức về AI Evaluation, bao gồm cả góc nhìn Product, Engineering và Data từ nhiều ngày khác nhau.
 
 ## 1. Tư duy nền tảng (Day 14, Day 21, Day 22)
 

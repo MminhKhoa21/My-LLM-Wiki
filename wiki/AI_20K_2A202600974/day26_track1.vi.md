@@ -10,67 +10,67 @@ Dưới đây là nội dung song ngữ (Anh – Việt) của file `day26_track
 
 ---
 
-*Ngày 26 – Track 1: Gây quỹ & Bản tóm tắt thông tin tình báo*
+Ngày 26 – Track 1: Gây quỹ & Bản tóm tắt thông tin tình báo
 
-*Tài liệu này tóm tắt lý thuyết và các bài tập thực hành trong phòng thí nghiệm cho Ngày 26 của Track 1, tập trung vào cơ chế gây quỹ khởi nghiệp, đánh giá môi trường đầu tư hiện tại và áp dụng các khái niệm này vào một thương vụ AI thực tế.*
-
----
-
-*1. Môi trường gây quỹ hiện tại*
-
-*Huy động vốn đòi hỏi nhiều hơn một sản phẩm tốt. Các yếu tố chính bao gồm:*
-
-  *Người sáng lập đáng tin cậy và cam kết.*
-  *Nhu cầu thị trường có thể chứng minh được.*
-  *Tầm nhìn lớn với lộ trình thực thi tin cậy.*
-  *Giải pháp khác biệt, có khả năng phòng thủ (tránh cái bẫy chỉ đơn giản là "chúng tôi đang sử dụng AI!").*
-  *Kế hoạch hấp dẫn bao gồm sản phẩm, tiếp cận thị trường và tài chính.*
-  *Thu hút các nhà đầu tư phù hợp với giai đoạn và lĩnh vực của công ty.*
-
-*Các vấn đề phổ biến*
-
-  *Thiếu tập trung và tư duy "công nghệ trước" thay vì "khách hàng trước".*
-  *Khác biệt hóa không rõ ràng.*
-  *Tài chính không rõ ràng: Không có khả năng trình bày kinh tế đơn vị, nhu cầu tiền mặt (đường băng) và các KPI cần thiết để đạt vòng tài trợ tiếp theo.*
-
-*3. Thu hút nhà đầu tư*
-
-*Cách tìm nhà đầu tư tốt*
-
-   *Giới thiệu: Phương pháp hiệu quả nhất.*
-   *Danh sách: Sử dụng các cơ sở dữ liệu như Crunchbase hoặc DealStreetAsia để lọc theo vị trí, loại nhà đầu tư (VC) và trạng thái hoạt động.*
-   *Sự kiện/Hội thảo: Kết nối trong cộng đồng khởi nghiệp.*
-
-*Những điều cần biết trước cuộc họp với nhà đầu tư*
-
-  *Họ có tiền sẵn có để đầu tư ngay không?*
-  *Luận điểm đầu tư của họ là gì (danh mục, thị trường, v.v.)?*
-  *Ai trong danh mục hiện tại của họ? Có khoản đầu tư cạnh tranh nào không?*
-  *Quy mô séc điển hình của họ là bao nhiêu?*
-  *Tiêu chí đầu tư của họ là gì (đội ngũ, thị trường, giai đoạn, yêu cầu % vốn chủ sở hữu)?*
+Tài liệu này tóm tắt lý thuyết và các bài tập thực hành trong phòng thí nghiệm cho Ngày 26 của Track 1, tập trung vào cơ chế gây quỹ khởi nghiệp, đánh giá môi trường đầu tư hiện tại và áp dụng các khái niệm này vào một thương vụ AI thực tế.
 
 ---
 
-*4. Phòng thí nghiệm: Bản tóm tắt thông tin tình báo về gây quỹ*
+1. Môi trường gây quỹ hiện tại
 
-*Phần thực hành yêu cầu lập bản đồ một thương vụ AI thực tế bằng các khung gây quỹ tiêu chuẩn và tạo bản đồ nhà đầu tư cho ý tưởng A3 Canvas của riêng mình.*
+Huy động vốn đòi hỏi nhiều hơn một sản phẩm tốt. Các yếu tố chính bao gồm:
 
-*Bước 1: Định vị thương vụ AI thực tế*
+  Người sáng lập đáng tin cậy và cam kết.
+  Nhu cầu thị trường có thể chứng minh được.
+  Tầm nhìn lớn với lộ trình thực thi tin cậy.
+  Giải pháp khác biệt, có khả năng phòng thủ (tránh cái bẫy chỉ đơn giản là "chúng tôi đang sử dụng AI!").
+  Kế hoạch hấp dẫn bao gồm sản phẩm, tiếp cận thị trường và tài chính.
+  Thu hút các nhà đầu tư phù hợp với giai đoạn và lĩnh vực của công ty.
 
-  *Mục tiêu: Tìm một thương vụ khởi nghiệp AI bản địa thực tế (2023-2026).*
-  *Nhiệm vụ: Tạo bản tóm tắt hồ sơ thương vụ, xác định startup, lĩnh vực, giai đoạn, nhà đầu tư và quy mô séc.*
-  *Kiểm tra khác biệt hóa AI: Xác định xem AI có thực sự giải quyết vấn đề cốt lõi hay chỉ là tính năng gắn thêm (tránh cái bẫy "khác biệt hóa không rõ ràng").*
-  *Lập bản đồ khung: Định vị thương vụ một cách chính xác trong "Các giai đoạn tài trợ vốn chủ sở hữu khởi nghiệp" (Pre-Seed -> Seed -> Series A/B -> Series C -> IPO) và bảng "Venture Capital vs Private Equity" dựa trên quy mô séc và loại nhà đầu tư.*
+Các vấn đề phổ biến
 
-*Bước 2: Lập bản đồ nhà đầu tư cho ý tưởng của bạn*
+  Thiếu tập trung và tư duy "công nghệ trước" thay vì "khách hàng trước".
+  Khác biệt hóa không rõ ràng.
+  Tài chính không rõ ràng: Không có khả năng trình bày kinh tế đơn vị, nhu cầu tiền mặt (đường băng) và các KPI cần thiết để đạt vòng tài trợ tiếp theo.
 
-  *Mục tiêu: Nghiên cứu 3-5 nhà đầu tư thực tế (VC hoặc quỹ) phù hợp với ý tưởng sản phẩm AI cụ thể của bạn.*
-  *Nhiệm vụ: Xác định luận điểm đầu tư, quy mô séc điển hình của họ và giải thích chính xác lý do tại sao họ phù hợp với giai đoạn và lĩnh vực của startup bạn. (ví dụ: Techstars, Antler, 500 Global).*
+3. Thu hút nhà đầu tư
 
-*Bước 3: Bản ghi nhớ định vị thị trường*
+Cách tìm nhà đầu tư tốt
 
-  *Mục tiêu: Viết một bản ghi nhớ ngắn gọn (0,5 - 1 trang) đánh giá khả năng huy động vốn của ý tưởng bạn trong bối cảnh thị trường hiện tại.*
-  *Các đầu ra chính: Giải quyết vấn đề "tài chính không rõ ràng" phổ biến bằng cách ước tính:*
-    *Kinh tế đơn vị: Doanh thu trên mỗi khách hàng trừ chi phí phục vụ khách hàng đó.*
-    *Nhu cầu tiền mặt: Đường băng cần thiết để đạt cột mốc tiếp theo.*
-    *KPI: Các chỉ số cần có trước khi huy động vòng tiếp theo.*
+   Giới thiệu: Phương pháp hiệu quả nhất.
+   Danh sách: Sử dụng các cơ sở dữ liệu như Crunchbase hoặc DealStreetAsia để lọc theo vị trí, loại nhà đầu tư (VC) và trạng thái hoạt động.
+   Sự kiện/Hội thảo: Kết nối trong cộng đồng khởi nghiệp.
+
+Những điều cần biết trước cuộc họp với nhà đầu tư
+
+  Họ có tiền sẵn có để đầu tư ngay không?
+  Luận điểm đầu tư của họ là gì (danh mục, thị trường, v.v.)?
+  Ai trong danh mục hiện tại của họ? Có khoản đầu tư cạnh tranh nào không?
+  Quy mô séc điển hình của họ là bao nhiêu?
+  Tiêu chí đầu tư của họ là gì (đội ngũ, thị trường, giai đoạn, yêu cầu % vốn chủ sở hữu)?
+
+---
+
+4. Phòng thí nghiệm: Bản tóm tắt thông tin tình báo về gây quỹ
+
+Phần thực hành yêu cầu lập bản đồ một thương vụ AI thực tế bằng các khung gây quỹ tiêu chuẩn và tạo bản đồ nhà đầu tư cho ý tưởng A3 Canvas của riêng mình.
+
+Bước 1: Định vị thương vụ AI thực tế
+
+  Mục tiêu: Tìm một thương vụ khởi nghiệp AI bản địa thực tế (2023-2026).
+  Nhiệm vụ: Tạo bản tóm tắt hồ sơ thương vụ, xác định startup, lĩnh vực, giai đoạn, nhà đầu tư và quy mô séc.
+  Kiểm tra khác biệt hóa AI: Xác định xem AI có thực sự giải quyết vấn đề cốt lõi hay chỉ là tính năng gắn thêm (tránh cái bẫy "khác biệt hóa không rõ ràng").
+  Lập bản đồ khung: Định vị thương vụ một cách chính xác trong "Các giai đoạn tài trợ vốn chủ sở hữu khởi nghiệp" (Pre-Seed -> Seed -> Series A/B -> Series C -> IPO) và bảng "Venture Capital vs Private Equity" dựa trên quy mô séc và loại nhà đầu tư.
+
+Bước 2: Lập bản đồ nhà đầu tư cho ý tưởng của bạn
+
+  Mục tiêu: Nghiên cứu 3-5 nhà đầu tư thực tế (VC hoặc quỹ) phù hợp với ý tưởng sản phẩm AI cụ thể của bạn.
+  Nhiệm vụ: Xác định luận điểm đầu tư, quy mô séc điển hình của họ và giải thích chính xác lý do tại sao họ phù hợp với giai đoạn và lĩnh vực của startup bạn. (ví dụ: Techstars, Antler, 500 Global).
+
+Bước 3: Bản ghi nhớ định vị thị trường
+
+  Mục tiêu: Viết một bản ghi nhớ ngắn gọn (0,5 - 1 trang) đánh giá khả năng huy động vốn của ý tưởng bạn trong bối cảnh thị trường hiện tại.
+  Các đầu ra chính: Giải quyết vấn đề "tài chính không rõ ràng" phổ biến bằng cách ước tính:
+    Kinh tế đơn vị: Doanh thu trên mỗi khách hàng trừ chi phí phục vụ khách hàng đó.
+    Nhu cầu tiền mặt: Đường băng cần thiết để đạt cột mốc tiếp theo.
+    KPI: Các chỉ số cần có trước khi huy động vòng tiếp theo.

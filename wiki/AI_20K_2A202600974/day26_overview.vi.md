@@ -6,7 +6,7 @@ tags: [ai, 20k, day26]
 timestamp: 2026-07-05
 sources: []
 ---
-*Ngày 26 – Hạ tầng MCP/A2A · Gọi vốn · Tích hợp công cụ MCP*
+Ngày 26 – Hạ tầng MCP/A2A · Gọi vốn · Tích hợp công cụ MCP
 
 | Track (Mạch) | Topic / Chủ đề |
 |-------|----------------|

@@ -22,7 +22,7 @@ LCEL (LangChain Expression Language) phù hợp cho các pipeline tuyến tính 
 - **Dynamic Routing**: Quyết định rẽ nhánh linh hoạt (conditional edges) dựa trên kết quả bước trước.
 - **Crash Recovery**: Checkpointing để tiếp tục lại luồng từ điểm dừng.
 
-*=> Giải pháp là LangGraph - orchestration framework thiết kế theo dạng State Machine.*
+=> Giải pháp là LangGraph - orchestration framework thiết kế theo dạng State Machine.
 
 ## 2. Core API của LangGraph
 Bốn khái niệm nền tảng của StateGraph:

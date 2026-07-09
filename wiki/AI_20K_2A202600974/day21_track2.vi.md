@@ -18,7 +18,7 @@ sources: ["raw/AI_20K_2A202600974/21/Day 21 - Track 2 - CICD AI SYSTEMS.pptx"]
 
 ## 1. Tổng Quan về CI/CD trong AI  
 
-  *Việc tự động hóa vòng đời model (từ lúc thử nghiệm đến production) là cực kỳ quan trọng để ngăn chặn model regression.*  
+  Việc tự động hóa vòng đời model (từ lúc thử nghiệm đến production) là cực kỳ quan trọng để ngăn chặn model regression.
 
   ***Mục tiêu:** Setup pipeline để mọi thay đổi về code, data, hoặc parameters đều được test, evaluate và deploy tự động một cách an toàn.*  
 
@@ -31,9 +31,9 @@ sources: ["raw/AI_20K_2A202600974/21/Day 21 - Track 2 - CICD AI SYSTEMS.pptx"]
   ***GitHub Actions CI/CD Pipeline:** Nền tảng tự động hóa CI/CD. Chạy auto test, auto train, và evaluate tự động mỗi khi có code mới.*  
 
   ***CD Model Deployment Strategies:** Áp dụng các chiến lược triển khai an toàn để giảm thiểu rủi ro khi release model mới:*  
-    *Triển khai Canary.*  
-    *Triển khai Blue/Green.*  
-    *Triển khai Shadow.*  
+    Triển khai Canary.
+    Triển khai Blue/Green.
+    Triển khai Shadow.
 
   ***Testing Pyramid & Model Serving:** Áp dụng tháp kiểm thử cho hệ thống AI và phục vụ (serving) model kết hợp với A/B Testing thông qua MLflow.*  
 

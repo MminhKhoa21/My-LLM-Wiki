@@ -10,77 +10,77 @@ sources: ["raw/AI_20K_2A202600974/18/1-d18-slide-v1-track1.pdf", "raw/AI_20K_2A2
 
 ---
 
-*1. Nguyên tắc cốt lõi & Kỳ vọng*
+1. Nguyên tắc cốt lõi & Kỳ vọng
 
-  *Đặt kỳ vọng: Tránh để giao diện người dùng hứa hẹn nhiều hơn những gì AI có thể thực hiện. Người dùng cần hiểu AI có thể làm gì, không thể làm gì và có thể thất bại như thế nào.*
+  Đặt kỳ vọng: Tránh để giao diện người dùng hứa hẹn nhiều hơn những gì AI có thể thực hiện. Người dùng cần hiểu AI có thể làm gì, không thể làm gì và có thể thất bại như thế nào.
 
-  *Tính cách AI: Kết hợp giữa sự ấm áp (thân thiện, dễ tiếp cận) và năng lực. Năng lực được hiệu chỉnh phù hợp giúp xây dựng lòng tin bền vững. Phát tín hiệu "không quá hoàn hảo" có thể làm giảm kỳ vọng ban đầu và cải thiện sự hài lòng lâu dài.*
+  Tính cách AI: Kết hợp giữa sự ấm áp (thân thiện, dễ tiếp cận) và năng lực. Năng lực được hiệu chỉnh phù hợp giúp xây dựng lòng tin bền vững. Phát tín hiệu "không quá hoàn hảo" có thể làm giảm kỳ vọng ban đầu và cải thiện sự hài lòng lâu dài.
 
-  *Khung tham khảo: Sổ tay PAIR của Google (định hình sản phẩm AI) và Bộ công cụ HAX của Microsoft (thiết kế tương tác AI).*
-
----
-
-*2. Hiệu chỉnh lòng tin*
-
-  *Tin tưởng thái quá: Người dùng tin tưởng AI vượt quá khả năng thực sự, dẫn đến ủy thác nhiệm vụ quá mức mà không kiểm tra lại.*
-
-  *Thiếu tin tưởng: Người dùng tin tưởng AI ít hơn khả năng thực tế, dẫn đến sử dụng không đầy đủ.*
-
-  *Công thức cho lòng tin: Hiệu chỉnh lòng tin = Kỳ vọng + Khả năng giải thích + Kiểm soát*  
-    *Kỳ vọng: Làm rõ giới hạn của AI.*  
-    *Khả năng giải thích: Giúp người dùng hiểu tại sao AI đưa ra đầu ra cụ thể.*  
-    *Kiểm soát: Cho phép người dùng chỉnh sửa, hoàn tác, xem trước hoặc phê duyệt các hành động.*
+  Khung tham khảo: Sổ tay PAIR của Google (định hình sản phẩm AI) và Bộ công cụ HAX của Microsoft (thiết kế tương tác AI).
 
 ---
 
-*3. Tăng cường so với Tự động hóa (Quyền chủ động)*
+2. Hiệu chỉnh lòng tin
 
-*Xác định mức độ tự chủ của AI dựa trên chi phí sai sót và mức độ chắc chắn về ý định của người dùng.*
+  Tin tưởng thái quá: Người dùng tin tưởng AI vượt quá khả năng thực sự, dẫn đến ủy thác nhiệm vụ quá mức mà không kiểm tra lại.
 
-  *Hành động (Tự động hóa): Độ chắc chắn cao, chi phí sai sót thấp. Dễ hoàn tác. AI tự động thực hiện hành động để tiết kiệm thời gian.*
+  Thiếu tin tưởng: Người dùng tin tưởng AI ít hơn khả năng thực tế, dẫn đến sử dụng không đầy đủ.
 
-  *Hỏi (Sáng kiến hỗn hợp): Độ chắc chắn vừa phải, tác động đáng kể. AI yêu cầu xác nhận trước khi tiến hành.*
-
-  *Không hành động (Bất động): Chi phí sai sót cao, độ chắc chắn thấp. Hệ thống hoàn toàn để quyết định cho người dùng.*
-
----
-
-*4. Xử lý lỗi AI và sự không chắc chắn*
-
-  *Giải thích lý do tại sao hệ thống đưa ra quyết định (ví dụ: ánh xạ hành vi hoặc đầu vào của người dùng thành đầu ra).*
-
-  *Hiển thị kết quả kèm mức độ tin cậy.*
-
-  *Cung cấp các lối thoát rõ ràng (ví dụ: chuyển sang nhân viên hỗ trợ, đưa ra các tùy chọn dự phòng).*
-
-  *Hoàn tác / Quay lại: Cho phép người dùng dễ dàng khôi phục các hành động của AI.*
-
-  *Sử dụng trạng thái lỗi như cơ hội để thu thập phản hồi và hướng dẫn người dùng cách sử dụng đúng.*
+  Công thức cho lòng tin: Hiệu chỉnh lòng tin = Kỳ vọng + Khả năng giải thích + Kiểm soát
+    Kỳ vọng: Làm rõ giới hạn của AI.
+    Khả năng giải thích: Giúp người dùng hiểu tại sao AI đưa ra đầu ra cụ thể.
+    Kiểm soát: Cho phép người dùng chỉnh sửa, hoàn tác, xem trước hoặc phê duyệt các hành động.
 
 ---
 
-*5. Vòng phản hồi*
+3. Tăng cường so với Tự động hóa (Quyền chủ động)
 
-*Phản hồi cho phép hệ thống học hỏi từ người dùng và người dùng học hỏi từ hệ thống.*
+Xác định mức độ tự chủ của AI dựa trên chi phí sai sót và mức độ chắc chắn về ý định của người dùng.
 
-  *Phản hồi của người dùng (Rõ ràng): Thích/không thích, đánh giá, báo cáo lỗi.*
+  Hành động (Tự động hóa): Độ chắc chắn cao, chi phí sai sót thấp. Dễ hoàn tác. AI tự động thực hiện hành động để tiết kiệm thời gian.
 
-  *Phản hồi của người dùng (Ngầm định): Các hành vi của người dùng như hoàn tác, bỏ qua tác vụ hoặc chấp nhận gợi ý.*
+  Hỏi (Sáng kiến hỗn hợp): Độ chắc chắn vừa phải, tác động đáng kể. AI yêu cầu xác nhận trước khi tiến hành.
 
-  *Phản hồi của hệ thống (Rõ ràng): Thông báo giải thích giới hạn, trạng thái hoặc các bước tiếp theo.*
-
-  *Phản hồi của hệ thống (Ngầm định): Các gợi ý của giao diện, trạng thái mặc định và tiết lộ dần dần giúp định hướng mô hình tinh thần của người dùng.*
+  Không hành động (Bất động): Chi phí sai sót cao, độ chắc chắn thấp. Hệ thống hoàn toàn để quyết định cho người dùng.
 
 ---
 
-*6. Thiết kế kịch bản thực hành*
+4. Xử lý lỗi AI và sự không chắc chắn
 
-*Bài tập thực hành nhấn mạnh việc thiết kế một phân đoạn liên tục của trải nghiệm AI qua bốn giai đoạn:*
+  Giải thích lý do tại sao hệ thống đưa ra quyết định (ví dụ: ánh xạ hành vi hoặc đầu vào của người dùng thành đầu ra).
 
-   *Khởi tạo: Đặt kỳ vọng mà không làm người dùng choáng ngợp.*
+  Hiển thị kết quả kèm mức độ tin cậy.
 
-   *Trong quá trình hành động: Hiển thị suy luận của AI, yêu cầu ngữ cảnh hoặc đề xuất giải pháp.*
+  Cung cấp các lối thoát rõ ràng (ví dụ: chuyển sang nhân viên hỗ trợ, đưa ra các tùy chọn dự phòng).
 
-   *Sau hành động: Xem xét kết quả, chỉnh sửa và xác nhận.*
+  Hoàn tác / Quay lại: Cho phép người dùng dễ dàng khôi phục các hành động của AI.
 
-   *Sai sót & Khắc phục: Tạo vòng phản hồi để sửa lỗi và tiếp tục quy trình làm việc một cách liền mạch.*
+  Sử dụng trạng thái lỗi như cơ hội để thu thập phản hồi và hướng dẫn người dùng cách sử dụng đúng.
+
+---
+
+5. Vòng phản hồi
+
+Phản hồi cho phép hệ thống học hỏi từ người dùng và người dùng học hỏi từ hệ thống.
+
+  Phản hồi của người dùng (Rõ ràng): Thích/không thích, đánh giá, báo cáo lỗi.
+
+  Phản hồi của người dùng (Ngầm định): Các hành vi của người dùng như hoàn tác, bỏ qua tác vụ hoặc chấp nhận gợi ý.
+
+  Phản hồi của hệ thống (Rõ ràng): Thông báo giải thích giới hạn, trạng thái hoặc các bước tiếp theo.
+
+  Phản hồi của hệ thống (Ngầm định): Các gợi ý của giao diện, trạng thái mặc định và tiết lộ dần dần giúp định hướng mô hình tinh thần của người dùng.
+
+---
+
+6. Thiết kế kịch bản thực hành
+
+Bài tập thực hành nhấn mạnh việc thiết kế một phân đoạn liên tục của trải nghiệm AI qua bốn giai đoạn:
+
+   Khởi tạo: Đặt kỳ vọng mà không làm người dùng choáng ngợp.
+
+   Trong quá trình hành động: Hiển thị suy luận của AI, yêu cầu ngữ cảnh hoặc đề xuất giải pháp.
+
+   Sau hành động: Xem xét kết quả, chỉnh sửa và xác nhận.
+
+   Sai sót & Khắc phục: Tạo vòng phản hồi để sửa lỗi và tiếp tục quy trình làm việc một cách liền mạch.

@@ -12,35 +12,35 @@ Dưới đây là nội dung file `day22_track2.md` đã được chuyển đổ
 
 # *LLMOps & Prompt Versioning (Ngày 22 - Track 2)*
 
-* **Giảng viên:** VinUniversity*  
-* **Khóa:** AICB Phase 2 · Track 2*
+ **Giảng viên:** VinUniversity
+ **Khóa:** AICB Phase 2 · Track 2
 
 > * **Câu hỏi trọng tâm:** "Prompt thay đổi = behavior thay đổi." Một thay đổi nhỏ trong system prompt có thể làm tăng latency 3x và token cost 200%. Làm thế nào để trace, version và eval mọi thay đổi?*
 
 ## *1. LLMOps vs MLOps Truyền Thống*
 
-- *Khác biệt cốt lõi: Trong LLMOps, việc quản lý phiên bản của **Prompt** quan trọng không kém việc quản lý code hay data.*  
+- Khác biệt cốt lõi: Trong LLMOps, việc quản lý phiên bản của **Prompt** quan trọng không kém việc quản lý code hay data.
 - ***Mục đích:** Khả năng truy vết (trace), lưu trữ phiên bản (version control) và đánh giá (evaluation) liên tục giúp đảm bảo độ ổn định và chi phí của ứng dụng LLM.*
 
 ## *2. Công Cụ & Kỹ Thuật Trọng Tâm*
 
-  - *Instrument (đo lường) các ứng dụng LLM.*  
-  - *Trace từng API call để debug nút thắt cổ chai (bottlenecks).*  
-  - *Lọc (filter) traces theo latency, cost, và error rate.*  
-  - *Giống như "GitHub dành riêng cho prompt".*  
-  - *Cho phép lưu trữ, versioning và pin (ghim) các prompt để kiểm soát phiên bản độc lập với code.*  
-  - *Đánh giá vượt ra ngoài độ chính xác (accuracy) thông thường.*  
-  - *Sử dụng RAGAS để chấm điểm mức độ tin cậy (faithfulness), sự liên quan (relevance), và nhận diện ảo giác (hallucination) một cách có hệ thống.*  
-  - *Validate cả đầu vào (inputs) và đầu ra (outputs) của LLM.*  
-  - *Ngăn chặn lộ thông tin cá nhân (PII), phát hiện Prompt Injection.*  
-  - *Tự động re-ask (hỏi lại) khi LLM trả về format sai (non-JSON).*
+  - Instrument (đo lường) các ứng dụng LLM.
+  - Trace từng API call để debug nút thắt cổ chai (bottlenecks).
+  - Lọc (filter) traces theo latency, cost, và error rate.
+  - Giống như "GitHub dành riêng cho prompt".
+  - Cho phép lưu trữ, versioning và pin (ghim) các prompt để kiểm soát phiên bản độc lập với code.
+  - Đánh giá vượt ra ngoài độ chính xác (accuracy) thông thường.
+  - Sử dụng RAGAS để chấm điểm mức độ tin cậy (faithfulness), sự liên quan (relevance), và nhận diện ảo giác (hallucination) một cách có hệ thống.
+  - Validate cả đầu vào (inputs) và đầu ra (outputs) của LLM.
+  - Ngăn chặn lộ thông tin cá nhân (PII), phát hiện Prompt Injection.
+  - Tự động re-ask (hỏi lại) khi LLM trả về format sai (non-JSON).
 
 ## *3. Deliverables của Lab*
 
-- * **LangSmith Project:** Ghi lại >100 traces từ RAG pipeline. Phân tích chi tiết latency, cost và error rate.*  
-- * **Prompt Hub:** Tạo 2 version prompt với commit message rõ ràng. Thực hiện A/B routing 50/50.*  
-- * **RAGAS Evaluation Report:** Chạy đánh giá trên 50 QA pairs. Mục tiêu: Faithfulness score > 0.8. So sánh kết quả giữa 2 prompt versions.*  
-- * **Guardrails AI Validator:** Tích hợp bộ chặn PII (chặn email, số điện thoại), tự động reformat JSON và log toàn bộ sự cố (incidents).*
+-  **LangSmith Project:** Ghi lại >100 traces từ RAG pipeline. Phân tích chi tiết latency, cost và error rate.
+-  **Prompt Hub:** Tạo 2 version prompt với commit message rõ ràng. Thực hiện A/B routing 50/50.
+-  **RAGAS Evaluation Report:** Chạy đánh giá trên 50 QA pairs. Mục tiêu: Faithfulness score > 0.8. So sánh kết quả giữa 2 prompt versions.
+-  **Guardrails AI Validator:** Tích hợp bộ chặn PII (chặn email, số điện thoại), tự động reformat JSON và log toàn bộ sự cố (incidents).
 
 ## *4. Liên Kết*
 

@@ -58,8 +58,8 @@ Hệ sinh thái MCP dựa trên kết nối tiêu chuẩn hóa giữa Host (Máy
 6. **Elicitation:** Server asking the user for structured input via the host UI.
 6. **Elicitation (Khơi gợi):** Server yêu cầu người dùng nhập thông tin có cấu trúc thông qua giao diện người dùng (UI) của host.
 
-*Takeaway: MCP is a protocol for **context exchange**, not just "function calling". Resources and Prompts are highly underutilized but powerful.*
-*Bài học: MCP là một giao thức để **trao đổi ngữ cảnh**, không chỉ là "gọi hàm". Tài nguyên và Dấu nhắc thường ít được sử dụng nhưng rất mạnh mẽ.*
+Takeaway: MCP is a protocol for **context exchange**, not just "function calling". Resources and Prompts are highly underutilized but powerful.
+Bài học: MCP là một giao thức để **trao đổi ngữ cảnh**, không chỉ là "gọi hàm". Tài nguyên và Dấu nhắc thường ít được sử dụng nhưng rất mạnh mẽ.
 
 ## 3. Building an MCP Server with Python SDK (FastMCP)
 ## 3. Xây dựng một MCP Server với Python SDK (FastMCP)

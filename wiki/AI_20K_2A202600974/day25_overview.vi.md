@@ -8,7 +8,7 @@ sources: []
 ---
 ```markdown
 # Day 25 – AI Product · GPU FinOps · Cost Optimization  
-*# Ngày 25 – Sản phẩm AI · GPU FinOps · Tối ưu chi phí*
+# Ngày 25 – Sản phẩm AI · GPU FinOps · Tối ưu chi phí
 
 | Track | Chủ đề |
 |-------|--------|
